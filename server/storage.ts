@@ -1019,9 +1019,6 @@ export class DatabaseStorage implements IStorage {
   
   async deleteUser(userId: number): Promise<void> {
     try {
-      // Delete user's profiles first
-      await db.delete(profiles).where(eq(profiles.userId, userId));
-      
       // Delete user's progress to maintain referential integrity
       await db.delete(userProgressTable).where(eq(userProgressTable.userId, userId));
       
