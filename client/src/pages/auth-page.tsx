@@ -9,6 +9,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormDescription,
 } from "@/components/ui/form";
 import {
   Select,
@@ -17,14 +18,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Checkbox } from "@/components/ui/checkbox";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLocation } from "wouter";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/use-auth";
-import { GRADES, GENDERS } from "@/lib/constants";
+import { GRADES, GENDERS, LEARNING_PREFERENCES, INTERESTS } from "@/lib/constants";
 
 // Login schema
 const loginSchema = z.object({
@@ -40,6 +48,8 @@ const registerSchema = z.object({
   password: z.string().min(6, "Password must be at least 6 characters"),
   grade: z.string().refine((val) => val !== "", "Please select a grade"),
   gender: z.string().refine((val) => val !== "", "Please select a gender"),
+  learningPreference: z.string().optional(),
+  interests: z.array(z.string()).optional().default([]),
 });
 
 type LoginValues = z.infer<typeof loginSchema>;
@@ -69,6 +79,8 @@ export default function AuthPage() {
       password: "",
       grade: "",
       gender: "",
+      learningPreference: "",
+      interests: [],
     },
   });
 
