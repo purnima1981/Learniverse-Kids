@@ -85,14 +85,30 @@ export default function AuthPage() {
   });
 
   // Get auth context
-  const { loginMutation, registerMutation } = useAuth();
+  const { user, loginMutation, registerMutation } = useAuth();
+  
+  // Redirect if user is already logged in
+  if (user) {
+    // If the user has a selected theme, go to dashboard, otherwise to theme selection
+    if (user.themeId) {
+      setLocation("/dashboard");
+    } else {
+      setLocation("/theme-selection");
+    }
+  }
 
   // Login submission handler
   const onLoginSubmit = async (data: LoginValues) => {
     try {
-      await loginMutation.mutateAsync(data);
-      // Redirect to dashboard on success
-      setLocation("/dashboard");
+      const user = await loginMutation.mutateAsync(data);
+      console.log("Login successful, user:", user);
+      
+      // Redirect based on whether user has selected a theme
+      if (user.themeId) {
+        setLocation("/dashboard");
+      } else {
+        setLocation("/theme-selection");
+      }
     } catch (error) {
       console.error("Login error:", error);
       // Toast notifications are handled by the auth context
@@ -102,8 +118,10 @@ export default function AuthPage() {
   // Registration submission handler
   const onRegisterSubmit = async (data: RegisterValues) => {
     try {
-      await registerMutation.mutateAsync(data);
-      // Redirect to theme selection on success
+      const user = await registerMutation.mutateAsync(data);
+      console.log("Registration successful, user:", user);
+      
+      // New users should always go to theme selection
       setLocation("/theme-selection");
     } catch (error) {
       console.error("Registration error:", error);
