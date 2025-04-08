@@ -1,12 +1,14 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { useParams, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, BookmarkIcon, InfoIcon } from "lucide-react";
-import { Story, Chapter } from "@shared/schema";
+import { Story, Chapter, InsertFlashcard } from "@shared/schema";
 import { SubjectTag } from "@/components/SubjectTag";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import FlashcardDeck, { VocabularyWord } from "@/components/FlashcardDeck";
+import { apiRequest, queryClient } from "@/lib/queryClient";
 
 export default function StoryReader() {
   const { id, chapter } = useParams();
