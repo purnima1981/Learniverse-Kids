@@ -215,3 +215,18 @@ export type InsertUserProgress = z.infer<typeof insertUserProgressSchema>;
 
 export type Flashcard = typeof flashcards.$inferSelect;
 export type InsertFlashcard = z.infer<typeof insertFlashcardSchema>;
+
+// Regional Epics Types (for static data usage)
+export interface RegionalEpic {
+  id: number;
+  name: string;
+  description: string;
+  region: string;
+  imageUrl: string;
+  themeId: number;
+  stories: {
+    id: number;
+    title: string;
+    grade: string;
+  }[];
+}
