@@ -53,7 +53,7 @@ export default function ThemeSelection() {
   };
   
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-950 to-blue-900 pt-10 pb-20">
+    <div className="min-h-screen bg-gradient-to-b from-cyan-500 to-blue-500 pt-10 pb-20">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <motion.div
@@ -62,12 +62,41 @@ export default function ThemeSelection() {
             transition={{ duration: 0.5 }}
           >
             <h1 className="font-bold text-4xl md:text-5xl mb-4 text-white text-center">Choose Your Adventure</h1>
-            <p className="text-lg mb-12 text-blue-100 text-center max-w-2xl mx-auto">
+            <p className="text-lg mb-12 text-white text-center max-w-2xl mx-auto">
               Select a learning theme that excites you! Each theme creates a unique journey connecting different subjects through immersive stories.
             </p>
           </motion.div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {/* Carousel for mobile view */}
+          <div className="block md:hidden mb-6">
+            <Carousel className="w-full">
+              <CarouselContent>
+                {themes.map((theme, index) => (
+                  <CarouselItem key={theme.id} className="md:basis-1/2 lg:basis-1/3">
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      className="px-2" // Add padding for spacing between carousel items
+                    >
+                      <ThemeCard 
+                        theme={theme}
+                        onSelect={handleThemeSelect}
+                        isSelecting={selectThemeMutation.isPending}
+                      />
+                    </motion.div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <div className="flex justify-center mt-4">
+                <CarouselPrevious className="relative mr-2 static transform-none" />
+                <CarouselNext className="relative ml-2 static transform-none" />
+              </div>
+            </Carousel>
+          </div>
+          
+          {/* Grid for tablet and desktop */}
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {themes.map((theme, index) => (
               <motion.div
                 key={theme.id}
