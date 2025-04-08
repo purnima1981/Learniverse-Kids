@@ -1,163 +1,26 @@
-import type { Express } from "express";
+import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { z } from "zod";
-import { compare, hash } from "bcryptjs";
 import express from "express";
-import session from "express-session";
-import { insertUserSchema } from "@shared/schema";
+import { setupAuth } from "./auth";
+import { insertUserSchema, users } from "@shared/schema";
 import { analyzeReading, generateReadingPassage } from "./services/openai";
+import { and, desc, eq } from "drizzle-orm";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Setup session middleware
-  app.use(
-    session({
-      secret: process.env.SESSION_SECRET || "learniverse-secret",
-      resave: false,
-      saveUninitialized: false,
-      cookie: { secure: process.env.NODE_ENV === "production", maxAge: 24 * 60 * 60 * 1000 },
-    })
-  );
+  // Setup authentication
+  setupAuth(app);
 
   // Authentication middleware
-  const requireAuth = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    if (!req.session.userId) {
+  const requireAuth = (req: Request, res: Response, next: NextFunction) => {
+    if (!req.isAuthenticated()) {
       return res.status(401).json({ message: "Unauthorized" });
     }
     next();
   };
 
-  // Get current user
-  app.get("/api/user", async (req, res) => {
-    try {
-      if (!req.session.userId) {
-        return res.status(401).json({ message: "Unauthorized" });
-      }
-
-      const user = await storage.getUser(req.session.userId);
-      
-      if (!user) {
-        return res.status(404).json({ message: "User not found" });
-      }
-
-      // Don't send password to client
-      const { password, ...userData } = user;
-      
-      // Add theme name if theme is selected
-      let userResponse = userData;
-      if (user.themeId) {
-        const theme = await storage.getTheme(user.themeId);
-        if (theme) {
-          userResponse = {
-            ...userData,
-            themeName: theme.name,
-          };
-        }
-      }
-      
-      res.json(userResponse);
-    } catch (error) {
-      console.error("Error fetching user:", error);
-      res.status(500).json({ message: "Internal server error" });
-    }
-  });
-
-  // Register
-  app.post("/api/register", async (req, res) => {
-    try {
-      const userData = insertUserSchema.parse(req.body);
-      
-      // Check if user with this email already exists
-      const existingUser = await storage.getUserByEmail(userData.email);
-      if (existingUser) {
-        return res.status(400).json({ message: "Email already in use" });
-      }
-      
-      // Hash password
-      const hashedPassword = await hash(userData.password, 10);
-      
-      // Create user
-      const user = await storage.createUser({
-        ...userData,
-        password: hashedPassword,
-      });
-      
-      // Set session
-      req.session.userId = user.id;
-      
-      // Don't send password to client
-      const { password, ...safeUser } = user;
-      
-      res.status(201).json(safeUser);
-    } catch (error) {
-      console.error("Registration error:", error);
-      if (error instanceof z.ZodError) {
-        return res.status(400).json({ message: "Invalid data", errors: error.errors });
-      }
-      res.status(500).json({ message: "Internal server error" });
-    }
-  });
-
-  // Login
-  app.post("/api/login", async (req, res) => {
-    try {
-      const { email, password } = z.object({
-        email: z.string().email(),
-        password: z.string().min(1),
-      }).parse(req.body);
-      
-      // Get user
-      const user = await storage.getUserByEmail(email);
-      if (!user) {
-        return res.status(401).json({ message: "Invalid email or password" });
-      }
-      
-      // Check password
-      const passwordValid = await compare(password, user.password);
-      if (!passwordValid) {
-        return res.status(401).json({ message: "Invalid email or password" });
-      }
-      
-      // Set session
-      req.session.userId = user.id;
-      
-      // Update last active timestamp
-      await storage.updateUserLastActive(user.id);
-      
-      // Don't send password to client
-      const { password: _, ...safeUser } = user;
-      
-      // Add theme name if theme is selected
-      let userResponse = safeUser;
-      if (user.themeId) {
-        const theme = await storage.getTheme(user.themeId);
-        if (theme) {
-          userResponse = {
-            ...safeUser,
-            themeName: theme.name,
-          };
-        }
-      }
-      
-      res.json(userResponse);
-    } catch (error) {
-      console.error("Login error:", error);
-      if (error instanceof z.ZodError) {
-        return res.status(400).json({ message: "Invalid data", errors: error.errors });
-      }
-      res.status(500).json({ message: "Internal server error" });
-    }
-  });
-
-  // Logout
-  app.post("/api/logout", (req, res) => {
-    req.session.destroy((err) => {
-      if (err) {
-        return res.status(500).json({ message: "Error logging out" });
-      }
-      res.json({ message: "Logged out successfully" });
-    });
-  });
+  // These routes are now handled in auth.ts
 
   // Set theme preference
   app.post("/api/user/theme", requireAuth, async (req, res) => {
@@ -173,7 +36,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       // Update user
-      const userId = req.session.userId!;
+      const userId = req.user!.id;
       await storage.updateUserTheme(userId, themeId);
       
       res.json({ message: "Theme updated successfully" });
@@ -327,7 +190,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       // Update user progress when accessing a chapter
-      const userId = req.session.userId!;
+      const userId = req.user!.id;
       await storage.updateUserStoryProgress(userId, storyId, chapterNumber);
       
       res.json(chapter);
