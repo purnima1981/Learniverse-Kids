@@ -48,7 +48,7 @@ type RegisterValues = z.infer<typeof registerSchema>;
 export default function AuthPage() {
   const [_, setLocation] = useLocation();
   const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState<"login" | "register">("login");
+  const [activeTab, setActiveTab] = useState<"login" | "register">("register");
 
   // Login form
   const loginForm = useForm<LoginValues>({
@@ -100,82 +100,33 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 to-purple-900 flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4">
       <div className="max-w-5xl w-full grid md:grid-cols-2 gap-8">
         {/* Left side - Hero content */}
         <div className="flex flex-col justify-center text-white">
           <h1 className="font-bold text-4xl mb-6">Welcome to Learniverse</h1>
-          <p className="text-lg mb-6">
-            The interdisciplinary educational app that connects various subjects in themed stories
-            aligned with school curriculum for grades 1-8.
-          </p>
-          <div className="space-y-4 mb-6">
-            <div className="flex items-start">
-              <div className="bg-white/10 rounded-full p-2 mr-3 mt-1">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg">Themed Stories</h3>
-                <p className="text-white/70">Exciting narratives that connect different subjects in a meaningful way</p>
-              </div>
-            </div>
-            <div className="flex items-start">
-              <div className="bg-white/10 rounded-full p-2 mr-3 mt-1">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg">AI Reading Coach</h3>
-                <p className="text-white/70">Practice your reading skills with our advanced AI coach</p>
-              </div>
-            </div>
-            <div className="flex items-start">
-              <div className="bg-white/10 rounded-full p-2 mr-3 mt-1">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg">Vocabulary Building</h3>
-                <p className="text-white/70">Digital flashcards to help you master new words</p>
-              </div>
-            </div>
-          </div>
-          <div className="hidden md:block">
-            <img
-              src="/src/assets/hero-illustration.svg"
-              alt="Learning illustration"
-              className="max-w-full"
+          <div className="mb-6">
+            <img 
+              src="/src/assets/illustrations.png"
+              alt="Learniverse illustrations" 
+              className="w-full h-auto"
             />
           </div>
         </div>
 
         {/* Right side - Auth forms */}
         <div>
-          <Card className="backdrop-blur-md bg-white/10 border-white/20 shadow-xl">
+          <Card className="glass-panel">
             <CardContent className="p-6">
               <Tabs 
-                defaultValue="login" 
+                defaultValue="register" 
                 value={activeTab} 
                 onValueChange={(value) => setActiveTab(value as "login" | "register")}
                 className="w-full"
               >
-                <TabsList className="grid grid-cols-2 mb-6 bg-white/10">
-                  <TabsTrigger 
-                    value="login" 
-                    className="text-white data-[state=active]:bg-white/20 data-[state=active]:text-white"
-                  >
-                    Login
-                  </TabsTrigger>
-                  <TabsTrigger 
-                    value="register" 
-                    className="text-white data-[state=active]:bg-white/20 data-[state=active]:text-white"
-                  >
-                    Register
-                  </TabsTrigger>
+                <TabsList className="hidden">
+                  <TabsTrigger value="login">Login</TabsTrigger>
+                  <TabsTrigger value="register">Register</TabsTrigger>
                 </TabsList>
 
                 {/* Login Form */}
@@ -241,7 +192,7 @@ export default function AuthPage() {
 
                 {/* Registration Form */}
                 <TabsContent value="register">
-                  <h2 className="font-bold text-2xl mb-6 text-white">Create an account</h2>
+                  <h2 className="font-bold text-2xl mb-4 text-white">Begin your learning adventure</h2>
                   <Form {...registerForm}>
                     <form onSubmit={registerForm.handleSubmit(onRegisterSubmit)} className="space-y-4">
                       <div className="grid grid-cols-2 gap-4">
@@ -287,7 +238,7 @@ export default function AuthPage() {
                         name="email"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-white">Email</FormLabel>
+                            <FormLabel className="text-white">Email Address</FormLabel>
                             <FormControl>
                               <Input
                                 placeholder="you@example.com"
@@ -335,9 +286,9 @@ export default function AuthPage() {
                                     <SelectValue placeholder="Select Grade" />
                                   </SelectTrigger>
                                 </FormControl>
-                                <SelectContent className="border-white/20 bg-slate-900 text-white">
+                                <SelectContent className="border-white/20 bg-blue-900/90 backdrop-blur-sm text-white">
                                   {GRADES.map((grade) => (
-                                    <SelectItem key={`grade-${grade}`} value={grade.toString()}>
+                                    <SelectItem key={grade} value={grade}>
                                       Grade {grade}
                                     </SelectItem>
                                   ))}
@@ -363,9 +314,9 @@ export default function AuthPage() {
                                     <SelectValue placeholder="Select Gender" />
                                   </SelectTrigger>
                                 </FormControl>
-                                <SelectContent className="border-white/20 bg-slate-900 text-white">
+                                <SelectContent className="border-white/20 bg-blue-900/90 backdrop-blur-sm text-white">
                                   {GENDERS.map((gender) => (
-                                    <SelectItem key={`gender-${gender.value}`} value={gender.value}>
+                                    <SelectItem key={gender.value} value={gender.value}>
                                       {gender.label}
                                     </SelectItem>
                                   ))}
@@ -379,22 +330,20 @@ export default function AuthPage() {
                       
                       <Button
                         type="submit"
-                        className="w-full bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600 text-black font-bold"
+                        className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 mt-4"
                         disabled={registerForm.formState.isSubmitting}
                       >
-                        {registerForm.formState.isSubmitting ? "Creating account..." : "Register"}
+                        {registerForm.formState.isSubmitting ? "Creating account..." : "REGISTER"}
                       </Button>
                     </form>
                   </Form>
-                  <div className="mt-4 text-center text-white/70">
-                    <p>Already have an account?{" "}
-                      <button 
-                        onClick={() => setActiveTab("login")} 
-                        className="text-yellow-300 hover:underline"
-                      >
-                        Sign in
-                      </button>
-                    </p>
+                  <div className="mt-4 text-center text-white">
+                    <p>Already have an account? <button 
+                      onClick={() => setActiveTab("login")} 
+                      className="text-yellow-400 hover:underline font-medium"
+                    >
+                      Sign in
+                    </button></p>
                   </div>
                 </TabsContent>
               </Tabs>
