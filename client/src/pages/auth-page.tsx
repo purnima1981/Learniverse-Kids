@@ -107,9 +107,9 @@ export default function AuthPage() {
           <h1 className="font-bold text-4xl mb-6">Welcome to Learniverse</h1>
           <div className="mb-6">
             <img 
-              src="/src/assets/illustrations.png"
-              alt="Learniverse illustrations" 
-              className="w-full h-auto"
+              src="/src/assets/learniverse-students.png"
+              alt="Learniverse students learning" 
+              className="w-full h-auto rounded-lg shadow-lg"
             />
           </div>
         </div>
@@ -315,11 +315,18 @@ export default function AuthPage() {
                                   </SelectTrigger>
                                 </FormControl>
                                 <SelectContent className="border-white/20 bg-blue-900/90 backdrop-blur-sm text-white">
-                                  {GENDERS.map((gender) => (
-                                    <SelectItem key={gender.value} value={gender.value}>
-                                      {gender.label}
-                                    </SelectItem>
-                                  ))}
+                                  {GENDERS.map((gender) => {
+                                    let label = "Male";
+                                    if (gender === "female") label = "Female";
+                                    else if (gender === "other") label = "Other";
+                                    else if (gender === "prefer_not_to_say") label = "Prefer not to say";
+                                    
+                                    return (
+                                      <SelectItem key={gender} value={gender}>
+                                        {label}
+                                      </SelectItem>
+                                    );
+                                  })}
                                 </SelectContent>
                               </Select>
                               <FormMessage className="text-red-300" />
