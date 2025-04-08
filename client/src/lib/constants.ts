@@ -18,3 +18,20 @@ export const SUBJECTS = [
   { id: 9, code: "engineering", name: "Engineering" },
   { id: 10, code: "economics", name: "Economics" },
 ];
+
+export const LEARNING_PREFERENCES = [
+  { value: "visual", label: "Visual learner" },
+  { value: "auditory", label: "Auditory learner" },
+  { value: "reading_writing", label: "Reading/writing learner" },
+  { value: "kinesthetic", label: "Hands-on learner" },
+];
+
+export const INTERESTS = [
+  { value: "science", label: "Science" },
+  { value: "arts", label: "Arts" },
+  { value: "sports", label: "Sports" },
+  { value: "music", label: "Music" },
+  { value: "nature", label: "Nature" },
+  { value: "technology", label: "Technology" },
+  { value: "history", label: "History" },
+];

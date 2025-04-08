@@ -6,6 +6,7 @@ import Dashboard from "@/pages/Dashboard";
 import StoryReader from "@/pages/StoryReader";
 import ReadingCoach from "@/pages/ReadingCoach";
 import AuthPage from "@/pages/auth-page";
+import PersonalizationPage from "@/pages/PersonalizationPage";
 import { ProtectedRoute } from "@/lib/protected-route";
 import { AuthProvider } from "@/hooks/use-auth";
 
@@ -18,6 +19,7 @@ function App() {
         
         {/* Protected routes */}
         <ProtectedRoute path="/" component={Dashboard} />
+        <ProtectedRoute path="/personalization" component={PersonalizationPage} />
         <ProtectedRoute path="/theme-selection" component={ThemeSelection} />
         <ProtectedRoute path="/dashboard" component={Dashboard} />
         <ProtectedRoute path="/story/:id/:chapter" component={StoryReader} />

@@ -155,7 +155,12 @@ export const flashcardsRelations = relations(flashcards, ({ one }) => ({
 }));
 
 // Insert schemas
-export const insertUserSchema = createInsertSchema(users).omit({ id: true, createdAt: true, lastActive: true });
+export const insertUserSchema = createInsertSchema(users)
+  .omit({ id: true, createdAt: true, lastActive: true })
+  .extend({
+    learningPreference: z.string().optional(),
+    interests: z.array(z.string()).optional(),
+  });
 export const insertThemeSchema = createInsertSchema(themes).omit({ id: true });
 export const insertSubjectSchema = createInsertSchema(subjects).omit({ id: true });
 export const insertStorySchema = createInsertSchema(stories).omit({ id: true });
