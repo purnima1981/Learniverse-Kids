@@ -1,0 +1,230 @@
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence, PanInfo } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { 
+  ArrowLeft, 
+  ArrowRight, 
+  Bookmark,
+  X,
+  Volume,
+  RefreshCw,
+  ThumbsUp,
+  ThumbsDown
+} from 'lucide-react';
+import './FlashcardDeck.css';
+
+export type VocabularyWord = {
+  word: string;
+  definition: string;
+  context: string;
+};
+
+type FlashcardDeckProps = {
+  words: VocabularyWord[];
+  onClose: () => void;
+  onSave?: (word: VocabularyWord) => void;
+};
+
+export default function FlashcardDeck({ words, onClose, onSave }: FlashcardDeckProps) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [flipped, setFlipped] = useState(false);
+  const [direction, setDirection] = useState<'left' | 'right' | null>(null);
+  const constraintsRef = useRef(null);
+  
+  // Speech synthesis
+  const speak = (text: string) => {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 0.9; // Slightly slower for clarity
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
+  const totalWords = words.length;
+  const currentWord = words[currentIndex];
+
+  const handleDragEnd = (_e: MouseEvent, info: PanInfo) => {
+    if (info.offset.x < -100) {
+      // Swiped left
+      goToNext();
+    } else if (info.offset.x > 100) {
+      // Swiped right
+      goToPrevious();
+    }
+  };
+
+  const goToPrevious = () => {
+    if (currentIndex > 0) {
+      setFlipped(false);
+      setDirection('left');
+      setTimeout(() => {
+        setCurrentIndex(currentIndex - 1);
+      }, 300);
+    }
+  };
+
+  const goToNext = () => {
+    if (currentIndex < totalWords - 1) {
+      setFlipped(false);
+      setDirection('right');
+      setTimeout(() => {
+        setCurrentIndex(currentIndex + 1);
+      }, 300);
+    }
+  };
+
+  const toggleFlip = () => {
+    setFlipped(!flipped);
+  };
+
+  const saveToFlashcards = () => {
+    if (onSave) {
+      onSave(currentWord);
+    }
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') {
+        goToPrevious();
+      } else if (e.key === 'ArrowRight') {
+        goToNext();
+      } else if (e.key === ' ' || e.key === 'Enter') {
+        toggleFlip();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [currentIndex, flipped]);
+
+  return (
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div 
+        className="max-w-5xl w-full bg-transparent rounded-xl overflow-hidden flex flex-col"
+        ref={constraintsRef}
+      >
+        <div className="flex justify-between items-center p-4">
+          <h2 className="text-white text-xl font-bold">
+            Vocabulary Flashcards ({currentIndex + 1}/{totalWords})
+          </h2>
+          <Button 
+            variant="ghost" 
+            className="text-white hover:bg-white/10"
+            onClick={onClose}
+          >
+            <X className="h-5 w-5" />
+          </Button>
+        </div>
+
+        <div className="relative flex-1 flex justify-center items-center min-h-[400px] py-6">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentIndex}
+              className="absolute w-full max-w-lg"
+              initial={{ 
+                opacity: 0, 
+                x: direction === 'right' ? 200 : -200
+              }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ 
+                opacity: 0, 
+                x: direction === 'right' ? -200 : 200
+              }}
+              transition={{ duration: 0.3 }}
+              drag="x"
+              dragConstraints={constraintsRef}
+              onDragEnd={handleDragEnd}
+            >
+              <div 
+                className={`relative w-full aspect-[3/2] cursor-pointer perspective-1000`}
+                onClick={toggleFlip}
+              >
+                <div 
+                  className={`w-full h-full duration-500 preserve-3d ${
+                    flipped ? 'rotate-y-180' : ''
+                  }`}
+                >
+                  {/* Front side */}
+                  <div 
+                    className={`absolute w-full h-full backface-hidden glass-panel p-8 rounded-xl flex flex-col justify-between`}
+                  >
+                    <div className="text-center text-white text-3xl font-bold flex-1 flex items-center justify-center">
+                      {currentWord.word}
+                    </div>
+                    <div className="text-white/70 text-sm italic text-center">
+                      Click to see definition
+                    </div>
+                  </div>
+
+                  {/* Back side */}
+                  <div 
+                    className={`absolute w-full h-full backface-hidden rotate-y-180 glass-panel p-8 rounded-xl`}
+                  >
+                    <div className="text-white text-lg mb-4">
+                      <span className="font-bold">Definition:</span> {currentWord.definition}
+                    </div>
+                    <div className="text-white text-lg mb-4">
+                      <span className="font-bold">Example:</span> <span className="italic">"{currentWord.context}"</span>
+                    </div>
+                    <div className="text-white/70 text-sm italic text-center mt-auto">
+                      Click to see word
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        <div className="flex justify-between items-center p-4 bg-gradient-to-t from-black/20 to-transparent">
+          <Button 
+            variant="ghost" 
+            className="text-white hover:bg-white/10"
+            onClick={goToPrevious}
+            disabled={currentIndex === 0}
+          >
+            <ArrowLeft className="h-5 w-5 mr-1" />
+            Previous
+          </Button>
+
+          <div className="flex space-x-3">
+            <Button 
+              variant="ghost" 
+              className="text-white hover:bg-white/10"
+              onClick={() => speak(currentWord.word)}
+            >
+              <Volume className="h-5 w-5" />
+            </Button>
+            <Button 
+              variant="ghost" 
+              className="text-white hover:bg-white/10"
+              onClick={toggleFlip}
+            >
+              <RefreshCw className="h-5 w-5" />
+            </Button>
+            <Button 
+              variant="ghost" 
+              className="text-white hover:bg-white/10"
+              onClick={saveToFlashcards}
+            >
+              <Bookmark className="h-5 w-5" />
+            </Button>
+          </div>
+
+          <Button 
+            variant="ghost" 
+            className="text-white hover:bg-white/10"
+            onClick={goToNext}
+            disabled={currentIndex === totalWords - 1}
+          >
+            Next
+            <ArrowRight className="h-5 w-5 ml-1" />
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
