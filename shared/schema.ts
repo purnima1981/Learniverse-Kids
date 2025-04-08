@@ -217,6 +217,56 @@ export type Flashcard = typeof flashcards.$inferSelect;
 export type InsertFlashcard = z.infer<typeof insertFlashcardSchema>;
 
 // Regional Epics Types (for static data usage)
+// Microgames schema
+export const microgames = pgTable("microgames", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  type: text("type").notNull(), // 'quiz', 'match', 'arrange', 'fill-in-blank'
+  difficulty: text("difficulty").notNull(), // 'easy', 'medium', 'hard'
+  subject: text("subject").notNull(),
+  gradeLevel: text("grade_level").notNull(),
+  instructions: text("instructions").notNull(),
+  content: jsonb("content").notNull(), // JSON with game content
+  timeLimit: integer("time_limit"), // in seconds, nullable
+  points: integer("points").notNull().default(10),
+  createdAt: timestamp("created_at").defaultNow()
+});
+
+export const userGameResults = pgTable("user_game_results", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  microgameId: integer("microgame_id").notNull().references(() => microgames.id, { onDelete: "cascade" }),
+  score: integer("score").notNull(),
+  timeTaken: integer("time_taken"), // in seconds, nullable
+  completedAt: timestamp("completed_at").defaultNow(),
+  answers: jsonb("answers") // JSON with user's answers
+});
+
+export const microgamesRelations = relations(microgames, ({ many }) => ({
+  userGameResults: many(userGameResults)
+}));
+
+export const userGameResultsRelations = relations(userGameResults, ({ one }) => ({
+  user: one(users, {
+    fields: [userGameResults.userId],
+    references: [users.id]
+  }),
+  microgame: one(microgames, {
+    fields: [userGameResults.microgameId],
+    references: [microgames.id]
+  })
+}));
+
+// Create insert schemas for the microgames tables
+export const insertMicrogameSchema = createInsertSchema(microgames).omit({ id: true, createdAt: true });
+export const insertUserGameResultSchema = createInsertSchema(userGameResults).omit({ id: true, completedAt: true });
+
+// Add types
+export type Microgame = typeof microgames.$inferSelect;
+export type InsertMicrogame = z.infer<typeof insertMicrogameSchema>;
+export type UserGameResult = typeof userGameResults.$inferSelect;
+export type InsertUserGameResult = z.infer<typeof insertUserGameResultSchema>;
+
 export interface RegionalEpic {
   id: number;
   name: string;
