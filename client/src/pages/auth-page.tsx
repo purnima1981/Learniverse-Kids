@@ -31,7 +31,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 import { FcGoogle } from "react-icons/fc";
 import { SiFacebook, SiApple } from "react-icons/si";
-import loginImage from "@/assets/login-image.png";
+import loginHero from "@/assets/login-hero.png";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -144,7 +144,7 @@ export default function AuthPage() {
       <div className="hidden lg:block lg:w-1/2 relative">
         <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/80 to-blue-600/80 z-10"></div>
         <img 
-          src={loginImage}
+          src={loginHero}
           alt="Learniverse illustration showing diverse students learning" 
           className="absolute w-full h-full object-cover"
         />
