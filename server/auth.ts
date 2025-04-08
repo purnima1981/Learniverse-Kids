@@ -25,6 +25,9 @@ declare global {
       firstName: string;
       lastName: string;
       role: string;
+      grade: string;
+      gender: string;
+      themeId: number | null;
       createdAt: Date | null;
       lastActive: Date | null;
       googleId: string | null;
@@ -118,6 +121,8 @@ async function handleSocialAuth(profile: any, provider: 'google' | 'facebook' | 
       password, // Random password
       firstName,
       lastName,
+      grade: "5", // Default grade for parent
+      gender: "other", // Default gender
       role: 'parent', // Default role
       [providerIdField]: profile.id
     };
