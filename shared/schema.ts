@@ -1,5 +1,6 @@
-import { pgTable, text, serial, integer, timestamp, boolean, jsonb } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, timestamp, boolean, jsonb, primaryKey } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
+import { relations } from "drizzle-orm";
 import { z } from "zod";
 
 // Users table
@@ -80,6 +81,78 @@ export const flashcards = pgTable("flashcards", {
   chapterId: integer("chapter_id"),
   masteryLevel: integer("mastery_level").default(0),
 });
+
+// Define relations
+export const usersRelations = relations(users, ({ one, many }) => ({
+  theme: one(themes, {
+    fields: [users.themeId],
+    references: [themes.id]
+  }),
+  progress: many(userProgress),
+  flashcards: many(flashcards)
+}));
+
+export const themesRelations = relations(themes, ({ many }) => ({
+  users: many(users),
+  stories: many(stories)
+}));
+
+export const storiesRelations = relations(stories, ({ one, many }) => ({
+  theme: one(themes, {
+    fields: [stories.themeId],
+    references: [themes.id]
+  }),
+  chapters: many(chapters),
+  storySubjects: many(storySubjects)
+}));
+
+export const chaptersRelations = relations(chapters, ({ one }) => ({
+  story: one(stories, {
+    fields: [chapters.storyId],
+    references: [stories.id]
+  })
+}));
+
+export const subjectsRelations = relations(subjects, ({ many }) => ({
+  storySubjects: many(storySubjects)
+}));
+
+export const storySubjectsRelations = relations(storySubjects, ({ one }) => ({
+  story: one(stories, {
+    fields: [storySubjects.storyId],
+    references: [stories.id]
+  }),
+  subject: one(subjects, {
+    fields: [storySubjects.subjectId],
+    references: [subjects.id]
+  })
+}));
+
+export const userProgressRelations = relations(userProgress, ({ one }) => ({
+  user: one(users, {
+    fields: [userProgress.userId],
+    references: [users.id]
+  }),
+  story: one(stories, {
+    fields: [userProgress.storyId],
+    references: [stories.id]
+  })
+}));
+
+export const flashcardsRelations = relations(flashcards, ({ one }) => ({
+  user: one(users, {
+    fields: [flashcards.userId],
+    references: [users.id]
+  }),
+  story: one(stories, {
+    fields: [flashcards.storyId],
+    references: [stories.id]
+  }),
+  chapter: one(chapters, {
+    fields: [flashcards.chapterId],
+    references: [chapters.id]
+  })
+}));
 
 // Insert schemas
 export const insertUserSchema = createInsertSchema(users).omit({ id: true, createdAt: true, lastActive: true });

@@ -1,29 +1,41 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, Redirect } from "wouter";
 import { Toaster } from "@/components/ui/toaster";
 import NotFound from "@/pages/not-found";
-import Register from "@/pages/Register";
 import ThemeSelection from "@/pages/ThemeSelection";
 import Dashboard from "@/pages/Dashboard";
 import StoryReader from "@/pages/StoryReader";
 import ReadingCoach from "@/pages/ReadingCoach";
-import Login from "@/pages/Login";
+import AuthPage from "@/pages/auth-page";
+import { ProtectedRoute } from "@/lib/protected-route";
+import { AuthProvider } from "@/hooks/use-auth";
 
-// Simple App component that just renders routes
 function App() {
   return (
-    <>
+    <AuthProvider>
       <Switch>
-        <Route path="/" component={Dashboard} />
-        <Route path="/register" component={Register} />
-        <Route path="/login" component={Login} />
-        <Route path="/theme-selection" component={ThemeSelection} />
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="/story/:id/:chapter" component={StoryReader} />
-        <Route path="/reading-coach" component={ReadingCoach} />
+        {/* Public routes */}
+        <Route path="/auth" component={AuthPage} />
+        
+        {/* Protected routes */}
+        <ProtectedRoute path="/" component={Dashboard} />
+        <ProtectedRoute path="/theme-selection" component={ThemeSelection} />
+        <ProtectedRoute path="/dashboard" component={Dashboard} />
+        <ProtectedRoute path="/story/:id/:chapter" component={StoryReader} />
+        <ProtectedRoute path="/reading-coach" component={ReadingCoach} />
+        
+        {/* Redirects */}
+        <Route path="/login">
+          <Redirect to="/auth" />
+        </Route>
+        <Route path="/register">
+          <Redirect to="/auth" />
+        </Route>
+        
+        {/* 404 Route */}
         <Route component={NotFound} />
       </Switch>
       <Toaster />
-    </>
+    </AuthProvider>
   );
 }
 

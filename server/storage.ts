@@ -12,10 +12,27 @@ import {
   UserProgress,
   Flashcard,
   InsertFlashcard,
+  users,
+  themes,
+  subjects,
+  stories,
+  storySubjects,
+  chapters,
+  userProgress as userProgressTable,
+  flashcards as flashcardsTable,
 } from "@shared/schema";
+import { db } from "./db";
+import { eq, and, desc, asc } from "drizzle-orm";
+import { sql } from "drizzle-orm/sql";
+import session from "express-session";
+import connectPg from "connect-pg-simple";
+import { pool } from "./db";
 
 // Storage interface
 export interface IStorage {
+  // Session management
+  sessionStore: session.Store;
+  
   // Users
   getUser(id: number): Promise<User | undefined>;
   getUserByEmail(email: string): Promise<User | undefined>;
@@ -59,6 +76,8 @@ export interface IStorage {
 
 // In-memory storage implementation
 export class MemStorage implements IStorage {
+  sessionStore: session.Store;
+  
   private users: Map<number, User>;
   private themes: Map<number, Theme>;
   private subjects: Map<number, Subject>;
@@ -77,6 +96,12 @@ export class MemStorage implements IStorage {
   private flashcardId: number;
 
   constructor() {
+    // Create memory store for sessions
+    const MemoryStore = require('memorystore')(session);
+    this.sessionStore = new MemoryStore({
+      checkPeriod: 86400000 // prune expired entries every 24h
+    });
+    
     this.users = new Map();
     this.themes = new Map();
     this.subjects = new Map();
@@ -578,7 +603,488 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+// Database storage implementation
+export class DatabaseStorage implements IStorage {
+  sessionStore: session.Store;
+
+  constructor() {
+    // Initialize session store with PostgreSQL
+    const PostgresSessionStore = connectPg(session);
+    this.sessionStore = new PostgresSessionStore({ 
+      pool, 
+      createTableIfMissing: true 
+    });
+  }
+
+  // User methods
+  async getUser(id: number): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user;
+  }
+
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.email, email));
+    return user;
+  }
+
+  async createUser(user: InsertUser): Promise<User> {
+    const [newUser] = await db.insert(users).values(user).returning();
+    return newUser;
+  }
+
+  async updateUserTheme(userId: number, themeId: number): Promise<void> {
+    await db.update(users)
+      .set({ themeId })
+      .where(eq(users.id, userId));
+  }
+
+  async updateUserLastActive(userId: number): Promise<void> {
+    await db.update(users)
+      .set({ lastActive: new Date() })
+      .where(eq(users.id, userId));
+  }
+
+  // Theme methods
+  async getTheme(id: number): Promise<Theme | undefined> {
+    const [theme] = await db.select().from(themes).where(eq(themes.id, id));
+    return theme;
+  }
+
+  async getAllThemes(): Promise<Theme[]> {
+    return db.select().from(themes);
+  }
+
+  async createTheme(theme: InsertTheme): Promise<Theme> {
+    const [newTheme] = await db.insert(themes).values(theme).returning();
+    return newTheme;
+  }
+
+  // Subject methods
+  async getSubject(id: number): Promise<Subject | undefined> {
+    const [subject] = await db.select().from(subjects).where(eq(subjects.id, id));
+    return subject;
+  }
+
+  async getAllSubjects(): Promise<Subject[]> {
+    return db.select().from(subjects);
+  }
+
+  async createSubject(subject: InsertSubject): Promise<Subject> {
+    const [newSubject] = await db.insert(subjects).values(subject).returning();
+    return newSubject;
+  }
+
+  // Story methods
+  async getStory(id: number): Promise<Story | undefined> {
+    const [story] = await db.select().from(stories).where(eq(stories.id, id));
+    if (!story) return undefined;
+
+    // Get subjects for this story
+    const storySubjectsData = await db
+      .select()
+      .from(storySubjects)
+      .leftJoin(subjects, eq(storySubjects.subjectId, subjects.id))
+      .where(eq(storySubjects.storyId, id));
+
+    const subjectList = storySubjectsData.map(row => ({
+      id: row.subjects.id,
+      name: row.subjects.name,
+      code: row.subjects.code
+    }));
+
+    return {
+      ...story,
+      subjects: subjectList,
+      progressPercent: 0 // Default value, will be updated if user progress exists
+    };
+  }
+
+  async getStoriesByTheme(themeId: number): Promise<Story[]> {
+    const storiesData = await db
+      .select()
+      .from(stories)
+      .where(eq(stories.themeId, themeId));
+
+    // Add subjects to each story
+    const result: Story[] = [];
+    for (const story of storiesData) {
+      const storyWithSubjects = await this.getStory(story.id);
+      if (storyWithSubjects) {
+        result.push(storyWithSubjects);
+      }
+    }
+
+    return result;
+  }
+
+  async getStoriesByGrade(grade: string): Promise<Story[]> {
+    const storiesData = await db
+      .select()
+      .from(stories)
+      .where(eq(stories.gradeLevel, grade));
+
+    // Add subjects to each story
+    const result: Story[] = [];
+    for (const story of storiesData) {
+      const storyWithSubjects = await this.getStory(story.id);
+      if (storyWithSubjects) {
+        result.push(storyWithSubjects);
+      }
+    }
+
+    return result;
+  }
+
+  async createStory(story: InsertStory): Promise<Story> {
+    const [newStory] = await db.insert(stories).values(story).returning();
+    
+    return {
+      ...newStory,
+      subjects: [],
+      progressPercent: 0
+    };
+  }
+
+  async getCurrentStory(userId: number): Promise<Story | undefined> {
+    // Find the user
+    const user = await this.getUser(userId);
+    if (!user) return undefined;
+
+    // Get the most recently accessed story for this user
+    const [userProgressEntry] = await db
+      .select()
+      .from(userProgressTable)
+      .where(eq(userProgressTable.userId, userId))
+      .orderBy(desc(userProgressTable.lastAccessedAt))
+      .limit(1);
+
+    // If user has no progress, return the first story of their theme
+    if (!userProgressEntry) {
+      const storiesOfTheme = await this.getStoriesByTheme(user.themeId || 1);
+      if (storiesOfTheme.length === 0) return undefined;
+
+      return {
+        ...storiesOfTheme[0],
+        currentChapter: 1,
+        currentChapterTitle: "Chapter 1",
+        progressPercent: 0,
+      };
+    }
+
+    // Get the story with subjects
+    const story = await this.getStory(userProgressEntry.storyId);
+    if (!story) return undefined;
+
+    // Get chapter title
+    const [chapter] = await db
+      .select()
+      .from(chapters)
+      .where(and(
+        eq(chapters.storyId, userProgressEntry.storyId),
+        eq(chapters.chapterNumber, userProgressEntry.currentChapter)
+      ));
+
+    // Calculate progress percentage
+    const completedChaptersCount = userProgressEntry.completedChapters 
+      ? (userProgressEntry.completedChapters as number[]).length 
+      : 0;
+    
+    const progressPercent = Math.round((completedChaptersCount / story.totalChapters) * 100);
+
+    return {
+      ...story,
+      currentChapter: userProgressEntry.currentChapter,
+      currentChapterTitle: chapter?.title || "Unknown Chapter",
+      progressPercent
+    };
+  }
+
+  async getRecommendedStories(userId: number): Promise<Story[]> {
+    const user = await this.getUser(userId);
+    if (!user) return [];
+
+    // Get all stories for this user's theme
+    const storiesOfTheme = await this.getStoriesByTheme(user.themeId || 1);
+    
+    // Get the current story
+    const currentStory = await this.getCurrentStory(userId);
+    if (!currentStory) return storiesOfTheme;
+    
+    // Return all stories except the current one
+    return storiesOfTheme.filter(story => story.id !== currentStory.id);
+  }
+
+  // Chapter methods
+  async getChapter(storyId: number, chapterNumber: number): Promise<Chapter | undefined> {
+    const [chapter] = await db
+      .select()
+      .from(chapters)
+      .where(and(
+        eq(chapters.storyId, storyId),
+        eq(chapters.chapterNumber, chapterNumber)
+      ));
+    
+    if (!chapter) return undefined;
+    
+    // Get story to check total chapters
+    const [story] = await db
+      .select()
+      .from(stories)
+      .where(eq(stories.id, storyId));
+    
+    if (!story) return undefined;
+    
+    return {
+      ...chapter,
+      previousChapter: chapterNumber > 1 ? chapterNumber - 1 : undefined,
+      nextChapter: chapterNumber < story.totalChapters ? chapterNumber + 1 : undefined,
+    };
+  }
+
+  async createChapter(chapter: InsertChapter): Promise<Chapter> {
+    const [newChapter] = await db.insert(chapters).values(chapter).returning();
+    
+    return newChapter;
+  }
+
+  // User Progress methods
+  async getUserProgress(userId: number): Promise<UserProgress> {
+    // Get all progress entries for this user
+    const userProgressEntries = await db
+      .select()
+      .from(userProgressTable)
+      .where(eq(userProgressTable.userId, userId));
+    
+    // Get all stories relevant to this user
+    const storiesData = await db
+      .select({ id: stories.id, totalChapters: stories.totalChapters })
+      .from(stories)
+      .leftJoin(userProgressTable, eq(stories.id, userProgressTable.storyId))
+      .where(eq(userProgressTable.userId, userId));
+    
+    // Calculate total completed chapters
+    let completedChapters = 0;
+    for (const entry of userProgressEntries) {
+      if (entry.completedChapters) {
+        completedChapters += (entry.completedChapters as number[]).length;
+      }
+    }
+    
+    // Calculate total chapters
+    const totalChapters = storiesData.reduce(
+      (total, story) => total + story.totalChapters,
+      0
+    );
+    
+    // Get days active 
+    const daysActive = 3; // Mock value for now
+    
+    // Get vocabulary stats
+    const flashcardsCount = await db
+      .select({ count: sql<number>`count(*)` })
+      .from(flashcardsTable)
+      .where(eq(flashcardsTable.userId, userId));
+    
+    const vocabularyLearned = flashcardsCount[0]?.count || 0;
+    const vocabularyGoal = 60; // Default goal
+    
+    return {
+      storyProgressPercent: totalChapters > 0 ? Math.round((completedChapters / totalChapters) * 100) : 0,
+      completedChapters,
+      totalChapters,
+      daysActive,
+      vocabularyLearned,
+      vocabularyGoal,
+    };
+  }
+
+  async updateUserStoryProgress(userId: number, storyId: number, chapterNumber: number): Promise<void> {
+    // Check if progress entry exists
+    const [existingProgress] = await db
+      .select()
+      .from(userProgressTable)
+      .where(and(
+        eq(userProgressTable.userId, userId),
+        eq(userProgressTable.storyId, storyId)
+      ));
+    
+    if (existingProgress) {
+      // Update existing progress
+      let completedChapters = existingProgress.completedChapters as number[] || [];
+      
+      // Add previous chapter to completed chapters if moving forward
+      if (!completedChapters.includes(chapterNumber - 1) && chapterNumber > 1) {
+        completedChapters.push(chapterNumber - 1);
+      }
+      
+      await db
+        .update(userProgressTable)
+        .set({
+          currentChapter: chapterNumber,
+          completedChapters,
+          lastAccessedAt: new Date()
+        })
+        .where(and(
+          eq(userProgressTable.userId, userId),
+          eq(userProgressTable.storyId, storyId)
+        ));
+    } else {
+      // Create new progress entry
+      const completedChapters = chapterNumber > 1 ? [chapterNumber - 1] : [];
+      
+      await db
+        .insert(userProgressTable)
+        .values({
+          userId,
+          storyId,
+          currentChapter: chapterNumber,
+          completedChapters,
+        });
+    }
+  }
+
+  // Flashcard methods
+  async getUserFlashcards(userId: number): Promise<Flashcard[]> {
+    return db
+      .select()
+      .from(flashcardsTable)
+      .where(eq(flashcardsTable.userId, userId));
+  }
+
+  async createFlashcard(flashcard: InsertFlashcard): Promise<Flashcard> {
+    const [newFlashcard] = await db
+      .insert(flashcardsTable)
+      .values(flashcard)
+      .returning();
+    
+    return newFlashcard;
+  }
+
+  // Add subjects to a story
+  async addSubjectsToStory(storyId: number, subjectIds: number[]): Promise<void> {
+    // Remove existing subjects
+    await db
+      .delete(storySubjects)
+      .where(eq(storySubjects.storyId, storyId));
+    
+    // Add new subjects
+    for (const subjectId of subjectIds) {
+      await db
+        .insert(storySubjects)
+        .values({ storyId, subjectId });
+    }
+  }
+
+  // Seed initial data for demo
+  async seedInitialData(): Promise<void> {
+    // Create themes
+    const themes = [
+      {
+        name: "Mythologies",
+        description: "Explore ancient stories and legends",
+        imageUrl: "https://via.placeholder.com/500x300?text=Mythologies",
+      },
+      {
+        name: "Folklore",
+        description: "Discover traditional stories and customs",
+        imageUrl: "https://via.placeholder.com/500x300?text=Folklore",
+      },
+      {
+        name: "Sports",
+        description: "Learn through games and athletics",
+        imageUrl: "https://via.placeholder.com/500x300?text=Sports",
+      },
+      {
+        name: "Space Exploration",
+        description: "Journey through the cosmos",
+        imageUrl: "https://via.placeholder.com/500x300?text=Space+Exploration",
+      },
+      {
+        name: "Historical Voyages",
+        description: "Travel through time and history",
+        imageUrl: "https://via.placeholder.com/500x300?text=Historical+Voyages",
+      },
+      {
+        name: "Ancient Civilization",
+        description: "Discover lost worlds and cultures",
+        imageUrl: "https://via.placeholder.com/500x300?text=Ancient+Civilization",
+      },
+      {
+        name: "Fiction",
+        description: "Explore imaginary worlds and adventures",
+        imageUrl: "https://via.placeholder.com/500x300?text=Fiction",
+      },
+    ];
+
+    for (const theme of themes) {
+      await this.createTheme(theme);
+    }
+
+    // Create subjects
+    const subjects = [
+      { name: "Mathematics", code: "mathematics" },
+      { name: "Physics", code: "physics" },
+      { name: "Chemistry", code: "chemistry" },
+      { name: "Biology", code: "biology" },
+      { name: "Astronomy", code: "astronomy" },
+      { name: "History", code: "history" },
+      { name: "Geography", code: "geography" },
+      { name: "Literature", code: "literature" },
+      { name: "Engineering", code: "engineering" },
+      { name: "Economics", code: "economics" },
+    ];
+
+    for (const subject of subjects) {
+      await this.createSubject(subject);
+    }
+
+    // Create a space story
+    const spaceStory = await this.createStory({
+      title: "Journey to the Stars",
+      description: "Join astronaut Maya as she prepares for her mission to the International Space Station! Learn about orbital mechanics, calculate distances between celestial bodies, and discover how astronauts live in zero gravity.",
+      imageUrl: "https://via.placeholder.com/500x300?text=Journey+to+the+Stars",
+      themeId: 4, // Space Exploration
+      gradeLevel: "5",
+      totalChapters: 10,
+    });
+
+    // Add subjects to the space story
+    await this.addSubjectsToStory(spaceStory.id, [1, 2, 5]); // Math, Physics, Astronomy
+
+    // Create chapters for the space story
+    await this.createChapter({
+      storyId: spaceStory.id,
+      chapterNumber: 1,
+      title: "Preparing for Launch",
+      content: `<p>Maya had dreamed of becoming an astronaut since she was a little girl. Now, at the age of 35, she was finally going to space.</p>
+      <p>"The training has been intense," Maya told her family during their last video call before launch day. "We've been preparing for every possible scenario."</p>
+      <p>Maya's daughter, Sofia, had a question. "Mom, how fast will your rocket go?"</p>
+      <p>Maya smiled. "Great question! Our rocket needs to reach what we call <span class="bg-yellow-300/20 px-1 rounded cursor-help" title="An escape velocity is the minimum speed needed for an object to escape from a planet's gravitational pull.">escape velocity</span>, which is about 11.2 kilometers per second."</p>
+      <p>"That's super fast!" Sofia's eyes widened. "How do you calculate that?"</p>
+      <p>"It's actually a math formula that uses gravity and the size of Earth," Maya explained.</p>`,
+      question: {
+        title: "Calculating Speed",
+        description: "If the rocket accelerates at 30 meters per second squared, how many seconds will it take to reach escape velocity (11.2 km/s)?",
+        hint: "Convert km/s to m/s first, then use the formula: time = velocity / acceleration",
+        answer: "373",
+      },
+      vocabularyWords: [
+        {
+          word: "escape velocity",
+          definition: "The minimum speed needed for an object to escape from a planet's gravitational pull.",
+          context: "The rocket needs to reach escape velocity to break free from Earth's gravity."
+        },
+        {
+          word: "orbital mechanics",
+          definition: "The mathematics describing the motions of objects in orbit, such as satellites or spacecraft.",
+          context: "Understanding orbital mechanics is essential for planning space missions."
+        }
+      ]
+    });
+  }
+}
+
+export const storage = new DatabaseStorage();
 
 // Seed initial data on startup
 storage.seedInitialData().catch(error => {
