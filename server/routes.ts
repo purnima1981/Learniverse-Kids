@@ -174,6 +174,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Delete user account
+  app.delete("/api/user", requireAuth, async (req, res) => {
+    try {
+      const userId = req.user!.id;
+      await storage.deleteUser(userId);
+      
+      // Logout the user after deletion
+      req.logout((err) => {
+        if (err) {
+          return res.status(500).json({ message: "Error logging out after account deletion" });
+        }
+        res.status(200).json({ message: "Account successfully deleted" });
+      });
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      res.status(500).json({ message: "Error deleting user account" });
+    }
+  });
+
   // Get specific chapter
   app.get("/api/stories/:id/chapters/:chapter", requireAuth, async (req, res) => {
     try {

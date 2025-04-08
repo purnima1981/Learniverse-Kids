@@ -39,6 +39,7 @@ export interface IStorage {
   createUser(user: InsertUser): Promise<User>;
   updateUserTheme(userId: number, themeId: number): Promise<void>;
   updateUserLastActive(userId: number): Promise<void>;
+  deleteUser(userId: number): Promise<void>;
 
   // Themes
   getTheme(id: number): Promise<Theme | undefined>;
@@ -155,6 +156,21 @@ export class MemStorage implements IStorage {
     if (user) {
       this.users.set(userId, { ...user, lastActive: new Date() });
     }
+  }
+  
+  async deleteUser(userId: number): Promise<void> {
+    // Remove user from users map
+    this.users.delete(userId);
+    
+    // Remove user's progress
+    Array.from(this.userProgress.keys())
+      .filter(key => key.startsWith(`${userId}:`))
+      .forEach(key => this.userProgress.delete(key));
+    
+    // Remove user's flashcards
+    Array.from(this.flashcards.values())
+      .filter(flashcard => flashcard.userId === userId)
+      .forEach(flashcard => this.flashcards.delete(flashcard.id));
   }
 
   // Theme methods
@@ -642,6 +658,22 @@ export class DatabaseStorage implements IStorage {
     await db.update(users)
       .set({ lastActive: new Date() })
       .where(eq(users.id, userId));
+  }
+  
+  async deleteUser(userId: number): Promise<void> {
+    try {
+      // Delete user's progress first to maintain referential integrity
+      await db.delete(userProgressTable).where(eq(userProgressTable.userId, userId));
+      
+      // Delete user's flashcards
+      await db.delete(flashcardsTable).where(eq(flashcardsTable.userId, userId));
+      
+      // Finally delete the user
+      await db.delete(users).where(eq(users.id, userId));
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      throw error;
+    }
   }
 
   // Theme methods
