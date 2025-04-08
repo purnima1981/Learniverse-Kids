@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased;
+    background: linear-gradient(135deg, #20D9D2 0%, #4CB8FF 100%);
+    min-height: 100vh;
+  }
+
+  .glass-panel {
+    @apply bg-white/15 backdrop-blur-sm rounded-xl border border-white/20;
+  }
+
+  .theme-card {
+    @apply transition-all duration-300;
+  }
+  
+  .theme-card:hover {
+    @apply transform -translate-y-1 shadow-lg;
+  }
+
+  .story-progress-bar {
+    @apply h-2 bg-white/30 rounded-full overflow-hidden;
+  }
+
+  .story-progress-bar .progress {
+    @apply h-full bg-yellow-400 rounded-full;
+  }
+}
