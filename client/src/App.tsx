@@ -5,7 +5,8 @@ import ThemeSelection from "@/pages/ThemeSelection";
 import Dashboard from "@/pages/Dashboard";
 import StoryReader from "@/pages/StoryReader";
 import ReadingCoach from "@/pages/ReadingCoach";
-import AuthPage from "@/pages/auth-page";
+import LoginPage from "@/pages/LoginPage";
+import RegisterPage from "@/pages/RegisterPage";
 import RegionalStoriesPage from "@/pages/RegionalStoriesPage";
 import { ProtectedRoute } from "@/lib/protected-route";
 import { AuthProvider } from "@/hooks/use-auth";
@@ -15,7 +16,8 @@ function App() {
     <AuthProvider>
       <Switch>
         {/* Public routes */}
-        <Route path="/auth" component={AuthPage} />
+        <Route path="/login" component={LoginPage} />
+        <Route path="/register" component={RegisterPage} />
         
         {/* Protected routes */}
         <ProtectedRoute path="/" component={Dashboard} />
@@ -26,11 +28,8 @@ function App() {
         <ProtectedRoute path="/reading-coach" component={ReadingCoach} />
         
         {/* Redirects */}
-        <Route path="/login">
-          <Redirect to="/auth" />
-        </Route>
-        <Route path="/register">
-          <Redirect to="/auth" />
+        <Route path="/auth">
+          <Redirect to="/login" />
         </Route>
         <Route path="/personalization">
           <Redirect to="/theme-selection" />
