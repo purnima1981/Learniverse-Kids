@@ -24,11 +24,13 @@ declare global {
       password: string;
       firstName: string;
       lastName: string;
-      grade: string;
-      gender: string;
-      themeId: number | null;
+      role: string;
       createdAt: Date | null;
       lastActive: Date | null;
+      googleId: string | null;
+      facebookId: string | null;
+      appleId: string | null;
+      avatar: string | null;
     }
   }
 }
@@ -116,8 +118,7 @@ async function handleSocialAuth(profile: any, provider: 'google' | 'facebook' | 
       password, // Random password
       firstName,
       lastName,
-      grade: '1', // Default grade, will need to be updated by user
-      gender: 'unspecified', // Default gender, will need to be updated by user
+      role: 'parent', // Default role
       [providerIdField]: profile.id
     };
     
@@ -368,12 +369,8 @@ export function setupAuth(app: Express) {
         if (req.user) {
           req.session.userId = req.user.id;
           
-          // Check if user needs to complete profile (if they're missing grade or gender)
-          if (!req.user.grade || req.user.grade === '1' || !req.user.gender || req.user.gender === 'unspecified') {
-            return res.redirect('/personalization');
-          }
-          
-          res.redirect('/');
+          // Check if user needs to set up a profile for a child
+          return res.redirect('/personalization');
         } else {
           res.redirect('/auth?error=google-login-failed');
         }
@@ -392,12 +389,8 @@ export function setupAuth(app: Express) {
         if (req.user) {
           req.session.userId = req.user.id;
           
-          // Check if user needs to complete profile
-          if (!req.user.grade || req.user.grade === '1' || !req.user.gender || req.user.gender === 'unspecified') {
-            return res.redirect('/personalization');
-          }
-          
-          res.redirect('/');
+          // Check if user needs to set up a profile for a child
+          return res.redirect('/personalization');
         } else {
           res.redirect('/auth?error=facebook-login-failed');
         }
@@ -416,12 +409,8 @@ export function setupAuth(app: Express) {
         if (req.user) {
           req.session.userId = req.user.id;
           
-          // Check if user needs to complete profile
-          if (!req.user.grade || req.user.grade === '1' || !req.user.gender || req.user.gender === 'unspecified') {
-            return res.redirect('/personalization');
-          }
-          
-          res.redirect('/');
+          // Check if user needs to set up a profile for a child
+          return res.redirect('/personalization');
         } else {
           res.redirect('/auth?error=apple-login-failed');
         }
