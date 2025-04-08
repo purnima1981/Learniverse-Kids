@@ -4,7 +4,7 @@ import { storage } from "./storage";
 import { z } from "zod";
 import express from "express";
 import { setupAuth } from "./auth";
-import { insertUserSchema, users } from "@shared/schema";
+import { insertUserSchema, insertUserGameResultSchema, users } from "@shared/schema";
 import { analyzeReading, generateReadingPassage } from "./services/openai";
 import { and, desc, eq } from "drizzle-orm";
 
@@ -273,6 +273,141 @@ export async function registerRoutes(app: Express): Promise<Server> {
         message: "Error generating sample text", 
         error: error instanceof Error ? error.message : "Unknown error" 
       });
+    }
+  });
+
+  // Microgames API endpoints
+  
+  // Get a random microgame based on grade and optional subject
+  app.get("/api/microgames/random", requireAuth, async (req, res) => {
+    try {
+      const grade = req.query.grade as string || req.user!.grade;
+      const subject = req.query.subject as string || undefined;
+      
+      const microgame = await storage.getRandomMicrogame(grade, subject);
+      
+      if (!microgame) {
+        return res.status(404).json({ message: "No microgames found for the specified criteria" });
+      }
+      
+      res.json(microgame);
+    } catch (error) {
+      console.error("Error fetching random microgame:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+  
+  // Get microgames by subject
+  app.get("/api/microgames/subject/:subject", requireAuth, async (req, res) => {
+    try {
+      const subject = req.params.subject;
+      
+      const microgames = await storage.getMicrogamesBySubject(subject);
+      
+      res.json(microgames);
+    } catch (error) {
+      console.error(`Error fetching microgames for subject ${req.params.subject}:`, error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+  
+  // Get microgames by grade
+  app.get("/api/microgames/grade/:grade", requireAuth, async (req, res) => {
+    try {
+      const grade = req.params.grade;
+      
+      const microgames = await storage.getMicrogamesByGrade(grade);
+      
+      res.json(microgames);
+    } catch (error) {
+      console.error(`Error fetching microgames for grade ${req.params.grade}:`, error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+  
+  // Get specific microgame by ID
+  app.get("/api/microgames/:id", requireAuth, async (req, res) => {
+    try {
+      const microgameId = parseInt(req.params.id);
+      
+      if (isNaN(microgameId)) {
+        return res.status(400).json({ message: "Invalid microgame ID" });
+      }
+      
+      const microgame = await storage.getMicrogame(microgameId);
+      
+      if (!microgame) {
+        return res.status(404).json({ message: "Microgame not found" });
+      }
+      
+      res.json(microgame);
+    } catch (error) {
+      console.error(`Error fetching microgame ${req.params.id}:`, error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+  
+  // Save user game result
+  app.post("/api/microgames/:id/results", requireAuth, async (req, res) => {
+    try {
+      const microgameId = parseInt(req.params.id);
+      
+      if (isNaN(microgameId)) {
+        return res.status(400).json({ message: "Invalid microgame ID" });
+      }
+      
+      const userId = req.user!.id;
+      
+      const data = insertUserGameResultSchema.parse({
+        ...req.body,
+        userId,
+        microgameId
+      });
+      
+      const result = await storage.saveUserGameResult(data);
+      
+      res.status(201).json(result);
+    } catch (error) {
+      console.error("Error saving game result:", error);
+      
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Invalid data", errors: error.errors });
+      }
+      
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+  
+  // Get user's game results
+  app.get("/api/user/game-results", requireAuth, async (req, res) => {
+    try {
+      const userId = req.user!.id;
+      
+      const results = await storage.getUserGameResults(userId);
+      
+      res.json(results);
+    } catch (error) {
+      console.error("Error fetching user game results:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+  
+  // Get user's game results for a specific microgame
+  app.get("/api/user/game-results/:microgameId", requireAuth, async (req, res) => {
+    try {
+      const userId = req.user!.id;
+      const microgameId = parseInt(req.params.microgameId);
+      
+      if (isNaN(microgameId)) {
+        return res.status(400).json({ message: "Invalid microgame ID" });
+      }
+      
+      const results = await storage.getUserGameResultsByMicrogame(userId, microgameId);
+      
+      res.json(results);
+    } catch (error) {
+      console.error(`Error fetching user results for microgame ${req.params.microgameId}:`, error);
+      res.status(500).json({ message: "Internal server error" });
     }
   });
 

@@ -12,6 +12,10 @@ import {
   UserProgress,
   Flashcard,
   InsertFlashcard,
+  Microgame,
+  InsertMicrogame,
+  UserGameResult,
+  InsertUserGameResult,
   users,
   themes,
   subjects,
@@ -20,6 +24,8 @@ import {
   chapters,
   userProgress as userProgressTable,
   flashcards as flashcardsTable,
+  microgames,
+  userGameResults,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, and, desc, asc } from "drizzle-orm";
@@ -71,6 +77,18 @@ export interface IStorage {
   getUserFlashcards(userId: number): Promise<Flashcard[]>;
   createFlashcard(flashcard: InsertFlashcard): Promise<Flashcard>;
   
+  // Microgames
+  getMicrogame(id: number): Promise<Microgame | undefined>;
+  getMicrogamesBySubject(subject: string): Promise<Microgame[]>;
+  getMicrogamesByGrade(grade: string): Promise<Microgame[]>;
+  getRandomMicrogame(grade: string, subject?: string): Promise<Microgame | undefined>;
+  createMicrogame(microgame: InsertMicrogame): Promise<Microgame>;
+  
+  // User Game Results
+  saveUserGameResult(result: InsertUserGameResult): Promise<UserGameResult>;
+  getUserGameResults(userId: number): Promise<UserGameResult[]>;
+  getUserGameResultsByMicrogame(userId: number, microgameId: number): Promise<UserGameResult[]>;
+  
   // Initial data seeding
   seedInitialData(): Promise<void>;
 }
@@ -86,6 +104,8 @@ export class MemStorage implements IStorage {
   private chapters: Map<string, Chapter>; // key is storyId:chapterNumber
   private userProgress: Map<string, any>; // key is userId:storyId
   private flashcards: Map<number, Flashcard>;
+  private microgames: Map<number, Microgame>;
+  private userGameResults: Map<number, UserGameResult>;
   private storySubjects: Map<string, number[]>; // key is storyId, value is array of subjectIds
 
   // Auto-increment IDs
@@ -95,6 +115,8 @@ export class MemStorage implements IStorage {
   private storyId: number;
   private chapterId: number;
   private flashcardId: number;
+  private microgameId: number;
+  private userGameResultId: number;
 
   constructor() {
     // Create memory store for sessions
@@ -110,6 +132,8 @@ export class MemStorage implements IStorage {
     this.chapters = new Map();
     this.userProgress = new Map();
     this.flashcards = new Map();
+    this.microgames = new Map();
+    this.userGameResults = new Map();
     this.storySubjects = new Map();
 
     this.userId = 1;
@@ -118,6 +142,8 @@ export class MemStorage implements IStorage {
     this.storyId = 1;
     this.chapterId = 1;
     this.flashcardId = 1;
+    this.microgameId = 1;
+    this.userGameResultId = 1;
   }
 
   // User methods
@@ -422,6 +448,68 @@ export class MemStorage implements IStorage {
     this.flashcards.set(id, newFlashcard);
     return newFlashcard;
   }
+
+  // Microgame methods
+  async getMicrogame(id: number): Promise<Microgame | undefined> {
+    return this.microgames.get(id);
+  }
+
+  async getMicrogamesBySubject(subject: string): Promise<Microgame[]> {
+    return Array.from(this.microgames.values()).filter(
+      (microgame) => microgame.subject === subject
+    );
+  }
+
+  async getMicrogamesByGrade(grade: string): Promise<Microgame[]> {
+    return Array.from(this.microgames.values()).filter(
+      (microgame) => microgame.gradeLevel === grade
+    );
+  }
+
+  async getRandomMicrogame(grade: string, subject?: string): Promise<Microgame | undefined> {
+    let games = await this.getMicrogamesByGrade(grade);
+    
+    if (subject) {
+      games = games.filter((game) => game.subject === subject);
+    }
+    
+    if (games.length === 0) return undefined;
+    
+    // Return a random game
+    const randomIndex = Math.floor(Math.random() * games.length);
+    return games[randomIndex];
+  }
+
+  async createMicrogame(microgame: InsertMicrogame): Promise<Microgame> {
+    const id = this.microgameId++;
+    const newMicrogame: Microgame = { ...microgame, id };
+    this.microgames.set(id, newMicrogame);
+    return newMicrogame;
+  }
+
+  // User Game Results methods
+  async saveUserGameResult(result: InsertUserGameResult): Promise<UserGameResult> {
+    const id = this.userGameResultId++;
+    const newResult: UserGameResult = { 
+      ...result, 
+      id,
+      completedAt: new Date()
+    };
+    this.userGameResults.set(id, newResult);
+    return newResult;
+  }
+
+  async getUserGameResults(userId: number): Promise<UserGameResult[]> {
+    return Array.from(this.userGameResults.values()).filter(
+      (result) => result.userId === userId
+    );
+  }
+
+  async getUserGameResultsByMicrogame(userId: number, microgameId: number): Promise<UserGameResult[]> {
+    return Array.from(this.userGameResults.values()).filter(
+      (result) => result.userId === userId && result.microgameId === microgameId
+    );
+  }
   
   // Add subjects to a story
   async addSubjectsToStory(storyId: number, subjectIds: number[]): Promise<void> {
@@ -616,6 +704,114 @@ export class MemStorage implements IStorage {
     });
     
     await this.addSubjectsToStory(cosmicChemistry.id, [3, 5]); // Chemistry, Astronomy
+    
+    // Create sample microgames for quick feedback
+    const mathGame1 = await this.createMicrogame({
+      title: "Cosmic Calculations",
+      type: "quiz",
+      difficulty: "easy",
+      subject: "Mathematics",
+      gradeLevel: "5",
+      instructions: "Calculate the answers to these space math problems!",
+      content: {
+        questions: [
+          {
+            id: 1,
+            question: "If a space shuttle travels at 28,000 km/h, how far will it travel in 3 hours?",
+            options: ["56,000 km", "84,000 km", "28,003 km", "31,000 km"],
+            answer: 1 // 84,000 km
+          },
+          {
+            id: 2,
+            question: "The Moon is approximately 384,400 km from Earth. If a spacecraft travels at 3,600 km/h, how many hours will it take to reach the Moon?",
+            options: ["96 hours", "107 hours", "110 hours", "120 hours"],
+            answer: 1 // 107 hours (rounded)
+          },
+          {
+            id: 3,
+            question: "If an astronaut weighs 80 kg on Earth, how much would they weigh on the Moon where gravity is 1/6 of Earth's?",
+            options: ["13.3 kg", "70 kg", "480 kg", "16 kg"],
+            answer: 0 // 13.3 kg
+          }
+        ]
+      },
+      timeLimit: 120,
+      points: 15
+    });
+    
+    const physicsGame = await this.createMicrogame({
+      title: "Gravity Master",
+      type: "arrange",
+      difficulty: "medium",
+      subject: "Physics",
+      gradeLevel: "5",
+      instructions: "Arrange these objects from the lowest to highest falling speed in a vacuum.",
+      content: {
+        items: [
+          { id: 1, text: "Feather", position: 1 },
+          { id: 2, text: "Basketball", position: 1 },
+          { id: 3, text: "Bowling Ball", position: 1 },
+          { id: 4, text: "Paper", position: 1 }
+        ],
+        correctOrder: [1, 2, 3, 4], // In vacuum, they all fall at the same rate
+        explanation: "In a vacuum, all objects fall at the same rate regardless of their mass. This is because there's no air resistance to slow down lighter objects."
+      },
+      timeLimit: 60,
+      points: 10
+    });
+    
+    const astronomyGame = await this.createMicrogame({
+      title: "Planet Matcher",
+      type: "match",
+      difficulty: "easy",
+      subject: "Astronomy",
+      gradeLevel: "5",
+      instructions: "Match each planet with its correct characteristic!",
+      content: {
+        pairs: [
+          { id: 1, left: "Mercury", right: "Closest to the Sun" },
+          { id: 2, left: "Venus", right: "Hottest planet" },
+          { id: 3, left: "Earth", right: "Only planet with liquid water on its surface" },
+          { id: 4, left: "Mars", right: "Known as the Red Planet" },
+          { id: 5, left: "Jupiter", right: "Largest planet in our solar system" }
+        ]
+      },
+      timeLimit: 90,
+      points: 10
+    });
+    
+    const chemistryGame = await this.createMicrogame({
+      title: "Element Explorer",
+      type: "fill-in-blank",
+      difficulty: "medium",
+      subject: "Chemistry",
+      gradeLevel: "5",
+      instructions: "Fill in the blanks with the correct chemical symbols for these elements!",
+      content: {
+        sentences: [
+          { 
+            id: 1, 
+            text: "Oxygen has the chemical symbol __.", 
+            answer: "O", 
+            hint: "This element is essential for breathing." 
+          },
+          { 
+            id: 2, 
+            text: "Water (H₂O) is made of hydrogen and __.", 
+            answer: "oxygen", 
+            hint: "It's the same element from the first question." 
+          },
+          { 
+            id: 3, 
+            text: "The chemical symbol for hydrogen is __.", 
+            answer: "H", 
+            hint: "It's the lightest element in the periodic table." 
+          }
+        ]
+      },
+      timeLimit: 60,
+      points: 15
+    });
   }
 }
 
@@ -1005,6 +1201,101 @@ export class DatabaseStorage implements IStorage {
         .insert(storySubjects)
         .values({ storyId, subjectId });
     }
+  }
+
+  // Microgame methods
+  async getMicrogame(id: number): Promise<Microgame | undefined> {
+    const [microgame] = await db
+      .select()
+      .from(microgames)
+      .where(eq(microgames.id, id));
+    
+    return microgame;
+  }
+
+  async getMicrogamesBySubject(subject: string): Promise<Microgame[]> {
+    return db
+      .select()
+      .from(microgames)
+      .where(eq(microgames.subject, subject));
+  }
+
+  async getMicrogamesByGrade(grade: string): Promise<Microgame[]> {
+    return db
+      .select()
+      .from(microgames)
+      .where(eq(microgames.gradeLevel, grade));
+  }
+
+  async getRandomMicrogame(grade: string, subject?: string): Promise<Microgame | undefined> {
+    let query = db
+      .select()
+      .from(microgames)
+      .where(eq(microgames.gradeLevel, grade));
+    
+    if (subject) {
+      query = db
+        .select()
+        .from(microgames)
+        .where(and(
+          eq(microgames.gradeLevel, grade),
+          eq(microgames.subject, subject)
+        ));
+    }
+    
+    const games = await query;
+    
+    if (games.length === 0) return undefined;
+    
+    // Return a random game
+    const randomIndex = Math.floor(Math.random() * games.length);
+    return games[randomIndex];
+  }
+
+  async createMicrogame(microgame: InsertMicrogame): Promise<Microgame> {
+    const [newMicrogame] = await db
+      .insert(microgames)
+      .values({
+        ...microgame,
+        createdAt: new Date()
+      })
+      .returning();
+    
+    return newMicrogame;
+  }
+
+  // User Game Results methods
+  async saveUserGameResult(result: InsertUserGameResult): Promise<UserGameResult> {
+    const [newResult] = await db
+      .insert(userGameResults)
+      .values({
+        ...result,
+        completedAt: new Date(),
+        answers: result.answers || null,
+        timeTaken: result.timeTaken || null
+      })
+      .returning();
+    
+    return newResult;
+  }
+
+  async getUserGameResults(userId: number): Promise<UserGameResult[]> {
+    return db
+      .select()
+      .from(userGameResults)
+      .where(eq(userGameResults.userId, userId))
+      .orderBy(desc(userGameResults.completedAt));
+  }
+
+  async getUserGameResultsByMicrogame(userId: number, microgameId: number): Promise<UserGameResult[]> {
+    return db
+      .select()
+      .from(userGameResults)
+      .where(and(
+        eq(userGameResults.userId, userId),
+        eq(userGameResults.microgameId, microgameId)
+      ))
+      .orderBy(desc(userGameResults.completedAt));
   }
 
   // Seed initial data for demo
