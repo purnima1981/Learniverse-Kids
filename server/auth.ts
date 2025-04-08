@@ -1,11 +1,19 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import { Strategy as FacebookStrategy } from "passport-facebook";
+import { Strategy as AppleStrategy } from "passport-apple";
 import { Express, Request, Response, NextFunction } from "express";
 import session from "express-session";
 import { scrypt, randomBytes, timingSafeEqual } from "crypto";
 import { promisify } from "util";
 import { storage } from "./storage";
 import { User, insertUserSchema } from "@shared/schema";
+
+// Social login callback URL
+const CALLBACK_URL = process.env.NODE_ENV === "production" 
+  ? "https://yourapp.replit.app" 
+  : "http://localhost:5000";
 
 declare global {
   namespace Express {
@@ -47,6 +55,86 @@ async function comparePasswords(supplied: string, stored: string) {
   return timingSafeEqual(hashedBuf, suppliedBuf);
 }
 
+// Helper function to create or find user from social provider
+async function handleSocialAuth(profile: any, provider: 'google' | 'facebook' | 'apple') {
+  try {
+    // Get provider ID field name (googleId, facebookId, or appleId)
+    const providerIdField = `${provider}Id` as 'googleId' | 'facebookId' | 'appleId';
+    
+    // Try to find user by provider ID
+    let user: User | undefined;
+    
+    if (provider === 'google') {
+      user = await storage.getUserByGoogleId(profile.id);
+    } else if (provider === 'facebook') {
+      user = await storage.getUserByFacebookId(profile.id);
+    } else if (provider === 'apple') {
+      user = await storage.getUserByAppleId(profile.id);
+    }
+    
+    // If user exists, return it
+    if (user) {
+      return user;
+    }
+    
+    // If not, check if email already exists
+    const email = profile.emails && profile.emails[0] && profile.emails[0].value;
+    if (email) {
+      user = await storage.getUserByEmail(email);
+      
+      // If user exists with this email, link social account
+      if (user) {
+        // Update user with social ID and save
+        const updates: Partial<User> = {};
+        updates[providerIdField] = profile.id;
+        
+        // If user has no avatar but profile does, use it
+        if (!user.avatar && profile.photos && profile.photos[0] && profile.photos[0].value) {
+          updates.avatar = profile.photos[0].value;
+        }
+        
+        // Update user in database
+        await storage.updateUser(user.id, updates);
+        
+        // Get updated user
+        user = await storage.getUser(user.id);
+        return user;
+      }
+    }
+    
+    // No existing user, create a new one
+    // Generate a random secure password for the user (they'll never use it directly)
+    const password = await hashPassword(randomBytes(16).toString('hex'));
+    
+    // Create user with social provider data
+    const firstName = profile.name?.givenName || profile.displayName?.split(' ')[0] || 'User';
+    const lastName = profile.name?.familyName || profile.displayName?.split(' ').slice(1).join(' ') || '';
+    
+    // Create new user record
+    const newUserData: any = {
+      email: email || `${profile.id}@${provider}.user`, // Fallback email if none provided
+      password, // Random password
+      firstName,
+      lastName,
+      grade: '1', // Default grade, will need to be updated by user
+      gender: 'unspecified', // Default gender, will need to be updated by user
+      [providerIdField]: profile.id
+    };
+    
+    // If profile has photo, use as avatar
+    if (profile.photos && profile.photos[0] && profile.photos[0].value) {
+      newUserData.avatar = profile.photos[0].value;
+    }
+    
+    // Create user
+    const newUser = await storage.createUser(newUserData);
+    return newUser;
+  } catch (error) {
+    console.error(`Error in ${provider} authentication:`, error);
+    throw error;
+  }
+}
+
 export function setupAuth(app: Express) {
   const sessionSettings: session.SessionOptions = {
     secret: process.env.SESSION_SECRET || "learniverse-app-session-secret",
@@ -66,6 +154,7 @@ export function setupAuth(app: Express) {
   app.use(passport.initialize());
   app.use(passport.session());
 
+  // Local Strategy
   passport.use(
     new LocalStrategy(
       {
@@ -85,6 +174,74 @@ export function setupAuth(app: Express) {
       }
     )
   );
+  
+  // Google Strategy (will be activated when you provide credentials)
+  if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+    passport.use(
+      new GoogleStrategy(
+        {
+          clientID: process.env.GOOGLE_CLIENT_ID,
+          clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+          callbackURL: `${CALLBACK_URL}/api/auth/google/callback`,
+          scope: ['profile', 'email']
+        },
+        async (accessToken, refreshToken, profile, done) => {
+          try {
+            const user = await handleSocialAuth(profile, 'google');
+            return done(null, user);
+          } catch (error) {
+            return done(error);
+          }
+        }
+      )
+    );
+  }
+  
+  // Facebook Strategy (will be activated when you provide credentials)
+  if (process.env.FACEBOOK_APP_ID && process.env.FACEBOOK_APP_SECRET) {
+    passport.use(
+      new FacebookStrategy(
+        {
+          clientID: process.env.FACEBOOK_APP_ID,
+          clientSecret: process.env.FACEBOOK_APP_SECRET,
+          callbackURL: `${CALLBACK_URL}/api/auth/facebook/callback`,
+          profileFields: ['id', 'displayName', 'photos', 'email', 'first_name', 'last_name']
+        },
+        async (accessToken, refreshToken, profile, done) => {
+          try {
+            const user = await handleSocialAuth(profile, 'facebook');
+            return done(null, user);
+          } catch (error) {
+            return done(error);
+          }
+        }
+      )
+    );
+  }
+  
+  // Apple Strategy (will be activated when you provide credentials)
+  if (process.env.APPLE_CLIENT_ID && process.env.APPLE_TEAM_ID && process.env.APPLE_KEY_ID && process.env.APPLE_PRIVATE_KEY) {
+    passport.use(
+      new AppleStrategy(
+        {
+          clientID: process.env.APPLE_CLIENT_ID,
+          teamID: process.env.APPLE_TEAM_ID,
+          keyID: process.env.APPLE_KEY_ID,
+          privateKeyString: process.env.APPLE_PRIVATE_KEY,
+          callbackURL: `${CALLBACK_URL}/api/auth/apple/callback`,
+          scope: ['name', 'email']
+        },
+        async (accessToken, refreshToken, profile, done) => {
+          try {
+            const user = await handleSocialAuth(profile, 'apple');
+            return done(null, user);
+          } catch (error) {
+            return done(error);
+          }
+        }
+      )
+    );
+  }
 
   passport.serializeUser((user, done) => {
     done(null, user.id);
@@ -197,4 +354,78 @@ export function setupAuth(app: Express) {
       res.status(500).json({ message: "Failed to fetch user" });
     }
   });
+  
+  // Social login routes
+  
+  // Google auth
+  if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+    app.get('/api/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+    
+    app.get('/api/auth/google/callback', 
+      passport.authenticate('google', { failureRedirect: '/auth?error=google-auth-failed' }),
+      (req, res) => {
+        // Successful authentication
+        if (req.user) {
+          req.session.userId = req.user.id;
+          
+          // Check if user needs to complete profile (if they're missing grade or gender)
+          if (!req.user.grade || req.user.grade === '1' || !req.user.gender || req.user.gender === 'unspecified') {
+            return res.redirect('/personalization');
+          }
+          
+          res.redirect('/');
+        } else {
+          res.redirect('/auth?error=google-login-failed');
+        }
+      }
+    );
+  }
+  
+  // Facebook auth
+  if (process.env.FACEBOOK_APP_ID && process.env.FACEBOOK_APP_SECRET) {
+    app.get('/api/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'public_profile'] }));
+    
+    app.get('/api/auth/facebook/callback',
+      passport.authenticate('facebook', { failureRedirect: '/auth?error=facebook-auth-failed' }),
+      (req, res) => {
+        // Successful authentication
+        if (req.user) {
+          req.session.userId = req.user.id;
+          
+          // Check if user needs to complete profile
+          if (!req.user.grade || req.user.grade === '1' || !req.user.gender || req.user.gender === 'unspecified') {
+            return res.redirect('/personalization');
+          }
+          
+          res.redirect('/');
+        } else {
+          res.redirect('/auth?error=facebook-login-failed');
+        }
+      }
+    );
+  }
+  
+  // Apple auth  
+  if (process.env.APPLE_CLIENT_ID && process.env.APPLE_TEAM_ID) {
+    app.get('/api/auth/apple', passport.authenticate('apple'));
+    
+    app.get('/api/auth/apple/callback',
+      passport.authenticate('apple', { failureRedirect: '/auth?error=apple-auth-failed' }),
+      (req, res) => {
+        // Successful authentication
+        if (req.user) {
+          req.session.userId = req.user.id;
+          
+          // Check if user needs to complete profile
+          if (!req.user.grade || req.user.grade === '1' || !req.user.gender || req.user.gender === 'unspecified') {
+            return res.redirect('/personalization');
+          }
+          
+          res.redirect('/');
+        } else {
+          res.redirect('/auth?error=apple-login-failed');
+        }
+      }
+    );
+  }
 }

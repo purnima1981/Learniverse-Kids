@@ -1,6 +1,8 @@
 import {
   User,
   InsertUser,
+  Profile,
+  InsertProfile,
   Theme,
   InsertTheme,
   Subject,
@@ -17,6 +19,7 @@ import {
   UserGameResult,
   InsertUserGameResult,
   users,
+  profiles,
   themes,
   subjects,
   stories,
@@ -42,10 +45,23 @@ export interface IStorage {
   // Users
   getUser(id: number): Promise<User | undefined>;
   getUserByEmail(email: string): Promise<User | undefined>;
+  getUserByGoogleId(googleId: string): Promise<User | undefined>;
+  getUserByFacebookId(facebookId: string): Promise<User | undefined>;
+  getUserByAppleId(appleId: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
-  updateUserTheme(userId: number, themeId: number): Promise<void>;
+  updateUser(userId: number, updates: Partial<User>): Promise<void>;
   updateUserLastActive(userId: number): Promise<void>;
   deleteUser(userId: number): Promise<void>;
+  
+  // Profiles
+  getProfile(id: number): Promise<Profile | undefined>;
+  getProfilesByUserId(userId: number): Promise<Profile[]>;
+  getDefaultProfile(userId: number): Promise<Profile | undefined>;
+  createProfile(profile: InsertProfile): Promise<Profile>;
+  updateProfile(profileId: number, updates: Partial<Profile>): Promise<void>;
+  updateProfileTheme(profileId: number, themeId: number): Promise<void>;
+  setDefaultProfile(profileId: number): Promise<void>;
+  deleteProfile(profileId: number): Promise<void>;
 
   // Themes
   getTheme(id: number): Promise<Theme | undefined>;
@@ -98,6 +114,7 @@ export class MemStorage implements IStorage {
   sessionStore: session.Store;
   
   private users: Map<number, User>;
+  private profiles: Map<number, Profile>;
   private themes: Map<number, Theme>;
   private subjects: Map<number, Subject>;
   private stories: Map<number, Story>;
@@ -110,6 +127,7 @@ export class MemStorage implements IStorage {
 
   // Auto-increment IDs
   private userId: number;
+  private profileId: number;
   private themeId: number;
   private subjectId: number;
   private storyId: number;
@@ -126,6 +144,7 @@ export class MemStorage implements IStorage {
     });
     
     this.users = new Map();
+    this.profiles = new Map();
     this.themes = new Map();
     this.subjects = new Map();
     this.stories = new Map();
@@ -137,6 +156,7 @@ export class MemStorage implements IStorage {
     this.storySubjects = new Map();
 
     this.userId = 1;
+    this.profileId = 1;
     this.themeId = 1;
     this.subjectId = 1;
     this.storyId = 1;
@@ -188,6 +208,11 @@ export class MemStorage implements IStorage {
     // Remove user from users map
     this.users.delete(userId);
     
+    // Remove user's profiles
+    Array.from(this.profiles.values())
+      .filter(profile => profile.userId === userId)
+      .forEach(profile => this.profiles.delete(profile.id));
+    
     // Remove user's progress
     Array.from(this.userProgress.keys())
       .filter(key => key.startsWith(`${userId}:`))
@@ -197,6 +222,121 @@ export class MemStorage implements IStorage {
     Array.from(this.flashcards.values())
       .filter(flashcard => flashcard.userId === userId)
       .forEach(flashcard => this.flashcards.delete(flashcard.id));
+  }
+  
+  // Social login methods
+  async getUserByGoogleId(googleId: string): Promise<User | undefined> {
+    return Array.from(this.users.values()).find(
+      (user) => user.googleId === googleId
+    );
+  }
+
+  async getUserByFacebookId(facebookId: string): Promise<User | undefined> {
+    return Array.from(this.users.values()).find(
+      (user) => user.facebookId === facebookId
+    );
+  }
+
+  async getUserByAppleId(appleId: string): Promise<User | undefined> {
+    return Array.from(this.users.values()).find(
+      (user) => user.appleId === appleId
+    );
+  }
+  
+  async updateUser(userId: number, updates: Partial<User>): Promise<void> {
+    const user = await this.getUser(userId);
+    if (user) {
+      this.users.set(userId, { ...user, ...updates });
+    }
+  }
+
+  // Profile methods
+  async getProfile(id: number): Promise<Profile | undefined> {
+    return this.profiles.get(id);
+  }
+  
+  async getProfilesByUserId(userId: number): Promise<Profile[]> {
+    return Array.from(this.profiles.values()).filter(
+      (profile) => profile.userId === userId
+    );
+  }
+  
+  async getDefaultProfile(userId: number): Promise<Profile | undefined> {
+    return Array.from(this.profiles.values()).find(
+      (profile) => profile.userId === userId && profile.isDefault
+    );
+  }
+  
+  async createProfile(profile: InsertProfile): Promise<Profile> {
+    const id = this.profileId++;
+    const now = new Date();
+    
+    // If this is the first profile for the user, make it the default
+    const existingProfiles = await this.getProfilesByUserId(profile.userId);
+    const isDefault = existingProfiles.length === 0 ? true : profile.isDefault;
+    
+    const newProfile: Profile = {
+      ...profile,
+      id,
+      isDefault,
+      createdAt: now,
+      lastActive: now,
+    };
+    
+    this.profiles.set(id, newProfile);
+    
+    // If this is a default profile, ensure no other profile for this user is default
+    if (isDefault) {
+      await this.setDefaultProfile(id);
+    }
+    
+    return newProfile;
+  }
+  
+  async updateProfile(profileId: number, updates: Partial<Profile>): Promise<void> {
+    const profile = await this.getProfile(profileId);
+    if (profile) {
+      this.profiles.set(profileId, { ...profile, ...updates });
+    }
+  }
+  
+  async updateProfileTheme(profileId: number, themeId: number): Promise<void> {
+    const profile = await this.getProfile(profileId);
+    if (profile) {
+      this.profiles.set(profileId, { ...profile, themeId });
+    }
+  }
+  
+  async setDefaultProfile(profileId: number): Promise<void> {
+    const profile = await this.getProfile(profileId);
+    if (!profile) return;
+    
+    // Reset isDefault for all profiles of this user
+    const userProfiles = await this.getProfilesByUserId(profile.userId);
+    for (const userProfile of userProfiles) {
+      if (userProfile.id !== profileId) {
+        await this.updateProfile(userProfile.id, { isDefault: false });
+      }
+    }
+    
+    // Set the specified profile as default
+    await this.updateProfile(profileId, { isDefault: true });
+  }
+  
+  async deleteProfile(profileId: number): Promise<void> {
+    const profile = await this.getProfile(profileId);
+    if (!profile) return;
+    
+    // Delete the profile
+    this.profiles.delete(profileId);
+    
+    // If this was the default profile, set another profile as default if available
+    if (profile.isDefault) {
+      const remainingProfiles = await this.getProfilesByUserId(profile.userId);
+      if (remainingProfiles.length > 0) {
+        await this.setDefaultProfile(remainingProfiles[0].id);
+      }
+    }
   }
 
   // Theme methods
@@ -838,10 +978,31 @@ export class DatabaseStorage implements IStorage {
     const [user] = await db.select().from(users).where(eq(users.email, email));
     return user;
   }
+  
+  async getUserByGoogleId(googleId: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.googleId, googleId));
+    return user;
+  }
+
+  async getUserByFacebookId(facebookId: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.facebookId, facebookId));
+    return user;
+  }
+
+  async getUserByAppleId(appleId: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.appleId, appleId));
+    return user;
+  }
 
   async createUser(user: InsertUser): Promise<User> {
     const [newUser] = await db.insert(users).values(user).returning();
     return newUser;
+  }
+  
+  async updateUser(userId: number, updates: Partial<User>): Promise<void> {
+    await db.update(users)
+      .set(updates)
+      .where(eq(users.id, userId));
   }
 
   async updateUserTheme(userId: number, themeId: number): Promise<void> {
@@ -858,7 +1019,10 @@ export class DatabaseStorage implements IStorage {
   
   async deleteUser(userId: number): Promise<void> {
     try {
-      // Delete user's progress first to maintain referential integrity
+      // Delete user's profiles first
+      await db.delete(profiles).where(eq(profiles.userId, userId));
+      
+      // Delete user's progress to maintain referential integrity
       await db.delete(userProgressTable).where(eq(userProgressTable.userId, userId));
       
       // Delete user's flashcards
@@ -869,6 +1033,93 @@ export class DatabaseStorage implements IStorage {
     } catch (error) {
       console.error("Error deleting user:", error);
       throw error;
+    }
+  }
+  
+  // Profile methods
+  async getProfile(id: number): Promise<Profile | undefined> {
+    const [profile] = await db.select().from(profiles).where(eq(profiles.id, id));
+    return profile;
+  }
+  
+  async getProfilesByUserId(userId: number): Promise<Profile[]> {
+    return await db.select().from(profiles).where(eq(profiles.userId, userId));
+  }
+  
+  async getDefaultProfile(userId: number): Promise<Profile | undefined> {
+    const [profile] = await db.select()
+      .from(profiles)
+      .where(and(
+        eq(profiles.userId, userId),
+        eq(profiles.isDefault, true)
+      ));
+    return profile;
+  }
+  
+  async createProfile(profile: InsertProfile): Promise<Profile> {
+    // If this is the first profile for the user, make it the default
+    const existingProfiles = await this.getProfilesByUserId(profile.userId);
+    const isDefault = existingProfiles.length === 0 ? true : profile.isDefault;
+    
+    const [createdProfile] = await db.insert(profiles)
+      .values({ ...profile, isDefault })
+      .returning();
+    
+    // If this is a default profile, ensure no other profile for this user is default
+    if (isDefault) {
+      await this.setDefaultProfile(createdProfile.id);
+    }
+    
+    return createdProfile;
+  }
+  
+  async updateProfile(profileId: number, updates: Partial<Profile>): Promise<void> {
+    await db.update(profiles)
+      .set(updates)
+      .where(eq(profiles.id, profileId));
+  }
+  
+  async updateProfileTheme(profileId: number, themeId: number): Promise<void> {
+    await db.update(profiles)
+      .set({ themeId })
+      .where(eq(profiles.id, profileId));
+  }
+  
+  async setDefaultProfile(profileId: number): Promise<void> {
+    const [profile] = await db.select().from(profiles).where(eq(profiles.id, profileId));
+    if (!profile) return;
+    
+    // Reset isDefault for all profiles of this user
+    await db.update(profiles)
+      .set({ isDefault: false })
+      .where(and(
+        eq(profiles.userId, profile.userId),
+        sql`${profiles.id} != ${profileId}`
+      ));
+    
+    // Set the specified profile as default
+    await db.update(profiles)
+      .set({ isDefault: true })
+      .where(eq(profiles.id, profileId));
+  }
+  
+  async deleteProfile(profileId: number): Promise<void> {
+    const [profile] = await db.select().from(profiles).where(eq(profiles.id, profileId));
+    if (!profile) return;
+    
+    // Delete the profile
+    await db.delete(profiles).where(eq(profiles.id, profileId));
+    
+    // If this was the default profile, set another profile as default if available
+    if (profile.isDefault) {
+      const remainingProfiles = await db.select()
+        .from(profiles)
+        .where(eq(profiles.userId, profile.userId))
+        .limit(1);
+      
+      if (remainingProfiles.length > 0) {
+        await this.setDefaultProfile(remainingProfiles[0].id);
+      }
     }
   }
 
@@ -1408,8 +1659,3 @@ export class DatabaseStorage implements IStorage {
 }
 
 export const storage = new DatabaseStorage();
-
-// Seed initial data on startup
-storage.seedInitialData().catch(error => {
-  console.error("Error seeding initial data:", error);
-});
