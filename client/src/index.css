@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+.bg-gradient-learniverse {
+  background: linear-gradient(to right, #2DD4BF, #60A5FA);
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0.5rem;
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -9,8 +20,9 @@
 
   body {
     @apply font-sans antialiased;
-    background: linear-gradient(135deg, #20D9D2 0%, #4CB8FF 100%);
+    background: linear-gradient(135deg, #2DD4BF 0%, #60A5FA 100%);
     min-height: 100vh;
+    background-attachment: fixed;
   }
 
   .glass-panel {

@@ -100,14 +100,14 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-learniverse">
       <div className="max-w-5xl w-full grid md:grid-cols-2 gap-8">
         {/* Left side - Hero content */}
         <div className="flex flex-col justify-center text-white">
           <h1 className="font-bold text-4xl mb-6">Welcome to Learniverse</h1>
           <div className="mb-6">
             <img 
-              src="/src/assets/learniverse-students.png"
+              src="client/src/assets/learniverse-kids.png"
               alt="Learniverse students learning" 
               className="w-full h-auto rounded-lg shadow-lg"
             />
