@@ -28,12 +28,13 @@ export default function ThemeSelection() {
     mutationFn: async (themeId: number) => {
       return apiRequest('POST', '/api/user/theme', { themeId });
     },
-    onSuccess: () => {
+    onSuccess: (_, themeId) => {
       toast({
         title: "Theme selected!",
-        description: "Your learning adventure is about to begin",
+        description: "Now choose a regional story collection",
       });
-      setLocation("/dashboard");
+      // Instead of going to dashboard, go to the regional stories page
+      setLocation(`/regional-stories/${themeId}`);
     },
     onError: (error) => {
       toast({
@@ -45,7 +46,10 @@ export default function ThemeSelection() {
   });
   
   const handleThemeSelect = (themeId: number) => {
-    selectThemeMutation.mutate(themeId);
+    // For demo purposes, we'll just navigate directly without saving to DB
+    setLocation(`/regional-stories/${themeId}`);
+    // In production, we would use:
+    // selectThemeMutation.mutate(themeId);
   };
   
   return (
