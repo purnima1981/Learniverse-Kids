@@ -10,6 +10,9 @@ export const users = pgTable("users", {
   lastName: text("last_name").notNull(),
   email: text("email").notNull().unique(),
   password: text("password").notNull(),
+  grade: text("grade").notNull(),
+  gender: text("gender").notNull(),
+  themeId: integer("theme_id"),
   role: text("role").notNull().default("parent"), // parent is the default role
   createdAt: timestamp("created_at").defaultNow(),
   lastActive: timestamp("last_active").defaultNow(),
@@ -183,6 +186,8 @@ export const insertUserSchema = createInsertSchema(users)
   .omit({ id: true, createdAt: true, lastActive: true, role: true })
   .extend({
     role: z.enum(["parent", "teacher", "admin"]).default("parent"),
+    grade: z.string().default("5"),
+    gender: z.string().default("other"),
     learningPreference: z.string().optional(),
     interests: z.array(z.string()).optional(),
   });
