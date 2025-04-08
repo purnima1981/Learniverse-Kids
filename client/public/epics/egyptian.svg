@@ -1,0 +1,7 @@
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#E9D5A1" />
+  <polygon points="200,50 130,220 270,220" fill="#C9B080" stroke="#8A7A56" stroke-width="3" />
+  <rect x="185" y="160" width="30" height="60" fill="#8A7A56" />
+  <text x="200" y="250" font-family="Arial" font-size="24" fill="#8A7A56" text-anchor="middle">Egyptian Mythology</text>
+  <text x="200" y="270" font-family="Arial" font-size="16" fill="#8A7A56" text-anchor="middle">North Africa</text>
+</svg>

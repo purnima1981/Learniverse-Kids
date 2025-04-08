@@ -8,7 +8,7 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
       name: "Greek and Roman",
       description: "Stories of gods and heroes from ancient Greece and Rome",
       region: "Mediterranean",
-      imageUrl: "/epics/greek-roman.jpg",
+      imageUrl: "/epics/greek-roman.svg",
       themeId: 1,
       stories: [
         { id: 1001, title: "Odyssey: The Journey Home", grade: "6-8" },
@@ -21,7 +21,7 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
       name: "Norse Legends",
       description: "Tales from the frozen north featuring gods, giants and heroes",
       region: "Scandinavia",
-      imageUrl: "/epics/norse.jpg",
+      imageUrl: "/epics/norse.svg",
       themeId: 1,
       stories: [
         { id: 1004, title: "Thor's Mighty Hammer", grade: "3-5" },
@@ -33,7 +33,7 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
       name: "Egyptian Mythology",
       description: "Ancient stories from the land of pharaohs and pyramids",
       region: "North Africa",
-      imageUrl: "/epics/egyptian.jpg",
+      imageUrl: "/epics/egyptian.svg",
       themeId: 1,
       stories: [
         { id: 1006, title: "Isis and Osiris", grade: "4-6" },
@@ -45,7 +45,7 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
       name: "Hindu Epics",
       description: "Ancient Indian tales of gods, heroes and cosmic principles",
       region: "South Asia",
-      imageUrl: "/epics/hindu.jpg",
+      imageUrl: "/epics/hindu.svg",
       themeId: 1,
       stories: [
         { id: 1008, title: "Ramayana: The Journey of Rama", grade: "5-8" },
@@ -61,7 +61,7 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
       name: "NASA Missions",
       description: "Stories of American space exploration and discovery",
       region: "United States",
-      imageUrl: "/epics/nasa.jpg",
+      imageUrl: "/epics/nasa.svg",
       themeId: 2,
       stories: [
         { id: 2001, title: "Apollo: Journey to the Moon", grade: "4-6" },
@@ -73,7 +73,7 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
       name: "Soviet Space Program",
       description: "The historic achievements of the first nation to reach space",
       region: "Russia",
-      imageUrl: "/epics/soviet-space.jpg",
+      imageUrl: "/epics/soviet-space.svg",
       themeId: 2,
       stories: [
         { id: 2003, title: "Sputnik: The First Satellite", grade: "3-5" },
@@ -85,7 +85,7 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
       name: "Asian Space Pioneers",
       description: "Modern achievements in space from China, Japan and India",
       region: "Asia",
-      imageUrl: "/epics/asian-space.jpg",
+      imageUrl: "/epics/asian-space.svg",
       themeId: 2,
       stories: [
         { id: 2005, title: "Chandrayaan: India's Moon Mission", grade: "5-7" },
@@ -101,7 +101,7 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
       name: "Mesopotamian Empires",
       description: "The cradle of civilization and its legendary kings",
       region: "Middle East",
-      imageUrl: "/epics/mesopotamia.jpg",
+      imageUrl: "/epics/mesopotamia.svg",
       themeId: 3,
       stories: [
         { id: 3001, title: "Gilgamesh: The First Hero", grade: "6-8" },
@@ -113,7 +113,7 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
       name: "Chinese Dynasties",
       description: "The rise and fall of China's ancient imperial houses",
       region: "East Asia",
-      imageUrl: "/epics/chinese-dynasties.jpg",
+      imageUrl: "/epics/chinese-dynasties.svg",
       themeId: 3,
       stories: [
         { id: 3003, title: "The First Emperor and the Terra Cotta Army", grade: "4-6" },
@@ -125,7 +125,7 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
       name: "African Kingdoms",
       description: "Powerful empires and city-states across the African continent",
       region: "Africa",
-      imageUrl: "/epics/african-kingdoms.jpg",
+      imageUrl: "/epics/african-kingdoms.svg",
       themeId: 3,
       stories: [
         { id: 3005, title: "Mansa Musa: The Golden King", grade: "4-6" },
@@ -137,7 +137,7 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
       name: "Pre-Columbian Americas",
       description: "Advanced civilizations of the Western Hemisphere",
       region: "Americas",
-      imageUrl: "/epics/pre-columbian.jpg",
+      imageUrl: "/epics/pre-columbian.svg",
       themeId: 3,
       stories: [
         { id: 3007, title: "Maya Calendar Mysteries", grade: "5-7" },
@@ -153,7 +153,7 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
       name: "Industrial Revolutions",
       description: "How technology transformed society across the globe",
       region: "Global",
-      imageUrl: "/epics/industrial.jpg",
+      imageUrl: "/epics/industrial.svg",
       themeId: 4,
       stories: [
         { id: 4001, title: "Steam Power Changes Everything", grade: "5-7" },
@@ -165,7 +165,7 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
       name: "Democracy Movements",
       description: "The struggle for representation and equality",
       region: "Global",
-      imageUrl: "/epics/democracy.jpg",
+      imageUrl: "/epics/democracy.svg",
       themeId: 4,
       stories: [
         { id: 4003, title: "Votes for All: Expanding the Franchise", grade: "6-8" },
@@ -181,7 +181,7 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
       name: "European Fairy Tales",
       description: "Classic stories that have enchanted generations",
       region: "Europe",
-      imageUrl: "/epics/european-tales.jpg",
+      imageUrl: "/epics/european-tales.svg",
       themeId: 5,
       stories: [
         { id: 5001, title: "Little Red Riding Hood's Journey", grade: "1-3" },
@@ -193,7 +193,7 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
       name: "Asian Folk Tales",
       description: "Wisdom and wonder from the East",
       region: "Asia",
-      imageUrl: "/epics/asian-tales.jpg",
+      imageUrl: "/epics/asian-tales.svg",
       themeId: 5,
       stories: [
         { id: 5003, title: "The Crane Wife", grade: "3-5" },
@@ -205,7 +205,7 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
       name: "African Folklore",
       description: "Tales of wisdom, tricksters, and explanation",
       region: "Africa",
-      imageUrl: "/epics/african-tales.jpg",
+      imageUrl: "/epics/african-tales.svg",
       themeId: 5,
       stories: [
         { id: 5005, title: "Anansi the Spider", grade: "1-3" },
@@ -217,7 +217,7 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
       name: "Indigenous American Stories",
       description: "Traditional tales from North, Central and South America",
       region: "Americas",
-      imageUrl: "/epics/indigenous-tales.jpg",
+      imageUrl: "/epics/indigenous-tales.svg",
       themeId: 5,
       stories: [
         { id: 5007, title: "Raven Brings the Light", grade: "2-4" },
@@ -233,7 +233,7 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
       name: "Genesis Stories",
       description: "Tales of creation and the earliest people",
       region: "Middle East",
-      imageUrl: "/epics/genesis.jpg",
+      imageUrl: "/epics/genesis.svg",
       themeId: 6,
       stories: [
         { id: 6001, title: "Noah's Ark and the Great Flood", grade: "1-3" },
@@ -245,7 +245,7 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
       name: "Exodus Journey",
       description: "The liberation and wandering of the Israelites",
       region: "Egypt and Sinai",
-      imageUrl: "/epics/exodus.jpg",
+      imageUrl: "/epics/exodus.svg",
       themeId: 6,
       stories: [
         { id: 6003, title: "Moses and the Burning Bush", grade: "3-5" },
@@ -261,7 +261,7 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
       name: "Polynesian Navigation",
       description: "How Pacific Islanders mastered sailing the world's largest ocean",
       region: "Pacific Islands",
-      imageUrl: "/epics/polynesian.jpg",
+      imageUrl: "/epics/polynesian.svg",
       themeId: 7,
       stories: [
         { id: 7001, title: "Wayfinders: Navigating by Stars", grade: "4-6" },
@@ -273,7 +273,7 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
       name: "European Exploration",
       description: "Voyages of discovery that connected the world",
       region: "Europe",
-      imageUrl: "/epics/european-ocean.jpg",
+      imageUrl: "/epics/european-ocean.svg",
       themeId: 7,
       stories: [
         { id: 7003, title: "Magellan's Voyage Around the World", grade: "5-7" },
@@ -289,7 +289,7 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
       name: "Silicon Valley Innovations",
       description: "How American entrepreneurs changed the digital world",
       region: "United States",
-      imageUrl: "/epics/silicon-valley.jpg",
+      imageUrl: "/epics/silicon-valley.svg",
       themeId: 8,
       stories: [
         { id: 8001, title: "From Garage to Global: The Computer Revolution", grade: "5-8" },
@@ -301,7 +301,7 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
       name: "Asian Tech Giants",
       description: "East Asian leaders in robotics, electronics and more",
       region: "East Asia",
-      imageUrl: "/epics/asian-tech.jpg",
+      imageUrl: "/epics/asian-tech.svg",
       themeId: 8,
       stories: [
         { id: 8003, title: "Japan's Robot Revolution", grade: "4-6" },

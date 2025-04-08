@@ -1,0 +1,8 @@
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#EDBA89" />
+  <circle cx="200" cy="80" r="40" fill="#FFFFFF" stroke="#866652" stroke-width="3" />
+  <rect x="170" y="120" width="60" height="150" fill="#FFFFFF" stroke="#866652" stroke-width="3" />
+  <rect x="80" y="120" width="240" height="30" fill="#FFFFFF" stroke="#866652" stroke-width="3" rx="5" />
+  <text x="200" y="260" font-family="Arial" font-size="24" fill="#866652" text-anchor="middle">Greek &amp; Roman</text>
+  <text x="200" y="280" font-family="Arial" font-size="16" fill="#866652" text-anchor="middle">Mythology</text>
+</svg>

@@ -1,0 +1,6 @@
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#F4A261" />
+  <circle cx="200" cy="100" r="50" fill="#E9C46A" stroke="#8B5D33" stroke-width="3" />
+  <path d="M170,100 Q200,120 230,100" fill="none" stroke="#8B5D33" stroke-width="3" />
+  <text x="200" y="250" font-family="Arial" font-size="24" fill="#8B5D33" text-anchor="middle">African Folklore</text>
+</svg>

@@ -1,0 +1,8 @@
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#6E88A1" />
+  <polygon points="200,40 160,120 240,120" fill="#FFFFFF" stroke="#3F5061" stroke-width="3" />
+  <rect x="180" y="120" width="40" height="100" fill="#FFFFFF" stroke="#3F5061" stroke-width="3" />
+  <circle cx="200" cy="90" r="15" fill="#FFC877" stroke="#3F5061" stroke-width="3" />
+  <text x="200" y="250" font-family="Arial" font-size="24" fill="#FFFFFF" text-anchor="middle">Norse Legends</text>
+  <text x="200" y="270" font-family="Arial" font-size="16" fill="#FFFFFF" text-anchor="middle">Scandinavia</text>
+</svg>

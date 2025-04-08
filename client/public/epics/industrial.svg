@@ -1,0 +1,10 @@
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#505A5B" />
+  <rect x="100" y="100" width="50" height="120" fill="#292F33" />
+  <rect x="150" y="60" width="30" height="160" fill="#292F33" />
+  <rect x="180" y="120" width="40" height="100" fill="#292F33" />
+  <rect x="220" y="80" width="60" height="140" fill="#292F33" />
+  <rect x="110" y="80" width="10" height="20" fill="#8C9091" />
+  <rect x="130" y="70" width="10" height="30" fill="#8C9091" />
+  <text x="200" y="250" font-family="Arial" font-size="24" fill="#CED8D9" text-anchor="middle">Industrial Revolutions</text>
+</svg>
