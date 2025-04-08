@@ -1,7 +1,13 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
 import {
   Form,
   FormControl,
@@ -9,7 +15,6 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-  FormDescription,
 } from "@/components/ui/form";
 import {
   Select,
@@ -18,50 +23,46 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Checkbox } from "@/components/ui/checkbox";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLocation } from "wouter";
-import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/use-auth";
-import { GRADES, GENDERS, LEARNING_PREFERENCES, INTERESTS } from "@/lib/constants";
-import { Separator } from "@/components/ui/separator";
+import { useToast } from "@/hooks/use-toast";
+import { FcGoogle } from "react-icons/fc";
+import { SiFacebook, SiApple } from "react-icons/si";
+import gradientBg from "@/assets/gradient-bg.png";
 
-// Login schema
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
-  password: z.string().min(1, "Password is required"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
-// Registration schema
 const registerSchema = z.object({
   firstName: z.string().min(2, "First name must be at least 2 characters"),
   lastName: z.string().min(2, "Last name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
-  grade: z.string().refine((val) => val !== "", "Please select a grade"),
-  gender: z.string().refine((val) => val !== "", "Please select a gender"),
-  learningPreference: z.string().optional(),
-  interests: z.array(z.string()).optional().default([]),
+  grade: z.string().min(1, "Please select a grade"),
+  gender: z.string().min(1, "Please select a gender option"),
 });
 
 type LoginValues = z.infer<typeof loginSchema>;
 type RegisterValues = z.infer<typeof registerSchema>;
 
 export default function AuthPage() {
+  const [activeTab, setActiveTab] = useState("login");
+  const { loginMutation, registerMutation, user } = useAuth();
   const [_, setLocation] = useLocation();
   const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState<"login" | "register">("register");
 
-  // Login form
+  // Redirect to dashboard if already logged in
+  useEffect(() => {
+    if (user) {
+      setLocation("/theme-selection");
+    }
+  }, [user, setLocation]);
+
   const loginForm = useForm<LoginValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -70,7 +71,6 @@ export default function AuthPage() {
     },
   });
 
-  // Registration form
   const registerForm = useForm<RegisterValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -80,384 +80,411 @@ export default function AuthPage() {
       password: "",
       grade: "",
       gender: "",
-      learningPreference: "",
-      interests: [],
     },
   });
 
-  // Get auth context
-  const { user, loginMutation, registerMutation } = useAuth();
-  
-  // Redirect if user is already logged in
-  if (user) {
-    // Always redirect to personalization for profile setup
-    setLocation("/personalization");
-  }
-
-  // Login submission handler
-  const onLoginSubmit = async (data: LoginValues) => {
+  const onLogin = async (data: LoginValues) => {
     try {
-      const user = await loginMutation.mutateAsync(data);
-      console.log("Login successful, user:", user);
+      // Create the data structure expected by the backend
+      const loginData = {
+        username: data.email, // backend expects username field
+        password: data.password,
+      };
       
-      // Redirect to personalization to select or create a profile
-      setLocation("/personalization");
+      await loginMutation.mutateAsync(loginData as any);
+      toast({
+        title: "Login successful",
+        description: "Welcome back to Learniverse!"
+      });
     } catch (error) {
       console.error("Login error:", error);
-      // Toast notifications are handled by the auth context
+      toast({
+        title: "Login failed",
+        description: "Invalid email or password",
+        variant: "destructive",
+      });
     }
   };
 
-  // Registration submission handler
-  const onRegisterSubmit = async (data: RegisterValues) => {
+  const onRegister = async (data: RegisterValues) => {
     try {
-      const user = await registerMutation.mutateAsync(data);
-      console.log("Registration successful, user:", user);
+      // Create the data structure expected by the backend
+      const registerData = {
+        ...data,
+        username: data.email, // backend expects username field
+      };
       
-      // New users should always go to personalization to create profiles
-      setLocation("/personalization");
+      await registerMutation.mutateAsync(registerData as any);
+      toast({
+        title: "Registration successful",
+        description: "Welcome to Learniverse!"
+      });
     } catch (error) {
       console.error("Registration error:", error);
-      // Toast notifications are handled by the auth context
+      toast({
+        title: "Registration failed",
+        description: "Could not create your account. Please try again.",
+        variant: "destructive",
+      });
     }
+  };
+
+  const handleSocialLogin = (provider: string) => {
+    toast({
+      title: `${provider} login`,
+      description: `Redirecting to ${provider} for authentication...`,
+    });
+    // This would be a redirect to the social auth endpoint
+    // window.location.href = `/api/auth/${provider.toLowerCase()}`;
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-learniverse">
-      <div className="max-w-5xl w-full grid md:grid-cols-2 gap-8">
-        {/* Left side - Hero content */}
-        <div className="flex flex-col justify-center text-white">
-          <h1 className="font-bold text-4xl mb-6">Welcome to Learniverse</h1>
-          <div className="mb-6">
-            <img 
-              src="/learniverse-kids.png"
-              alt="Learniverse students learning" 
-              className="w-full h-auto rounded-lg shadow-lg"
-            />
+    <div className="min-h-screen flex bg-gradient-to-r from-cyan-400 to-blue-500 overflow-hidden">
+      {/* Hero section (left) */}
+      <div className="hidden lg:flex lg:w-1/2 flex-col justify-center items-center p-12 relative">
+        <div className="text-white z-10 max-w-xl">
+          <h1 className="text-5xl font-bold mb-6">Welcome to Learniverse</h1>
+          <p className="text-xl mb-8">
+            An innovative educational platform that connects various subjects through themed stories, making learning more engaging and effective for students in grades 1-8.
+          </p>
+          <div className="bg-white/20 backdrop-blur-sm rounded-xl p-6">
+            <h3 className="text-2xl font-semibold mb-4">Features include:</h3>
+            <ul className="space-y-2">
+              <li className="flex items-center">
+                <div className="h-2 w-2 bg-yellow-300 rounded-full mr-2"></div>
+                <span>Personalized learning experiences</span>
+              </li>
+              <li className="flex items-center">
+                <div className="h-2 w-2 bg-yellow-300 rounded-full mr-2"></div>
+                <span>Interactive story-based learning</span>
+              </li>
+              <li className="flex items-center">
+                <div className="h-2 w-2 bg-yellow-300 rounded-full mr-2"></div>
+                <span>AI-powered reading coach</span>
+              </li>
+              <li className="flex items-center">
+                <div className="h-2 w-2 bg-yellow-300 rounded-full mr-2"></div>
+                <span>Vocabulary building with flashcards</span>
+              </li>
+              <li className="flex items-center">
+                <div className="h-2 w-2 bg-yellow-300 rounded-full mr-2"></div>
+                <span>Progress tracking and analytics</span>
+              </li>
+            </ul>
           </div>
         </div>
+      </div>
 
-        {/* Right side - Auth forms */}
-        <div>
-          <Card className="glass-panel">
-            <CardContent className="p-6">
-              <Tabs 
-                defaultValue="register" 
-                value={activeTab} 
-                onValueChange={(value) => setActiveTab(value as "login" | "register")}
-                className="w-full"
-              >
-                <TabsList className="hidden">
-                  <TabsTrigger value="login">Login</TabsTrigger>
-                  <TabsTrigger value="register">Register</TabsTrigger>
-                </TabsList>
+      {/* Auth forms (right) */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-8">
+        <Card className="w-full max-w-md bg-white/20 backdrop-blur-md border-0 shadow-xl">
+          <CardContent className="pt-6">
+            <Tabs
+              defaultValue="login"
+              value={activeTab}
+              onValueChange={setActiveTab}
+              className="w-full"
+            >
+              <TabsList className="grid w-full grid-cols-2 mb-6">
+                <TabsTrigger value="login" className="rounded-l-lg">Login</TabsTrigger>
+                <TabsTrigger value="register" className="rounded-r-lg">Register</TabsTrigger>
+              </TabsList>
 
-                {/* Login Form */}
-                <TabsContent value="login">
-                  <h2 className="font-bold text-2xl mb-6 text-white">Welcome back</h2>
-                  <Form {...loginForm}>
-                    <form onSubmit={loginForm.handleSubmit(onLoginSubmit)} className="space-y-4">
-                      <FormField
-                        control={loginForm.control}
-                        name="email"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-white">Email</FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="you@example.com"
-                                className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage className="text-red-300" />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={loginForm.control}
-                        name="password"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-white">Password</FormLabel>
-                            <FormControl>
-                              <Input
-                                type="password"
-                                placeholder="••••••••"
-                                className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage className="text-red-300" />
-                          </FormItem>
-                        )}
-                      />
-                      <Button
-                        type="submit"
-                        className="w-full bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600 text-black font-bold"
-                        disabled={loginForm.formState.isSubmitting}
-                      >
-                        {loginForm.formState.isSubmitting ? "Logging in..." : "Login"}
-                      </Button>
-                    </form>
-                  </Form>
-                  <div className="mt-6">
-                    <div className="relative">
+              {/* Login Form */}
+              <TabsContent value="login">
+                <Form {...loginForm}>
+                  <form onSubmit={loginForm.handleSubmit(onLogin)} className="space-y-4">
+                    <FormField
+                      control={loginForm.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-white">Email Address</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="your.email@example.com"
+                              className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={loginForm.control}
+                      name="password"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-white">Password</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="password"
+                              placeholder="••••••••"
+                              className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <Button
+                      type="submit"
+                      className="w-full py-6 bg-yellow-400 hover:bg-yellow-500 text-black font-bold"
+                      disabled={loginMutation.isPending}
+                    >
+                      {loginMutation.isPending ? "Logging in..." : "SIGN IN"}
+                    </Button>
+
+                    <div className="relative my-6">
                       <div className="absolute inset-0 flex items-center">
-                        <Separator className="w-full border-white/20" />
+                        <div className="w-full border-t border-white/20"></div>
                       </div>
-                      <div className="relative flex justify-center text-xs">
-                        <span className="bg-transparent px-2 text-white/70">
-                          Or continue with
-                        </span>
+                      <div className="relative flex justify-center text-sm">
+                        <span className="px-2 bg-transparent text-white">Or continue with</span>
                       </div>
                     </div>
-                    
-                    <div className="mt-4 flex gap-3">
-                      <a 
-                        href="/api/auth/google" 
-                        className="flex-1 bg-white text-black font-medium rounded-md py-2 px-4 flex items-center justify-center hover:bg-gray-100 transition-colors"
+
+                    <div className="grid grid-cols-3 gap-3">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="bg-white/10 border-white/20 hover:bg-white/20 text-white"
+                        onClick={() => handleSocialLogin('Google')}
                       >
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/google/google-original.svg" className="w-5 h-5 mr-2" /> 
-                        Google
-                      </a>
-                      <a 
-                        href="/api/auth/facebook" 
-                        className="flex-1 bg-[#1877F2] text-white font-medium rounded-md py-2 px-4 flex items-center justify-center hover:bg-[#166FE5] transition-colors"
+                        <FcGoogle className="h-5 w-5" />
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="bg-white/10 border-white/20 hover:bg-white/20 text-white"
+                        onClick={() => handleSocialLogin('Facebook')}
                       >
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/facebook/facebook-original.svg" className="w-5 h-5 mr-2" /> 
-                        Facebook
-                      </a>
-                      <a 
-                        href="/api/auth/apple" 
-                        className="flex-1 bg-black text-white font-medium rounded-md py-2 px-4 flex items-center justify-center hover:bg-gray-900 transition-colors"
+                        <SiFacebook className="h-5 w-5 text-blue-600" />
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="bg-white/10 border-white/20 hover:bg-white/20 text-white"
+                        onClick={() => handleSocialLogin('Apple')}
                       >
-                        <svg className="w-5 h-5 mr-2" viewBox="0 0 384 512" fill="currentColor">
-                          <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
-                        </svg>
-                        Apple
-                      </a>
+                        <SiApple className="h-5 w-5" />
+                      </Button>
                     </div>
-                  </div>
-                  
-                  <div className="mt-4 text-center text-white/70">
-                    <p>Don't have an account?{" "}
-                      <button 
-                        onClick={() => setActiveTab("register")} 
-                        className="text-yellow-300 hover:underline"
+
+                    <p className="text-center text-white text-sm mt-6">
+                      Don't have an account?{" "}
+                      <button
+                        type="button"
+                        className="text-yellow-400 hover:underline font-medium"
+                        onClick={() => setActiveTab("register")}
                       >
-                        Sign up
+                        Register now
                       </button>
                     </p>
-                  </div>
-                </TabsContent>
+                  </form>
+                </Form>
+              </TabsContent>
 
-                {/* Registration Form */}
-                <TabsContent value="register">
-                  <h2 className="font-bold text-2xl mb-4 text-white">Begin your learning adventure</h2>
-                  <Form {...registerForm}>
-                    <form onSubmit={registerForm.handleSubmit(onRegisterSubmit)} className="space-y-4">
-                      <div className="grid grid-cols-2 gap-4">
-                        <FormField
-                          control={registerForm.control}
-                          name="firstName"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-white">First Name</FormLabel>
-                              <FormControl>
-                                <Input
-                                  placeholder="Your first name"
-                                  className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage className="text-red-300" />
-                            </FormItem>
-                          )}
-                        />
-                        
-                        <FormField
-                          control={registerForm.control}
-                          name="lastName"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-white">Last Name</FormLabel>
-                              <FormControl>
-                                <Input
-                                  placeholder="Your last name"
-                                  className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage className="text-red-300" />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      
+              {/* Register Form */}
+              <TabsContent value="register">
+                <Form {...registerForm}>
+                  <form onSubmit={registerForm.handleSubmit(onRegister)} className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
                       <FormField
                         control={registerForm.control}
-                        name="email"
+                        name="firstName"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-white">Email Address</FormLabel>
+                            <FormLabel className="text-white">First Name</FormLabel>
                             <FormControl>
                               <Input
-                                placeholder="you@example.com"
+                                placeholder="First name"
                                 className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
                                 {...field}
                               />
                             </FormControl>
-                            <FormMessage className="text-red-300" />
+                            <FormMessage />
                           </FormItem>
                         )}
                       />
-                      
+
                       <FormField
                         control={registerForm.control}
-                        name="password"
+                        name="lastName"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-white">Password</FormLabel>
+                            <FormLabel className="text-white">Last Name</FormLabel>
                             <FormControl>
                               <Input
-                                type="password"
-                                placeholder="Create a secure password"
+                                placeholder="Last name"
                                 className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
                                 {...field}
                               />
                             </FormControl>
-                            <FormMessage className="text-red-300" />
+                            <FormMessage />
                           </FormItem>
                         )}
                       />
-                      
-                      <div className="grid grid-cols-2 gap-4">
-                        <FormField
-                          control={registerForm.control}
-                          name="grade"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-white">Grade</FormLabel>
-                              <Select
-                                onValueChange={field.onChange}
-                                defaultValue={field.value}
-                              >
-                                <FormControl>
-                                  <SelectTrigger className="bg-white/10 border-white/20 text-white">
-                                    <SelectValue placeholder="Select Grade" />
-                                  </SelectTrigger>
-                                </FormControl>
-                                <SelectContent className="border-white/20 bg-blue-900/90 backdrop-blur-sm text-white">
-                                  {GRADES.map((grade) => (
-                                    <SelectItem key={grade} value={grade}>
-                                      Grade {grade}
-                                    </SelectItem>
-                                  ))}
-                                </SelectContent>
-                              </Select>
-                              <FormMessage className="text-red-300" />
-                            </FormItem>
-                          )}
-                        />
-                        
-                        <FormField
-                          control={registerForm.control}
-                          name="gender"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-white">Gender</FormLabel>
-                              <Select
-                                onValueChange={field.onChange}
-                                defaultValue={field.value}
-                              >
-                                <FormControl>
-                                  <SelectTrigger className="bg-white/10 border-white/20 text-white">
-                                    <SelectValue placeholder="Select Gender" />
-                                  </SelectTrigger>
-                                </FormControl>
-                                <SelectContent className="border-white/20 bg-blue-900/90 backdrop-blur-sm text-white">
-                                  {GENDERS.map((gender) => {
-                                    let label = "Male";
-                                    if (gender === "female") label = "Female";
-                                    else if (gender === "other") label = "Other";
-                                    else if (gender === "prefer_not_to_say") label = "Prefer not to say";
-                                    
-                                    return (
-                                      <SelectItem key={gender} value={gender}>
-                                        {label}
-                                      </SelectItem>
-                                    );
-                                  })}
-                                </SelectContent>
-                              </Select>
-                              <FormMessage className="text-red-300" />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      
-                      <Button
-                        type="submit"
-                        className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 mt-4"
-                        disabled={registerForm.formState.isSubmitting}
-                      >
-                        {registerForm.formState.isSubmitting ? "Creating account..." : "REGISTER"}
-                      </Button>
-                    </form>
-                  </Form>
-                  <div className="mt-6">
-                    <div className="relative">
-                      <div className="absolute inset-0 flex items-center">
-                        <Separator className="w-full border-white/20" />
-                      </div>
-                      <div className="relative flex justify-center text-xs">
-                        <span className="bg-transparent px-2 text-white/70">
-                          Or sign up with
-                        </span>
-                      </div>
                     </div>
-                    
-                    <div className="mt-4 flex gap-3">
-                      <a 
-                        href="/api/auth/google" 
-                        className="flex-1 bg-white text-black font-medium rounded-md py-2 px-4 flex items-center justify-center hover:bg-gray-100 transition-colors"
-                      >
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/google/google-original.svg" className="w-5 h-5 mr-2" /> 
-                        Google
-                      </a>
-                      <a 
-                        href="/api/auth/facebook" 
-                        className="flex-1 bg-[#1877F2] text-white font-medium rounded-md py-2 px-4 flex items-center justify-center hover:bg-[#166FE5] transition-colors"
-                      >
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/facebook/facebook-original.svg" className="w-5 h-5 mr-2" /> 
-                        Facebook
-                      </a>
-                      <a 
-                        href="/api/auth/apple" 
-                        className="flex-1 bg-black text-white font-medium rounded-md py-2 px-4 flex items-center justify-center hover:bg-gray-900 transition-colors"
-                      >
-                        <svg className="w-5 h-5 mr-2" viewBox="0 0 384 512" fill="currentColor">
-                          <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
-                        </svg>
-                        Apple
-                      </a>
+
+                    <FormField
+                      control={registerForm.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-white">Email Address</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="your.email@example.com"
+                              className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={registerForm.control}
+                      name="password"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-white">Password</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="password"
+                              placeholder="••••••••"
+                              className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <div className="grid grid-cols-2 gap-4">
+                      <FormField
+                        control={registerForm.control}
+                        name="grade"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-white">Grade</FormLabel>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger className="bg-white/10 border-white/20 text-white">
+                                  <SelectValue placeholder="Select Grade" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent className="bg-slate-900 border-white/20 text-white">
+                                {Array.from({ length: 8 }, (_, i) => i + 1).map((grade) => (
+                                  <SelectItem key={grade} value={grade.toString()}>
+                                    Grade {grade}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={registerForm.control}
+                        name="gender"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-white">Gender</FormLabel>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger className="bg-white/10 border-white/20 text-white">
+                                  <SelectValue placeholder="Select Gender" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent className="bg-slate-900 border-white/20 text-white">
+                                <SelectItem value="male">Male</SelectItem>
+                                <SelectItem value="female">Female</SelectItem>
+                                <SelectItem value="other">Other</SelectItem>
+                                <SelectItem value="prefer_not_to_say">Prefer not to say</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
                     </div>
-                  </div>
-                  
-                  <div className="mt-4 text-center text-white">
-                    <p>Already have an account? <button 
-                      onClick={() => setActiveTab("login")} 
-                      className="text-yellow-400 hover:underline font-medium"
+
+                    <Button
+                      type="submit"
+                      className="w-full py-6 bg-yellow-400 hover:bg-yellow-500 text-black font-bold"
+                      disabled={registerMutation.isPending}
                     >
-                      Sign in
-                    </button></p>
-                  </div>
-                </TabsContent>
-              </Tabs>
-            </CardContent>
-          </Card>
-        </div>
+                      {registerMutation.isPending ? "Creating account..." : "CREATE ACCOUNT"}
+                    </Button>
+
+                    <div className="relative my-6">
+                      <div className="absolute inset-0 flex items-center">
+                        <div className="w-full border-t border-white/20"></div>
+                      </div>
+                      <div className="relative flex justify-center text-sm">
+                        <span className="px-2 bg-transparent text-white">Or register with</span>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-3 gap-3">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="bg-white/10 border-white/20 hover:bg-white/20 text-white"
+                        onClick={() => handleSocialLogin('Google')}
+                      >
+                        <FcGoogle className="h-5 w-5" />
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="bg-white/10 border-white/20 hover:bg-white/20 text-white"
+                        onClick={() => handleSocialLogin('Facebook')}
+                      >
+                        <SiFacebook className="h-5 w-5 text-blue-600" />
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="bg-white/10 border-white/20 hover:bg-white/20 text-white"
+                        onClick={() => handleSocialLogin('Apple')}
+                      >
+                        <SiApple className="h-5 w-5" />
+                      </Button>
+                    </div>
+
+                    <p className="text-center text-white text-sm mt-6">
+                      Already have an account?{" "}
+                      <button
+                        type="button"
+                        className="text-yellow-400 hover:underline font-medium"
+                        onClick={() => setActiveTab("login")}
+                      >
+                        Sign in
+                      </button>
+                    </p>
+                  </form>
+                </Form>
+              </TabsContent>
+            </Tabs>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

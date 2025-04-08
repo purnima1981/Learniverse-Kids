@@ -6,7 +6,6 @@ import Dashboard from "@/pages/Dashboard";
 import StoryReader from "@/pages/StoryReader";
 import ReadingCoach from "@/pages/ReadingCoach";
 import AuthPage from "@/pages/auth-page";
-import PersonalizationPage from "@/pages/PersonalizationPage";
 import RegionalStoriesPage from "@/pages/RegionalStoriesPage";
 import { ProtectedRoute } from "@/lib/protected-route";
 import { AuthProvider } from "@/hooks/use-auth";
@@ -20,7 +19,6 @@ function App() {
         
         {/* Protected routes */}
         <ProtectedRoute path="/" component={Dashboard} />
-        <ProtectedRoute path="/personalization" component={PersonalizationPage} />
         <ProtectedRoute path="/theme-selection" component={ThemeSelection} />
         <ProtectedRoute path="/regional-stories/:themeId" component={RegionalStoriesPage} />
         <ProtectedRoute path="/dashboard" component={Dashboard} />
@@ -33,6 +31,9 @@ function App() {
         </Route>
         <Route path="/register">
           <Redirect to="/auth" />
+        </Route>
+        <Route path="/personalization">
+          <Redirect to="/theme-selection" />
         </Route>
         
         {/* 404 Route */}
