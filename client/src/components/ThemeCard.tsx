@@ -45,6 +45,38 @@ export default function ThemeCard({ theme, onSelect, isSelecting }: ThemeCardPro
     }
   };
   
+  // Theme-specific background patterns based on the ID
+  const getThemeBackground = (id: number) => {
+    switch (id % 8) {
+      case 1: return "from-orange-600 to-amber-800"; // Mythology
+      case 2: return "from-purple-700 to-indigo-900"; // Space
+      case 3: return "from-amber-700 to-yellow-900"; // Kingdoms
+      case 4: return "from-emerald-600 to-teal-800"; // Civilization
+      case 5: return "from-pink-600 to-rose-800"; // Folklore
+      case 6: return "from-sky-600 to-blue-800"; // Biblical
+      case 7: return "from-cyan-600 to-blue-800"; // Ocean
+      case 0: return "from-violet-600 to-purple-900"; // Future Technology
+      default: return "from-blue-600 to-indigo-900";
+    }
+  };
+  
+  // Theme-specific icons based on the ID
+  const getThemeIcon = (id: number, name: string) => {
+    const iconSize = "text-6xl text-white/80";
+    
+    switch (id % 8) {
+      case 1: return <div className={iconSize}>🏛️</div>; // Mythology
+      case 2: return <div className={iconSize}>🚀</div>; // Space
+      case 3: return <div className={iconSize}>👑</div>; // Kingdoms
+      case 4: return <div className={iconSize}>🏙️</div>; // Civilization
+      case 5: return <div className={iconSize}>🧚</div>; // Folklore
+      case 6: return <div className={iconSize}>📜</div>; // Biblical
+      case 7: return <div className={iconSize}>🌊</div>; // Ocean
+      case 0: return <div className={iconSize}>🤖</div>; // Future Technology
+      default: return <span className="text-6xl text-white/80">{ name.charAt(0) }</span>;
+    }
+  };
+  
   return (
     <motion.div
       whileHover={{ scale: 1.03 }}
@@ -55,7 +87,8 @@ export default function ThemeCard({ theme, onSelect, isSelecting }: ThemeCardPro
         onClick={handleClick}
       >
         <div className="w-full h-48 relative overflow-hidden">
-          {theme.imageUrl ? (
+          {/* Generate theme-specific background if a proper image URL is not available */}
+          {(theme.imageUrl && !theme.imageUrl.includes("themes-cover.png")) ? (
             <div className="relative w-full h-full">
               <img 
                 src={theme.imageUrl} 
@@ -65,8 +98,8 @@ export default function ThemeCard({ theme, onSelect, isSelecting }: ThemeCardPro
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent mix-blend-overlay"></div>
             </div>
           ) : (
-            <div className="w-full h-full bg-gradient-to-br from-blue-700 to-indigo-900 flex items-center justify-center">
-              <span className="text-3xl text-white/60">{ theme.name.charAt(0) }</span>
+            <div className={`w-full h-full bg-gradient-to-br ${getThemeBackground(theme.id)} flex items-center justify-center`}>
+              {getThemeIcon(theme.id, theme.name)}
             </div>
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
