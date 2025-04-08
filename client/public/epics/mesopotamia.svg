@@ -1,0 +1,8 @@
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#D3C7A2" />
+  <rect x="100" y="100" width="200" height="120" fill="#A69B7B" stroke="#73695A" stroke-width="3" />
+  <rect x="140" y="140" width="50" height="80" fill="#73695A" />
+  <rect x="210" y="140" width="50" height="50" fill="#73695A" />
+  <text x="200" y="250" font-family="Arial" font-size="24" fill="#73695A" text-anchor="middle">Mesopotamian Empires</text>
+  <text x="200" y="270" font-family="Arial" font-size="16" fill="#73695A" text-anchor="middle">Middle East</text>
+</svg>

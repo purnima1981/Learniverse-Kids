@@ -1,0 +1,8 @@
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#061539" />
+  <circle cx="200" cy="100" r="50" fill="#D7DFF3" />
+  <circle cx="180" cy="85" r="15" fill="#061539" />
+  <circle cx="220" cy="85" r="10" fill="#061539" />
+  <text x="200" y="220" font-family="Arial" font-size="24" fill="#D7DFF3" text-anchor="middle">Asian Space</text>
+  <text x="200" y="250" font-family="Arial" font-size="16" fill="#D7DFF3" text-anchor="middle">Pioneers</text>
+</svg>

@@ -1,0 +1,7 @@
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#EDCFA9" />
+  <polygon points="200,60 150,110 150,180 250,180 250,110" fill="#BC8051" stroke="#805039" stroke-width="3" />
+  <rect x="190" y="140" width="20" height="40" fill="#805039" />
+  <text x="200" y="250" font-family="Arial" font-size="24" fill="#805039" text-anchor="middle">Pre-Columbian Americas</text>
+  <text x="200" y="270" font-family="Arial" font-size="16" fill="#805039" text-anchor="middle">Americas</text>
+</svg>

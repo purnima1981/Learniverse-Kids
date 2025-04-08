@@ -1,0 +1,7 @@
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#E4C1F9" />
+  <polygon points="200,60 150,150 250,150" fill="#D3A588" stroke="#6D466B" stroke-width="3" />
+  <rect x="190" y="150" width="20" height="80" fill="#6D466B" />
+  <circle cx="200" cy="100" r="10" fill="#FF99C8" />
+  <text x="200" y="250" font-family="Arial" font-size="24" fill="#6D466B" text-anchor="middle">Asian Folk Tales</text>
+</svg>

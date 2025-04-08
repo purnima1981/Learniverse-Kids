@@ -1,0 +1,7 @@
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#E8D0A9" />
+  <path d="M150,80 C150,50 250,50 250,80 S230,130 230,150 Q230,180 200,200 Q170,180 170,150 S150,110 150,80" fill="#C13828" stroke="#7C2A1A" stroke-width="3" />
+  <line x1="180" y1="100" x2="220" y2="100" stroke="#7C2A1A" stroke-width="3" />
+  <text x="200" y="250" font-family="Arial" font-size="24" fill="#7C2A1A" text-anchor="middle">Chinese Dynasties</text>
+  <text x="200" y="270" font-family="Arial" font-size="16" fill="#7C2A1A" text-anchor="middle">East Asia</text>
+</svg>

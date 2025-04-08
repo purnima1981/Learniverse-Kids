@@ -1,0 +1,8 @@
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#F0C987" />
+  <circle cx="200" cy="100" r="50" fill="#DFA25F" stroke="#A97339" stroke-width="3" />
+  <path d="M170,100 L230,100 M200,70 L200,130" stroke="#A97339" stroke-width="3" />
+  <rect x="170" y="150" width="60" height="60" fill="#A97339" />
+  <text x="200" y="250" font-family="Arial" font-size="24" fill="#A97339" text-anchor="middle">African Kingdoms</text>
+  <text x="200" y="270" font-family="Arial" font-size="16" fill="#A97339" text-anchor="middle">Africa</text>
+</svg>

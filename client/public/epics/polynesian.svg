@@ -1,0 +1,6 @@
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#75B9BE" />
+  <path d="M100,150 C140,180 260,180 300,150" fill="#D3F6DB" stroke="#0A3A40" stroke-width="3" />
+  <path d="M200,120 L200,180 L220,170 Z" fill="#0A3A40" />
+  <text x="200" y="250" font-family="Arial" font-size="24" fill="#0A3A40" text-anchor="middle">Polynesian Navigation</text>
+</svg>

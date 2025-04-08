@@ -1,0 +1,8 @@
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#C9E4CA" />
+  <rect x="140" y="80" width="120" height="80" rx="5" fill="#87BBA2" stroke="#55828B" stroke-width="3" />
+  <rect x="160" y="100" width="80" height="40" fill="#3B6064" />
+  <rect x="180" y="160" width="40" height="60" fill="#87BBA2" stroke="#55828B" stroke-width="3" />
+  <text x="200" y="250" font-family="Arial" font-size="24" fill="#3B6064" text-anchor="middle">Silicon Valley</text>
+  <text x="200" y="270" font-family="Arial" font-size="16" fill="#3B6064" text-anchor="middle">North America</text>
+</svg>

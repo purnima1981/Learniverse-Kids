@@ -1,0 +1,7 @@
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#B1CC74" />
+  <circle cx="200" cy="80" r="40" fill="#668C4A" stroke="#3F4A3C" stroke-width="3" />
+  <path d="M180,140 L200,80 L220,140 Z" fill="#3F4A3C" />
+  <text x="200" y="240" font-family="Arial" font-size="24" fill="#3F4A3C" text-anchor="middle">Indigenous American</text>
+  <text x="200" y="270" font-family="Arial" font-size="24" fill="#3F4A3C" text-anchor="middle">Stories</text>
+</svg>

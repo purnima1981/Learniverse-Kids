@@ -1,0 +1,8 @@
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#771419" />
+  <circle cx="200" cy="80" r="40" fill="#FFCE00" />
+  <polygon points="180,80 220,80 210,140 190,140" fill="#771419" stroke="#FFCE00" stroke-width="2" />
+  <polygon points="200,40 185,75 215,75" fill="#FFCE00" />
+  <text x="200" y="220" font-family="Arial" font-size="24" fill="#FFCE00" text-anchor="middle">Soviet Space</text>
+  <text x="200" y="250" font-family="Arial" font-size="16" fill="#FFCE00" text-anchor="middle">Program</text>
+</svg>
