@@ -31,6 +31,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 import { FcGoogle } from "react-icons/fc";
 import { SiFacebook, SiApple } from "react-icons/si";
+import loginImage from "@/assets/login-image.png";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -140,41 +141,44 @@ export default function AuthPage() {
   return (
     <div className="min-h-screen flex bg-gradient-to-r from-cyan-400 to-blue-500 overflow-hidden">
       {/* Hero section (left) */}
-      <div className="hidden lg:flex lg:w-1/2 flex-col justify-center items-center p-12 relative">
+      <div className="hidden lg:block lg:w-1/2 relative">
+        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/80 to-blue-600/80 z-10"></div>
         <img 
-          src="/assets/login-image.png" 
+          src={loginImage}
           alt="Learniverse illustration showing diverse students learning" 
-          className="absolute h-full w-full object-cover"
+          className="absolute w-full h-full object-cover"
         />
-        <div className="text-white z-10 max-w-xl">
-          <h1 className="text-5xl font-bold mb-6">Welcome to Learniverse</h1>
-          <p className="text-xl mb-8">
-            An innovative educational platform that connects various subjects through themed stories, making learning more engaging and effective for students in grades 1-8.
-          </p>
-          <div className="bg-white/20 backdrop-blur-sm rounded-xl p-6">
-            <h3 className="text-2xl font-semibold mb-4">Features include:</h3>
-            <ul className="space-y-2">
-              <li className="flex items-center">
-                <div className="h-2 w-2 bg-yellow-300 rounded-full mr-2"></div>
-                <span>Personalized learning experiences</span>
-              </li>
-              <li className="flex items-center">
-                <div className="h-2 w-2 bg-yellow-300 rounded-full mr-2"></div>
-                <span>Interactive story-based learning</span>
-              </li>
-              <li className="flex items-center">
-                <div className="h-2 w-2 bg-yellow-300 rounded-full mr-2"></div>
-                <span>AI-powered reading coach</span>
-              </li>
-              <li className="flex items-center">
-                <div className="h-2 w-2 bg-yellow-300 rounded-full mr-2"></div>
-                <span>Vocabulary building with flashcards</span>
-              </li>
-              <li className="flex items-center">
-                <div className="h-2 w-2 bg-yellow-300 rounded-full mr-2"></div>
-                <span>Progress tracking and analytics</span>
-              </li>
-            </ul>
+        <div className="relative flex flex-col justify-center h-full p-12 z-20">
+          <div className="text-white z-20 max-w-xl">
+            <h1 className="text-5xl font-bold mb-6">Welcome to Learniverse</h1>
+            <p className="text-xl mb-8">
+              An innovative educational platform that connects various subjects through themed stories, making learning more engaging and effective for students in grades 1-8.
+            </p>
+            <div className="bg-white/20 backdrop-blur-sm rounded-xl p-6">
+              <h3 className="text-2xl font-semibold mb-4">Features include:</h3>
+              <ul className="space-y-2">
+                <li className="flex items-center">
+                  <div className="h-2 w-2 bg-yellow-300 rounded-full mr-2"></div>
+                  <span>Personalized learning experiences</span>
+                </li>
+                <li className="flex items-center">
+                  <div className="h-2 w-2 bg-yellow-300 rounded-full mr-2"></div>
+                  <span>Interactive story-based learning</span>
+                </li>
+                <li className="flex items-center">
+                  <div className="h-2 w-2 bg-yellow-300 rounded-full mr-2"></div>
+                  <span>AI-powered reading coach</span>
+                </li>
+                <li className="flex items-center">
+                  <div className="h-2 w-2 bg-yellow-300 rounded-full mr-2"></div>
+                  <span>Vocabulary building with flashcards</span>
+                </li>
+                <li className="flex items-center">
+                  <div className="h-2 w-2 bg-yellow-300 rounded-full mr-2"></div>
+                  <span>Progress tracking and analytics</span>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
