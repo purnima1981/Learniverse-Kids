@@ -24,8 +24,7 @@ import { useLocation } from "wouter";
 import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 
-// Import the image directly from the assets folder
-import backgroundImage from '../assets/login-background.png';
+// We'll reference the image directly from the public folder
 
 const registerSchema = z.object({
   firstName: z.string().min(2, "First name must be at least 2 characters"),
@@ -90,7 +89,7 @@ export default function RegisterPage() {
       {/* Left side with image */}
       <div className="hidden lg:flex lg:w-1/2 relative">
         <img 
-          src={backgroundImage}
+          src="/kids-learning.png"
           alt="Learniverse illustration showing diverse students learning" 
           className="absolute w-full h-full object-cover"
         />

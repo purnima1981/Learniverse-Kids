@@ -17,8 +17,7 @@ import { useLocation } from "wouter";
 import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 
-// We'll use a direct import of the attached image
-import backgroundImage from '../assets/login-background.png';
+// We'll reference the image directly from the public folder
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -75,7 +74,7 @@ export default function LoginPage() {
       {/* Left side with image */}
       <div className="hidden lg:flex lg:w-1/2 relative">
         <img 
-          src={backgroundImage}
+          src="/kids-learning.png"
           alt="Learniverse illustration showing diverse students learning" 
           className="absolute w-full h-full object-cover"
         />
