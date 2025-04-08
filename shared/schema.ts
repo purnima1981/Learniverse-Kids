@@ -3,18 +3,34 @@ import { createInsertSchema } from "drizzle-zod";
 import { relations } from "drizzle-orm";
 import { z } from "zod";
 
-// Users table
+// Users table (now represents parent accounts)
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   firstName: text("first_name").notNull(),
   lastName: text("last_name").notNull(),
   email: text("email").notNull().unique(),
   password: text("password").notNull(),
+  role: text("role").notNull().default("parent"), // parent is the default role
+  createdAt: timestamp("created_at").defaultNow(),
+  lastActive: timestamp("last_active").defaultNow(),
+  googleId: text("google_id").unique(),
+  facebookId: text("facebook_id").unique(),
+  appleId: text("apple_id").unique(),
+  avatar: text("avatar"),
+});
+
+// Profiles table (for kids' profiles under a parent account)
+export const profiles = pgTable("profiles", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  name: text("name").notNull(),
   grade: text("grade").notNull(),
   gender: text("gender").notNull(),
+  avatar: text("avatar"),
   themeId: integer("theme_id"),
   createdAt: timestamp("created_at").defaultNow(),
   lastActive: timestamp("last_active").defaultNow(),
+  isDefault: boolean("is_default").default(false),
 });
 
 // Themes table
@@ -83,13 +99,21 @@ export const flashcards = pgTable("flashcards", {
 });
 
 // Define relations
-export const usersRelations = relations(users, ({ one, many }) => ({
-  theme: one(themes, {
-    fields: [users.themeId],
-    references: [themes.id]
-  }),
+export const usersRelations = relations(users, ({ many }) => ({
+  profiles: many(profiles),
   progress: many(userProgress),
   flashcards: many(flashcards)
+}));
+
+export const profilesRelations = relations(profiles, ({ one }) => ({
+  user: one(users, {
+    fields: [profiles.userId],
+    references: [users.id]
+  }),
+  theme: one(themes, {
+    fields: [profiles.themeId],
+    references: [themes.id]
+  })
 }));
 
 export const themesRelations = relations(themes, ({ many }) => ({
@@ -156,11 +180,20 @@ export const flashcardsRelations = relations(flashcards, ({ one }) => ({
 
 // Insert schemas
 export const insertUserSchema = createInsertSchema(users)
-  .omit({ id: true, createdAt: true, lastActive: true })
+  .omit({ id: true, createdAt: true, lastActive: true, role: true })
   .extend({
+    role: z.enum(["parent", "teacher", "admin"]).default("parent"),
     learningPreference: z.string().optional(),
     interests: z.array(z.string()).optional(),
   });
+
+export const insertProfileSchema = createInsertSchema(profiles)
+  .omit({ id: true, createdAt: true, lastActive: true, isDefault: true })
+  .extend({
+    isDefault: z.boolean().default(false),
+    avatarColor: z.string().optional(),
+  });
+
 export const insertThemeSchema = createInsertSchema(themes).omit({ id: true });
 export const insertSubjectSchema = createInsertSchema(subjects).omit({ id: true });
 export const insertStorySchema = createInsertSchema(stories).omit({ id: true });
@@ -171,6 +204,9 @@ export const insertFlashcardSchema = createInsertSchema(flashcards).omit({ id: t
 // Types
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
+
+export type Profile = typeof profiles.$inferSelect;
+export type InsertProfile = z.infer<typeof insertProfileSchema>;
 
 export type Theme = typeof themes.$inferSelect;
 export type InsertTheme = z.infer<typeof insertThemeSchema>;
