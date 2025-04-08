@@ -16,6 +16,13 @@ export default function ThemeCard({ theme, onSelect, isSelecting }: ThemeCardPro
     }
   };
   
+  // Ensure consistent description length for uniform card heights
+  const truncateDescription = (description: string, maxLength = 80) => {
+    return description.length > maxLength
+      ? `${description.substring(0, maxLength)}...`
+      : description;
+  };
+  
   // Theme-specific colors based on the ID
   const getThemeColors = (id: number) => {
     switch (id % 8) {
@@ -83,7 +90,7 @@ export default function ThemeCard({ theme, onSelect, isSelecting }: ThemeCardPro
       transition={{ duration: 0.2 }}
     >
       <Card 
-        className={`theme-card rounded-xl overflow-hidden cursor-pointer shadow-lg bg-gradient-to-br ${getThemeColors(theme.id)} border-white/20`}
+        className={`theme-card rounded-xl overflow-hidden cursor-pointer shadow-lg bg-gradient-to-br ${getThemeColors(theme.id)} border-white/20 h-[360px]`}
         onClick={handleClick}
       >
         <div className="w-full h-48 relative overflow-hidden">
@@ -105,7 +112,7 @@ export default function ThemeCard({ theme, onSelect, isSelecting }: ThemeCardPro
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
         </div>
         <div className="p-4 relative">
-          <Badge className={`mb-2 ${getBadgeColor(theme.id)} text-white font-semibold`}>
+          <Badge className={`mb-2 ${getBadgeColor(theme.id)} text-white font-semibold px-3 py-1 h-[28px]`}>
             {theme.name === "Mythology" ? "🏛️ Mythology" : 
              theme.name === "Space Exploration" ? "🚀 Space" :
              theme.name === "Ancient Kingdoms" ? "👑 Kingdoms" : 
@@ -115,8 +122,8 @@ export default function ThemeCard({ theme, onSelect, isSelecting }: ThemeCardPro
              theme.name === "Ocean Adventures" ? "🌊 Ocean" :
              theme.name === "Future Technology" ? "🤖 Technology" : theme.name}
           </Badge>
-          <h3 className="font-bold text-xl text-white">{theme.name}</h3>
-          <p className="text-white/90 text-sm mt-1">{theme.description}</p>
+          <h3 className="font-bold text-xl text-white h-[30px] flex items-center">{theme.name}</h3>
+          <p className="text-white/90 text-sm mt-1 line-clamp-3 h-[60px]">{truncateDescription(theme.description)}</p>
         </div>
       </Card>
     </motion.div>
