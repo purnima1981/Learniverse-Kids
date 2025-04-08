@@ -107,7 +107,7 @@ export default function AuthPage() {
           <h1 className="font-bold text-4xl mb-6">Welcome to Learniverse</h1>
           <div className="mb-6">
             <img 
-              src="client/src/assets/learniverse-kids.png"
+              src="/learniverse-kids.png"
               alt="Learniverse students learning" 
               className="w-full h-auto rounded-lg shadow-lg"
             />
