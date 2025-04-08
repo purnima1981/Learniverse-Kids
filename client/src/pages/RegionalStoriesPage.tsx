@@ -100,7 +100,11 @@ export default function RegionalStoriesPage() {
   
   // Filter stories by grade and return epics that have at least one matching story
   const filteredEpics = useMemo(() => {
+    // If no user or grade filtering is off, show all epics
     if (!user || !showOnlyGradeAppropriate) return regionalEpics;
+    
+    // Default to grade 5 if no profile is selected yet
+    const userGrade = '5';
     
     return regionalEpics.map(epic => {
       // Create a new epic object with filtered stories
@@ -109,8 +113,8 @@ export default function RegionalStoriesPage() {
           // If a specific grade filter is selected, use that
           return story.grade === selectedGradeFilter;
         } else {
-          // Otherwise filter by user's grade appropriateness
-          return isGradeAppropriate(story.grade, user.grade);
+          // Otherwise filter by the default grade appropriateness
+          return isGradeAppropriate(story.grade, userGrade);
         }
       });
       
@@ -185,7 +189,7 @@ export default function RegionalStoriesPage() {
                     className="rounded text-primary-500 focus:ring-primary-500"
                   />
                   <label htmlFor="grade-filter" className={cn(themeColors.text.primary)}>
-                    Show content for my grade ({user.grade})
+                    Show content for appropriate grade level
                   </label>
                 </div>
                 

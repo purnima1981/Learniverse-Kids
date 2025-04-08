@@ -89,12 +89,8 @@ export default function AuthPage() {
   
   // Redirect if user is already logged in
   if (user) {
-    // If the user has a selected theme, go to dashboard, otherwise to theme selection
-    if (user.themeId) {
-      setLocation("/dashboard");
-    } else {
-      setLocation("/theme-selection");
-    }
+    // Always redirect to personalization for profile setup
+    setLocation("/personalization");
   }
 
   // Login submission handler
@@ -103,12 +99,8 @@ export default function AuthPage() {
       const user = await loginMutation.mutateAsync(data);
       console.log("Login successful, user:", user);
       
-      // Redirect based on whether user has selected a theme
-      if (user.themeId) {
-        setLocation("/dashboard");
-      } else {
-        setLocation("/theme-selection");
-      }
+      // Redirect to personalization to select or create a profile
+      setLocation("/personalization");
     } catch (error) {
       console.error("Login error:", error);
       // Toast notifications are handled by the auth context
@@ -121,8 +113,8 @@ export default function AuthPage() {
       const user = await registerMutation.mutateAsync(data);
       console.log("Registration successful, user:", user);
       
-      // New users should always go to theme selection
-      setLocation("/theme-selection");
+      // New users should always go to personalization to create profiles
+      setLocation("/personalization");
     } catch (error) {
       console.error("Registration error:", error);
       // Toast notifications are handled by the auth context
