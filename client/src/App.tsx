@@ -7,32 +7,9 @@ import Dashboard from "@/pages/Dashboard";
 import StoryReader from "@/pages/StoryReader";
 import ReadingCoach from "@/pages/ReadingCoach";
 import Login from "@/pages/Login";
-import { useAuth } from "./lib/contexts/AuthContext";
-import { useEffect } from "react";
-import { useLocation } from "wouter";
 
-function AppContent() {
-  const { user, loading } = useAuth();
-  const [location, setLocation] = useLocation();
-  
-  useEffect(() => {
-    if (!loading) {
-      // Redirect based on auth state
-      if (!user && !location.startsWith("/register") && !location.startsWith("/login")) {
-        setLocation("/register");
-      } else if (user && !user.themeId && location !== "/theme-selection") {
-        setLocation("/theme-selection");
-      } else if (user && user.themeId && location === "/") {
-        setLocation("/dashboard");
-      }
-    }
-  }, [user, loading, location, setLocation]);
-
-  // Show nothing while initial loading
-  if (loading) {
-    return null;
-  }
-  
+// Simple App component that just renders routes
+function App() {
   return (
     <>
       <Switch>
@@ -48,10 +25,6 @@ function AppContent() {
       <Toaster />
     </>
   );
-}
-
-function App() {
-  return <AppContent />;
 }
 
 export default App;

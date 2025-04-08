@@ -20,8 +20,8 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useLocation } from "wouter";
-import { useAuth } from "@/lib/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
 
 const registerSchema = z.object({
   firstName: z.string().min(2, "First name must be at least 2 characters"),
@@ -35,7 +35,6 @@ const registerSchema = z.object({
 type RegisterValues = z.infer<typeof registerSchema>;
 
 export default function Register() {
-  const { register } = useAuth();
   const [_, setLocation] = useLocation();
   const { toast } = useToast();
 
@@ -53,11 +52,16 @@ export default function Register() {
 
   const onSubmit = async (data: RegisterValues) => {
     try {
-      await register(data);
+      // Use direct API call instead of auth context
+      const response = await apiRequest('POST', '/api/register', data);
+      const user = await response.json();
+      
       toast({
         title: "Registration successful",
         description: "Welcome to Learniverse!",
       });
+      
+      // Navigate to the dashboard/theme selection
       setLocation("/theme-selection");
     } catch (error) {
       console.error("Registration error:", error);
