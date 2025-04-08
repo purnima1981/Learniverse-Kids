@@ -31,7 +31,6 @@ import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 import { FcGoogle } from "react-icons/fc";
 import { SiFacebook, SiApple } from "react-icons/si";
-import gradientBg from "@/assets/gradient-bg.png";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -142,6 +141,11 @@ export default function AuthPage() {
     <div className="min-h-screen flex bg-gradient-to-r from-cyan-400 to-blue-500 overflow-hidden">
       {/* Hero section (left) */}
       <div className="hidden lg:flex lg:w-1/2 flex-col justify-center items-center p-12 relative">
+        <img 
+          src="/assets/login-image.png" 
+          alt="Learniverse illustration showing diverse students learning" 
+          className="absolute h-full w-full object-cover"
+        />
         <div className="text-white z-10 max-w-xl">
           <h1 className="text-5xl font-bold mb-6">Welcome to Learniverse</h1>
           <p className="text-xl mb-8">
