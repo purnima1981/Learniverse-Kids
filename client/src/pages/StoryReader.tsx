@@ -183,18 +183,33 @@ export default function StoryReader() {
         <div className="mb-6">
           <h1 className="font-bold text-3xl mb-2 text-white">Family Adventures</h1>
           <h2 className="text-xl mb-4 text-white">Chapter {chapterNumber}: A Walk to Remember</h2>
+          <div className="flex flex-wrap items-center text-sm mb-3 gap-2">
+            <div className="font-medium text-white mb-1 w-full">Topics:</div>
+            <span className="px-3 py-1 bg-[#8A4FFF]/50 text-white rounded-full text-sm">
+              Shapes (Geometry)
+            </span>
+            <span className="px-3 py-1 bg-[#8A4FFF]/50 text-white rounded-full text-sm">
+              Distance (Measurement)
+            </span>
+            <span className="px-3 py-1 bg-[#8A4FFF]/50 text-white rounded-full text-sm">
+              Energy (Science)
+            </span>
+            <span className="px-3 py-1 bg-[#8A4FFF]/50 text-white rounded-full text-sm">
+              Road Safety
+            </span>
+          </div>
+          
           <div className="flex flex-wrap items-center text-sm mb-6 gap-2">
-            {story.subjects.map((subject, index) => (
-              <span key={index} className="px-3 py-1 bg-cyan-700/50 text-white rounded-full text-sm">
-                {subject}
-              </span>
-            ))}
+            <div className="font-medium text-white mb-1 w-full">Academic Schedule:</div>
+            <span className="px-3 py-1 bg-[#FF6B9D]/50 text-white rounded-full text-sm">
+              Week 3: Geometric Shapes & Physical Science
+            </span>
           </div>
           
           {/* Progress bar */}
           <div className="w-full bg-gray-200/20 rounded-full h-2.5 mb-6">
             <div 
-              className="bg-cyan-600 h-2.5 rounded-full" 
+              className="bg-[#FF6B9D] h-2.5 rounded-full" 
               style={{ width: `${progress}%` }}
             ></div>
           </div>

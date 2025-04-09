@@ -98,11 +98,28 @@ export default function Dashboard() {
 
                   <div className="flex-1">
                     <h3 className="font-bold text-2xl mb-2 text-white">Family Adventures</h3>
-                    <h4 className="text-lg mb-2 text-cyan-400">Chapter 1: A Walk to Remember</h4>
+                    <h4 className="text-lg mb-2 text-[#FF6B9D]">Chapter 1: A Walk to Remember</h4>
                     <div className="flex flex-wrap items-center text-sm mb-3 gap-2">
-                      {currentStory.subjects && currentStory.subjects.map((subject) => (
-                        <SubjectTag key={subject.id} subject={subject} />
-                      ))}
+                      <div className="font-medium text-white mb-1 w-full">Topics:</div>
+                      <span className="px-3 py-1 bg-[#8A4FFF]/50 text-white rounded-full text-sm">
+                        Shapes (Geometry)
+                      </span>
+                      <span className="px-3 py-1 bg-[#8A4FFF]/50 text-white rounded-full text-sm">
+                        Distance (Measurement)
+                      </span>
+                      <span className="px-3 py-1 bg-[#8A4FFF]/50 text-white rounded-full text-sm">
+                        Energy (Science)
+                      </span>
+                      <span className="px-3 py-1 bg-[#8A4FFF]/50 text-white rounded-full text-sm">
+                        Road Safety
+                      </span>
+                    </div>
+                    
+                    <div className="flex flex-wrap items-center text-sm mb-3 gap-2">
+                      <div className="font-medium text-white mb-1 w-full">Academic Schedule:</div>
+                      <span className="px-3 py-1 bg-[#FF6B9D]/50 text-white rounded-full text-sm">
+                        Week 3: Geometric Shapes & Physical Science
+                      </span>
                     </div>
                     <p className="mb-4 text-white">{currentStory.description}</p>
 
