@@ -17,9 +17,22 @@ import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 
 export default function ThemeSelection() {
-  const { user } = useAuth();
+  const { user, logoutMutation } = useAuth();
   const [_, setLocation] = useLocation();
   const { toast } = useToast();
+  
+  const handleLogout = async () => {
+    try {
+      await logoutMutation.mutateAsync();
+      // Redirect to auth page will happen automatically due to protected route
+    } catch (error) {
+      toast({
+        title: "Logout failed",
+        description: "Could not sign out. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
   
   // Use theme data directly since this is a demonstration
   const themes = themeData;
@@ -55,6 +68,17 @@ export default function ThemeSelection() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-cyan-500 to-blue-500 pt-10 pb-20">
       <div className="container mx-auto px-4">
+        {/* Logout Button at the top right */}
+        <div className="flex justify-end mb-4">
+          <button
+            onClick={handleLogout}
+            className="bg-white/20 text-white py-2 px-4 rounded-md hover:bg-white/30 transition-colors flex items-center"
+            disabled={logoutMutation.isPending}
+          >
+            {logoutMutation.isPending ? "Signing Out..." : "Sign Out"}
+          </button>
+        </div>
+      
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: -20 }}

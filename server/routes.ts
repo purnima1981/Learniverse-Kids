@@ -9,6 +9,11 @@ import { analyzeReading, generateReadingPassage } from "./services/openai";
 import { and, desc, eq } from "drizzle-orm";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Redirect root path to auth page
+  app.get("/", (req, res) => {
+    res.redirect("/auth");
+  });
+  
   // Setup authentication
   setupAuth(app);
 

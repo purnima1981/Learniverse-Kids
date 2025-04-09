@@ -12,7 +12,7 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
       description: "Family Adventures showing how subjects integrates into everyday life and learning",
       region: "United States",
       imageUrl: "/epics/family-adventures.svg",
-      themeId: 8,
+      themeId: 2,
       stories: [
         { 
           id: 8001, 
