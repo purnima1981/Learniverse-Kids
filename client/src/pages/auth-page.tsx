@@ -59,10 +59,15 @@ export default function AuthPage() {
   const [_, setLocation] = useLocation();
   const { toast } = useToast();
 
-  // Redirect to dashboard if already logged in
+  // Redirect to appropriate page based on login state and theme selection
   useEffect(() => {
     if (user) {
-      setLocation("/dashboard");
+      // If user has a theme selected, go to dashboard, otherwise go to theme selection
+      if (user.themeId) {
+        setLocation("/dashboard");
+      } else {
+        setLocation("/theme-selection");
+      }
     }
   }, [user, setLocation]);
 
