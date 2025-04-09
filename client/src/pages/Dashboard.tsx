@@ -73,47 +73,6 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Progress Overview */}
-          {progress && (
-            <div className="glass-panel p-6 mb-8">
-              <h2 className="font-bold text-2xl mb-4 text-white">Your Learning Journey</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-white/10 rounded-lg p-4">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="font-semibold text-white">Story Progress</span>
-                    <span className="text-yellow-400 font-bold">{progress.storyProgressPercent}%</span>
-                  </div>
-                  <ProgressBar progress={progress.storyProgressPercent} />
-                  <p className="text-sm mt-2 text-white">
-                    {progress.completedChapters} of {progress.totalChapters} chapters completed
-                  </p>
-                </div>
-                <div className="bg-white/10 rounded-lg p-4">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="font-semibold text-white">Weekly Goal</span>
-                    <span className="text-yellow-400 font-bold">
-                      {progress.daysActive}/5
-                    </span>
-                  </div>
-                  <ProgressBar progress={(progress.daysActive / 5) * 100} />
-                  <p className="text-sm mt-2 text-white">
-                    {progress.daysActive} of 5 days completed
-                  </p>
-                </div>
-                <div className="bg-white/10 rounded-lg p-4">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="font-semibold text-white">Vocabulary Words</span>
-                    <span className="text-yellow-400 font-bold">{progress.vocabularyLearned}</span>
-                  </div>
-                  <ProgressBar progress={(progress.vocabularyLearned / progress.vocabularyGoal) * 100} />
-                  <p className="text-sm mt-2 text-white">
-                    {progress.vocabularyLearned} new words learned
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-
           {/* Current Story */}
           {currentStory && (
             <div className="mb-8">
@@ -127,7 +86,7 @@ export default function Dashboard() {
               <div className="glass-panel p-6">
                 <div className="flex flex-col md:flex-row gap-6">
                   <img
-                    src={currentStory.imageUrl}
+                    src={currentStory.imageUrl || '/epics/family-adventures.svg'}
                     alt={currentStory.title}
                     className="w-full md:w-1/3 rounded-lg object-cover"
                     style={{ maxHeight: "240px" }}
@@ -136,7 +95,7 @@ export default function Dashboard() {
                   <div className="flex-1">
                     <h3 className="font-bold text-2xl mb-2 text-white">{currentStory.title}</h3>
                     <div className="flex flex-wrap items-center text-sm mb-3 gap-2">
-                      {currentStory.subjects.map((subject) => (
+                      {currentStory.subjects && currentStory.subjects.map((subject) => (
                         <SubjectTag key={subject.id} subject={subject} />
                       ))}
                     </div>
@@ -189,29 +148,6 @@ export default function Dashboard() {
               />
             </div>
           </div>
-
-          {/* Recommended Stories */}
-          {recommendedStories && recommendedStories.length > 0 && (
-            <div>
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="font-bold text-2xl text-white">Recommended for You</h2>
-                <div className="flex space-x-2">
-                  <button className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30">
-                    <ChevronLeft className="h-5 w-5" />
-                  </button>
-                  <button className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30">
-                    <ChevronRight className="h-5 w-5" />
-                  </button>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {recommendedStories.map((story) => (
-                  <StoryCard key={story.id} story={story} />
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </div>

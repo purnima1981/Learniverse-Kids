@@ -1,13 +1,8 @@
-import { useQuery, useMutation } from "@tanstack/react-query";
 import { useParams, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, BookmarkIcon, InfoIcon } from "lucide-react";
-import { SubjectTag } from "@/components/SubjectTag";
 import { useState, useEffect } from "react";
-import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import FlashcardDeck, { VocabularyWord } from "@/components/FlashcardDeck";
-import { apiRequest, queryClient } from "@/lib/queryClient";
 import * as StoryService from "@/lib/story-service";
 
 export default function StoryReader() {
@@ -86,22 +81,6 @@ export default function StoryReader() {
       title: "Vocabulary",
       description: "Vocabulary feature coming soon!",
     });
-  };
-  
-  const checkAnswer = () => {
-    if (currentChapter?.question && userAnswer === currentChapter.question.answer) {
-      toast({
-        title: "Correct!",
-        description: "Great job! That's the right answer.",
-        variant: "default",
-      });
-    } else {
-      toast({
-        title: "Try again",
-        description: "That's not quite right. Give it another try!",
-        variant: "destructive",
-      });
-    }
   };
   
   // Show loading state
@@ -194,35 +173,7 @@ export default function StoryReader() {
             <p key={idx}>{paragraph}</p>
           ))}
           
-          {/* Render chapter question if available */}
-          {currentChapter.question && (
-            <div className="bg-white/10 p-4 rounded-lg my-6">
-              <h3 className="font-bold text-xl mb-2 text-white">{currentChapter.question.title}</h3>
-              <p className="mb-2 text-white">{currentChapter.question.description}</p>
-              
-              {currentChapter.question.hint && (
-                <p className="text-sm italic mt-2 text-white/80">Hint: {currentChapter.question.hint}</p>
-              )}
-              
-              <div className="mt-4 flex items-center">
-                <Input
-                  type="text"
-                  placeholder="Enter your answer"
-                  className="flex-1 bg-white/20 border-white/30 text-white placeholder:text-white/50"
-                  value={userAnswer}
-                  onChange={(e) => setUserAnswer(e.target.value)}
-                />
-                <Button 
-                  className="ml-2 bg-yellow-400 hover:bg-yellow-500 text-black font-bold"
-                  onClick={checkAnswer}
-                >
-                  Check
-                </Button>
-              </div>
-            </div>
-          )}
-          
-          {/* Render vocabulary section if available */}
+          {/* Vocabulary section */}
           {currentChapter.vocabularyWords && currentChapter.vocabularyWords.length > 0 && (
             <div className="bg-cyan-800/30 p-4 rounded-lg my-6">
               <h3 className="font-bold text-xl mb-4 text-white">Vocabulary Words</h3>
