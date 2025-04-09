@@ -153,6 +153,8 @@ export default function StoryReader() {
         const scrollPercentage = (scrollTop + clientHeight) / scrollHeight;
         const percent = Math.min(Math.round(scrollPercentage * 100), 100);
         
+        console.log(`Scroll tracking: ${percent}% (${scrollTop}/${scrollHeight})`);
+        
         // Update progress percentage state
         setReadingProgressPercent(percent);
         
@@ -163,16 +165,27 @@ export default function StoryReader() {
       }
     };
     
+    // Initialize immediately when content loads
+    setReadingProgressPercent(10); // Start at 10% instead of 0
+    
     const contentElement = contentRef.current;
     if (contentElement) {
+      // Add both scroll and mousewheel events to catch all scroll actions
       contentElement.addEventListener('scroll', handleScroll);
-      // Initialize reading progress by triggering the handler once
-      handleScroll();
+      contentElement.addEventListener('mousewheel', handleScroll);
+      contentElement.addEventListener('touchmove', handleScroll);
+      
+      // Force a calculation after a short delay to ensure content is fully loaded
+      setTimeout(() => {
+        handleScroll();
+      }, 500);
     }
     
     return () => {
       if (contentElement) {
         contentElement.removeEventListener('scroll', handleScroll);
+        contentElement.removeEventListener('mousewheel', handleScroll);
+        contentElement.removeEventListener('touchmove', handleScroll);
       }
     };
   }, []);
