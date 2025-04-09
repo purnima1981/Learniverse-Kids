@@ -6,7 +6,7 @@ import { regionalEpicsData } from "@/data/regional-epics";
 import { RegionalEpic, Theme } from "@shared/schema";
 import { motion } from "framer-motion";
 import { themeData } from "@/data/themes";
-import { ChevronRight, Globe, BookOpen, MapPin, Filter, X } from "lucide-react";
+import { ChevronRight, Globe, BookOpen, MapPin } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -20,7 +20,6 @@ export default function RegionalStoriesPage() {
   const [_, setLocation] = useLocation();
   const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null);
   const [regionalEpics, setRegionalEpics] = useState<RegionalEpic[]>([]);
-  const [showOnlyGradeAppropriate, setShowOnlyGradeAppropriate] = useState<boolean>(true);
   
   // Get theme colors for dynamic styling
   const themeColors = useMemo(() => {
@@ -77,24 +76,8 @@ export default function RegionalStoriesPage() {
     setLocation(`/dashboard`);
   };
 
-  // Filter stories by grade and return epics that have at least one matching story
-  const filteredEpics = useMemo(() => {
-    // If no user or grade filtering is off, show all epics
-    if (!user || !showOnlyGradeAppropriate) return regionalEpics;
-    
-    // Default to grade 5 if no profile is selected yet
-    const userGrade = user?.grade || '5';
-    
-    return regionalEpics.map(epic => {
-      // Create a new epic object with filtered stories
-      const filteredStories = epic.stories.filter(story => {
-        // Filter by grade appropriateness
-        return isGradeAppropriate(story.grade, userGrade);
-      });
-      
-      return { ...epic, stories: filteredStories };
-    }).filter(epic => epic.stories.length > 0); // Only keep epics with at least one story
-  }, [regionalEpics, user, showOnlyGradeAppropriate]);
+  // Just show all epics and stories without filtering
+  const filteredEpics = regionalEpics;
 
   if (!selectedTheme || regionalEpics.length === 0) {
     return (
@@ -141,34 +124,7 @@ export default function RegionalStoriesPage() {
             </p>
           </motion.div>
           
-          {/* Grade Filter */}
-          {user && (
-            <div className={cn(
-              "mb-8 p-4 rounded-lg backdrop-blur-sm", 
-              themeColors.card.background, 
-              themeColors.card.border
-            )}>
-              <div className="flex items-center gap-3 mb-3">
-                <Filter size={20} className={cn(themeColors.text.primary)} />
-                <h3 className={cn("text-lg font-medium", themeColors.text.primary)}>Personalization Options</h3>
-              </div>
-              
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2">
-                  <input 
-                    type="checkbox" 
-                    id="grade-filter"
-                    checked={showOnlyGradeAppropriate}
-                    onChange={() => setShowOnlyGradeAppropriate(!showOnlyGradeAppropriate)}
-                    className="rounded text-primary-500 focus:ring-primary-500"
-                  />
-                  <label htmlFor="grade-filter" className={cn(themeColors.text.primary)}>
-                    Show content for appropriate grade level
-                  </label>
-                </div>
-              </div>
-            </div>
-          )}
+          {/* Personalization Options removed */}
 
           <div className="grid grid-cols-1 gap-8 mt-6">
             {filteredEpics.length > 0 ? (
@@ -260,7 +216,7 @@ export default function RegionalStoriesPage() {
                         </div>
                       ) : (
                         <p className={cn("text-center p-4 italic", `${themeColors.text.primary}/70`)}>
-                          No stories found for your grade. Try adjusting the filter settings.
+                          No stories available for this theme.
                         </p>
                       )}
                     </div>
@@ -273,19 +229,8 @@ export default function RegionalStoriesPage() {
                 themeColors.card.background,
                 themeColors.card.border
               )}>
-                <div className={cn("text-xl mb-2", themeColors.text.primary)}>No stories match your grade level</div>
-                <p className={cn(`${themeColors.text.primary}/80`)}>Try turning off grade filtering to see all available stories</p>
-                <Button 
-                  className={cn(
-                    "mt-4 bg-gradient-to-r",
-                    themeColors.button.from,
-                    themeColors.button.to
-                  )}
-                  onClick={() => setShowOnlyGradeAppropriate(false)}
-                >
-                  <X size={16} className="mr-2" />
-                  Remove Grade Filter
-                </Button>
+                <div className={cn("text-xl mb-2", themeColors.text.primary)}>No stories available</div>
+                <p className={cn(`${themeColors.text.primary}/80`)}>There are no stories for this theme yet.</p>
               </div>
             )}
           </div>
