@@ -60,7 +60,7 @@ export default function StoryReader() {
   }, [storyId, chapterNumberParam, toast]);
   
   const handleGoBack = () => {
-    setLocation("/regional-stories/8"); // Return to Family Adventures page
+    setLocation("/"); // Return to Dashboard
   };
   
   const handlePreviousChapter = () => {
@@ -127,7 +127,7 @@ export default function StoryReader() {
       <div className="max-w-4xl mx-auto px-4 py-10">
         <div className="glass-panel p-8">
           <h1 className="text-2xl font-bold text-white mb-4">Story not found</h1>
-          <Button onClick={handleGoBack}>Back to Family Adventures</Button>
+          <Button onClick={handleGoBack}>Back to Dashboard</Button>
         </div>
       </div>
     );
@@ -149,7 +149,7 @@ export default function StoryReader() {
           onClick={handleGoBack}
         >
           <ChevronLeft className="h-5 w-5 mr-2" />
-          Back to Family Adventures
+          Back to Dashboard
         </Button>
         <div className="flex space-x-4">
           <Button 
@@ -175,7 +175,7 @@ export default function StoryReader() {
       
       <div className="glass-panel p-8">
         <div className="mb-6">
-          <h1 className="font-bold text-3xl mb-2 text-white">{story.title}</h1>
+          <h1 className="font-bold text-3xl mb-2 text-white">Family Adventures</h1>
           <h2 className="text-xl mb-4 text-white">Chapter {chapterNumber}: {currentChapter.title}</h2>
           <div className="flex flex-wrap items-center text-sm mb-6 gap-2">
             {story.subjects.map((subject, index) => (
