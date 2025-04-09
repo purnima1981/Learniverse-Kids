@@ -93,7 +93,8 @@ export default function AuthPage() {
         password: data.password,
       };
       
-      await loginMutation.mutateAsync(loginData as any);
+      console.log("Submitting login data:", loginData);
+      await loginMutation.mutateAsync(loginData);
       toast({
         title: "Login successful",
         description: "Welcome back to Learniverse!"
@@ -116,7 +117,8 @@ export default function AuthPage() {
         username: data.email, // backend expects username field
       };
       
-      await registerMutation.mutateAsync(registerData as any);
+      console.log("Submitting register data:", registerData);
+      await registerMutation.mutateAsync(registerData);
       toast({
         title: "Registration successful",
         description: "Welcome to Learniverse!"
