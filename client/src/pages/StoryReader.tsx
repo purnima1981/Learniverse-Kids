@@ -195,30 +195,59 @@ export default function StoryReader() {
         </div>
         
         <div className="prose prose-lg prose-invert max-w-none">
-          {/* Render the chapter content as paragraphs */}
-          {currentChapter.content.split('\n\n').map((paragraph, idx) => (
-            <p key={idx}>{paragraph}</p>
-          ))}
-          
-          {/* Vocabulary section */}
-          {currentChapter.vocabularyWords && currentChapter.vocabularyWords.length > 0 && (
-            <div className="bg-cyan-800/30 p-4 rounded-lg my-6">
-              <h3 className="font-bold text-xl mb-4 text-white">Vocabulary Words</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {currentChapter.vocabularyWords.map((word, idx) => (
-                  <div 
-                    key={idx} 
-                    className="bg-white/10 p-3 rounded-lg cursor-pointer hover:bg-white/20 transition-colors"
-                    onClick={() => handleWordClick(word)}
-                  >
-                    <h4 className="font-bold text-cyan-300">{word.word}</h4>
-                    <p className="text-white">{word.definition}</p>
-                    <p className="text-sm text-white/70 mt-1">"{word.context}"</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+          {/* Render the chapter content as paragraphs with highlighted vocabulary words */}
+          {currentChapter.content.split('\n\n').map((paragraph, pidx) => {
+            // Only process if we have vocabulary words
+            if (currentChapter.vocabularyWords && currentChapter.vocabularyWords.length > 0) {
+              let processedParagraph = paragraph;
+              let fragments = [];
+              let lastIndex = 0;
+              
+              // Loop through each vocabulary word
+              currentChapter.vocabularyWords.forEach((word, widx) => {
+                const wordRegex = new RegExp(`\\b${word.word}\\b`, 'gi');
+                let match;
+                
+                // Find all instances of the word in this paragraph
+                while ((match = wordRegex.exec(processedParagraph)) !== null) {
+                  // Add text before the match
+                  if (match.index > lastIndex) {
+                    fragments.push(
+                      <span key={`${pidx}-text-${lastIndex}`}>{processedParagraph.substring(lastIndex, match.index)}</span>
+                    );
+                  }
+                  
+                  // Add the highlighted word
+                  fragments.push(
+                    <span 
+                      key={`${pidx}-word-${match.index}`}
+                      className="font-bold text-cyan-300 cursor-pointer hover:underline"
+                      onClick={() => handleWordClick(word)}
+                    >
+                      {match[0]}
+                    </span>
+                  );
+                  
+                  lastIndex = match.index + match[0].length;
+                }
+              });
+              
+              // Add any remaining text
+              if (lastIndex < processedParagraph.length) {
+                fragments.push(
+                  <span key={`${pidx}-text-${lastIndex}`}>{processedParagraph.substring(lastIndex)}</span>
+                );
+              }
+              
+              // If we found and processed vocabulary words
+              if (fragments.length > 0) {
+                return <p key={pidx}>{fragments}</p>;
+              }
+            }
+            
+            // If no vocabulary words were found or none exist, return the paragraph as is
+            return <p key={pidx}>{paragraph}</p>;
+          })}
         </div>
         
         <div className="flex justify-between mt-8">
