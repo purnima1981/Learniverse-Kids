@@ -76,7 +76,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       queryClient.setQueryData(["/api/user"], user);
       toast({
         title: "Registration successful",
-        description: "Welcome to Learniverse!",
+        description: "Welcome to Learniverse! Let's set up your learning theme.",
       });
     },
     onError: (error: Error) => {
