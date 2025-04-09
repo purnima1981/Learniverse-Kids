@@ -198,6 +198,15 @@ export default function RegionalStoriesPage() {
                                 onClick={() => handleStorySelect(story.id)}
                               >
                                 <div className="p-4">
+                                  {story.imageUrl && (
+                                    <div className="mb-3 rounded-md overflow-hidden h-32 w-full">
+                                      <img 
+                                        src={story.imageUrl} 
+                                        alt={story.title} 
+                                        className="object-cover w-full h-full"
+                                      />
+                                    </div>
+                                  )}
                                   <div className="mb-2">
                                     <h3 className={cn("font-semibold text-lg", themeColors.text.primary)}>{story.title}</h3>
                                   </div>
