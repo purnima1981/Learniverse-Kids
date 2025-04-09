@@ -6,16 +6,19 @@ import StoryCard from "@/components/StoryCard";
 import LearningTool from "@/components/LearningTool";
 import { ChevronLeft, ChevronRight, PlusCircle } from "lucide-react";
 import { useLocation } from "wouter";
-import { Story, UserProgress } from "@shared/schema";
+import { Story, UserProgress, User } from "@shared/schema";
 import { SubjectTag } from "@/components/SubjectTag";
 
 export default function Dashboard() {
-  // Simplified approach without auth for now
-  const user = { 
-    firstName: "Student",
-    grade: "5",
-    themeName: "Family Adventures"
-  };
+  // Get user data from API
+  const { data: userData, isLoading: isUserLoading } = useQuery<User>({
+    queryKey: ['/api/user'],
+  });
+  
+  // Data for display
+  const userName = userData?.firstName || "Student";
+  const userGrade = userData?.grade || "5";
+  const themeName = "Family Adventures";
   const [_, setLocation] = useLocation();
 
   const { data: progress, isLoading: isProgressLoading } = useQuery<UserProgress>({
@@ -37,7 +40,7 @@ export default function Dashboard() {
     }
   };
 
-  if (isProgressLoading || isCurrentStoryLoading || isRecommendedLoading) {
+  if (isUserLoading || isProgressLoading || isCurrentStoryLoading || isRecommendedLoading) {
     return (
       <div className="min-h-screen">
         <Navigation />
@@ -57,10 +60,10 @@ export default function Dashboard() {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
             <div>
               <h1 className="font-bold text-3xl md:text-4xl text-white">
-                Welcome back, {user?.firstName}!
+                Welcome back, {userName}!
               </h1>
               <p className="text-lg mt-1 text-white">
-                Grade {user?.grade} • {user?.themeName} Theme
+                Grade {userGrade} • {themeName} Theme
               </p>
             </div>
             <div className="mt-4 md:mt-0">
