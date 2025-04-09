@@ -17,6 +17,27 @@ import { Card, CardContent } from "@/components/ui/card";
 import ChapterQuestions from "@/components/ChapterQuestions";
 import chapterQuestions, { ChapterQuestionsMap } from "@/data/chapterQuestions";
 
+// Reading Timer Component
+function ReadingTimer({ startTime }: { startTime: number }) {
+  const [timeElapsed, setTimeElapsed] = useState("0:00");
+  
+  useEffect(() => {
+    // Update the timer every second
+    const interval = setInterval(() => {
+      if (startTime) {
+        const seconds = Math.floor((Date.now() - startTime) / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        setTimeElapsed(`${minutes}:${remainingSeconds.toString().padStart(2, '0')}`);
+      }
+    }, 1000);
+    
+    return () => clearInterval(interval);
+  }, [startTime]);
+  
+  return <span>{timeElapsed}</span>;
+}
+
 export default function StoryReader() {
   const { id: storyId, chapter: chapterNumberParam } = useParams();
   const [_, setLocation] = useLocation();
@@ -29,6 +50,8 @@ export default function StoryReader() {
   const [showFlashcard, setShowFlashcard] = useState(false);
   const [showQuestions, setShowQuestions] = useState(false);
   const [hasReadStory, setHasReadStory] = useState(false);
+  const [readingStartTime, setReadingStartTime] = useState<number | null>(null);
+  const [readingTime, setReadingTime] = useState<number>(0);
   const contentRef = useRef<HTMLDivElement>(null);
   
   // Convert storyId and chapterNumber to numbers
@@ -40,6 +63,9 @@ export default function StoryReader() {
     const loadStory = async () => {
       try {
         setLoading(true);
+        setReadingStartTime(null);
+        setReadingTime(0);
+        
         console.log(`Loading story ID: ${storyIdNumber}, chapter: ${chapterNumber}`);
         const storyData = await StoryService.fetchStory(storyIdNumber);
         console.log("Story data loaded:", storyData);
@@ -56,6 +82,8 @@ export default function StoryReader() {
         }
         
         setLoading(false);
+        // Start the reading timer when content loads
+        setReadingStartTime(Date.now());
       } catch (error) {
         console.error("Error loading story:", error);
         toast({
@@ -113,13 +141,22 @@ export default function StoryReader() {
     setHasReadStory(false); // Reset the reading state
   }, [chapterNumber]);
   
+  // State to track reading progress percentage
+  const [readingProgressPercent, setReadingProgressPercent] = useState(0);
+  
   // Add scroll tracking to detect when user has read the story
   useEffect(() => {
     const handleScroll = () => {
       if (contentRef.current) {
         const { scrollTop, scrollHeight, clientHeight } = contentRef.current;
-        // Consider "read" when the user has scrolled to 90% of the content
+        // Calculate scroll percentage (0-100)
         const scrollPercentage = (scrollTop + clientHeight) / scrollHeight;
+        const percent = Math.min(Math.round(scrollPercentage * 100), 100);
+        
+        // Update progress percentage state
+        setReadingProgressPercent(percent);
+        
+        // Consider "read" when the user has scrolled to 90% of the content
         if (scrollPercentage > 0.9) {
           setHasReadStory(true);
         }
@@ -129,6 +166,8 @@ export default function StoryReader() {
     const contentElement = contentRef.current;
     if (contentElement) {
       contentElement.addEventListener('scroll', handleScroll);
+      // Initialize reading progress by triggering the handler once
+      handleScroll();
     }
     
     return () => {
@@ -140,11 +179,30 @@ export default function StoryReader() {
   
   const handleQuizComplete = (analytics: any[]) => {
     console.log("Quiz analytics:", analytics);
+    
+    // Calculate reading time if we started the timer
+    if (readingStartTime) {
+      const readingDuration = Math.floor((Date.now() - readingStartTime) / 1000);
+      setReadingTime(readingDuration);
+      console.log(`Completed reading in ${readingDuration} seconds`);
+      
+      // Add reading time to analytics
+      analytics.push({
+        metric: "reading_time_seconds",
+        value: readingDuration
+      });
+    }
+    
     setQuizAnalytics(analytics);
     setQuizCompleted(true);
     setShowQuestions(false);
+    
     // In a real application, we would submit these analytics to the backend
     // for future analysis, personalization, and educational insights
+    toast({
+      title: "Quiz Completed!",
+      description: readingTime ? `You completed the chapter in ${Math.floor(readingTime / 60)} minutes and ${readingTime % 60} seconds.` : "Great job completing the quiz!"
+    });
   };
   
   const handleBookmark = () => {
@@ -266,13 +324,42 @@ export default function StoryReader() {
             </span>
           </div>
           
-          {/* Progress bar */}
-          <div className="w-full bg-gray-200/20 rounded-full h-2.5 mb-6">
+          {/* Story progress bar */}
+          <div className="w-full bg-gray-200/20 rounded-full h-2.5 mb-2">
             <div 
               className="bg-[#10B981] h-2.5 rounded-full" 
               style={{ width: `${progress}%` }}
             ></div>
           </div>
+          <div className="flex justify-between text-xs text-white/60 mb-4">
+            <span>Story Progress</span>
+            <span>Chapter {chapterNumber} of {story.chapters.length}</span>
+          </div>
+          
+          {/* Reading progress bar */}
+          <div className="w-full bg-gray-200/20 rounded-full h-2.5 mb-2">
+            <div 
+              className="bg-[#2563EB] h-2.5 rounded-full transition-all duration-300" 
+              style={{ width: `${readingProgressPercent}%` }}
+            ></div>
+          </div>
+          <div className="flex justify-between text-xs text-white/60 mb-1">
+            <span>Reading Progress</span>
+            <span>{hasReadStory ? 'Complete!' : `${readingProgressPercent}%`}</span>
+          </div>
+          
+          {/* Reading timer */}
+          {readingStartTime && (
+            <div className="flex justify-end text-xs text-white/60 mb-6">
+              <div className="px-2 py-1 bg-[#2563EB]/20 rounded-md flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <ReadingTimer startTime={readingStartTime} />
+              </div>
+            </div>
+          )}
         </div>
         
         <div className="relative">
