@@ -319,5 +319,6 @@ export interface RegionalEpic {
     id: number;
     title: string;
     grade?: string;  // Make grade optional
+    imageUrl?: string;  // Add optional image URL for story thumbnails
   }[];
 }
