@@ -224,31 +224,31 @@ export const themeColorMap: Record<number, ThemeColors> = {
     }
   },
   
-  // Future Technology Theme
+  // Realistic Fiction Theme
   8: {
-    primary: "violet-600",
-    secondary: "violet-300",
-    accent: "cyan-500",
+    primary: "sky-600",
+    secondary: "sky-300",
+    accent: "amber-500",
     background: {
-      from: "violet-800",
-      to: "purple-900"
+      from: "sky-700",
+      to: "blue-800"
     },
     card: {
-      background: "bg-violet-900/30",
-      border: "border-violet-400/30"
+      background: "bg-sky-800/30",
+      border: "border-sky-400/30"
     },
     text: {
       primary: "text-white",
-      secondary: "text-violet-100"
+      secondary: "text-sky-100"
     },
     button: {
-      from: "from-cyan-400",
-      to: "to-blue-500",
+      from: "from-amber-400",
+      to: "to-orange-500",
       hover: {
-        from: "from-cyan-500",
-        to: "to-blue-600"
+        from: "from-amber-500",
+        to: "to-orange-600"
       },
-      text: "text-violet-900"
+      text: "text-sky-900"
     }
   }
 };

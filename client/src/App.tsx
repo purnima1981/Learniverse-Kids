@@ -35,13 +35,10 @@ function App() {
           <Redirect to="/theme-selection" />
         </Route>
         
-        {/* Default route - redirect to auth page */}
-        <Route path="/">
+        {/* Force all other URLs (including root) to redirect to auth page */}
+        <Route>
           <Redirect to="/auth" />
         </Route>
-        
-        {/* 404 Route */}
-        <Route component={NotFound} />
       </Switch>
       <Toaster />
     </AuthProvider>
