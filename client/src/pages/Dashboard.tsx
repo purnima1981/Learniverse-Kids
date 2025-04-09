@@ -81,7 +81,7 @@ export default function Dashboard() {
           {currentStory && (
             <div className="mb-8">
               <div className="flex justify-between items-center mb-4">
-                <h2 className="font-bold text-2xl text-white">Continue Your Adventure</h2>
+                <h2 className="font-bold text-2xl text-white">Continue Family Adventures</h2>
                 <a href="#" className="text-yellow-400 hover:underline font-semibold">
                   View All Stories
                 </a>
@@ -97,7 +97,8 @@ export default function Dashboard() {
                   />
 
                   <div className="flex-1">
-                    <h3 className="font-bold text-2xl mb-2 text-white">{currentStory.title}</h3>
+                    <h3 className="font-bold text-2xl mb-2 text-white">Family Adventures</h3>
+                    <h4 className="text-lg mb-2 text-cyan-400">Chapter 1: {currentStory.title}</h4>
                     <div className="flex flex-wrap items-center text-sm mb-3 gap-2">
                       {currentStory.subjects && currentStory.subjects.map((subject) => (
                         <SubjectTag key={subject.id} subject={subject} />
