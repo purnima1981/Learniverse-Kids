@@ -11,7 +11,6 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { getThemeColors, isGradeAppropriate } from "@/lib/theme-utils";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { cn } from "@/lib/utils";
 
 export default function RegionalStoriesPage() {
@@ -22,7 +21,6 @@ export default function RegionalStoriesPage() {
   const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null);
   const [regionalEpics, setRegionalEpics] = useState<RegionalEpic[]>([]);
   const [showOnlyGradeAppropriate, setShowOnlyGradeAppropriate] = useState<boolean>(true);
-  const [selectedGradeFilter, setSelectedGradeFilter] = useState<string | null>(null);
   
   // Get theme colors for dynamic styling
   const themeColors = useMemo(() => {
@@ -79,48 +77,24 @@ export default function RegionalStoriesPage() {
     setLocation(`/dashboard`);
   };
 
-  // Get all grade ranges from stories for filtering
-  const allGradeRanges = useMemo(() => {
-    if (!regionalEpics.length) return [];
-    
-    const grades = new Set<string>();
-    regionalEpics.forEach(epic => {
-      epic.stories.forEach(story => {
-        grades.add(story.grade);
-      });
-    });
-    
-    return Array.from(grades).sort((a, b) => {
-      // Sort by the first number in the grade range
-      const aNum = parseInt(a.split('-')[0]);
-      const bNum = parseInt(b.split('-')[0]);
-      return aNum - bNum;
-    });
-  }, [regionalEpics]);
-  
   // Filter stories by grade and return epics that have at least one matching story
   const filteredEpics = useMemo(() => {
     // If no user or grade filtering is off, show all epics
     if (!user || !showOnlyGradeAppropriate) return regionalEpics;
     
     // Default to grade 5 if no profile is selected yet
-    const userGrade = '5';
+    const userGrade = user?.grade || '5';
     
     return regionalEpics.map(epic => {
       // Create a new epic object with filtered stories
       const filteredStories = epic.stories.filter(story => {
-        if (selectedGradeFilter) {
-          // If a specific grade filter is selected, use that
-          return story.grade === selectedGradeFilter;
-        } else {
-          // Otherwise filter by the default grade appropriateness
-          return isGradeAppropriate(story.grade, userGrade);
-        }
+        // Filter by grade appropriateness
+        return isGradeAppropriate(story.grade, userGrade);
       });
       
       return { ...epic, stories: filteredStories };
     }).filter(epic => epic.stories.length > 0); // Only keep epics with at least one story
-  }, [regionalEpics, user, showOnlyGradeAppropriate, selectedGradeFilter]);
+  }, [regionalEpics, user, showOnlyGradeAppropriate]);
 
   if (!selectedTheme || regionalEpics.length === 0) {
     return (
@@ -167,7 +141,7 @@ export default function RegionalStoriesPage() {
             </p>
           </motion.div>
           
-          {/* Grade Filters */}
+          {/* Grade Filter */}
           {user && (
             <div className={cn(
               "mb-8 p-4 rounded-lg backdrop-blur-sm", 
@@ -179,7 +153,7 @@ export default function RegionalStoriesPage() {
                 <h3 className={cn("text-lg font-medium", themeColors.text.primary)}>Personalization Options</h3>
               </div>
               
-              <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+              <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
                   <input 
                     type="checkbox" 
@@ -192,35 +166,6 @@ export default function RegionalStoriesPage() {
                     Show content for appropriate grade level
                   </label>
                 </div>
-                
-                {allGradeRanges.length > 0 && (
-                  <div className={cn(
-                    "flex flex-wrap gap-2", 
-                    !showOnlyGradeAppropriate && "opacity-50 pointer-events-none"
-                  )}>
-                    <span className={cn("self-center mr-1", themeColors.text.primary)}>Grade Range:</span>
-                    <ToggleGroup type="single" value={selectedGradeFilter || ''} onValueChange={(value) => setSelectedGradeFilter(value || null)}>
-                      <ToggleGroupItem value="" className={cn(
-                        themeColors.text.primary, 
-                        `bg-${themeColors.primary}/20`
-                      )}>
-                        All
-                      </ToggleGroupItem>
-                      {allGradeRanges.map(grade => (
-                        <ToggleGroupItem 
-                          key={grade} 
-                          value={grade}
-                          className={cn(
-                            themeColors.text.primary, 
-                            `bg-${themeColors.primary}/20`
-                          )}
-                        >
-                          {grade}
-                        </ToggleGroupItem>
-                      ))}
-                    </ToggleGroup>
-                  </div>
-                )}
               </div>
             </div>
           )}

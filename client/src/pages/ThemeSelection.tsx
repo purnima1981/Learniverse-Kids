@@ -31,7 +31,7 @@ export default function ThemeSelection() {
     onSuccess: (_, themeId) => {
       toast({
         title: "Theme selected!",
-        description: "Now choose a regional story collection",
+        description: "Now choose a collection",
       });
       // Instead of going to dashboard, go to the regional stories page
       setLocation(`/regional-stories/${themeId}`);
