@@ -19,7 +19,7 @@ type AuthContextType = {
 };
 
 type LoginData = {
-  email: string;
+  username: string;
   password: string;
 };
 
@@ -27,6 +27,7 @@ type RegistrationData = {
   firstName: string;
   lastName: string;
   email: string;
+  username: string; // Backend expects username field
   password: string;
   grade: string;
   gender: string;
