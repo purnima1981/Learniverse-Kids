@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 .bg-gradient-learniverse {
-  background: linear-gradient(to right, #8A4FFF, #FF6B9D);
+  background: linear-gradient(to right, #2563EB, #10B981);
 }
 
 .glass-panel {
-  background: rgba(30, 30, 50, 0.4);
+  background: rgba(30, 40, 50, 0.4);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(138, 79, 255, 0.3);
+  border: 1px solid rgba(37, 99, 235, 0.3);
   border-radius: 0.75rem;
 }
 
@@ -20,7 +20,7 @@
 
   body {
     @apply font-sans antialiased;
-    background: linear-gradient(135deg, #332358 0%, #8A4FFF 50%, #FF6B9D 100%);
+    background: linear-gradient(135deg, #0F172A 0%, #2563EB 50%, #10B981 100%);
     min-height: 100vh;
     background-attachment: fixed;
   }
@@ -42,6 +42,6 @@
   }
 
   .story-progress-bar .progress {
-    @apply h-full bg-[#FF6B9D] rounded-full;
+    @apply h-full bg-[#10B981] rounded-full;
   }
 }

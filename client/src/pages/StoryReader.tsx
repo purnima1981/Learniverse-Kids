@@ -201,7 +201,7 @@ export default function StoryReader() {
           
           <div className="flex flex-wrap items-center text-sm mb-6 gap-2">
             <div className="font-medium text-white mb-1 w-full">Academic Schedule:</div>
-            <span className="px-3 py-1 bg-[#FF6B9D]/50 text-white rounded-full text-sm">
+            <span className="px-3 py-1 bg-[#10B981]/50 text-white rounded-full text-sm">
               Week 3: Geometric Shapes & Physical Science
             </span>
           </div>
@@ -209,7 +209,7 @@ export default function StoryReader() {
           {/* Progress bar */}
           <div className="w-full bg-gray-200/20 rounded-full h-2.5 mb-6">
             <div 
-              className="bg-[#FF6B9D] h-2.5 rounded-full" 
+              className="bg-[#10B981] h-2.5 rounded-full" 
               style={{ width: `${progress}%` }}
             ></div>
           </div>
@@ -245,7 +245,7 @@ export default function StoryReader() {
                     fragments.push(
                       <span 
                         key={`${pidx}-word-${match.index}`}
-                        className="font-bold text-[#FF6B9D] cursor-pointer hover:underline"
+                        className="font-bold text-[#10B981] cursor-pointer hover:underline"
                         onClick={() => handleWordClick(word)}
                       >
                         {match[0]}
@@ -286,7 +286,7 @@ export default function StoryReader() {
             Previous Chapter
           </Button>
           <Button
-            className="bg-[#FF6B9D] hover:bg-[#FF4F8B] text-white font-bold"
+            className="bg-[#10B981] hover:bg-[#0D9488] text-white font-bold"
             onClick={handleNextChapter}
             disabled={!nextChapter}
           >
@@ -298,7 +298,7 @@ export default function StoryReader() {
 
       {/* Flashcard Dialog */}
       <Dialog open={showFlashcard} onOpenChange={setShowFlashcard}>
-        <DialogContent className="sm:max-w-md bg-gradient-to-br from-[#332358] to-[#8A4FFF] border-none">
+        <DialogContent className="sm:max-w-md bg-gradient-to-br from-[#0F172A] to-[#2563EB] border-none">
           <DialogHeader>
             <DialogTitle className="text-center text-2xl font-bold text-white mb-2">
               Vocabulary Flashcard
@@ -311,16 +311,16 @@ export default function StoryReader() {
           {selectedWord && (
             <div className="py-4">
               <Card className="bg-white/10 overflow-hidden">
-                <div className="p-4 bg-[#8A4FFF]/50">
+                <div className="p-4 bg-[#2563EB]/50">
                   <h2 className="text-xl font-bold text-center text-white mb-1">
                     {selectedWord.word}
                   </h2>
                 </div>
                 <CardContent className="p-6">
-                  <h3 className="text-lg font-semibold text-[#FF6B9D] mb-2">Definition:</h3>
+                  <h3 className="text-lg font-semibold text-[#10B981] mb-2">Definition:</h3>
                   <p className="text-white mb-4">{selectedWord.definition}</p>
                   
-                  <h3 className="text-lg font-semibold text-[#FF6B9D] mb-2">Example:</h3>
+                  <h3 className="text-lg font-semibold text-[#10B981] mb-2">Example:</h3>
                   <p className="italic text-white/90 bg-white/5 p-3 rounded border border-white/10">
                     "{selectedWord.context}"
                   </p>
@@ -332,7 +332,7 @@ export default function StoryReader() {
           <div className="flex justify-center mt-2">
             <Button 
               variant="outline" 
-              className="bg-[#8A4FFF]/30 hover:bg-[#8A4FFF]/50 border-[#FF6B9D]/50 text-white"
+              className="bg-[#2563EB]/30 hover:bg-[#2563EB]/50 border-[#10B981]/50 text-white"
               onClick={closeFlashcard}
             >
               Close
