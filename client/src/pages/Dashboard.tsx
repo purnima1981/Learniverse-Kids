@@ -98,7 +98,7 @@ export default function Dashboard() {
 
                   <div className="flex-1">
                     <h3 className="font-bold text-2xl mb-2 text-white">Family Adventures</h3>
-                    <h4 className="text-lg mb-2 text-cyan-400">Chapter 1: {currentStory.title}</h4>
+                    <h4 className="text-lg mb-2 text-cyan-400">Chapter 1: A Walk to Remember</h4>
                     <div className="flex flex-wrap items-center text-sm mb-3 gap-2">
                       {currentStory.subjects && currentStory.subjects.map((subject) => (
                         <SubjectTag key={subject.id} subject={subject} />
@@ -116,7 +116,7 @@ export default function Dashboard() {
 
                     <Button
                       onClick={handleContinueReading}
-                      className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold"
+                      className="bg-[#FF6B9D] hover:bg-[#FF4F8B] text-white font-bold"
                     >
                       Continue Reading
                     </Button>
