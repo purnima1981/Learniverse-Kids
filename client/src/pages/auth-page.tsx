@@ -62,7 +62,7 @@ export default function AuthPage() {
   // Redirect to dashboard if already logged in
   useEffect(() => {
     if (user) {
-      setLocation("/theme-selection");
+      setLocation("/dashboard");
     }
   }, [user, setLocation]);
 
