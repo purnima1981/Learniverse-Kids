@@ -353,81 +353,92 @@ export default function StoryReader() {
               <p className="text-lg">Loading chapter content...</p>
             ) : (
               currentChapter.content.split('\n\n').map((paragraph, pidx) => {
-                // Only process if we have vocabulary words
-                if (currentChapter.vocabularyWords && currentChapter.vocabularyWords.length > 0) {
-                  let processedParagraph = paragraph;
-                  let fragments = [];
-                  let lastIndex = 0;
+                if (!currentChapter.vocabularyWords || currentChapter.vocabularyWords.length === 0) {
+                  // If no vocabulary words, just return the paragraph
+                  return <p key={pidx} className="mb-4">{paragraph}</p>;
+                }
+                
+                // Process paragraph with vocabulary words
+                let processedText = paragraph;
+                let highlightedParagraph = [];
+                let lastIndex = 0;
+                
+                // Sort words by their position in the paragraph to avoid overlapping highlights
+                const wordsInParagraph = [];
+                
+                // Find all words in this paragraph and their positions
+                currentChapter.vocabularyWords.forEach(word => {
+                  const wordLower = word.word.toLowerCase();
+                  const paragraphLower = paragraph.toLowerCase();
+                  const index = paragraphLower.indexOf(wordLower);
                   
-                  // Note: We use the componentRef here which is reset when chapter changes
-                  
-                  // Loop through each vocabulary word
-                  currentChapter.vocabularyWords.forEach((word, widx) => {
-                    const wordRegex = new RegExp(`\\b${word.word}\\b`, 'i'); // Only match case-insensitive first occurrence
+                  // Only process if the word is in this paragraph and hasn't been highlighted yet
+                  if (index !== -1 && !highlightedWordsRef.current.has(wordLower)) {
+                    wordsInParagraph.push({
+                      word: word,
+                      index: index,
+                      length: word.word.length
+                    });
                     
-                    // Only find the first instance of each word to avoid duplicates
-                    // But only if we haven't already highlighted this word
-                    if (!highlightedWordsRef.current.has(word.word.toLowerCase())) {
-                      const match = wordRegex.exec(processedParagraph);
-                      
-                      if (match) {
-                        // Add text before the match
-                        if (match.index > lastIndex) {
-                          fragments.push(
-                            <span key={`${pidx}-text-${lastIndex}`}>{processedParagraph.substring(lastIndex, match.index)}</span>
-                          );
-                        }
-                        
-                        // Get color based on subject
-                        const getSubjectColor = (subject?: string) => {
-                          switch (subject) {
-                            case 'Geometry':
-                              return 'text-[#10B981]'; // Green
-                            case 'Physics':
-                              return 'text-[#2563EB]'; // Blue
-                            case 'Materials Science':
-                              return 'text-[#D97706]'; // Amber
-                            case 'Language Arts':
-                              return 'text-[#8B5CF6]'; // Purple
-                            default:
-                              return 'text-[#10B981]'; // Default green
-                          }
-                        };
-
-                        // Add the highlighted word with subject-based color
-                        fragments.push(
-                          <span 
-                            key={`${pidx}-word-${match.index}`}
-                            className={`font-bold ${getSubjectColor(word.subject)} cursor-pointer hover:underline`}
-                            onClick={() => handleWordClick(word)}
-                          >
-                            {match[0]}
-                          </span>
-                        );
-                        
-                        lastIndex = match.index + match[0].length;
-                        
-                        // Add the word to the set of highlighted words
-                        highlightedWordsRef.current.add(word.word.toLowerCase());
-                      }
-                    }
-                  });
-                  
-                  // Add any remaining text
-                  if (lastIndex < processedParagraph.length) {
-                    fragments.push(
-                      <span key={`${pidx}-text-${lastIndex}`}>{processedParagraph.substring(lastIndex)}</span>
+                    // Mark as highlighted so we don't highlight it again
+                    highlightedWordsRef.current.add(wordLower);
+                  }
+                });
+                
+                // Sort words by their position in the paragraph
+                wordsInParagraph.sort((a, b) => a.index - b.index);
+                
+                // Process each word in order
+                wordsInParagraph.forEach((item, idx) => {
+                  // Add text before the word
+                  if (item.index > lastIndex) {
+                    highlightedParagraph.push(
+                      <span key={`${pidx}-text-${lastIndex}`}>
+                        {paragraph.substring(lastIndex, item.index)}
+                      </span>
                     );
                   }
                   
-                  // If we found and processed vocabulary words
-                  if (fragments.length > 0) {
-                    return <p key={pidx} className="mb-4">{fragments}</p>;
-                  }
+                  // Determine color based on subject
+                  const getSubjectColor = (subject?: string) => {
+                    switch (subject) {
+                      case 'Geometry':
+                        return 'text-[#10B981]'; // Green
+                      case 'Physics':
+                        return 'text-[#2563EB]'; // Blue
+                      case 'Materials Science':
+                        return 'text-[#D97706]'; // Amber
+                      case 'Language Arts':
+                        return 'text-[#8B5CF6]'; // Purple
+                      default:
+                        return 'text-[#10B981]'; // Default green
+                    }
+                  };
+                  
+                  // Add the highlighted word
+                  highlightedParagraph.push(
+                    <span 
+                      key={`${pidx}-word-${item.index}`}
+                      className={`font-bold ${getSubjectColor(item.word.subject)} cursor-pointer hover:underline`}
+                      onClick={() => handleWordClick(item.word)}
+                    >
+                      {paragraph.substring(item.index, item.index + item.length)}
+                    </span>
+                  );
+                  
+                  lastIndex = item.index + item.length;
+                });
+                
+                // Add any remaining text
+                if (lastIndex < paragraph.length) {
+                  highlightedParagraph.push(
+                    <span key={`${pidx}-text-${lastIndex}`}>
+                      {paragraph.substring(lastIndex)}
+                    </span>
+                  );
                 }
                 
-                // If no vocabulary words were found or none exist, return the paragraph as is
-                return <p key={pidx} className="mb-4">{paragraph}</p>;
+                return <p key={pidx} className="mb-4">{highlightedParagraph}</p>;
               })
             )}
           </div>
