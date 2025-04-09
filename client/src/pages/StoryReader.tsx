@@ -20,8 +20,8 @@ export default function StoryReader() {
   const [loading, setLoading] = useState(true);
   
   // Convert storyId and chapterNumber to numbers
-  const storyIdNumber = parseInt(storyId);
-  const chapterNumber = parseInt(chapterNumberParam);
+  const storyIdNumber = storyId ? parseInt(storyId) : 8001; // Default to our story ID
+  const chapterNumber = chapterNumberParam ? parseInt(chapterNumberParam) : 1; // Default to chapter 1
   
   // Load story and chapter data
   useEffect(() => {
