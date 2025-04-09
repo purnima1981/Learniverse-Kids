@@ -32,7 +32,8 @@ export default function Dashboard() {
 
   const handleContinueReading = () => {
     if (currentStory) {
-      setLocation(`/story/${currentStory.id}/${currentStory.currentChapter}`);
+      // Start at chapter 1 when continuing the story
+      setLocation(`/story/${currentStory.id}/1`);
     }
   };
 
@@ -103,7 +104,7 @@ export default function Dashboard() {
 
                     <div className="mb-4">
                       <div className="flex justify-between text-sm mb-1 text-white">
-                        <span>Chapter {currentStory.currentChapter}: {currentStory.currentChapterTitle}</span>
+                        <span>Story Progress</span>
                         <span>{currentStory.progressPercent}% Complete</span>
                       </div>
                       <ProgressBar progress={currentStory.progressPercent} />
