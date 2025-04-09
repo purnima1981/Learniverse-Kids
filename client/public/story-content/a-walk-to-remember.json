@@ -12,52 +12,62 @@
         {
           "word": "octagon",
           "definition": "A flat shape with eight straight sides and eight angles.",
-          "context": "Stop signs are shaped like octagons, which are eight-sided figures."
+          "context": "Stop signs are shaped like octagons, which are eight-sided figures.",
+          "subject": "Geometry"
         },
         {
           "word": "pentagon",
           "definition": "A flat shape with five straight sides and five angles.",
-          "context": "School zone signs are shaped like pentagons, which are five-sided figures."
+          "context": "School zone signs are shaped like pentagons, which are five-sided figures.",
+          "subject": "Geometry"
         },
         {
           "word": "triangular",
           "definition": "Having three sides or corners; shaped like a triangle.",
-          "context": "Most houses have triangular roofs to help snow and rain slide off."
+          "context": "Most houses have triangular roofs to help snow and rain slide off.",
+          "subject": "Geometry"
         },
         {
           "word": "rhombus",
           "definition": "A four-sided shape where all sides have equal length; a diamond shape.",
-          "context": "Ethan drew a rhombus in the dirt and showed how a diagonal line splits it into two triangles."
+          "context": "Ethan drew a rhombus in the dirt and showed how a diagonal line splits it into two triangles.",
+          "subject": "Geometry"
         },
         {
           "word": "congruent",
           "definition": "Identical in form, having exactly the same size and shape.",
-          "context": "A diagonal line splits a diamond into two congruent triangles."
+          "context": "A diagonal line splits a diamond into two congruent triangles.",
+          "subject": "Geometry"
         },
         {
           "word": "potential energy",
           "definition": "Stored energy that an object has due to its position or state.",
-          "context": "When we walk uphill, our bodies store potential energy because of our height above the ground."
+          "context": "When we walk uphill, our bodies store potential energy because of our height above the ground.",
+          "subject": "Physics"
         },
         {
           "word": "kinetic energy",
           "definition": "Energy of motion; the energy an object possesses due to its movement.",
-          "context": "Potential energy turns into kinetic energy when objects move downhill."
+          "context": "Potential energy turns into kinetic energy when objects move downhill.",
+          "subject": "Physics"
         },
         {
           "word": "air resistance",
           "definition": "A force that opposes the motion of an object through air.",
-          "context": "Air resistance is a force that impedes us when we move forward against the wind."
+          "context": "Air resistance is a force that impedes us when we move forward against the wind.",
+          "subject": "Physics"
         },
         {
           "word": "personification",
           "definition": "Giving human qualities or abilities to something that is not human.",
-          "context": "Saying the wind plays a song is personification because it gives human qualities to the wind."
+          "context": "Saying the wind plays a song is personification because it gives human qualities to the wind.",
+          "subject": "Language Arts"
         },
         {
           "word": "resilient",
           "definition": "Able to withstand or recover quickly from difficult conditions.",
-          "context": "Wood isn't as resilient outdoors as metal unless it's properly treated."
+          "context": "Wood isn't as resilient outdoors as metal unless it's properly treated.",
+          "subject": "Materials Science"
         }
       ]
     }

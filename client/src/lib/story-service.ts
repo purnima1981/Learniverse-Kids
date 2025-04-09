@@ -22,6 +22,7 @@ export interface VocabularyWord {
   word: string;
   definition: string;
   context: string;
+  subject?: string;
 }
 
 export interface Question {
