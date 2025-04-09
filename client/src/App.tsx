@@ -4,7 +4,6 @@ import NotFound from "@/pages/not-found";
 import ThemeSelection from "@/pages/ThemeSelection";
 import Dashboard from "@/pages/Dashboard";
 import StoryReader from "@/pages/StoryReader";
-import ReadingCoach from "@/pages/ReadingCoach";
 import AuthPage from "@/pages/auth-page";
 import RegionalStoriesPage from "@/pages/RegionalStoriesPage";
 import { ProtectedRoute } from "@/lib/protected-route";
@@ -22,7 +21,6 @@ function App() {
         <ProtectedRoute path="/dashboard" component={Dashboard} />
         <ProtectedRoute path="/theme-selection" component={ThemeSelection} />
         <ProtectedRoute path="/regional-stories/:themeId" component={RegionalStoriesPage} />
-        <ProtectedRoute path="/reading-coach" component={ReadingCoach} />
         
         {/* Redirects */}
         <Route path="/login">
@@ -33,6 +31,12 @@ function App() {
         </Route>
         <Route path="/personalization">
           <Redirect to="/theme-selection" />
+        </Route>
+        <Route path="/reading-coach">
+          <Redirect to="/dashboard" />
+        </Route>
+        <Route path="/challenges">
+          <Redirect to="/dashboard" />
         </Route>
         
         {/* Home page */}

@@ -147,27 +147,15 @@ export default function Dashboard() {
           <div className="mb-8">
             <h2 className="font-bold text-2xl mb-4 text-white">Learning Tools</h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <LearningTool
-                title="AI Reading Coach"
-                description="Practice reading aloud and get instant feedback to improve your reading fluency and comprehension."
-                icon="book"
-                onClick={() => setLocation("/reading-coach")}
-              />
-
-              <LearningTool
-                title="Vocabulary Flashcards"
-                description="Review and learn new words with interactive flashcards that build your vocabulary for SAT and beyond."
-                icon="cards"
-                onClick={() => setLocation("/flashcards")}
-              />
-
-              <LearningTool
-                title="Practice Challenges"
-                description="Test your knowledge with olympiad-style questions that align with your school curriculum."
-                icon="test"
-                onClick={() => setLocation("/challenges")}
-              />
+            <div className="flex justify-center">
+              <div className="w-full max-w-md">
+                <LearningTool
+                  title="Vocabulary Flashcards"
+                  description="Review and learn new words with interactive flashcards that build your vocabulary for success in school and beyond."
+                  icon="cards"
+                  onClick={() => setLocation("/flashcards")}
+                />
+              </div>
             </div>
           </div>
         </div>
