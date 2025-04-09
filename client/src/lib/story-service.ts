@@ -34,7 +34,8 @@ export interface Question {
 // Fetch a story by ID
 export async function fetchStory(storyId: number): Promise<Story> {
   try {
-    // For now, we'll fetch from static JSON files in the public folder
+    // For now, we'll always fetch our one story regardless of ID
+    // This would be updated when we have more stories
     const response = await fetch(`/story-content/a-walk-to-remember.json`);
     
     if (!response.ok) {

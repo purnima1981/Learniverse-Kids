@@ -295,7 +295,7 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
         { 
           id: 8001, 
           title: "A Walk to Remember",
-          imageUrl: "/story-thumbnails/a-walk-to-remember.png" 
+          imageUrl: "/stories/a-walk-to-remember.png" 
         },
         { id: 8002, title: "The Park Adventure" },
         { id: 8003, title: "The Long Drive" },

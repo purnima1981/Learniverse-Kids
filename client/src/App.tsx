@@ -16,12 +16,12 @@ function App() {
       <Switch>
         {/* Public routes */}
         <Route path="/auth" component={AuthPage} />
+        <Route path="/story/:id/:chapter" component={StoryReader} />
         
         {/* Protected routes */}
         <ProtectedRoute path="/dashboard" component={Dashboard} />
         <ProtectedRoute path="/theme-selection" component={ThemeSelection} />
         <ProtectedRoute path="/regional-stories/:themeId" component={RegionalStoriesPage} />
-        <ProtectedRoute path="/story/:id/:chapter" component={StoryReader} />
         <ProtectedRoute path="/reading-coach" component={ReadingCoach} />
         
         {/* Redirects */}

@@ -96,13 +96,7 @@
           "definition": "Pleasant-sounding and tuneful; having a melody.",
           "context": "The wind chimes created a melodic farewell to our adventure."
         }
-      ],
-      "question": {
-        "title": "Learning Journey",
-        "description": "How long did the walking journey take, from start to finish?",
-        "hint": "Find the start and end times mentioned in the story and calculate the difference.",
-        "answer": "45 minutes"
-      }
+      ]
     }
   ],
   "subjects": ["Mathematics", "Physics", "Architecture", "Observation"],

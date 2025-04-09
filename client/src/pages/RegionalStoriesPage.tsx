@@ -67,13 +67,12 @@ export default function RegionalStoriesPage() {
   };
 
   const handleStorySelect = (storyId: number) => {
-    // In a production app, this would navigate to the story reader
+    // Navigate to the story reader, starting with chapter 1
+    setLocation(`/story/${storyId}/1`);
     toast({
-      title: "Story selected!",
-      description: "You've selected a story to read",
+      title: "Loading story...",
+      description: "Preparing your reading experience",
     });
-    // Just as an example for now
-    setLocation(`/dashboard`);
   };
 
   // Just show all epics and stories without filtering
