@@ -39,14 +39,16 @@ export const themeData: Theme[] = [
   },
   {
     id: 7,
-    name: "Ocean Adventures",
-    description: "Dive deep into marine biology, oceanography and nautical history",
+    name: "Historical Voyages",
+    description: "Trace the intersection of geography, maritime engineering, and cultural exchanges as explorers navigated the globe.",
+
+
     imageUrl: "/themes/themes-cover.png" // Using our custom image
   },
   {
     id: 8,
-    name: "Future Technology",
-    description: "Explore how science and innovation will shape our tomorrow",
+    name: "Realistic Fiction",
+    description: "Delve into authentic stories with realistic settings and plausible events",
     imageUrl: "/themes/themes-cover.png" // Using our custom image
   }
 ];

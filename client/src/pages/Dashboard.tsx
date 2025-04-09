@@ -14,7 +14,7 @@ export default function Dashboard() {
   const user = { 
     firstName: "Student",
     grade: "5",
-    themeName: "Space Exploration"
+    themeName: "Family Adventures"
   };
   const [_, setLocation] = useLocation();
 

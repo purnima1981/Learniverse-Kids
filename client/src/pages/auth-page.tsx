@@ -33,8 +33,8 @@ import { FcGoogle } from "react-icons/fc";
 import { SiFacebook, SiApple } from "react-icons/si";
 
 // Import the images directly from the assets folder
-import loginBackground from "../assets/login-background.png";
-import learniverseCharacters from "../assets/images/learniverse-characters.png";
+
+import learniverseCharacters from "../assets/images/learniverse-kids.png";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -148,11 +148,6 @@ export default function AuthPage() {
       {/* Hero section (left) */}
       <div className="hidden lg:block lg:w-1/2 relative">
         <div className="absolute inset-0 bg-gradient-to-r from-[#36D7B7]/80 to-[#45AEF5]/80 z-10"></div>
-        <img 
-          src={loginBackground}
-          alt="Learniverse illustration showing diverse students learning" 
-          className="absolute w-full h-full object-cover"
-        />
         <div className="relative flex flex-col justify-center h-full p-12 z-20">
           <div className="text-white z-20 max-w-xl">
             <h1 className="text-5xl font-bold mb-6">Welcome to Learniverse</h1>
@@ -181,9 +176,9 @@ export default function AuthPage() {
               <div className="bg-white/20 backdrop-blur-sm rounded-xl p-5 hover:bg-white/30 transition-all duration-300 transform hover:-translate-y-1">
                 <div className="flex items-center mb-3">
                   <div className="h-4 w-4 bg-[#36D7B7] rounded-full mr-3"></div>
-                  <h3 className="text-xl font-semibold">Vocabulary Builder</h3>
+                  <h3 className="text-xl font-semibold">Connected Platform</h3>
                 </div>
-                <p className="text-white/90 text-sm">Interactive flashcards for building a strong foundation for SAT and beyond</p>
+                <p className="text-white/90 text-sm">Cetralized platform that connects parents, teachers,students and tutors</p>
               </div>
               
               <div className="bg-white/20 backdrop-blur-sm rounded-xl p-5 hover:bg-white/30 transition-all duration-300 transform hover:-translate-y-1">

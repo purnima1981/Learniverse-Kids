@@ -286,26 +286,20 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
   8: [
     {
       id: 801,
-      name: "Silicon Valley Innovations",
-      description: "How American entrepreneurs changed the digital world",
+      name: "Family Adventures",
+      description: "Family Adventures showing how subjects integrates into everyday life and learning",
       region: "United States",
       imageUrl: "/epics/silicon-valley.svg",
       themeId: 8,
       stories: [
-        { id: 8001, title: "From Garage to Global: The Computer Revolution", grade: "5-8" },
-        { id: 8002, title: "Smartphone World: Always Connected", grade: "4-6" }
-      ]
-    },
-    {
-      id: 802,
-      name: "Asian Tech Giants",
-      description: "East Asian leaders in robotics, electronics and more",
-      region: "East Asia",
-      imageUrl: "/epics/asian-tech.svg",
-      themeId: 8,
-      stories: [
-        { id: 8003, title: "Japan's Robot Revolution", grade: "4-6" },
-        { id: 8004, title: "Korea's Digital Society", grade: "6-8" }
+        { id: 8001, title: "The Weekend Walk", grade: "5" },
+
+        { id: 8002, title: "The Park Adventure", grade: "5" },
+
+        { id: 8003, title: "The Long Drive", grade: "5" },
+
+        { id: 8004, title: "The Backyard Project ", grade: "5" }
+
       ]
     }
   ]
