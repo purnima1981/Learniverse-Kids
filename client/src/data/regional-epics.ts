@@ -292,10 +292,10 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
       imageUrl: "/epics/family-adventures.svg",
       themeId: 8,
       stories: [
-        { id: 8001, title: "The Weekend Walk", grade: "3-5" },
-        { id: 8002, title: "The Park Adventure", grade: "3-5" },
-        { id: 8003, title: "The Long Drive", grade: "3-5" },
-        { id: 8004, title: "The Backyard Project", grade: "3-5" }
+        { id: 8001, title: "The Weekend Walk" },
+        { id: 8002, title: "The Park Adventure" },
+        { id: 8003, title: "The Long Drive" },
+        { id: 8004, title: "The Backyard Project" }
       ]
     }
   ]

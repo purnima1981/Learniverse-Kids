@@ -198,13 +198,8 @@ export default function RegionalStoriesPage() {
                                 onClick={() => handleStorySelect(story.id)}
                               >
                                 <div className="p-4">
-                                  <div className="flex justify-between items-start mb-2">
+                                  <div className="mb-2">
                                     <h3 className={cn("font-semibold text-lg", themeColors.text.primary)}>{story.title}</h3>
-                                    <Badge className={cn(
-                                      "font-semibold py-1 px-2",
-                                      themeColors.text.primary, 
-                                      `bg-${themeColors.accent}/60`
-                                    )}>{story.grade}</Badge>
                                   </div>
                                   <div className={cn("flex items-center text-sm mt-3", `${themeColors.text.primary}/80`)}>
                                     <BookOpen size={14} className="mr-2" />
