@@ -1,8 +1,9 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
-import { MicIcon, StopCircleIcon, PlayIcon, RefreshCwIcon } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { MicIcon, StopCircleIcon, PlayIcon, RefreshCwIcon, VolumeIcon, Volume2Icon } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
@@ -19,16 +20,98 @@ export default function AIReadingCoach() {
     feedback: string;
   }>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [recognitionActive, setRecognitionActive] = useState(false);
+  const [recordingTime, setRecordingTime] = useState(0);
+  const [confidenceLevel, setConfidenceLevel] = useState(0);
   const { toast } = useToast();
+  
+  // References
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
+  const audioPlayerRef = useRef<HTMLAudioElement | null>(null);
+  const timerRef = useRef<number | null>(null);
+  const speechRecognitionRef = useRef<any>(null);
+  
+  // TypeScript interface for SpeechRecognition
+  interface SpeechRecognitionEvent {
+    results: {
+      [key: number]: {
+        [key: number]: {
+          transcript: string;
+          confidence: number;
+        };
+      };
+      length: number;
+    };
+  }
+
+  interface SpeechRecognition {
+    new(): SpeechRecognition;
+    continuous: boolean;
+    interimResults: boolean;
+    lang: string;
+    start(): void;
+    stop(): void;
+    onresult: (event: SpeechRecognitionEvent) => void;
+    onend: () => void;
+  }
+
+  // Initialize SpeechRecognition API (if available)
+  useEffect(() => {
+    // Feature detection for the SpeechRecognition API
+    const SpeechRecognitionAPI = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (SpeechRecognitionAPI) {
+      const recognition = new SpeechRecognitionAPI() as SpeechRecognition;
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.lang = 'en-US';
+      
+      recognition.onresult = (event: any) => {
+        const result = event.results[event.results.length - 1];
+        const transcript = result[0].transcript;
+        const confidence = result[0].confidence;
+        setConfidenceLevel(Math.round(confidence * 100));
+      };
+      
+      recognition.onend = () => {
+        if (recognitionActive) {
+          recognition.start();
+        }
+      };
+      
+      speechRecognitionRef.current = recognition;
+    }
+    
+    return () => {
+      if (speechRecognitionRef.current) {
+        speechRecognitionRef.current.stop();
+      }
+      
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+      
+      if (audioPlayerRef.current) {
+        audioPlayerRef.current.pause();
+      }
+    };
+  }, [recognitionActive]);
 
   const startRecording = async () => {
     try {
+      // Reset state
+      setAudioUrl(null);
       audioChunksRef.current = [];
+      setRecordingTime(0);
+      setConfidenceLevel(0);
+      
+      // Request microphone access
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const mediaRecorder = new MediaRecorder(stream);
       
+      // Set up recorder event handlers
       mediaRecorder.ondataavailable = (event) => {
         if (event.data.size > 0) {
           audioChunksRef.current.push(event.data);
@@ -36,16 +119,47 @@ export default function AIReadingCoach() {
       };
       
       mediaRecorder.onstop = async () => {
+        // Create audio blob from chunks
         const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/mp3' });
+        
+        // Create URL for playback
+        const url = URL.createObjectURL(audioBlob);
+        setAudioUrl(url);
+        
+        // Process the audio with AI
         await processAudio(audioBlob);
         
         // Stop all tracks to release the microphone
         stream.getTracks().forEach(track => track.stop());
+        
+        // Stop timer
+        if (timerRef.current) {
+          clearInterval(timerRef.current);
+          timerRef.current = null;
+        }
+        
+        // Stop speech recognition
+        if (speechRecognitionRef.current) {
+          speechRecognitionRef.current.stop();
+          setRecognitionActive(false);
+        }
       };
       
+      // Start recording
       mediaRecorderRef.current = mediaRecorder;
-      mediaRecorder.start();
+      mediaRecorder.start(1000); // Collect data every second
       setIsRecording(true);
+      
+      // Start timer
+      timerRef.current = window.setInterval(() => {
+        setRecordingTime(prev => prev + 1);
+      }, 1000) as unknown as number;
+      
+      // Start speech recognition if available
+      if (speechRecognitionRef.current) {
+        setRecognitionActive(true);
+        speechRecognitionRef.current.start();
+      }
       
       toast({
         title: "Recording started",
@@ -65,10 +179,44 @@ export default function AIReadingCoach() {
     if (mediaRecorderRef.current && isRecording) {
       mediaRecorderRef.current.stop();
       setIsRecording(false);
+      
+      // Stop timer
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+      
+      // Stop speech recognition
+      if (speechRecognitionRef.current) {
+        speechRecognitionRef.current.stop();
+        setRecognitionActive(false);
+      }
+      
       toast({
         title: "Recording finished",
         description: "Processing your reading...",
       });
+    }
+  };
+  
+  const playRecording = () => {
+    if (audioUrl) {
+      if (!audioPlayerRef.current) {
+        audioPlayerRef.current = new Audio(audioUrl);
+        audioPlayerRef.current.onended = () => {
+          setIsPlaying(false);
+        };
+      }
+      
+      audioPlayerRef.current.play();
+      setIsPlaying(true);
+    }
+  };
+  
+  const pausePlayback = () => {
+    if (audioPlayerRef.current) {
+      audioPlayerRef.current.pause();
+      setIsPlaying(false);
     }
   };
   
@@ -137,6 +285,13 @@ export default function AIReadingCoach() {
     }
   };
   
+  // Format seconds to MM:SS
+  const formatTime = (seconds: number): string => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+  };
+
   return (
     <div className="space-y-6">
       <Card className="p-6 glass-panel">
@@ -149,6 +304,21 @@ export default function AIReadingCoach() {
         <div className="bg-white/10 p-4 rounded-lg mb-4">
           <p className="text-white">{sampleText}</p>
         </div>
+        
+        {isRecording && (
+          <div className="mb-4">
+            <div className="flex justify-between items-center mb-2">
+              <div className="flex items-center">
+                <div className="h-3 w-3 rounded-full bg-red-500 animate-pulse mr-2"></div>
+                <span className="text-white text-sm">Recording {formatTime(recordingTime)}</span>
+              </div>
+              {confidenceLevel > 0 && (
+                <span className="text-white text-sm">Confidence: {confidenceLevel}%</span>
+              )}
+            </div>
+            <Progress value={confidenceLevel} className="h-1 bg-white/20" />
+          </div>
+        )}
         
         <div className="flex justify-between">
           <Button 
@@ -195,6 +365,30 @@ export default function AIReadingCoach() {
               <div className="bg-white/10 p-4 rounded-lg mb-4">
                 <p className="text-white">{transcript}</p>
               </div>
+              
+              {audioUrl && (
+                <div className="flex justify-end mb-4">
+                  {!isPlaying ? (
+                    <Button
+                      variant="outline"
+                      className="bg-white/20 hover:bg-white/30 text-white border-transparent"
+                      onClick={playRecording}
+                    >
+                      <VolumeIcon className="h-4 w-4 mr-2" />
+                      Listen to Recording
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="outline"
+                      className="bg-white/20 hover:bg-white/30 text-white border-transparent"
+                      onClick={pausePlayback}
+                    >
+                      <StopCircleIcon className="h-4 w-4 mr-2" />
+                      Stop
+                    </Button>
+                  )}
+                </div>
+              )}
               
               {feedback && (
                 <div className="space-y-4">
