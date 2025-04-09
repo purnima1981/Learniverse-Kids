@@ -143,10 +143,10 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen flex bg-gradient-to-r from-[#1E88E5] via-[#FFC107] to-[#F44336] overflow-hidden">
+    <div className="min-h-screen flex bg-gradient-to-r from-[#36D7B7] to-[#45AEF5] overflow-hidden">
       {/* Hero section (left) */}
       <div className="hidden lg:block lg:w-1/2 relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1E88E5]/80 via-[#FFC107]/70 to-[#F44336]/80 z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#36D7B7]/80 to-[#45AEF5]/80 z-10"></div>
         <img 
           src={loginBackground}
           alt="Learniverse illustration showing diverse students learning" 
@@ -158,28 +158,57 @@ export default function AuthPage() {
             <p className="text-xl mb-8">
               An innovative educational platform that connects various subjects through themed stories, making learning more engaging and effective for students in grades 1-8.
             </p>
-            <div className="bg-white/20 backdrop-blur-sm rounded-xl p-6">
-              <h3 className="text-2xl font-semibold mb-4">Features include:</h3>
+            
+            {/* Feature highlight cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+              <div className="bg-white/20 backdrop-blur-sm rounded-xl p-5 hover:bg-white/30 transition-all duration-300 transform hover:-translate-y-1">
+                <div className="flex items-center mb-3">
+                  <div className="h-4 w-4 bg-[#36D7B7] rounded-full mr-3"></div>
+                  <h3 className="text-xl font-semibold">Story-Based Learning</h3>
+                </div>
+                <p className="text-white/90 text-sm">Engaging narratives that connect different subjects in a meaningful context</p>
+              </div>
+              
+              <div className="bg-white/20 backdrop-blur-sm rounded-xl p-5 hover:bg-white/30 transition-all duration-300 transform hover:-translate-y-1">
+                <div className="flex items-center mb-3">
+                  <div className="h-4 w-4 bg-[#45AEF5] rounded-full mr-3"></div>
+                  <h3 className="text-xl font-semibold">AI Reading Coach</h3>
+                </div>
+                <p className="text-white/90 text-sm">Personalized reading assistance and feedback for continuous improvement</p>
+              </div>
+              
+              <div className="bg-white/20 backdrop-blur-sm rounded-xl p-5 hover:bg-white/30 transition-all duration-300 transform hover:-translate-y-1">
+                <div className="flex items-center mb-3">
+                  <div className="h-4 w-4 bg-[#36D7B7] rounded-full mr-3"></div>
+                  <h3 className="text-xl font-semibold">Vocabulary Builder</h3>
+                </div>
+                <p className="text-white/90 text-sm">Interactive flashcards for building a strong foundation for SAT and beyond</p>
+              </div>
+              
+              <div className="bg-white/20 backdrop-blur-sm rounded-xl p-5 hover:bg-white/30 transition-all duration-300 transform hover:-translate-y-1">
+                <div className="flex items-center mb-3">
+                  <div className="h-4 w-4 bg-[#45AEF5] rounded-full mr-3"></div>
+                  <h3 className="text-xl font-semibold">Progress Tracking</h3>
+                </div>
+                <p className="text-white/90 text-sm">Detailed analytics to monitor learning achievements and areas for growth</p>
+              </div>
+            </div>
+
+            {/* Additional educational benefits section */}
+            <div className="bg-white/20 backdrop-blur-sm rounded-xl p-5 mb-4">
+              <h3 className="text-xl font-semibold mb-3">Educational Benefits</h3>
               <ul className="space-y-2">
-                <li className="flex items-center">
-                  <div className="h-2 w-2 bg-[#1E88E5] rounded-full mr-2"></div>
-                  <span>Personalized learning experiences</span>
+                <li className="flex items-start">
+                  <div className="h-2 w-2 bg-[#36D7B7] rounded-full mr-2 mt-2"></div>
+                  <span>Improved retention through contextual learning</span>
                 </li>
-                <li className="flex items-center">
-                  <div className="h-2 w-2 bg-[#FFC107] rounded-full mr-2"></div>
-                  <span>Interactive story-based learning</span>
+                <li className="flex items-start">
+                  <div className="h-2 w-2 bg-[#45AEF5] rounded-full mr-2 mt-2"></div>
+                  <span>Interdisciplinary approach connecting multiple subjects</span>
                 </li>
-                <li className="flex items-center">
-                  <div className="h-2 w-2 bg-[#F44336] rounded-full mr-2"></div>
-                  <span>AI-powered reading coach</span>
-                </li>
-                <li className="flex items-center">
-                  <div className="h-2 w-2 bg-[#FFC107] rounded-full mr-2"></div>
-                  <span>Vocabulary building with flashcards</span>
-                </li>
-                <li className="flex items-center">
-                  <div className="h-2 w-2 bg-[#1E88E5] rounded-full mr-2"></div>
-                  <span>Progress tracking and analytics</span>
+                <li className="flex items-start">
+                  <div className="h-2 w-2 bg-[#36D7B7] rounded-full mr-2 mt-2"></div>
+                  <span>Culturally diverse content from regional epics</span>
                 </li>
               </ul>
             </div>
@@ -245,7 +274,7 @@ export default function AuthPage() {
 
                     <Button
                       type="submit"
-                      className="w-full py-6 bg-[#F44336] hover:bg-[#E53935] text-white font-bold"
+                      className="w-full py-6 bg-[#36D7B7] hover:bg-[#27c9a9] text-white font-bold"
                       disabled={loginMutation.isPending}
                     >
                       {loginMutation.isPending ? "Logging in..." : "SIGN IN"}
@@ -291,7 +320,7 @@ export default function AuthPage() {
                       Don't have an account?{" "}
                       <button
                         type="button"
-                        className="text-[#FFC107] hover:underline font-medium"
+                        className="text-[#45AEF5] hover:underline font-medium"
                         onClick={() => setActiveTab("register")}
                       >
                         Register now
@@ -439,7 +468,7 @@ export default function AuthPage() {
 
                     <Button
                       type="submit"
-                      className="w-full py-6 bg-[#1E88E5] hover:bg-[#1976D2] text-white font-bold"
+                      className="w-full py-6 bg-[#45AEF5] hover:bg-[#3498db] text-white font-bold"
                       disabled={registerMutation.isPending}
                     >
                       {registerMutation.isPending ? "Creating account..." : "CREATE ACCOUNT"}
@@ -485,7 +514,7 @@ export default function AuthPage() {
                       Already have an account?{" "}
                       <button
                         type="button"
-                        className="text-[#F44336] hover:underline font-medium"
+                        className="text-[#36D7B7] hover:underline font-medium"
                         onClick={() => setActiveTab("login")}
                       >
                         Sign in
