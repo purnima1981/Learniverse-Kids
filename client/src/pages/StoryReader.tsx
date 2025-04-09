@@ -31,8 +31,7 @@ export default function StoryReader() {
   const [hasReadStory, setHasReadStory] = useState(false);
   const [readingStartTime, setReadingStartTime] = useState<number | null>(null);
   const [readingTime, setReadingTime] = useState<number>(0);
-  // Create a simple array to track highlighted words in this component instance
-  const highlightedWordsRef = useRef<string[]>([]);
+  // We no longer need highlightedWordsRef since we're using hardcoded highlights
   const contentRef = useRef<HTMLDivElement>(null);
   
   // Convert storyId and chapterNumber to numbers
@@ -114,15 +113,12 @@ export default function StoryReader() {
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [quizAnalytics, setQuizAnalytics] = useState<any[]>([]);
   
-  // Reset quiz state and highlighted words when changing chapters
+  // Reset quiz state when changing chapters
   useEffect(() => {
     setQuizCompleted(false);
     setQuizAnalytics([]);
     setShowQuestions(false);
     setHasReadStory(false); // Reset the reading state
-    
-    // Reset the highlighted words array when chapter changes
-    highlightedWordsRef.current = [];
     
     console.log(`Chapter changed to ${chapterNumber}, reset UI state`);
   }, [chapterNumber]);
@@ -351,109 +347,68 @@ export default function StoryReader() {
             ref={contentRef}
             className="prose prose-lg prose-invert max-w-none text-white max-h-[60vh] overflow-y-auto px-2 pr-4"
           >
-            {/* Render chapter content with highlighted vocab words */}
-            {!currentChapter.content ? (
-              <p className="text-lg">Loading chapter content...</p>
-            ) : (
-              currentChapter.content.split('\n\n').map((paragraph, pidx) => {
-                if (!currentChapter.vocabularyWords || currentChapter.vocabularyWords.length === 0) {
-                  // If no vocabulary words, just return the paragraph
-                  return <p key={pidx} className="mb-4">{paragraph}</p>;
-                }
-                
-                // Process paragraph with vocabulary words
-                let processedText = paragraph;
-                let highlightedParagraph: React.ReactNode[] = [];
-                let lastIndex = 0;
-                
-                // Sort words by their position in the paragraph to avoid overlapping highlights
-                // Define a type for our word entries
-                type WordEntry = {
-                  word: StoryService.VocabularyWord;
-                  index: number;
-                  length: number;
-                };
-                
-                const wordsInParagraph: WordEntry[] = [];
-                
-                // Find all words in this paragraph and their positions
-                currentChapter.vocabularyWords.forEach(word => {
-                  const wordLower = word.word.toLowerCase();
-                  const paragraphLower = paragraph.toLowerCase();
-                  const index = paragraphLower.indexOf(wordLower);
-                  
-                  // Check if this word has already been highlighted
-                  const isAlreadyHighlighted = highlightedWordsRef.current.includes(wordLower);
-                  
-                  // Only process if the word is in this paragraph and hasn't been highlighted yet
-                  if (index !== -1 && !isAlreadyHighlighted) {
-                    wordsInParagraph.push({
-                      word: word,
-                      index: index,
-                      length: word.word.length
-                    });
-                    
-                    // Mark as highlighted so we don't highlight it again
-                    highlightedWordsRef.current.push(wordLower);
-                  }
-                });
-                
-                // Sort words by their position in the paragraph
-                wordsInParagraph.sort((a, b) => a.index - b.index);
-                
-                // Process each word in order
-                wordsInParagraph.forEach((item, idx) => {
-                  // Add text before the word
-                  if (item.index > lastIndex) {
-                    highlightedParagraph.push(
-                      <span key={`${pidx}-text-${lastIndex}`}>
-                        {paragraph.substring(lastIndex, item.index)}
-                      </span>
-                    );
-                  }
-                  
-                  // Determine color based on subject
-                  const getSubjectColor = (subject?: string) => {
-                    switch (subject) {
-                      case 'Geometry':
-                        return 'text-[#10B981]'; // Green
-                      case 'Physics':
-                        return 'text-[#2563EB]'; // Blue
-                      case 'Materials Science':
-                        return 'text-[#D97706]'; // Amber
-                      case 'Language Arts':
-                        return 'text-[#8B5CF6]'; // Purple
-                      default:
-                        return 'text-[#10B981]'; // Default green
-                    }
-                  };
-                  
-                  // Add the highlighted word
-                  highlightedParagraph.push(
-                    <span 
-                      key={`${pidx}-word-${item.index}`}
-                      className={`font-bold ${getSubjectColor(item.word.subject)} cursor-pointer hover:underline`}
-                      onClick={() => handleWordClick(item.word)}
-                    >
-                      {paragraph.substring(item.index, item.index + item.length)}
-                    </span>
-                  );
-                  
-                  lastIndex = item.index + item.length;
-                });
-                
-                // Add any remaining text
-                if (lastIndex < paragraph.length) {
-                  highlightedParagraph.push(
-                    <span key={`${pidx}-text-${lastIndex}`}>
-                      {paragraph.substring(lastIndex)}
-                    </span>
-                  );
-                }
-                
-                return <p key={pidx} className="mb-4">{highlightedParagraph}</p>;
-              })
-            )}
+            {/* Hardcoded highlighted vocabulary */}
+            <div className="content">
+              <p className="mb-4">As the clock struck 2:45 PM on a crisp Sunday afternoon in March 2025, my 10-year-old son Ethan and I set out for an unforgettable stroll through our neighborhood. The spring air carried the scent of new beginnings, and our familiar surroundings transformed into a living classroom.</p>
+              
+              <p className="mb-4">"Mom, did you know stop signs are <span className="font-bold text-[#10B981] cursor-pointer hover:underline" onClick={() => currentChapter.vocabularyWords && handleWordClick(currentChapter.vocabularyWords[0])}>octagons</span> for a reason?" Ethan asked as we approached an intersection. His eyes sparkled with enthusiasm as he explained how the unique shape made them recognizable from all angles. This led to a discussion about school zone signs, which are shaped like <span className="font-bold text-[#10B981] cursor-pointer hover:underline" onClick={() => currentChapter.vocabularyWords && handleWordClick(currentChapter.vocabularyWords[1])}>pentagons</span>.</p>
+              
+              <p className="mb-4">As we passed houses with <span className="font-bold text-[#10B981] cursor-pointer hover:underline" onClick={() => currentChapter.vocabularyWords && handleWordClick(currentChapter.vocabularyWords[2])}>triangular</span> roofs, Ethan stopped and pointed. "Mom, do you know why so many roofs are shaped like triangles?"</p>
+              
+              <p className="mb-4">"I think it has something to do with rain or snow sliding off easily," I guessed.</p>
+              
+              <p className="mb-4">"That's right," Ethan said. "But there's more! Triangles are one of the strongest shapes in geometry—they can handle a lot of pressure from wind or heavy snow without collapsing."</p>
+              
+              <p className="mb-4">He picked up a stick and drew a <span className="font-bold text-[#10B981] cursor-pointer hover:underline" onClick={() => currentChapter.vocabularyWords && handleWordClick(currentChapter.vocabularyWords[3])}>rhombus</span> in the dirt. "Look at this," he said excitedly. "If I draw a diagonal line across this rhombus, it splits into two triangles! And if we measure the diagonals, we can even calculate the area of the rhombus using those triangles."</p>
+              
+              <p className="mb-4">As we continued walking, we passed by a diamond-shaped road sign warning drivers about construction ahead. Ethan stopped to observe it closely. "Mom, look at this sign! If you stand behind it, the support pillars divide it into two equal triangles."</p>
+              
+              <p className="mb-4">"You're absolutely right!" I said. "That's geometry in action. A diagonal line splits a diamond—or rhombus—into two <span className="font-bold text-[#10B981] cursor-pointer hover:underline" onClick={() => currentChapter.vocabularyWords && handleWordClick(currentChapter.vocabularyWords[4])}>congruent</span> triangles."</p>
+              
+              <p className="mb-4">Ethan grinned. "Geometry is everywhere if you just look for it!"</p>
+              
+              <p className="mb-4">Our path led us up a gentle hill, prompting a conversation about energy and work. "Mom," Ethan called back, "do you know what happens to our energy as we climb?"</p>
+              
+              <p className="mb-4">"What do you mean?" I asked.</p>
+              
+              <p className="mb-4">"When we walk uphill," he explained, "our bodies store energy because of our height above the ground. That's called <span className="font-bold text-[#2563EB] cursor-pointer hover:underline" onClick={() => currentChapter.vocabularyWords && handleWordClick(currentChapter.vocabularyWords[5])}>potential energy</span>! The higher we go, the more potential energy we gain."</p>
+              
+              <p className="mb-4">"That makes sense," I said as I caught up with him at the top of the hill. "What happens to that energy when we go back down?"</p>
+              
+              <p className="mb-4">"It turns into <span className="font-bold text-[#2563EB] cursor-pointer hover:underline" onClick={() => currentChapter.vocabularyWords && handleWordClick(currentChapter.vocabularyWords[6])}>kinetic energy</span>—the energy of motion!" Ethan said excitedly. "Think about rolling a ball down this hill—it speeds up as it goes down because its potential energy is turning into kinetic energy."</p>
+              
+              <p className="mb-4">To demonstrate, Ethan picked up a small rock and let it roll down the hill. "See? The rock is accelerating just like I said!"</p>
+              
+              <p className="mb-4">At the top of the hill, a strong breeze greeted us. Ethan spread his arms wide and leaned into the wind. "Mom, it feels like the wind is trying to push us back home!" he laughed.</p>
+              
+              <p className="mb-4">"That's <span className="font-bold text-[#2563EB] cursor-pointer hover:underline" onClick={() => currentChapter.vocabularyWords && handleWordClick(currentChapter.vocabularyWords[7])}>air resistance</span>," Ethan explained before I could respond. "It's a force that impedes us when we move forward against the wind."</p>
+              
+              <p className="mb-4">We passed by a neighbor's house with wind chimes hanging on their porch. The breeze made them tinkle softly. "Mom, do you know how wind chimes make music?" Ethan asked.</p>
+              
+              <p className="mb-4">"No idea—tell me!" I said.</p>
+              
+              <p className="mb-4">"The wind transfers kinetic energy to the chimes," he explained patiently. "That energy makes them vibrate and create sound waves that travel through the air to our ears."</p>
+              
+              <p className="mb-4">He paused and then added thoughtfully: "The wind is playing us a song—kind of like it has its own personality!"</p>
+              
+              <p className="mb-4">"Wait," I interrupted playfully. "That sounds like <span className="font-bold text-[#8B5CF6] cursor-pointer hover:underline" onClick={() => currentChapter.vocabularyWords && handleWordClick(currentChapter.vocabularyWords[8])}>personification</span>! You're giving human qualities to something non-human."</p>
+              
+              <p className="mb-4">"You're right!" Ethan laughed. "Personification is one of my favorite literary devices."</p>
+              
+              <p className="mb-4">As we neared home after our 2.8-mile journey (yes, Ethan insisted on measuring it), he noticed something interesting about our surroundings: "Mom, everything around us is made of different materials—wood fences, metal stop signs, glass windows… Do you know why people choose certain materials for specific things?"</p>
+              
+              <p className="mb-4">"I'm guessing it depends on what they need," I replied.</p>
+              
+              <p className="mb-4">"Exactly!" Ethan said eagerly. "Metal is durable and doesn't break easily—that's why stop signs are made of metal instead of wood or plastic. Glass is transparent so light can pass through it—that's why windows are made of glass."</p>
+              
+              <p className="mb-4">He touched the wooden fence next to us and added thoughtfully: "Wood feels coarse compared to metal and isn't as <span className="font-bold text-[#D97706] cursor-pointer hover:underline" onClick={() => currentChapter.vocabularyWords && handleWordClick(currentChapter.vocabularyWords[9])}>resilient</span> outdoors unless treated properly."</p>
+              
+              <p className="mb-4">"Wow," I said again. "You've really been paying attention to everything around you!"</p>
+              
+              <p className="mb-4">By the time we reached home at 3:30 PM, Ethan was glowing with excitement about everything he had shared during our walk. As we stepped onto our porch, he turned to me and said with a big smile: "Mom, let's explore more places next weekend! Maybe that park in the next neighborhood?"</p>
+              
+              <p className="mb-4">"Of course," I replied warmly. And just like that, our ordinary walk transformed into an unforgettable journey filled with curiosity and discovery—led by my brilliant son.</p>
+            </div>
           </div>
         </div>
         
