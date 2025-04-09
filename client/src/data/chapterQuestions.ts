@@ -38,10 +38,14 @@ export const chapterQuestions: ChapterQuestionsMap = {
     },
     {
       id: 4,
-      type: 'multiple-choice',
-      text: 'Match the following:\na) Triangular 1) School zone signs\nb) Octagonal 2) Roofs\nc) Pentagonal 3) Stop signs',
-      options: ['a-1, b-2, c-3', 'a-2, b-3, c-1', 'a-3, b-1, c-2', 'a-2, b-1, c-3'],
-      answer: 'b',
+      type: 'matching',
+      text: 'Match each shape with where we saw it in our walk:',
+      items: [
+        { item: 'Triangular', match: 'Roofs' },
+        { item: 'Octagonal', match: 'Stop signs' },
+        { item: 'Pentagonal', match: 'School zone signs' }
+      ],
+      answer: ['Triangular:Roofs', 'Octagonal:Stop signs', 'Pentagonal:School zone signs'],
     },
     {
       id: 5,
@@ -77,10 +81,14 @@ export const chapterQuestions: ChapterQuestionsMap = {
     },
     {
       id: 10,
-      type: 'multiple-choice',
-      text: 'Match the following:\na) Crisp 1) Sharp or clear\nb) Gentle 2) Mild or gradual\nc) Melodic 3) Musical or tuneful',
-      options: ['a-1, b-2, c-3', 'a-2, b-1, c-3', 'a-3, b-2, c-1', 'a-1, b-3, c-2'],
-      answer: 'a',
+      type: 'matching',
+      text: 'Match each word with its definition:',
+      items: [
+        { item: 'Crisp', match: 'Sharp or clear' },
+        { item: 'Gentle', match: 'Mild or gradual' },
+        { item: 'Melodic', match: 'Musical or tuneful' }
+      ],
+      answer: ['Crisp:Sharp or clear', 'Gentle:Mild or gradual', 'Melodic:Musical or tuneful'],
     },
     {
       id: 11,
