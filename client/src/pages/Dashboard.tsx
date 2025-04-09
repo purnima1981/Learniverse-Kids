@@ -98,26 +98,26 @@ export default function Dashboard() {
 
                   <div className="flex-1">
                     <h3 className="font-bold text-2xl mb-2 text-white">Family Adventures</h3>
-                    <h4 className="text-lg mb-2 text-[#FF6B9D]">Chapter 1: A Walk to Remember</h4>
+                    <h4 className="text-lg mb-2 text-[#10B981]">Chapter 1: A Walk to Remember</h4>
                     <div className="flex flex-wrap items-center text-sm mb-3 gap-2">
                       <div className="font-medium text-white mb-1 w-full">Topics:</div>
-                      <span className="px-3 py-1 bg-[#8A4FFF]/50 text-white rounded-full text-sm">
+                      <span className="px-3 py-1 bg-[#2563EB]/50 text-white rounded-full text-sm">
                         Shapes (Geometry)
                       </span>
-                      <span className="px-3 py-1 bg-[#8A4FFF]/50 text-white rounded-full text-sm">
+                      <span className="px-3 py-1 bg-[#2563EB]/50 text-white rounded-full text-sm">
                         Distance (Measurement)
                       </span>
-                      <span className="px-3 py-1 bg-[#8A4FFF]/50 text-white rounded-full text-sm">
+                      <span className="px-3 py-1 bg-[#2563EB]/50 text-white rounded-full text-sm">
                         Energy (Science)
                       </span>
-                      <span className="px-3 py-1 bg-[#8A4FFF]/50 text-white rounded-full text-sm">
+                      <span className="px-3 py-1 bg-[#2563EB]/50 text-white rounded-full text-sm">
                         Road Safety
                       </span>
                     </div>
                     
                     <div className="flex flex-wrap items-center text-sm mb-3 gap-2">
                       <div className="font-medium text-white mb-1 w-full">Academic Schedule:</div>
-                      <span className="px-3 py-1 bg-[#FF6B9D]/50 text-white rounded-full text-sm">
+                      <span className="px-3 py-1 bg-[#10B981]/50 text-white rounded-full text-sm">
                         Week 3: Geometric Shapes & Physical Science
                       </span>
                     </div>
@@ -133,7 +133,7 @@ export default function Dashboard() {
 
                     <Button
                       onClick={handleContinueReading}
-                      className="bg-[#FF6B9D] hover:bg-[#FF4F8B] text-white font-bold"
+                      className="bg-[#10B981] hover:bg-[#0D9488] text-white font-bold"
                     >
                       Continue Reading
                     </Button>
