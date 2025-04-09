@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { CheckCircle, XCircle, Clock } from "lucide-react";
+import { CheckCircle, XCircle, Clock, X } from "lucide-react";
 import { Question } from "@/data/chapterQuestions";
 
 interface QuestionAnalytics {
@@ -18,9 +18,10 @@ interface ChapterQuestionsProps {
   questions: Question[];
   onComplete: (analytics: QuestionAnalytics[]) => void;
   chapterNumber: number;
+  onClose?: () => void; // Optional close handler
 }
 
-export default function ChapterQuestions({ questions, onComplete, chapterNumber }: ChapterQuestionsProps) {
+export default function ChapterQuestions({ questions, onComplete, chapterNumber, onClose }: ChapterQuestionsProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<number, any>>({});
   const [showFeedback, setShowFeedback] = useState(false);
@@ -160,7 +161,19 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber 
     };
     
     return (
-      <div className="text-center p-6 bg-[#2563EB]/30 rounded-lg">
+      <div className="text-center p-6 bg-[#2563EB]/30 rounded-lg relative">
+        {/* Close button in corner of results screen */}
+        {onClose && (
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute top-2 right-2 text-white/70 hover:text-white"
+            onClick={onClose}
+          >
+            <X className="h-5 w-5" />
+          </Button>
+        )}
+      
         <h3 className="text-2xl font-bold text-white mb-4">Chapter {chapterNumber} Quiz Results</h3>
         <div className="text-6xl font-bold mb-4 text-white">{score}/{questions.length}</div>
         
@@ -200,9 +213,21 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber 
 
   return (
     <div className="max-w-3xl mx-auto">
-      <div className="mb-8 text-center">
-        <h2 className="text-2xl font-bold text-white mb-2">Chapter {chapterNumber} Comprehension Quiz</h2>
-        <p className="text-white/70">Question {currentQuestionIndex + 1} of {questions.length}</p>
+      <div className="mb-8 relative">
+        {/* Close button in top right corner */}
+        {onClose && (
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute top-0 right-0 text-white/70 hover:text-white"
+            onClick={onClose}
+          >
+            <X className="h-5 w-5" />
+          </Button>
+        )}
+        
+        <h2 className="text-2xl font-bold text-white mb-2 text-center">Chapter {chapterNumber} Comprehension Quiz</h2>
+        <p className="text-white/70 text-center">Question {currentQuestionIndex + 1} of {questions.length}</p>
         <div className="w-full bg-gray-200/20 h-2 rounded-full mt-4 mb-6">
           <div 
             className="bg-[#10B981] h-2 rounded-full" 
