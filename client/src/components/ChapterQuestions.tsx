@@ -4,8 +4,9 @@ import { Card } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { CheckCircle, XCircle, Clock, X } from "lucide-react";
+import { CheckCircle, XCircle, Clock, X, GripVertical } from "lucide-react";
 import { Question } from "@/data/chapterQuestions";
+import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
 
 interface QuestionAnalytics {
   questionId: number;
@@ -32,6 +33,9 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
   const [questionStartTime, setQuestionStartTime] = useState(Date.now());
   const [analytics, setAnalytics] = useState<QuestionAnalytics[]>([]);
   
+  // For matching questions
+  const [matchItems, setMatchItems] = useState<{[key: number]: {item: string, match: string}[]}>({});
+  
   // Timer setup - increment every second
   useEffect(() => {
     const timerInterval = setInterval(() => {
@@ -45,6 +49,17 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
   useEffect(() => {
     setQuestionStartTime(Date.now());
     setTimer(0);
+    
+    // Initialize matching items if this is a matching question
+    if (questions[currentQuestionIndex]?.type === 'matching' && questions[currentQuestionIndex]?.items) {
+      const currentId = questions[currentQuestionIndex].id;
+      if (!matchItems[currentId]) {
+        // Initialize with shuffled matches
+        const items = [...questions[currentQuestionIndex].items!];
+        const shuffledItems = [...items].sort(() => Math.random() - 0.5);
+        setMatchItems({ ...matchItems, [currentId]: shuffledItems });
+      }
+    }
   }, [currentQuestionIndex]);
 
   const currentQuestion = questions[currentQuestionIndex];
@@ -99,28 +114,118 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
     <RadioGroup 
       value={answers[question.id] || ""}
       onValueChange={handleAnswer}
-      className="space-y-3"
+      className="space-y-4"
     >
       {question.options?.map((option, index) => (
-        <div key={index} className="flex items-center space-x-2 bg-white/10 p-3 rounded-md">
-          <RadioGroupItem value={String.fromCharCode(97 + index)} id={`option-${index}`} />
-          <Label htmlFor={`option-${index}`} className="text-white">{option}</Label>
+        <div key={index} className="flex items-start space-x-3 bg-white/10 p-4 rounded-md hover:bg-white/20 transition-colors cursor-pointer">
+          <RadioGroupItem value={String.fromCharCode(97 + index)} id={`option-${index}`} className="mt-1" />
+          <Label 
+            htmlFor={`option-${index}`} 
+            className="text-white flex-1 cursor-pointer"
+            onClick={() => handleAnswer(String.fromCharCode(97 + index))}
+          >
+            {option}
+          </Label>
         </div>
       ))}
     </RadioGroup>
   );
 
   const renderFillBlank = (question: Question) => (
-    <div className="space-y-3">
+    <div className="space-y-4">
+      <div className="p-2 rounded-md bg-[#2563EB]/20 text-white/80 text-sm mb-2">
+        Type your answer in the field below. Be specific and check your spelling.
+      </div>
       <Input 
         type="text" 
         placeholder="Your answer..."
         value={answers[question.id] || ""}
         onChange={(e) => handleAnswer(e.target.value)}
-        className="bg-white/10 border-[#2563EB]/30 text-white"
+        className="bg-white/10 border-[#2563EB]/30 text-white p-6 text-lg"
+        autoFocus
       />
     </div>
   );
+
+  const handleDragEnd = (result: DropResult, question: Question) => {
+    const { source, destination } = result;
+    
+    // Return if dropped outside a droppable area or didn't move
+    if (!destination || (source.droppableId === destination.droppableId && source.index === destination.index)) {
+      return;
+    }
+    
+    // Get current matches for this question
+    const currentItems = [...(matchItems[question.id] || [])];
+    
+    // Reorder the items
+    const [removed] = currentItems.splice(source.index, 1);
+    currentItems.splice(destination.index, 0, removed);
+    
+    // Update the state
+    setMatchItems({
+      ...matchItems,
+      [question.id]: currentItems,
+    });
+    
+    // Update the answer with the new order
+    const mappedAnswers = currentItems.map(item => `${item.item}:${item.match}`);
+    handleAnswer(mappedAnswers);
+  };
+  
+  const renderMatching = (question: Question) => {
+    if (!question.items || !matchItems[question.id]) return null;
+    
+    return (
+      <div className="space-y-6">
+        <div className="p-3 rounded-md bg-[#2563EB]/20 text-white/80 text-sm mb-2">
+          Drag and drop items to match each term with its correct definition. 
+        </div>
+        
+        <DragDropContext onDragEnd={(result) => handleDragEnd(result, question)}>
+          <Droppable droppableId="matching-items">
+            {(provided) => (
+              <div
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+                className="space-y-3"
+              >
+                {matchItems[question.id].map((item, index) => (
+                  <Draggable key={`${item.item}-${index}`} draggableId={`${item.item}-${index}`} index={index}>
+                    {(provided, snapshot) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        className={`flex items-center bg-white/10 p-4 rounded-md ${
+                          snapshot.isDragging ? 'border-2 border-[#10B981]' : ''
+                        }`}
+                      >
+                        <div 
+                          {...provided.dragHandleProps}
+                          className="mr-3 text-white/70 hover:text-white/90 cursor-grab"
+                        >
+                          <GripVertical className="h-5 w-5" />
+                        </div>
+                        <div className="flex flex-1 justify-between gap-2">
+                          <div className="font-semibold text-white bg-[#2563EB]/40 px-3 py-2 rounded">
+                            {item.item}
+                          </div>
+                          <div className="text-white flex-1 text-right bg-[#0F172A]/60 px-3 py-2 rounded">
+                            {item.match}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </div>
+    );
+  };
 
   const renderQuestion = (question: Question) => {
     switch (question.type) {
@@ -128,28 +233,56 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
         return renderMultipleChoice(question);
       case 'fill-blank':
         return renderFillBlank(question);
+      case 'matching':
+        return renderMatching(question);
       default:
         return <p className="text-white">Question type not supported yet</p>;
     }
   };
 
-  const renderFeedback = () => (
-    <div className={`p-4 rounded-md mb-4 ${isCorrect ? 'bg-[#10B981]/20' : 'bg-red-500/20'}`}>
-      <div className="flex items-center space-x-2">
-        {isCorrect ? (
-          <>
-            <CheckCircle className="h-6 w-6 text-[#10B981]" />
-            <span className="text-white font-medium">Correct! Good job!</span>
-          </>
-        ) : (
-          <>
-            <XCircle className="h-6 w-6 text-red-500" />
-            <span className="text-white font-medium">Incorrect. The correct answer was: {currentQuestion.answer}</span>
-          </>
-        )}
+  const renderFeedback = () => {
+    const displayCorrectAnswer = () => {
+      if (currentQuestion.type === 'matching' && Array.isArray(currentQuestion.answer)) {
+        return (
+          <div className="mt-3 space-y-2">
+            <p className="text-white font-medium mb-2">The correct matches are:</p>
+            {currentQuestion.items?.map((item, index) => (
+              <div key={index} className="flex space-x-2 text-sm bg-white/10 p-2 rounded">
+                <span className="text-[#10B981] font-semibold">{item.item}:</span>
+                <span className="text-white">{item.match}</span>
+              </div>
+            ))}
+          </div>
+        );
+      } else {
+        return (
+          <span className="text-white font-medium">
+            Incorrect. The correct answer was: {Array.isArray(currentQuestion.answer) 
+              ? currentQuestion.answer.join(', ')
+              : currentQuestion.answer}
+          </span>
+        );
+      }
+    };
+    
+    return (
+      <div className={`p-4 rounded-md mb-4 ${isCorrect ? 'bg-[#10B981]/20' : 'bg-red-500/20'}`}>
+        <div className="flex items-center space-x-2">
+          {isCorrect ? (
+            <>
+              <CheckCircle className="h-6 w-6 text-[#10B981]" />
+              <span className="text-white font-medium">Correct! Good job!</span>
+            </>
+          ) : (
+            <>
+              <XCircle className="h-6 w-6 text-red-500" />
+              {displayCorrectAnswer()}
+            </>
+          )}
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   const renderResults = () => {
     // Calculate average time spent per question
@@ -237,15 +370,17 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
       </div>
 
       <Card className="bg-[#0F172A]/60 border-[#2563EB]/30 p-6 mb-6">
-        <div className="flex justify-between items-center mb-2">
-          <h3 className="text-xl font-medium text-white">{currentQuestion.text}</h3>
-          <div className="flex items-center text-white/70 text-sm">
+        <div className="flex justify-between items-start mb-4">
+          <h3 className="text-xl font-medium text-white w-full">{currentQuestion.text}</h3>
+          <div className="flex items-center text-white/70 text-sm whitespace-nowrap ml-4">
             <Clock className="h-4 w-4 mr-1" />
             <span>{Math.floor(timer / 60).toString().padStart(2, '0')}:{(timer % 60).toString().padStart(2, '0')}</span>
           </div>
         </div>
         
-        {showFeedback ? renderFeedback() : renderQuestion(currentQuestion)}
+        <div className="mt-6">
+          {showFeedback ? renderFeedback() : renderQuestion(currentQuestion)}
+        </div>
       </Card>
 
       <div className="flex justify-between">
