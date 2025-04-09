@@ -61,13 +61,23 @@
           "word": "personification",
           "definition": "Giving human qualities or abilities to something that is not human.",
           "context": "Saying the wind plays a song is personification because it gives human qualities to the wind.",
-          "subject": "Language Arts"
+          "subject": "Language Arts",
+          "synonyms": ["anthropomorphism", "humanization", "attribution"],
+          "antonyms": ["dehumanization", "objectification"]
         },
         {
           "word": "resilient",
           "definition": "Able to withstand or recover quickly from difficult conditions.",
           "context": "Wood isn't as resilient outdoors as metal unless it's properly treated.",
           "subject": "Materials Science"
+        },
+        {
+          "word": "crisp",
+          "definition": "Cool, fresh, and invigorating (for air or weather).",
+          "context": "As the clock struck 2:45 PM on a crisp Sunday afternoon in March 2025, we set out for a walk.",
+          "subject": "Language Arts",
+          "synonyms": ["fresh", "bracing", "invigorating", "refreshing"],
+          "antonyms": ["mild", "muggy", "humid", "stuffy"]
         }
       ]
     }

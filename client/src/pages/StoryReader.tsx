@@ -521,6 +521,33 @@ export default function StoryReader() {
                   <p className="italic text-white/90 bg-white/5 p-3 rounded border border-white/10">
                     "{selectedWord.context}"
                   </p>
+                  
+                  {/* Show synonyms and antonyms only for Language Arts vocabulary */}
+                  {selectedWord.subject === "Language Arts" && selectedWord.synonyms && selectedWord.synonyms.length > 0 && (
+                    <div className="mt-4">
+                      <h3 className="text-lg font-semibold text-[#8B5CF6] mb-2">Synonyms:</h3>
+                      <div className="flex flex-wrap gap-2">
+                        {selectedWord.synonyms.map((synonym, index) => (
+                          <span key={index} className="px-2 py-1 bg-[#8B5CF6]/20 text-white rounded text-sm">
+                            {synonym}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {selectedWord.subject === "Language Arts" && selectedWord.antonyms && selectedWord.antonyms.length > 0 && (
+                    <div className="mt-4">
+                      <h3 className="text-lg font-semibold text-[#8B5CF6] mb-2">Antonyms:</h3>
+                      <div className="flex flex-wrap gap-2">
+                        {selectedWord.antonyms.map((antonym, index) => (
+                          <span key={index} className="px-2 py-1 bg-[#8B5CF6]/10 text-white/80 rounded text-sm border border-[#8B5CF6]/30">
+                            {antonym}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </div>

@@ -23,6 +23,8 @@ export interface VocabularyWord {
   definition: string;
   context: string;
   subject?: string;
+  synonyms?: string[];
+  antonyms?: string[];
 }
 
 export interface Question {
