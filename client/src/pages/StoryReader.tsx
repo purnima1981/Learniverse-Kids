@@ -14,6 +14,8 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { Card, CardContent } from "@/components/ui/card";
+import ChapterQuestions from "@/components/ChapterQuestions";
+import chapterQuestions, { ChapterQuestionsMap } from "@/data/chapterQuestions";
 
 export default function StoryReader() {
   const { id: storyId, chapter: chapterNumberParam } = useParams();
@@ -25,6 +27,7 @@ export default function StoryReader() {
   const [loading, setLoading] = useState(true);
   const [selectedWord, setSelectedWord] = useState<StoryService.VocabularyWord | null>(null);
   const [showFlashcard, setShowFlashcard] = useState(false);
+  const [showQuestions, setShowQuestions] = useState(false);
   
   // Convert storyId and chapterNumber to numbers
   const storyIdNumber = storyId ? parseInt(storyId) : 8001; // Default to our story ID
@@ -79,12 +82,41 @@ export default function StoryReader() {
   };
   
   const handleNextChapter = () => {
+    // Check if we should show questions before going to the next chapter
+    const questions = chapterQuestions[`${storyIdNumber}-${chapterNumber}`];
+    if (questions && questions.length > 0) {
+      setShowQuestions(true);
+    } else {
+      navigateToNextChapter();
+    }
+  };
+  
+  const navigateToNextChapter = () => {
     if (story) {
       const nextChapterNum = StoryService.getNextChapterNumber(story, chapterNumber);
       if (nextChapterNum) {
         setLocation(`/story/${storyId}/${nextChapterNum}`);
       }
     }
+  };
+  
+  const [quizCompleted, setQuizCompleted] = useState(false);
+  const [quizAnalytics, setQuizAnalytics] = useState<any[]>([]);
+  
+  // Reset quiz state when changing chapters
+  useEffect(() => {
+    setQuizCompleted(false);
+    setQuizAnalytics([]);
+    setShowQuestions(false);
+  }, [chapterNumber]);
+  
+  const handleQuizComplete = (analytics: any[]) => {
+    console.log("Quiz analytics:", analytics);
+    setQuizAnalytics(analytics);
+    setQuizCompleted(true);
+    setShowQuestions(false);
+    // In a real application, we would submit these analytics to the backend
+    // for future analysis, personalization, and educational insights
   };
   
   const handleBookmark = () => {
@@ -288,13 +320,33 @@ export default function StoryReader() {
           <Button
             className="bg-[#10B981] hover:bg-[#0D9488] text-white font-bold"
             onClick={handleNextChapter}
-            disabled={!nextChapter}
+            disabled={
+              !nextChapter || 
+              (chapterQuestions[`${storyIdNumber}-${chapterNumber}`] && 
+               !quizCompleted)
+            }
           >
-            Next Chapter
-            <ChevronRight className="h-5 w-5 ml-1" />
+            {chapterQuestions[`${storyIdNumber}-${chapterNumber}`] && !quizCompleted ? (
+              <>Complete Quiz to Continue</>
+            ) : (
+              <>Next Chapter<ChevronRight className="h-5 w-5 ml-1" /></>
+            )}
           </Button>
         </div>
       </div>
+
+      {/* Chapter Questions */}
+      {showQuestions && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4 overflow-y-auto">
+          <div className="w-full max-w-4xl glass-panel">
+            <ChapterQuestions 
+              questions={chapterQuestions[`${storyIdNumber}-${chapterNumber}`] || []}
+              onComplete={handleQuizComplete}
+              chapterNumber={chapterNumber}
+            />
+          </div>
+        </div>
+      )}
 
       {/* Flashcard Dialog */}
       <Dialog open={showFlashcard} onOpenChange={setShowFlashcard}>
