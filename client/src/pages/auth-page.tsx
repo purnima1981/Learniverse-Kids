@@ -143,10 +143,10 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen flex bg-gradient-to-r from-purple-500 to-teal-400 overflow-hidden">
+    <div className="min-h-screen flex bg-gradient-to-r from-[#1E88E5] via-[#FFC107] to-[#F44336] overflow-hidden">
       {/* Hero section (left) */}
       <div className="hidden lg:block lg:w-1/2 relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/80 to-teal-500/80 z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1E88E5]/80 via-[#FFC107]/70 to-[#F44336]/80 z-10"></div>
         <img 
           src={loginBackground}
           alt="Learniverse illustration showing diverse students learning" 
@@ -162,23 +162,23 @@ export default function AuthPage() {
               <h3 className="text-2xl font-semibold mb-4">Features include:</h3>
               <ul className="space-y-2">
                 <li className="flex items-center">
-                  <div className="h-2 w-2 bg-teal-300 rounded-full mr-2"></div>
+                  <div className="h-2 w-2 bg-[#1E88E5] rounded-full mr-2"></div>
                   <span>Personalized learning experiences</span>
                 </li>
                 <li className="flex items-center">
-                  <div className="h-2 w-2 bg-fuchsia-400 rounded-full mr-2"></div>
+                  <div className="h-2 w-2 bg-[#FFC107] rounded-full mr-2"></div>
                   <span>Interactive story-based learning</span>
                 </li>
                 <li className="flex items-center">
-                  <div className="h-2 w-2 bg-teal-300 rounded-full mr-2"></div>
+                  <div className="h-2 w-2 bg-[#F44336] rounded-full mr-2"></div>
                   <span>AI-powered reading coach</span>
                 </li>
                 <li className="flex items-center">
-                  <div className="h-2 w-2 bg-fuchsia-400 rounded-full mr-2"></div>
+                  <div className="h-2 w-2 bg-[#FFC107] rounded-full mr-2"></div>
                   <span>Vocabulary building with flashcards</span>
                 </li>
                 <li className="flex items-center">
-                  <div className="h-2 w-2 bg-teal-300 rounded-full mr-2"></div>
+                  <div className="h-2 w-2 bg-[#1E88E5] rounded-full mr-2"></div>
                   <span>Progress tracking and analytics</span>
                 </li>
               </ul>
@@ -245,7 +245,7 @@ export default function AuthPage() {
 
                     <Button
                       type="submit"
-                      className="w-full py-6 bg-fuchsia-500 hover:bg-fuchsia-600 text-white font-bold"
+                      className="w-full py-6 bg-[#F44336] hover:bg-[#E53935] text-white font-bold"
                       disabled={loginMutation.isPending}
                     >
                       {loginMutation.isPending ? "Logging in..." : "SIGN IN"}
@@ -291,7 +291,7 @@ export default function AuthPage() {
                       Don't have an account?{" "}
                       <button
                         type="button"
-                        className="text-teal-300 hover:underline font-medium"
+                        className="text-[#FFC107] hover:underline font-medium"
                         onClick={() => setActiveTab("register")}
                       >
                         Register now
@@ -439,7 +439,7 @@ export default function AuthPage() {
 
                     <Button
                       type="submit"
-                      className="w-full py-6 bg-fuchsia-500 hover:bg-fuchsia-600 text-white font-bold"
+                      className="w-full py-6 bg-[#1E88E5] hover:bg-[#1976D2] text-white font-bold"
                       disabled={registerMutation.isPending}
                     >
                       {registerMutation.isPending ? "Creating account..." : "CREATE ACCOUNT"}
@@ -485,7 +485,7 @@ export default function AuthPage() {
                       Already have an account?{" "}
                       <button
                         type="button"
-                        className="text-teal-300 hover:underline font-medium"
+                        className="text-[#F44336] hover:underline font-medium"
                         onClick={() => setActiveTab("login")}
                       >
                         Sign in
