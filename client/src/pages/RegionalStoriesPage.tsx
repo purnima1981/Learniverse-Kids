@@ -191,26 +191,30 @@ export default function RegionalStoriesPage() {
                               <Card 
                                 key={story.id}
                                 className={cn(
-                                  "bg-gradient-to-br overflow-hidden cursor-pointer hover:shadow-xl transition-all shadow-md",
-                                  storyColor,
+                                  "bg-gradient-to-br overflow-hidden cursor-pointer hover:shadow-xl transition-all shadow-md border-0",
+                                  story.imageUrl ? "" : storyColor,
                                   themeColors.card.border
                                 )}
                                 onClick={() => handleStorySelect(story.id)}
                               >
-                                <div className="p-4">
+                                <div className={cn("p-4", story.imageUrl ? "bg-white/80 rounded-lg" : "")}>
                                   {story.imageUrl && (
-                                    <div className="mb-3 rounded-md overflow-hidden h-32 w-full">
+                                    <div className="mb-3 rounded-lg overflow-hidden h-48 w-full shadow-md">
                                       <img 
                                         src={story.imageUrl} 
                                         alt={story.title} 
-                                        className="object-cover w-full h-full"
+                                        className="object-cover w-full h-full hover:scale-105 transition-transform duration-300"
                                       />
                                     </div>
                                   )}
                                   <div className="mb-2">
-                                    <h3 className={cn("font-semibold text-lg", themeColors.text.primary)}>{story.title}</h3>
+                                    <h3 className={cn("font-semibold text-lg", 
+                                      story.imageUrl ? "text-cyan-900" : themeColors.text.primary
+                                    )}>{story.title}</h3>
                                   </div>
-                                  <div className={cn("flex items-center text-sm mt-3", `${themeColors.text.primary}/80`)}>
+                                  <div className={cn("flex items-center text-sm mt-3", 
+                                    story.imageUrl ? "text-cyan-700" : `${themeColors.text.primary}/80`
+                                  )}>
                                     <BookOpen size={14} className="mr-2" />
                                     <span>Interactive story with exercises</span>
                                   </div>
