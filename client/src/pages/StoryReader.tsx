@@ -35,13 +35,19 @@ export default function StoryReader() {
     const loadStory = async () => {
       try {
         setLoading(true);
+        console.log(`Loading story ID: ${storyIdNumber}, chapter: ${chapterNumber}`);
         const storyData = await StoryService.fetchStory(storyIdNumber);
+        console.log("Story data loaded:", storyData);
         setStory(storyData);
         
         // Find the requested chapter
         const chapter = StoryService.getChapter(storyData, chapterNumber);
+        console.log("Chapter data:", chapter);
         if (chapter) {
+          console.log("Chapter content length:", chapter.content ? chapter.content.length : 0);
           setCurrentChapter(chapter);
+        } else {
+          console.error("Chapter not found in story");
         }
         
         setLoading(false);
@@ -57,7 +63,7 @@ export default function StoryReader() {
     };
     
     loadStory();
-  }, [storyId, chapterNumberParam, toast]);
+  }, [storyId, chapterNumberParam, toast, storyIdNumber, chapterNumber]);
   
   const handleGoBack = () => {
     setLocation("/"); // Return to Dashboard
@@ -194,60 +200,64 @@ export default function StoryReader() {
           </div>
         </div>
         
-        <div className="prose prose-lg prose-invert max-w-none">
-          {/* Render the chapter content as paragraphs with highlighted vocabulary words */}
-          {currentChapter.content.split('\n\n').map((paragraph, pidx) => {
-            // Only process if we have vocabulary words
-            if (currentChapter.vocabularyWords && currentChapter.vocabularyWords.length > 0) {
-              let processedParagraph = paragraph;
-              let fragments = [];
-              let lastIndex = 0;
-              
-              // Loop through each vocabulary word
-              currentChapter.vocabularyWords.forEach((word, widx) => {
-                const wordRegex = new RegExp(`\\b${word.word}\\b`, 'gi');
-                let match;
+        <div className="prose prose-lg prose-invert max-w-none text-white">
+          {/* Render chapter content with highlighted vocab words */}
+          {!currentChapter.content ? (
+            <p className="text-lg">Loading chapter content...</p>
+          ) : (
+            currentChapter.content.split('\n\n').map((paragraph, pidx) => {
+              // Only process if we have vocabulary words
+              if (currentChapter.vocabularyWords && currentChapter.vocabularyWords.length > 0) {
+                let processedParagraph = paragraph;
+                let fragments = [];
+                let lastIndex = 0;
                 
-                // Find all instances of the word in this paragraph
-                while ((match = wordRegex.exec(processedParagraph)) !== null) {
-                  // Add text before the match
-                  if (match.index > lastIndex) {
+                // Loop through each vocabulary word
+                currentChapter.vocabularyWords.forEach((word, widx) => {
+                  const wordRegex = new RegExp(`\\b${word.word}\\b`, 'gi');
+                  let match;
+                  
+                  // Find all instances of the word in this paragraph
+                  while ((match = wordRegex.exec(processedParagraph)) !== null) {
+                    // Add text before the match
+                    if (match.index > lastIndex) {
+                      fragments.push(
+                        <span key={`${pidx}-text-${lastIndex}`}>{processedParagraph.substring(lastIndex, match.index)}</span>
+                      );
+                    }
+                    
+                    // Add the highlighted word
                     fragments.push(
-                      <span key={`${pidx}-text-${lastIndex}`}>{processedParagraph.substring(lastIndex, match.index)}</span>
+                      <span 
+                        key={`${pidx}-word-${match.index}`}
+                        className="font-bold text-cyan-300 cursor-pointer hover:underline"
+                        onClick={() => handleWordClick(word)}
+                      >
+                        {match[0]}
+                      </span>
                     );
+                    
+                    lastIndex = match.index + match[0].length;
                   }
-                  
-                  // Add the highlighted word
+                });
+                
+                // Add any remaining text
+                if (lastIndex < processedParagraph.length) {
                   fragments.push(
-                    <span 
-                      key={`${pidx}-word-${match.index}`}
-                      className="font-bold text-cyan-300 cursor-pointer hover:underline"
-                      onClick={() => handleWordClick(word)}
-                    >
-                      {match[0]}
-                    </span>
+                    <span key={`${pidx}-text-${lastIndex}`}>{processedParagraph.substring(lastIndex)}</span>
                   );
-                  
-                  lastIndex = match.index + match[0].length;
                 }
-              });
-              
-              // Add any remaining text
-              if (lastIndex < processedParagraph.length) {
-                fragments.push(
-                  <span key={`${pidx}-text-${lastIndex}`}>{processedParagraph.substring(lastIndex)}</span>
-                );
+                
+                // If we found and processed vocabulary words
+                if (fragments.length > 0) {
+                  return <p key={pidx} className="mb-4">{fragments}</p>;
+                }
               }
               
-              // If we found and processed vocabulary words
-              if (fragments.length > 0) {
-                return <p key={pidx}>{fragments}</p>;
-              }
-            }
-            
-            // If no vocabulary words were found or none exist, return the paragraph as is
-            return <p key={pidx}>{paragraph}</p>;
-          })}
+              // If no vocabulary words were found or none exist, return the paragraph as is
+              return <p key={pidx} className="mb-4">{paragraph}</p>;
+            })
+          )}
         </div>
         
         <div className="flex justify-between mt-8">
