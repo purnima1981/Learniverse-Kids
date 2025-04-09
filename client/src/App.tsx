@@ -35,10 +35,11 @@ function App() {
           <Redirect to="/theme-selection" />
         </Route>
         
-        {/* Force all other URLs (including root) to redirect to auth page */}
-        <Route>
-          <Redirect to="/auth" />
-        </Route>
+        {/* Home page */}
+        <ProtectedRoute path="/" component={Dashboard} />
+        
+        {/* 404 for any other routes */}
+        <Route component={NotFound} />
       </Switch>
       <Toaster />
     </AuthProvider>

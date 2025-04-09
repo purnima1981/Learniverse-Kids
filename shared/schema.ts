@@ -318,6 +318,6 @@ export interface RegionalEpic {
   stories: {
     id: number;
     title: string;
-    grade: string;
+    grade?: string;  // Make grade optional
   }[];
 }
