@@ -31,8 +31,8 @@ export default function StoryReader() {
   const [hasReadStory, setHasReadStory] = useState(false);
   const [readingStartTime, setReadingStartTime] = useState<number | null>(null);
   const [readingTime, setReadingTime] = useState<number>(0);
-  // Create a map to store highlighted words for each chapter
-  const highlightedWordsRef = useRef<Map<number, Set<string>>>(new Map());
+  // Create a simple array to track highlighted words in this component instance
+  const highlightedWordsRef = useRef<string[]>([]);
   const contentRef = useRef<HTMLDivElement>(null);
   
   // Convert storyId and chapterNumber to numbers
@@ -114,17 +114,15 @@ export default function StoryReader() {
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [quizAnalytics, setQuizAnalytics] = useState<any[]>([]);
   
-  // Reset quiz state when changing chapters
+  // Reset quiz state and highlighted words when changing chapters
   useEffect(() => {
     setQuizCompleted(false);
     setQuizAnalytics([]);
     setShowQuestions(false);
     setHasReadStory(false); // Reset the reading state
     
-    // Initialize a Set for the current chapter if it doesn't exist
-    if (!highlightedWordsRef.current.has(chapterNumber)) {
-      highlightedWordsRef.current.set(chapterNumber, new Set<string>());
-    }
+    // Reset the highlighted words array when chapter changes
+    highlightedWordsRef.current = [];
     
     console.log(`Chapter changed to ${chapterNumber}, reset UI state`);
   }, [chapterNumber]);
@@ -384,11 +382,11 @@ export default function StoryReader() {
                   const paragraphLower = paragraph.toLowerCase();
                   const index = paragraphLower.indexOf(wordLower);
                   
-                  // Get the highlighted words set for this chapter
-                  const chapterHighlightedWords = highlightedWordsRef.current.get(chapterNumber) || new Set<string>();
+                  // Check if this word has already been highlighted
+                  const isAlreadyHighlighted = highlightedWordsRef.current.includes(wordLower);
                   
                   // Only process if the word is in this paragraph and hasn't been highlighted yet
-                  if (index !== -1 && !chapterHighlightedWords.has(wordLower)) {
+                  if (index !== -1 && !isAlreadyHighlighted) {
                     wordsInParagraph.push({
                       word: word,
                       index: index,
@@ -396,8 +394,7 @@ export default function StoryReader() {
                     });
                     
                     // Mark as highlighted so we don't highlight it again
-                    chapterHighlightedWords.add(wordLower);
-                    highlightedWordsRef.current.set(chapterNumber, chapterHighlightedWords);
+                    highlightedWordsRef.current.push(wordLower);
                   }
                 });
                 
