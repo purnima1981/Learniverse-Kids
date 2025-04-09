@@ -436,6 +436,7 @@ export default function StoryReader() {
             <ChapterQuestions 
               questions={chapterQuestions[`${storyIdNumber}-${chapterNumber}`] || []}
               onComplete={handleQuizComplete}
+              onClose={() => setShowQuestions(false)}
               chapterNumber={chapterNumber}
             />
           </div>
