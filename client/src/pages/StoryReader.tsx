@@ -31,8 +31,8 @@ export default function StoryReader() {
   const [hasReadStory, setHasReadStory] = useState(false);
   const [readingStartTime, setReadingStartTime] = useState<number | null>(null);
   const [readingTime, setReadingTime] = useState<number>(0);
-  // Create a ref to store highlighted words across renders
-  const highlightedWordsRef = useRef<Set<string>>(new Set());
+  // Create a map to store highlighted words for each chapter
+  const highlightedWordsRef = useRef<Map<number, Set<string>>>(new Map());
   const contentRef = useRef<HTMLDivElement>(null);
   
   // Convert storyId and chapterNumber to numbers
@@ -120,8 +120,13 @@ export default function StoryReader() {
     setQuizAnalytics([]);
     setShowQuestions(false);
     setHasReadStory(false); // Reset the reading state
-    // Reset highlighted words when chapter changes
-    highlightedWordsRef.current = new Set<string>();
+    
+    // Initialize a Set for the current chapter if it doesn't exist
+    if (!highlightedWordsRef.current.has(chapterNumber)) {
+      highlightedWordsRef.current.set(chapterNumber, new Set<string>());
+    }
+    
+    console.log(`Chapter changed to ${chapterNumber}, reset UI state`);
   }, [chapterNumber]);
   
   // State to track reading progress percentage
@@ -360,11 +365,18 @@ export default function StoryReader() {
                 
                 // Process paragraph with vocabulary words
                 let processedText = paragraph;
-                let highlightedParagraph = [];
+                let highlightedParagraph: React.ReactNode[] = [];
                 let lastIndex = 0;
                 
                 // Sort words by their position in the paragraph to avoid overlapping highlights
-                const wordsInParagraph = [];
+                // Define a type for our word entries
+                type WordEntry = {
+                  word: StoryService.VocabularyWord;
+                  index: number;
+                  length: number;
+                };
+                
+                const wordsInParagraph: WordEntry[] = [];
                 
                 // Find all words in this paragraph and their positions
                 currentChapter.vocabularyWords.forEach(word => {
@@ -372,8 +384,11 @@ export default function StoryReader() {
                   const paragraphLower = paragraph.toLowerCase();
                   const index = paragraphLower.indexOf(wordLower);
                   
+                  // Get the highlighted words set for this chapter
+                  const chapterHighlightedWords = highlightedWordsRef.current.get(chapterNumber) || new Set<string>();
+                  
                   // Only process if the word is in this paragraph and hasn't been highlighted yet
-                  if (index !== -1 && !highlightedWordsRef.current.has(wordLower)) {
+                  if (index !== -1 && !chapterHighlightedWords.has(wordLower)) {
                     wordsInParagraph.push({
                       word: word,
                       index: index,
@@ -381,7 +396,8 @@ export default function StoryReader() {
                     });
                     
                     // Mark as highlighted so we don't highlight it again
-                    highlightedWordsRef.current.add(wordLower);
+                    chapterHighlightedWords.add(wordLower);
+                    highlightedWordsRef.current.set(chapterNumber, chapterHighlightedWords);
                   }
                 });
                 
