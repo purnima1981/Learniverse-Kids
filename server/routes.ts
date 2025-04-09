@@ -83,25 +83,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get current story
   app.get("/api/user/current-story", async (req, res) => {
     try {
-      // Mock story data for now
-      const mockStory = {
-        id: 1,
-        title: "Journey Through the Stars",
-        description: "Join the adventure as we explore the mysteries of our solar system and beyond!",
+      // Return "A Walk to Remember" story data from the Family Adventures theme
+      const walkToRememberStory = {
+        id: 8001,
+        title: "A Walk to Remember",
+        description: "Join a family on their nature walk as they discover how math, science, and language connect with the world around them.",
         grade: "5",
-        themeId: 1,
-        imageUrl: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+        themeId: 8,
+        imageUrl: "/stories/a-walk-to-remember.png",
         publishedAt: new Date(),
         subjects: [
           { id: 1, name: "Science", color: "#4F46E5" },
-          { id: 2, name: "Astronomy", color: "#EC4899" }
+          { id: 6, name: "Mathematics", color: "#16A34A" },
+          { id: 7, name: "Language Arts", color: "#FB7185" }
         ],
-        currentChapter: 3,
-        currentChapterTitle: "The Red Planet",
-        progressPercent: 60
+        currentChapter: 2,
+        currentChapterTitle: "Patterns in Nature",
+        progressPercent: 40
       };
       
-      res.json(mockStory);
+      res.json(walkToRememberStory);
     } catch (error) {
       console.error("Error fetching current story:", error);
       res.status(500).json({ message: "Internal server error" });
