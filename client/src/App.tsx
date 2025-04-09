@@ -18,10 +18,9 @@ function App() {
         <Route path="/auth" component={AuthPage} />
         
         {/* Protected routes */}
-        <ProtectedRoute path="/" component={Dashboard} />
+        <ProtectedRoute path="/dashboard" component={Dashboard} />
         <ProtectedRoute path="/theme-selection" component={ThemeSelection} />
         <ProtectedRoute path="/regional-stories/:themeId" component={RegionalStoriesPage} />
-        <ProtectedRoute path="/dashboard" component={Dashboard} />
         <ProtectedRoute path="/story/:id/:chapter" component={StoryReader} />
         <ProtectedRoute path="/reading-coach" component={ReadingCoach} />
         
@@ -34,6 +33,11 @@ function App() {
         </Route>
         <Route path="/personalization">
           <Redirect to="/theme-selection" />
+        </Route>
+        
+        {/* Default route - redirect to auth page */}
+        <Route path="/">
+          <Redirect to="/auth" />
         </Route>
         
         {/* 404 Route */}
