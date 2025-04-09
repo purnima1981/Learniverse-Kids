@@ -42,7 +42,19 @@ export async function fetchStory(storyId: number): Promise<Story> {
       throw new Error(`Failed to fetch story: ${response.statusText}`);
     }
     
-    return await response.json();
+    const data = await response.json();
+    console.log("Fetched story data:", data);
+    
+    // Ensure the story content is properly loaded
+    if (data && data.chapters) {
+      data.chapters.forEach((chapter: Chapter) => {
+        if (!chapter.content) {
+          console.warn(`Chapter ${chapter.chapterNumber} is missing content`);
+        }
+      });
+    }
+    
+    return data;
   } catch (error) {
     console.error('Error fetching story:', error);
     throw error;
