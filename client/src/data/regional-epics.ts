@@ -54,42 +54,37 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
     }
   ],
   
-  // Space Exploration Theme (ID: 2)
+  // Realistic Fiction Theme (ID: 2)
   2: [
     {
       id: 201,
-      name: "NASA Missions",
-      description: "Stories of American space exploration and discovery",
+      name: "Family Adventures",
+      description: "Family Adventures showing how subjects integrate into everyday life and learning",
       region: "United States",
-      imageUrl: "/epics/nasa.svg",
+      imageUrl: "/epics/family-adventures.svg",
       themeId: 2,
       stories: [
-        { id: 2001, title: "Apollo: Journey to the Moon", grade: "4-6" },
-        { id: 2002, title: "Mars Rovers: Exploring the Red Planet", grade: "3-5" }
+        { 
+          id: 8001, 
+          title: "A Walk to Remember",
+          imageUrl: "/stories/a-walk-to-remember.png",
+          grade: "1-5"
+        },
+        { id: 8002, title: "The Park Adventure", grade: "1-5" },
+        { id: 8003, title: "The Long Drive", grade: "1-5" },
+        { id: 8004, title: "The Backyard Project", grade: "1-5" }
       ]
     },
     {
       id: 202,
-      name: "Soviet Space Program",
-      description: "The historic achievements of the first nation to reach space",
-      region: "Russia",
-      imageUrl: "/epics/soviet-space.svg",
+      name: "School Stories",
+      description: "Realistic stories set in school environments that connect academic subjects",
+      region: "Global",
+      imageUrl: "/epics/school-stories.svg",
       themeId: 2,
       stories: [
-        { id: 2003, title: "Sputnik: The First Satellite", grade: "3-5" },
-        { id: 2004, title: "Yuri Gagarin: First Human in Space", grade: "4-6" }
-      ]
-    },
-    {
-      id: 203,
-      name: "Asian Space Pioneers",
-      description: "Modern achievements in space from China, Japan and India",
-      region: "Asia",
-      imageUrl: "/epics/asian-space.svg",
-      themeId: 2,
-      stories: [
-        { id: 2005, title: "Chandrayaan: India's Moon Mission", grade: "5-7" },
-        { id: 2006, title: "China's Journey to the Far Side", grade: "6-8" }
+        { id: 2003, title: "The Science Fair Project", grade: "3-5" },
+        { id: 2004, title: "Math Olympics", grade: "4-6" }
       ]
     }
   ],
