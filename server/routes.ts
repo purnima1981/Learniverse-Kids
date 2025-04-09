@@ -97,8 +97,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
           { id: 6, name: "Mathematics", color: "#16A34A" },
           { id: 7, name: "Language Arts", color: "#FB7185" }
         ],
-        currentChapter: 2,
-        currentChapterTitle: "Patterns in Nature",
         progressPercent: 40
       };
       
