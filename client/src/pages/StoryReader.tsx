@@ -272,19 +272,36 @@ export default function StoryReader() {
           <h2 className="text-xl mb-4 text-white">Chapter {chapterNumber}: A Walk to Remember</h2>
           <div className="flex flex-wrap items-center text-sm mb-3 gap-2">
             <div className="font-medium text-white mb-1 w-full">Topics:</div>
-            <span className="px-3 py-1 bg-[#2563EB]/50 text-white rounded-full text-sm">
-              Shapes (Geometry)
-            </span>
-            <span className="px-3 py-1 bg-[#2563EB]/50 text-white rounded-full text-sm">
-              Distance (Measurement)
-            </span>
-            <span className="px-3 py-1 bg-[#2563EB]/50 text-white rounded-full text-sm">
-              Energy (Science)
-            </span>
-            <span className="px-3 py-1 bg-[#2563EB]/50 text-white rounded-full text-sm">
-              Road Safety
-            </span>
+            {story.subjects.map((subject, idx) => (
+              <span key={idx} className="px-3 py-1 bg-[#2563EB]/50 text-white rounded-full text-sm">
+                {subject}
+              </span>
+            ))}
           </div>
+          
+          {/* Vocabulary color guide */}
+          {currentChapter.vocabularyWords && currentChapter.vocabularyWords.length > 0 && (
+            <div className="flex flex-wrap items-center text-sm mb-5 gap-2 p-3 bg-white/5 rounded-md">
+              <div className="font-medium text-white mb-1 w-full">Vocabulary Word Color Guide:</div>
+              {Array.from(new Set(currentChapter.vocabularyWords.map(word => word.subject))).map((subject, idx) => (
+                subject && (
+                  <div key={idx} className="flex items-center mr-3">
+                    <span className={`w-3 h-3 rounded-full mr-1.5 ${
+                      subject === 'Geometry' ? 'bg-[#10B981]' :
+                      subject === 'Physics' ? 'bg-[#2563EB]' :
+                      subject === 'Materials Science' ? 'bg-[#D97706]' :
+                      subject === 'Language Arts' ? 'bg-[#8B5CF6]' :
+                      'bg-[#2563EB]'
+                    }`}></span>
+                    <span className="text-white/80 text-xs">{subject}</span>
+                  </div>
+                )
+              ))}
+              <div className="text-white/60 text-xs italic mt-1 w-full">
+                Click on any highlighted word to see its definition
+              </div>
+            </div>
+          )}
           
           <div className="flex flex-wrap items-center text-sm mb-6 gap-2">
             <div className="font-medium text-white mb-1 w-full">Academic Schedule:</div>
@@ -352,11 +369,27 @@ export default function StoryReader() {
                         );
                       }
                       
-                      // Add the highlighted word
+                      // Get color based on subject
+                      const getSubjectColor = (subject?: string) => {
+                        switch (subject) {
+                          case 'Geometry':
+                            return 'text-[#10B981]'; // Green
+                          case 'Physics':
+                            return 'text-[#2563EB]'; // Blue
+                          case 'Materials Science':
+                            return 'text-[#D97706]'; // Amber
+                          case 'Language Arts':
+                            return 'text-[#8B5CF6]'; // Purple
+                          default:
+                            return 'text-[#10B981]'; // Default green
+                        }
+                      };
+
+                      // Add the highlighted word with subject-based color
                       fragments.push(
                         <span 
                           key={`${pidx}-word-${match.index}`}
-                          className="font-bold text-[#10B981] cursor-pointer hover:underline"
+                          className={`font-bold ${getSubjectColor(word.subject)} cursor-pointer hover:underline`}
                           onClick={() => handleWordClick(word)}
                         >
                           {match[0]}
@@ -458,7 +491,24 @@ export default function StoryReader() {
           {selectedWord && (
             <div className="py-4">
               <Card className="bg-white/10 overflow-hidden">
-                <div className="p-4 bg-[#2563EB]/50">
+                {selectedWord.subject && (
+                  <div className={`text-xs uppercase tracking-wider text-white text-center py-1 ${
+                    selectedWord.subject === 'Geometry' ? 'bg-[#10B981]/70' :
+                    selectedWord.subject === 'Physics' ? 'bg-[#2563EB]/70' :
+                    selectedWord.subject === 'Materials Science' ? 'bg-[#D97706]/70' :
+                    selectedWord.subject === 'Language Arts' ? 'bg-[#8B5CF6]/70' :
+                    'bg-[#2563EB]/70'
+                  }`}>
+                    {selectedWord.subject}
+                  </div>
+                )}
+                <div className={`p-4 ${
+                  selectedWord.subject === 'Geometry' ? 'bg-[#10B981]/50' :
+                  selectedWord.subject === 'Physics' ? 'bg-[#2563EB]/50' :
+                  selectedWord.subject === 'Materials Science' ? 'bg-[#D97706]/50' :
+                  selectedWord.subject === 'Language Arts' ? 'bg-[#8B5CF6]/50' :
+                  'bg-[#2563EB]/50'
+                }`}>
                   <h2 className="text-xl font-bold text-center text-white mb-1">
                     {selectedWord.word}
                   </h2>
