@@ -17,27 +17,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import ChapterQuestions from "@/components/ChapterQuestions";
 import chapterQuestions, { ChapterQuestionsMap } from "@/data/chapterQuestions";
 
-// Reading Timer Component
-function ReadingTimer({ startTime }: { startTime: number }) {
-  const [timeElapsed, setTimeElapsed] = useState("0:00");
-  
-  useEffect(() => {
-    // Update the timer every second
-    const interval = setInterval(() => {
-      if (startTime) {
-        const seconds = Math.floor((Date.now() - startTime) / 1000);
-        const minutes = Math.floor(seconds / 60);
-        const remainingSeconds = seconds % 60;
-        setTimeElapsed(`${minutes}:${remainingSeconds.toString().padStart(2, '0')}`);
-      }
-    }, 1000);
-    
-    return () => clearInterval(interval);
-  }, [startTime]);
-  
-  return <span>{timeElapsed}</span>;
-}
-
 export default function StoryReader() {
   const { id: storyId, chapter: chapterNumberParam } = useParams();
   const [_, setLocation] = useLocation();
@@ -144,51 +123,28 @@ export default function StoryReader() {
   // State to track reading progress percentage
   const [readingProgressPercent, setReadingProgressPercent] = useState(0);
   
-  // Add scroll tracking to detect when user has read the story
+  // Implement manual progress buttons instead of scroll tracking
   useEffect(() => {
-    const handleScroll = () => {
-      if (contentRef.current) {
-        const { scrollTop, scrollHeight, clientHeight } = contentRef.current;
-        // Calculate scroll percentage (0-100)
-        const scrollPercentage = (scrollTop + clientHeight) / scrollHeight;
-        const percent = Math.min(Math.round(scrollPercentage * 100), 100);
-        
-        console.log(`Scroll tracking: ${percent}% (${scrollTop}/${scrollHeight})`);
-        
-        // Update progress percentage state
-        setReadingProgressPercent(percent);
-        
-        // Consider "read" when the user has scrolled to 90% of the content
-        if (scrollPercentage > 0.9) {
-          setHasReadStory(true);
-        }
-      }
-    };
+    // Start with 10% progress
+    setReadingProgressPercent(10);
     
-    // Initialize immediately when content loads
-    setReadingProgressPercent(10); // Start at 10% instead of 0
+    // Create a timer to automatically increase progress
+    const progressInterval = setInterval(() => {
+      setReadingProgressPercent(prev => {
+        // Increase by 5% every 3 seconds until we reach 90%
+        const newValue = Math.min(prev + 5, 90);
+        return newValue;
+      });
+    }, 3000); // Update every 3 seconds
     
-    const contentElement = contentRef.current;
-    if (contentElement) {
-      // Add both scroll and mousewheel events to catch all scroll actions
-      contentElement.addEventListener('scroll', handleScroll);
-      contentElement.addEventListener('mousewheel', handleScroll);
-      contentElement.addEventListener('touchmove', handleScroll);
-      
-      // Force a calculation after a short delay to ensure content is fully loaded
-      setTimeout(() => {
-        handleScroll();
-      }, 500);
-    }
-    
-    return () => {
-      if (contentElement) {
-        contentElement.removeEventListener('scroll', handleScroll);
-        contentElement.removeEventListener('mousewheel', handleScroll);
-        contentElement.removeEventListener('touchmove', handleScroll);
-      }
-    };
+    return () => clearInterval(progressInterval);
   }, []);
+  
+  // Function to manually complete reading
+  const completeReading = () => {
+    setReadingProgressPercent(100);
+    setHasReadStory(true);
+  };
   
   const handleQuizComplete = (analytics: any[]) => {
     console.log("Quiz analytics:", analytics);
@@ -337,49 +293,31 @@ export default function StoryReader() {
             </span>
           </div>
           
-          {/* Story progress bar */}
-          <div className="w-full bg-gray-200/20 rounded-full h-2.5 mb-2">
+          {/* Reading progress bar - single combined bar for simplicity */}
+          <div className="w-full bg-gray-200/20 rounded-full h-4 mb-3">
             <div 
-              className="bg-[#10B981] h-2.5 rounded-full" 
-              style={{ width: `${progress}%` }}
-            ></div>
-          </div>
-          <div className="flex justify-between text-xs text-white/60 mb-4">
-            <span>Story Progress</span>
-            <span>Chapter {chapterNumber} of {story.chapters.length}</span>
-          </div>
-          
-          {/* Reading progress bar */}
-          <div className="w-full bg-gray-200/20 rounded-full h-2.5 mb-2">
-            <div 
-              className="bg-[#2563EB] h-2.5 rounded-full transition-all duration-300" 
+              className="bg-gradient-to-r from-[#10B981] to-[#2563EB] h-4 rounded-full transition-all duration-300" 
               style={{ width: `${readingProgressPercent}%` }}
             ></div>
           </div>
-          <div className="flex justify-between text-xs text-white/60 mb-1">
-            <span>Reading Progress</span>
-            <span>{hasReadStory ? 'Complete!' : `${readingProgressPercent}%`}</span>
+          <div className="flex justify-between text-xs text-white/70 mb-6">
+            <span>Reading Progress ({hasReadStory ? 'Complete!' : `${readingProgressPercent}%`})</span>
+            <span>Chapter {chapterNumber} of {story.chapters.length}</span>
           </div>
-          
-          {/* Reading timer */}
-          {readingStartTime && (
-            <div className="flex justify-end text-xs text-white/60 mb-6">
-              <div className="px-2 py-1 bg-[#2563EB]/20 rounded-md flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <polyline points="12 6 12 12 16 14"></polyline>
-                </svg>
-                <ReadingTimer startTime={readingStartTime} />
-              </div>
-            </div>
-          )}
         </div>
         
         <div className="relative">
           {!hasReadStory && (
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0F172A] to-transparent h-20 flex items-end justify-center pb-2 z-10">
-              <span className="text-white/70 text-sm animate-bounce flex items-center">
-                Scroll down to read the full story
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0F172A] to-transparent h-20 flex flex-col items-center justify-end pb-2 z-10">
+              <Button 
+                variant="outline"
+                className="bg-[#2563EB] hover:bg-[#1E40AF] text-white border-transparent mb-3"
+                onClick={completeReading}
+              >
+                Mark as Read
+              </Button>
+              <span className="text-white/70 text-sm flex items-center">
+                Continue reading the story
                 <ChevronRight className="h-4 w-4 ml-1 rotate-90" />
               </span>
             </div>
