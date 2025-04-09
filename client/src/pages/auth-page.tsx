@@ -32,8 +32,9 @@ import { useToast } from "@/hooks/use-toast";
 import { FcGoogle } from "react-icons/fc";
 import { SiFacebook, SiApple } from "react-icons/si";
 
-// Import the image directly from the assets folder
+// Import the images directly from the assets folder
 import loginBackground from "../assets/login-background.png";
+import learniverseCharacters from "../assets/images/learniverse-characters.png";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -217,7 +218,12 @@ export default function AuthPage() {
       </div>
 
       {/* Auth forms (right) */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-8">
+      <div className="w-full lg:w-1/2 flex flex-col items-center justify-center p-4 sm:p-8">
+        <img 
+          src={learniverseCharacters} 
+          alt="Learniverse characters" 
+          className="mb-6 w-full max-w-md"
+        />
         <Card className="w-full max-w-md bg-white/20 backdrop-blur-md border-0 shadow-xl">
           <CardContent className="pt-6">
             <Tabs
