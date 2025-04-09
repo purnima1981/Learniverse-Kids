@@ -185,13 +185,13 @@ export default function RegionalStoriesPage() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                           {epic.stories.map((story, storyIndex) => {
                             // Use theme-specific color classes for story cards
-                            const storyColor = `from-${themeColors.primary}/80 to-${themeColors.accent}/80`;
+                            const storyColor = `from-${themeColors.primary}/90 to-${themeColors.accent}/80`;
                             
                             return (
                               <Card 
                                 key={story.id}
                                 className={cn(
-                                  "bg-gradient-to-br overflow-hidden cursor-pointer hover:shadow-xl transition-all",
+                                  "bg-gradient-to-br overflow-hidden cursor-pointer hover:shadow-xl transition-all shadow-md",
                                   storyColor,
                                   themeColors.card.border
                                 )}
@@ -201,8 +201,9 @@ export default function RegionalStoriesPage() {
                                   <div className="flex justify-between items-start mb-2">
                                     <h3 className={cn("font-semibold text-lg", themeColors.text.primary)}>{story.title}</h3>
                                     <Badge className={cn(
+                                      "font-semibold py-1 px-2",
                                       themeColors.text.primary, 
-                                      `bg-${themeColors.accent}/30`
+                                      `bg-${themeColors.accent}/60`
                                     )}>{story.grade}</Badge>
                                   </div>
                                   <div className={cn("flex items-center text-sm mt-3", `${themeColors.text.primary}/80`)}>

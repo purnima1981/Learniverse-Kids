@@ -289,17 +289,13 @@ export const regionalEpicsData: { [themeId: number]: RegionalEpic[] } = {
       name: "Family Adventures",
       description: "Family Adventures showing how subjects integrates into everyday life and learning",
       region: "United States",
-      imageUrl: "/epics/silicon-valley.svg",
+      imageUrl: "/epics/family-adventures.svg",
       themeId: 8,
       stories: [
-        { id: 8001, title: "The Weekend Walk", grade: "5" },
-
-        { id: 8002, title: "The Park Adventure", grade: "5" },
-
-        { id: 8003, title: "The Long Drive", grade: "5" },
-
-        { id: 8004, title: "The Backyard Project ", grade: "5" }
-
+        { id: 8001, title: "The Weekend Walk", grade: "3-5" },
+        { id: 8002, title: "The Park Adventure", grade: "3-5" },
+        { id: 8003, title: "The Long Drive", grade: "3-5" },
+        { id: 8004, title: "The Backyard Project", grade: "3-5" }
       ]
     }
   ]
