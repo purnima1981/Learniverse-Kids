@@ -143,21 +143,7 @@ export default function Dashboard() {
             </div>
           )}
 
-          {/* Learning Tools */}
-          <div className="mb-8">
-            <h2 className="font-bold text-2xl mb-4 text-white">Learning Tools</h2>
 
-            <div className="flex justify-center">
-              <div className="w-full max-w-md">
-                <LearningTool
-                  title="Vocabulary Flashcards"
-                  description="Review and learn new words with interactive flashcards that build your vocabulary for success in school and beyond."
-                  icon="cards"
-                  onClick={() => setLocation("/flashcards")}
-                />
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
