@@ -7,25 +7,7 @@ import StoryReader from "@/pages/StoryReader";
 import AuthPage from "@/pages/auth-page";
 import RegionalStoriesPage from "@/pages/RegionalStoriesPage";
 import { ProtectedRoute } from "@/lib/protected-route";
-import { AuthProvider, useAuth } from "@/hooks/use-auth";
-
-// HomePage component that handles conditional routing based on user state
-function HomePage() {
-  const { user } = useAuth();
-  
-  // If user has no theme selected, redirect to theme selection
-  if (user && !user.themeId) {
-    return <Redirect to="/theme-selection" />;
-  }
-  
-  // If user is logged in and has theme, show dashboard
-  if (user) {
-    return <Dashboard />;
-  }
-  
-  // Otherwise redirect to auth page
-  return <Redirect to="/auth" />;
-}
+import { AuthProvider } from "@/hooks/use-auth";
 
 function App() {
   return (
@@ -57,8 +39,10 @@ function App() {
           <Redirect to="/dashboard" />
         </Route>
         
-        {/* Home page - decide where to direct users based on whether they have selected a theme */}
-        <Route path="/" component={HomePage} />
+        {/* Home page - redirects directly to auth page to start with login/registration */}
+        <Route path="/">
+          <Redirect to="/auth" />
+        </Route>
         
         {/* 404 for any other routes */}
         <Route component={NotFound} />
