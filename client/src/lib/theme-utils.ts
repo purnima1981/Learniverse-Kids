@@ -226,20 +226,20 @@ export const themeColorMap: Record<number, ThemeColors> = {
   
   // Realistic Fiction Theme
   8: {
-    primary: "sky-600",
-    secondary: "sky-300",
-    accent: "amber-500",
+    primary: "cyan-500",
+    secondary: "cyan-300",
+    accent: "orange-400",
     background: {
-      from: "sky-700",
-      to: "blue-800"
+      from: "cyan-500",
+      to: "amber-400"
     },
     card: {
-      background: "bg-sky-800/30",
-      border: "border-sky-400/30"
+      background: "bg-cyan-600/20",
+      border: "border-cyan-400/20"
     },
     text: {
       primary: "text-white",
-      secondary: "text-sky-100"
+      secondary: "text-cyan-50"
     },
     button: {
       from: "from-amber-400",
@@ -248,7 +248,7 @@ export const themeColorMap: Record<number, ThemeColors> = {
         from: "from-amber-500",
         to: "to-orange-600"
       },
-      text: "text-sky-900"
+      text: "text-white"
     }
   }
 };
