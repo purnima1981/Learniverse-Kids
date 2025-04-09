@@ -1,9 +1,19 @@
 import { useParams, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, BookmarkIcon, InfoIcon } from "lucide-react";
+import { ChevronLeft, ChevronRight, BookmarkIcon, InfoIcon, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import * as StoryService from "@/lib/story-service";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose,
+} from "@/components/ui/dialog";
+import { Card, CardContent } from "@/components/ui/card";
 
 export default function StoryReader() {
   const { id: storyId, chapter: chapterNumberParam } = useParams();
@@ -13,6 +23,8 @@ export default function StoryReader() {
   const [story, setStory] = useState<StoryService.Story | null>(null);
   const [currentChapter, setCurrentChapter] = useState<StoryService.Chapter | null>(null);
   const [loading, setLoading] = useState(true);
+  const [selectedWord, setSelectedWord] = useState<StoryService.VocabularyWord | null>(null);
+  const [showFlashcard, setShowFlashcard] = useState(false);
   
   // Convert storyId and chapterNumber to numbers
   const storyIdNumber = storyId ? parseInt(storyId) : 8001; // Default to our story ID
@@ -77,10 +89,25 @@ export default function StoryReader() {
   };
   
   const handleVocabulary = () => {
-    toast({
-      title: "Vocabulary",
-      description: "Vocabulary feature coming soon!",
-    });
+    if (currentChapter?.vocabularyWords && currentChapter.vocabularyWords.length > 0) {
+      setShowFlashcard(true);
+      setSelectedWord(currentChapter.vocabularyWords[0]);
+    } else {
+      toast({
+        title: "No vocabulary words",
+        description: "This chapter doesn't have any vocabulary words.",
+      });
+    }
+  };
+  
+  const handleWordClick = (word: StoryService.VocabularyWord) => {
+    setSelectedWord(word);
+    setShowFlashcard(true);
+  };
+  
+  const closeFlashcard = () => {
+    setShowFlashcard(false);
+    setSelectedWord(null);
   };
   
   // Show loading state
@@ -179,7 +206,11 @@ export default function StoryReader() {
               <h3 className="font-bold text-xl mb-4 text-white">Vocabulary Words</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {currentChapter.vocabularyWords.map((word, idx) => (
-                  <div key={idx} className="bg-white/10 p-3 rounded-lg">
+                  <div 
+                    key={idx} 
+                    className="bg-white/10 p-3 rounded-lg cursor-pointer hover:bg-white/20 transition-colors"
+                    onClick={() => handleWordClick(word)}
+                  >
                     <h4 className="font-bold text-cyan-300">{word.word}</h4>
                     <p className="text-white">{word.definition}</p>
                     <p className="text-sm text-white/70 mt-1">"{word.context}"</p>
@@ -210,6 +241,51 @@ export default function StoryReader() {
           </Button>
         </div>
       </div>
+
+      {/* Flashcard Dialog */}
+      <Dialog open={showFlashcard} onOpenChange={setShowFlashcard}>
+        <DialogContent className="sm:max-w-md bg-gradient-to-br from-cyan-900 to-blue-900 border-none">
+          <DialogHeader>
+            <DialogTitle className="text-center text-2xl font-bold text-white mb-2">
+              Vocabulary Flashcard
+            </DialogTitle>
+            <DialogDescription className="text-center text-white/70 text-sm">
+              Learn more about this vocabulary word
+            </DialogDescription>
+          </DialogHeader>
+          
+          {selectedWord && (
+            <div className="py-4">
+              <Card className="bg-white/10 overflow-hidden">
+                <div className="p-4 bg-cyan-800/50">
+                  <h2 className="text-xl font-bold text-center text-white mb-1">
+                    {selectedWord.word}
+                  </h2>
+                </div>
+                <CardContent className="p-6">
+                  <h3 className="text-lg font-semibold text-cyan-300 mb-2">Definition:</h3>
+                  <p className="text-white mb-4">{selectedWord.definition}</p>
+                  
+                  <h3 className="text-lg font-semibold text-cyan-300 mb-2">Example:</h3>
+                  <p className="italic text-white/90 bg-white/5 p-3 rounded border border-white/10">
+                    "{selectedWord.context}"
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+          
+          <div className="flex justify-center mt-2">
+            <Button 
+              variant="outline" 
+              className="bg-white/10 hover:bg-white/20 border-white/30 text-white"
+              onClick={closeFlashcard}
+            >
+              Close
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
