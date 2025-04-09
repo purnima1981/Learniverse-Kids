@@ -31,6 +31,8 @@ export default function StoryReader() {
   const [hasReadStory, setHasReadStory] = useState(false);
   const [readingStartTime, setReadingStartTime] = useState<number | null>(null);
   const [readingTime, setReadingTime] = useState<number>(0);
+  // Create a ref to store highlighted words across renders
+  const highlightedWordsRef = useRef<Set<string>>(new Set());
   const contentRef = useRef<HTMLDivElement>(null);
   
   // Convert storyId and chapterNumber to numbers
@@ -118,6 +120,8 @@ export default function StoryReader() {
     setQuizAnalytics([]);
     setShowQuestions(false);
     setHasReadStory(false); // Reset the reading state
+    // Reset highlighted words when chapter changes
+    highlightedWordsRef.current = new Set<string>();
   }, [chapterNumber]);
   
   // State to track reading progress percentage
@@ -355,48 +359,57 @@ export default function StoryReader() {
                   let fragments = [];
                   let lastIndex = 0;
                   
+                  // Note: We use the componentRef here which is reset when chapter changes
+                  
                   // Loop through each vocabulary word
                   currentChapter.vocabularyWords.forEach((word, widx) => {
-                    const wordRegex = new RegExp(`\\b${word.word}\\b`, 'gi');
-                    let match;
+                    const wordRegex = new RegExp(`\\b${word.word}\\b`, 'i'); // Only match case-insensitive first occurrence
                     
-                    // Find all instances of the word in this paragraph
-                    while ((match = wordRegex.exec(processedParagraph)) !== null) {
-                      // Add text before the match
-                      if (match.index > lastIndex) {
-                        fragments.push(
-                          <span key={`${pidx}-text-${lastIndex}`}>{processedParagraph.substring(lastIndex, match.index)}</span>
-                        );
-                      }
+                    // Only find the first instance of each word to avoid duplicates
+                    // But only if we haven't already highlighted this word
+                    if (!highlightedWordsRef.current.has(word.word.toLowerCase())) {
+                      const match = wordRegex.exec(processedParagraph);
                       
-                      // Get color based on subject
-                      const getSubjectColor = (subject?: string) => {
-                        switch (subject) {
-                          case 'Geometry':
-                            return 'text-[#10B981]'; // Green
-                          case 'Physics':
-                            return 'text-[#2563EB]'; // Blue
-                          case 'Materials Science':
-                            return 'text-[#D97706]'; // Amber
-                          case 'Language Arts':
-                            return 'text-[#8B5CF6]'; // Purple
-                          default:
-                            return 'text-[#10B981]'; // Default green
+                      if (match) {
+                        // Add text before the match
+                        if (match.index > lastIndex) {
+                          fragments.push(
+                            <span key={`${pidx}-text-${lastIndex}`}>{processedParagraph.substring(lastIndex, match.index)}</span>
+                          );
                         }
-                      };
+                        
+                        // Get color based on subject
+                        const getSubjectColor = (subject?: string) => {
+                          switch (subject) {
+                            case 'Geometry':
+                              return 'text-[#10B981]'; // Green
+                            case 'Physics':
+                              return 'text-[#2563EB]'; // Blue
+                            case 'Materials Science':
+                              return 'text-[#D97706]'; // Amber
+                            case 'Language Arts':
+                              return 'text-[#8B5CF6]'; // Purple
+                            default:
+                              return 'text-[#10B981]'; // Default green
+                          }
+                        };
 
-                      // Add the highlighted word with subject-based color
-                      fragments.push(
-                        <span 
-                          key={`${pidx}-word-${match.index}`}
-                          className={`font-bold ${getSubjectColor(word.subject)} cursor-pointer hover:underline`}
-                          onClick={() => handleWordClick(word)}
-                        >
-                          {match[0]}
-                        </span>
-                      );
-                      
-                      lastIndex = match.index + match[0].length;
+                        // Add the highlighted word with subject-based color
+                        fragments.push(
+                          <span 
+                            key={`${pidx}-word-${match.index}`}
+                            className={`font-bold ${getSubjectColor(word.subject)} cursor-pointer hover:underline`}
+                            onClick={() => handleWordClick(word)}
+                          >
+                            {match[0]}
+                          </span>
+                        );
+                        
+                        lastIndex = match.index + match[0].length;
+                        
+                        // Add the word to the set of highlighted words
+                        highlightedWordsRef.current.add(word.word.toLowerCase());
+                      }
                     }
                   });
                   
