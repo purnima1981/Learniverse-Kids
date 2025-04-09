@@ -6,6 +6,7 @@ import Dashboard from "@/pages/Dashboard";
 import StoryReader from "@/pages/StoryReader";
 import AuthPage from "@/pages/auth-page";
 import RegionalStoriesPage from "@/pages/RegionalStoriesPage";
+import ReadingCoach from "@/pages/ReadingCoach";
 import { ProtectedRoute } from "@/lib/protected-route";
 import { AuthProvider } from "@/hooks/use-auth";
 
@@ -32,9 +33,7 @@ function App() {
         <Route path="/personalization">
           <Redirect to="/theme-selection" />
         </Route>
-        <Route path="/reading-coach">
-          <Redirect to="/dashboard" />
-        </Route>
+        <ProtectedRoute path="/reading-coach" component={ReadingCoach} />
         <Route path="/challenges">
           <Redirect to="/dashboard" />
         </Route>

@@ -77,6 +77,81 @@ export default function Dashboard() {
             </div>
           </div>
 
+          {/* Learning Tools */}
+          <div className="mb-8">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="font-bold text-2xl text-white">Learning Tools</h2>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* AI Reading Coach */}
+              <div 
+                className="glass-panel p-6 cursor-pointer hover:bg-white/10 transition-colors duration-300"
+                onClick={() => setLocation('/reading-coach')}
+              >
+                <div className="flex items-start">
+                  <div className="flex-shrink-0 mr-4 bg-[#45AEF5]/20 p-3 rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-[#45AEF5]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"></path>
+                      <path d="M12 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path>
+                      <path d="M12 8v4m0 4v-1"></path>
+                      <path d="M5 3a2 2 0 0 0-2 2"></path>
+                      <path d="M9 3h1"></path>
+                      <path d="M14 3h1"></path>
+                      <path d="M19 3a2 2 0 0 1 2 2"></path>
+                      <path d="M21 9v1"></path>
+                      <path d="M21 14v1"></path>
+                      <path d="M19 21a2 2 0 0 1-2-2"></path>
+                      <path d="M14 21h1"></path>
+                      <path d="M9 21h1"></path>
+                      <path d="M5 21a2 2 0 0 1-2-2"></path>
+                      <path d="M3 14v1"></path>
+                      <path d="M3 9v1"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-xl text-white mb-2">AI Reading Coach</h3>
+                    <p className="text-white text-sm mb-3">
+                      Practice reading aloud with our AI-powered coach to improve your fluency,
+                      pronunciation, and comprehension skills.
+                    </p>
+                    <Button
+                      className="bg-[#45AEF5] hover:bg-[#3B82F6] text-white"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setLocation('/reading-coach');
+                      }}
+                    >
+                      Start Practice
+                    </Button>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Interactive Challenges */}
+              <div className="glass-panel p-6 cursor-pointer hover:bg-white/10 transition-colors duration-300">
+                <div className="flex items-start">
+                  <div className="flex-shrink-0 mr-4 bg-[#10B981]/20 p-3 rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-[#10B981]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+                      <path d="m9 12 2 2 4-4"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-xl text-white mb-2">Interactive Challenges</h3>
+                    <p className="text-white text-sm mb-3">
+                      Fun educational games aligned with your curriculum that reinforce
+                      key concepts through play-based learning.
+                    </p>
+                    <div className="px-3 py-1 bg-white/10 inline-block rounded-full text-white text-xs">
+                      Coming Soon
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
           {/* Current Story */}
           {currentStory && (
             <div className="mb-8">
