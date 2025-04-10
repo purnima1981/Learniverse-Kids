@@ -96,7 +96,7 @@ const ArrangeGame: React.FC<ArrangeGameProps> = ({
 
   return (
     <div className="p-4 md:p-6">
-      <h3 className="text-xl font-semibold mb-4">Arrange in the correct order:</h3>
+      <h3 className="text-xl font-semibold mb-4 text-blue-600 dark:text-blue-400">Arrange in the Correct Order</h3>
       
       {submitted ? (
         <div className="mb-6">
@@ -151,9 +151,19 @@ const ArrangeGame: React.FC<ArrangeGameProps> = ({
         </div>
       ) : (
         <div className="mb-6">
-          <p className="text-gray-600 dark:text-gray-300 mb-4">
-            Drag and drop the items or use the arrow buttons to arrange them in the correct order.
-          </p>
+          <div className="bg-blue-50 dark:bg-blue-900/30 p-4 rounded-lg mb-4 border border-blue-200 dark:border-blue-800">
+            <h4 className="font-medium text-blue-700 dark:text-blue-300 mb-2">Instructions:</h4>
+            <p className="text-gray-600 dark:text-gray-300">
+              Arrange the words in the correct order. You can:
+            </p>
+            <ul className="list-disc pl-5 mt-2 text-gray-600 dark:text-gray-300">
+              <li>Drag and drop items using the grip handle</li>
+              <li>Use the up/down arrow buttons to move items</li>
+            </ul>
+            <p className="mt-2 text-sm italic text-gray-500 dark:text-gray-400">
+              The goal is to put all items in their logical sequence.
+            </p>
+          </div>
           
           <DragDropContext onDragEnd={handleDragEnd}>
             <Droppable droppableId="arrangeable-items">
@@ -173,33 +183,40 @@ const ArrangeGame: React.FC<ArrangeGameProps> = ({
                           <div
                             ref={provided.innerRef}
                             {...provided.draggableProps}
-                            className="p-3 bg-white dark:bg-gray-850 border border-gray-200 dark:border-gray-700 rounded-lg"
+                            className="p-3 relative bg-white dark:bg-gray-850 border-2 border-blue-200 dark:border-blue-700 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 transform hover:-translate-y-1"
                           >
                             <div className="flex items-center">
-                              <div {...provided.dragHandleProps} className="mr-3 text-gray-400">
+                              <div 
+                                {...provided.dragHandleProps} 
+                                className="mr-3 flex items-center justify-center bg-blue-100 dark:bg-blue-800 text-blue-500 dark:text-blue-300 p-1.5 rounded-md cursor-grab active:cursor-grabbing"
+                              >
                                 <GripVertical className="w-5 h-5" />
                               </div>
-                              <span className="flex-grow">{item}</span>
-                              <div className="flex space-x-1">
+                              <span className="flex-grow font-medium">{item}</span>
+                              <div className="flex space-x-1.5">
                                 <Button
-                                  variant="ghost"
+                                  variant="outline"
                                   size="sm"
                                   onClick={() => moveItem(index, 'up')}
                                   disabled={index === 0}
-                                  className="h-8 w-8 p-0"
+                                  className={`h-8 w-8 p-0 rounded-full ${index === 0 ? 'opacity-50' : 'bg-blue-50 border-blue-200 hover:bg-blue-100 dark:bg-blue-900 dark:border-blue-700'}`}
                                 >
                                   <ArrowUp className="h-4 w-4" />
                                 </Button>
                                 <Button
-                                  variant="ghost"
+                                  variant="outline"
                                   size="sm"
                                   onClick={() => moveItem(index, 'down')}
                                   disabled={index === arrangedItems.length - 1}
-                                  className="h-8 w-8 p-0"
+                                  className={`h-8 w-8 p-0 rounded-full ${index === arrangedItems.length - 1 ? 'opacity-50' : 'bg-blue-50 border-blue-200 hover:bg-blue-100 dark:bg-blue-900 dark:border-blue-700'}`}
                                 >
                                   <ArrowDown className="h-4 w-4" />
                                 </Button>
                               </div>
+                            </div>
+                            {/* Position indicator */}
+                            <div className="absolute -left-2 top-1/2 transform -translate-y-1/2 w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center text-xs text-white font-bold border-2 border-white dark:border-gray-800">
+                              {index + 1}
                             </div>
                           </div>
                         )}
