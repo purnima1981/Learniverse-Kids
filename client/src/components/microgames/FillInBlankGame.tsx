@@ -181,7 +181,7 @@ const FillInBlankGame: React.FC<FillInBlankGameProps> = ({
       {submitted ? (
         <div className="flex justify-between items-center">
           <div>
-            <Badge variant={allCorrect ? "success" : "destructive"}>
+            <Badge className={allCorrect ? "bg-green-500 hover:bg-green-600" : "bg-red-500 hover:bg-red-600"}>
               {allCorrect ? "All Correct!" : "Some answers incorrect"}
             </Badge>
           </div>

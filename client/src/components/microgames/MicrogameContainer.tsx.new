@@ -39,7 +39,8 @@ const MicrogameContainer: React.FC<MicrogameContainerProps> = ({
   const [timeTaken, setTimeTaken] = useState(0);
   const [startTime, setStartTime] = useState<number | null>(null);
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
-  const [timeLeft, setTimeLeft] = useState(microgame.timeLimit || 0);
+  const timeLimit = microgame.timeLimit || 0;
+  const [timeLeft, setTimeLeft] = useState(timeLimit);
 
   // Parse the content JSON
   const content = typeof microgame.content === "string"
@@ -50,10 +51,10 @@ const MicrogameContainer: React.FC<MicrogameContainerProps> = ({
   const passingThreshold = content.passingThreshold || 60;
 
   useEffect(() => {
-    if (started && !completed && microgame.timeLimit) {
+    if (started && !completed && timeLimit > 0) {
       // Initialize timer
       setStartTime(Date.now());
-      setTimeLeft(microgame.timeLimit);
+      setTimeLeft(timeLimit);
       
       const intervalId = setInterval(() => {
         setTimeLeft((prev) => {
@@ -73,7 +74,7 @@ const MicrogameContainer: React.FC<MicrogameContainerProps> = ({
         if (intervalId) clearInterval(intervalId);
       };
     }
-  }, [started, completed, microgame.timeLimit]);
+  }, [started, completed, timeLimit]);
 
   const formatTime = (seconds: number): string => {
     const mins = Math.floor(seconds / 60);
@@ -173,10 +174,10 @@ const MicrogameContainer: React.FC<MicrogameContainerProps> = ({
           <p className="text-center text-gray-600 dark:text-gray-300">
             {microgame.instructions}
           </p>
-          {microgame.timeLimit && (
+          {timeLimit > 0 && (
             <div className="flex items-center space-x-2">
               <Timer className="w-5 h-5 text-orange-500" />
-              <span>Time limit: {formatTime(microgame.timeLimit)}</span>
+              <span>Time limit: {formatTime(timeLimit)}</span>
             </div>
           )}
           <div className="flex items-center space-x-2">
@@ -257,7 +258,7 @@ const MicrogameContainer: React.FC<MicrogameContainerProps> = ({
           <QuizGame
             questions={content.questions || []}
             config={{
-              timeLimit: microgame.timeLimit,
+              timeLimit: timeLimit > 0 ? timeLimit : undefined,
               shuffleOptions: content.shuffleOptions,
               showExplanation: content.showExplanation,
             }}
@@ -270,7 +271,7 @@ const MicrogameContainer: React.FC<MicrogameContainerProps> = ({
           <MatchingGame
             pairs={content.pairs || []}
             config={{
-              timeLimit: microgame.timeLimit,
+              timeLimit: timeLimit > 0 ? timeLimit : undefined,
               shuffleOptions: content.shuffleOptions,
             }}
             onAnswer={handleAnswer}
@@ -283,7 +284,7 @@ const MicrogameContainer: React.FC<MicrogameContainerProps> = ({
             items={content.items || []}
             correctOrder={content.correctOrder || []}
             config={{
-              timeLimit: microgame.timeLimit,
+              timeLimit: timeLimit > 0 ? timeLimit : undefined,
             }}
             onAnswer={handleAnswer}
             onComplete={(answers: UserAnswer[]) => handleComplete(answers)}
@@ -295,7 +296,7 @@ const MicrogameContainer: React.FC<MicrogameContainerProps> = ({
             text={content.text || ""}
             blanks={content.blanks || []}
             config={{
-              timeLimit: microgame.timeLimit,
+              timeLimit: timeLimit > 0 ? timeLimit : undefined,
               showHints: content.showHints,
             }}
             onAnswer={handleAnswer}
@@ -327,7 +328,7 @@ const MicrogameContainer: React.FC<MicrogameContainerProps> = ({
             </CardDescription>
           </div>
           
-          {started && !completed && microgame.timeLimit && microgame.timeLimit > 0 && (
+          {started && !completed && timeLimit > 0 && (
             <div className="text-xl font-mono bg-black/30 px-3 py-1 rounded-md flex items-center">
               <Timer className="w-5 h-5 mr-2" />
               {formatTime(timeLeft)}
