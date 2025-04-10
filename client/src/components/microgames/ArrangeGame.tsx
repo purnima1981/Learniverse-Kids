@@ -26,8 +26,25 @@ const ArrangeGame: React.FC<ArrangeGameProps> = ({
 
   useEffect(() => {
     // Initialize with shuffled items
-    setArrangedItems([...items].sort(() => Math.random() - 0.5));
-  }, [items]);
+    const shuffled = [...items].sort(() => Math.random() - 0.5);
+    
+    // Make sure the shuffled order is different from the correct order
+    // This prevents the rare case where random shuffling results in the correct order
+    const isIdentical = JSON.stringify(shuffled) === JSON.stringify(correctOrder);
+    
+    if (isIdentical && items.length > 1) {
+      // If they're identical, swap the first two elements
+      [shuffled[0], shuffled[1]] = [shuffled[1], shuffled[0]];
+    }
+    
+    console.log("ArrangeGame initialized:", { 
+      correctOrder, 
+      shuffledOrder: shuffled,
+      areIdentical: isIdentical
+    });
+    
+    setArrangedItems(shuffled);
+  }, [items, correctOrder]);
 
   const handleDragEnd = (result: any) => {
     if (!result.destination) return;
@@ -55,7 +72,14 @@ const ArrangeGame: React.FC<ArrangeGameProps> = ({
   };
 
   const handleSubmit = () => {
-    const correct = checkAnswer(arrangedItems, correctOrder);
+    // Check if the arranged items match the correct order
+    console.log("Checking arranged items:", arrangedItems);
+    console.log("Against correct order:", correctOrder);
+    
+    // Compare arrays 
+    const correct = JSON.stringify(arrangedItems) === JSON.stringify(correctOrder);
+    console.log("Is correct:", correct);
+    
     setIsCorrect(correct);
     setSubmitted(true);
 
@@ -65,7 +89,9 @@ const ArrangeGame: React.FC<ArrangeGameProps> = ({
     };
 
     onAnswer(answer);
-    onComplete([answer]);
+    
+    // We don't auto-complete here, allowing the user to see the correct arrangement
+    // onComplete([answer]);
   };
 
   return (
@@ -137,44 +163,49 @@ const ArrangeGame: React.FC<ArrangeGameProps> = ({
                   ref={provided.innerRef}
                   className="space-y-2"
                 >
-                  {arrangedItems.map((item, index) => (
-                    <Draggable key={item} draggableId={item} index={index}>
-                      {(provided) => (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          className="p-3 bg-white dark:bg-gray-850 border border-gray-200 dark:border-gray-700 rounded-lg"
-                        >
-                          <div className="flex items-center">
-                            <div {...provided.dragHandleProps} className="mr-3 text-gray-400">
-                              <GripVertical className="w-5 h-5" />
-                            </div>
-                            <span className="flex-grow">{item}</span>
-                            <div className="flex space-x-1">
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => moveItem(index, 'up')}
-                                disabled={index === 0}
-                                className="h-8 w-8 p-0"
-                              >
-                                <ArrowUp className="h-4 w-4" />
-                              </Button>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => moveItem(index, 'down')}
-                                disabled={index === arrangedItems.length - 1}
-                                className="h-8 w-8 p-0"
-                              >
-                                <ArrowDown className="h-4 w-4" />
-                              </Button>
+                  {arrangedItems.map((item, index) => {
+                    // Create a unique draggable ID that includes both the item and its position 
+                    // This ensures unique keys even when words are repeated
+                    const draggableId = `item-${index}-${item.replace(/\s+/g, '-')}`;
+                    return (
+                      <Draggable key={draggableId} draggableId={draggableId} index={index}>
+                        {(provided) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            className="p-3 bg-white dark:bg-gray-850 border border-gray-200 dark:border-gray-700 rounded-lg"
+                          >
+                            <div className="flex items-center">
+                              <div {...provided.dragHandleProps} className="mr-3 text-gray-400">
+                                <GripVertical className="w-5 h-5" />
+                              </div>
+                              <span className="flex-grow">{item}</span>
+                              <div className="flex space-x-1">
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => moveItem(index, 'up')}
+                                  disabled={index === 0}
+                                  className="h-8 w-8 p-0"
+                                >
+                                  <ArrowUp className="h-4 w-4" />
+                                </Button>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => moveItem(index, 'down')}
+                                  disabled={index === arrangedItems.length - 1}
+                                  className="h-8 w-8 p-0"
+                                >
+                                  <ArrowDown className="h-4 w-4" />
+                                </Button>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      )}
-                    </Draggable>
-                  ))}
+                        )}
+                      </Draggable>
+                    );
+                  })}
                   {provided.placeholder}
                 </div>
               )}
