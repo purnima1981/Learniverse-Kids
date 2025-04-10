@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <title>Rhombus Shape</title>
+  <desc>A rhombus with diagonal lines showing area calculation</desc>
+  
+  <!-- Rhombus with a light fill and border -->
+  <polygon 
+    points="100,25 160,100 100,175 40,100" 
+    fill="#10B981" 
+    fill-opacity="0.2" 
+    stroke="#10B981" 
+    stroke-width="3" 
+  />
+  
+  <!-- Diagonal lines -->
+  <line x1="100" y1="25" x2="100" y2="175" stroke="#2563EB" stroke-width="2" stroke-dasharray="5,5" />
+  <line x1="40" y1="100" x2="160" y2="100" stroke="#2563EB" stroke-width="2" stroke-dasharray="5,5" />
+  
+  <!-- Labels -->
+  <text x="110" y="100" font-family="Arial, sans-serif" font-size="14" text-anchor="start" fill="#0F172A">
+    d₁
+  </text>
+  
+  <text x="100" y="40" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#0F172A">
+    d₂
+  </text>
+  
+  <!-- Sides labels -->
+  <text x="130" y="60" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#0F172A">
+    side
+  </text>
+  
+  <text x="130" y="140" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#0F172A">
+    side
+  </text>
+  
+  <!-- Formula -->
+  <rect x="35" y="180" width="130" height="25" rx="5" fill="#0F172A" />
+  <text x="100" y="197" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#FFFFFF">
+    Area = (d₁ × d₂) ÷ 2
+  </text>
+  
+  <!-- Center point -->
+  <circle cx="100" cy="100" r="3" fill="#D97706" />
+  
+  <!-- Vertices -->
+  <circle cx="100" cy="25" r="3" fill="#2563EB" />
+  <circle cx="160" cy="100" r="3" fill="#2563EB" />
+  <circle cx="100" cy="175" r="3" fill="#2563EB" />
+  <circle cx="40" cy="100" r="3" fill="#2563EB" />
+</svg>

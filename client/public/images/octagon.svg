@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <title>Octagon Shape</title>
+  <desc>A regular octagon with eight equal sides</desc>
+  
+  <!-- Octagon with a light fill and border -->
+  <polygon 
+    points="75,25 125,25 175,75 175,125 125,175 75,175 25,125 25,75" 
+    fill="#10B981" 
+    fill-opacity="0.2" 
+    stroke="#10B981" 
+    stroke-width="3" 
+  />
+  
+  <!-- Center dot for reference -->
+  <circle cx="100" cy="100" r="3" fill="#10B981" />
+  
+  <!-- Label -->
+  <text x="100" y="100" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" dominant-baseline="middle" fill="#0F172A">
+    Octagon
+  </text>
+  
+  <!-- Side labels -->
+  <text x="100" y="20" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#0F172A">Side 1</text>
+  <text x="180" y="100" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#0F172A">Side 3</text>
+  <text x="100" y="185" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#0F172A">Side 5</text>
+  <text x="20" y="100" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#0F172A">Side 7</text>
+  
+  <!-- Vertices -->
+  <circle cx="75" cy="25" r="3" fill="#2563EB" />
+  <circle cx="125" cy="25" r="3" fill="#2563EB" />
+  <circle cx="175" cy="75" r="3" fill="#2563EB" />
+  <circle cx="175" cy="125" r="3" fill="#2563EB" />
+  <circle cx="125" cy="175" r="3" fill="#2563EB" />
+  <circle cx="75" cy="175" r="3" fill="#2563EB" />
+  <circle cx="25" cy="125" r="3" fill="#2563EB" />
+  <circle cx="25" cy="75" r="3" fill="#2563EB" />
+</svg>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <title>Potential Energy</title>
+  <desc>Illustration of potential energy with a ball on a hill</desc>
+  
+  <!-- Sky background -->
+  <rect x="0" y="0" width="200" height="130" fill="#DBEAFE" />
+  
+  <!-- Ground/hill -->
+  <path d="M0,130 Q50,50 100,90 Q150,130 200,110 L200,200 L0,200 Z" fill="#10B981" />
+  
+  <!-- Height measurement line -->
+  <line x1="50" y1="150" x2="50" y2="90" stroke="#2563EB" stroke-width="2" stroke-dasharray="5,5" />
+  <line x1="45" y1="90" x2="55" y2="90" stroke="#2563EB" stroke-width="2" />
+  <line x1="45" y1="150" x2="55" y2="150" stroke="#2563EB" stroke-width="2" />
+  
+  <!-- Ball at height -->
+  <circle cx="50" cy="70" r="15" fill="#D97706" stroke="#0F172A" stroke-width="2" />
+  <circle cx="50" cy="70" r="3" fill="#FFFFFF" />
+  
+  <!-- Mass label -->
+  <text x="25" y="70" font-family="Arial, sans-serif" font-size="12" text-anchor="end" fill="#0F172A">
+    m
+  </text>
+  
+  <!-- Height label -->
+  <text x="40" y="120" font-family="Arial, sans-serif" font-size="14" text-anchor="end" fill="#0F172A">
+    h
+  </text>
+  
+  <!-- Gravity arrow -->
+  <line x1="50" y1="30" x2="50" y2="50" stroke="#D97706" stroke-width="2" />
+  <polygon points="50,55 45,45 55,45" fill="#D97706" />
+  <text x="40" y="40" font-family="Arial, sans-serif" font-size="12" text-anchor="end" fill="#0F172A">
+    g
+  </text>
+  
+  <!-- Formula -->
+  <rect x="110" y="25" width="80" height="25" rx="5" fill="#0F172A" />
+  <text x="150" y="42" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#FFFFFF">
+    PE = mgh
+  </text>
+  
+  <!-- Labels -->
+  <text x="150" y="60" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#0F172A">
+    Potential Energy
+  </text>
+  
+  <text x="100" y="190" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#FFFFFF">
+    Higher position = More potential energy
+  </text>
+</svg>
