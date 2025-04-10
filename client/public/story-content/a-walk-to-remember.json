@@ -22,13 +22,21 @@
           "word": "pentagon",
           "definition": "A flat shape with five straight sides and five angles.",
           "context": "School zone signs are shaped like pentagons, which are five-sided figures.",
-          "subject": "Geometry"
+          "subject": "Geometry",
+          "type": "vocabulary",
+          "mnemonic": "PENTA means five in Greek, like a PENTAgon has five sides and five angles. Think of your hand with five fingers as a 'PENTA-hand'.",
+          "formula": "Area of regular pentagon = (1/4) × √(5 × (5 + 2 × √5)) × s²",
+          "formulaExplanation": "For a regular pentagon with side length s, this formula gives the area. The simpler way is to divide the pentagon into triangles from the center."
         },
         {
           "word": "triangular",
           "definition": "Having three sides or corners; shaped like a triangle.",
           "context": "Most houses have triangular roofs to help snow and rain slide off.",
-          "subject": "Geometry"
+          "subject": "Geometry",
+          "type": "formula",
+          "formula": "Area = (b × h) ÷ 2",
+          "formulaExplanation": "The area of a triangle is half the product of its base (b) and height (h).",
+          "mnemonic": "TRI means three - think of a TRIangle with its three angles and three sides, or a TRIcycle with its three wheels. To find the area, remember 'Half of Base times Height'."
         },
         {
           "word": "rhombus",
@@ -44,25 +52,39 @@
           "word": "congruent",
           "definition": "Identical in form, having exactly the same size and shape.",
           "context": "A diagonal line splits a diamond into two congruent triangles.",
-          "subject": "Geometry"
+          "subject": "Geometry",
+          "type": "vocabulary",
+          "mnemonic": "To remember 'congruent,' think 'CON-GREW-ent' - when shapes are congruent, it's as if one shape GREW from a CONnection to the exact same size and shape as the other."
         },
         {
           "word": "potential energy",
           "definition": "Stored energy that an object has due to its position or state.",
           "context": "When we walk uphill, our bodies store potential energy because of our height above the ground.",
-          "subject": "Physics"
+          "subject": "Physics",
+          "type": "concept",
+          "formula": "PE = m × g × h",
+          "formulaExplanation": "Gravitational potential energy equals mass (m) times acceleration due to gravity (g) times height (h).",
+          "mnemonic": "Think 'Higher Up, More to Give' - the higher something is, the more potential energy it has to give when it falls."
         },
         {
           "word": "kinetic energy",
           "definition": "Energy of motion; the energy an object possesses due to its movement.",
           "context": "Potential energy turns into kinetic energy when objects move downhill.",
-          "subject": "Physics"
+          "subject": "Physics",
+          "type": "formula",
+          "formula": "KE = ½ × m × v²",
+          "formulaExplanation": "Kinetic energy equals half of mass (m) times velocity squared (v²). This means doubling the speed makes the energy four times greater!",
+          "mnemonic": "Remember 'Half MV Squared' - the faster something moves, the much more energy it has due to the squared velocity."
         },
         {
           "word": "air resistance",
           "definition": "A force that opposes the motion of an object through air.",
           "context": "Air resistance is a force that impedes us when we move forward against the wind.",
-          "subject": "Physics"
+          "subject": "Physics",
+          "type": "concept",
+          "formula": "F_d = ½ × ρ × v² × C_d × A",
+          "formulaExplanation": "The drag force due to air resistance depends on air density (ρ), velocity squared (v²), drag coefficient (C_d), and cross-sectional area (A).",
+          "mnemonic": "Think 'SAVE': Shape, Area, Velocity, and Environment all affect air resistance. A streamlined shape faces less resistance than a flat one!"
         },
         {
           "word": "personification",
@@ -70,13 +92,17 @@
           "context": "Saying the wind plays a song is personification because it gives human qualities to the wind.",
           "subject": "Language Arts",
           "synonyms": ["anthropomorphism", "humanization", "attribution"],
-          "antonyms": ["dehumanization", "objectification"]
+          "antonyms": ["dehumanization", "objectification"],
+          "type": "vocabulary",
+          "mnemonic": "Think of 'PERSON-ification' - you're making a non-human thing act like a PERSON. The 'wind dances,' 'time crawls,' or 'the sun smiles' are all examples of giving human qualities to non-human entities."
         },
         {
           "word": "resilient",
           "definition": "Able to withstand or recover quickly from difficult conditions.",
           "context": "Wood isn't as resilient outdoors as metal unless it's properly treated.",
-          "subject": "Materials Science"
+          "subject": "Materials Science",
+          "type": "vocabulary",
+          "mnemonic": "Think 'RE-SILENT' - after being pressed or pushed, a resilient material goes back to being silent (stable and unchanged). Like a spring that bounces back after being compressed."
         },
         {
           "word": "crisp",
@@ -84,7 +110,9 @@
           "context": "As the clock struck 2:45 PM on a crisp Sunday afternoon in March 2025, we set out for a walk.",
           "subject": "Language Arts",
           "synonyms": ["fresh", "bracing", "invigorating", "refreshing"],
-          "antonyms": ["mild", "muggy", "humid", "stuffy"]
+          "antonyms": ["mild", "muggy", "humid", "stuffy"],
+          "type": "vocabulary",
+          "mnemonic": "The sound of the word 'crisp' helps remember its meaning - when you say it, your mouth makes a sharp, clean sound that feels refreshing, just like crisp air feels refreshing to breathe!"
         }
       ]
     }
