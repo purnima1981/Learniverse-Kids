@@ -39,12 +39,23 @@ const InterChapterGame: React.FC<InterChapterGameProps> = ({
   useEffect(() => {
     const loadMicrogame = async () => {
       try {
+        console.log("InterChapterGame - Loading microgame", { 
+          gradeLevel, 
+          subjects, 
+          storyId, 
+          currentChapter, 
+          nextChapter 
+        });
+        
         setLoading(true);
         setError(null);
         
         // Fetch a random microgame relevant to the current story's grade level and a random subject
         const subject = chooseSubject();
+        console.log("Selected subject for microgame:", subject);
+        
         const game = await fetchRandomMicrogame(gradeLevel, subject);
+        console.log("Loaded microgame:", game);
         
         setMicrogame(game);
       } catch (err) {
@@ -56,7 +67,7 @@ const InterChapterGame: React.FC<InterChapterGameProps> = ({
     };
 
     loadMicrogame();
-  }, [gradeLevel, subjects]);
+  }, [gradeLevel, subjects, storyId, currentChapter, nextChapter]);
 
   const handleGameComplete = (result: { score: number; passed: boolean }) => {
     setGameResult(result);
