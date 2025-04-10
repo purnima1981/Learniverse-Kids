@@ -77,8 +77,12 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
     if (Array.isArray(currentQuestion.answer)) {
       // For matching questions
       correct = JSON.stringify(currentAnswer) === JSON.stringify(currentQuestion.answer);
+    } else if (currentQuestion.type === 'fill-blank') {
+      // For fill in the blank questions, compare with the correct answer
+      // We're now using an exact match since we've switched to multiple choice
+      correct = currentAnswer === currentQuestion.answer;
     } else {
-      // For multiple choice and fill in the blank
+      // For multiple choice
       correct = currentAnswer === currentQuestion.answer;
     }
 
@@ -131,21 +135,79 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
     </RadioGroup>
   );
 
-  const renderFillBlank = (question: Question) => (
-    <div className="space-y-4">
-      <div className="p-2 rounded-md bg-[#2563EB]/20 text-white/80 text-sm mb-2">
-        Type your answer in the field below. Be specific and check your spelling.
+  // Generate multiple choice options for fill-in-blank questions
+  const generateOptions = (correctAnswer: string): string[] => {
+    // If the answer has multiple words, split it into parts
+    const parts = correctAnswer.split(/[ ,]+/);
+    
+    // Generate options including the correct answer
+    const options = [correctAnswer];
+    
+    // Generate 3 additional plausible but incorrect answers
+    if (parts.length > 1) {
+      // For multi-word answers, create variations by changing one word
+      for (let i = 0; i < Math.min(3, parts.length); i++) {
+        const modified = [...parts];
+        modified[i] = modified[i] + 's'; // Simple modification
+        options.push(modified.join(' '));
+      }
+    } else {
+      // For single word answers, add similar options
+      options.push(correctAnswer + 's');
+      options.push(correctAnswer.substring(0, Math.max(3, correctAnswer.length - 2)));
+      options.push(correctAnswer.charAt(0) + correctAnswer.substring(1).split('').sort(() => 0.5 - Math.random()).join(''));
+    }
+    
+    // If we don't have 4 options yet, add some generic ones
+    while (options.length < 4) {
+      options.push(`${correctAnswer} (variation ${options.length})`);
+    }
+    
+    // Shuffle the options
+    return options.sort(() => Math.random() - 0.5);
+  };
+  
+  // Cache options for fill-in-blank questions to avoid regenerating on re-renders
+  const [fillBlankOptions, setFillBlankOptions] = useState<{[key: number]: string[]}>({});
+  
+  // Generate and cache options for fill-in-blank questions when they first appear
+  useEffect(() => {
+    if (currentQuestion?.type === 'fill-blank' && !fillBlankOptions[currentQuestion.id]) {
+      const options = generateOptions(currentQuestion.answer as string);
+      setFillBlankOptions(prev => ({ ...prev, [currentQuestion.id]: options }));
+    }
+  }, [currentQuestionIndex, currentQuestion]);
+  
+  const renderFillBlank = (question: Question) => {
+    // Get or generate options for this question
+    const options = fillBlankOptions[question.id] || generateOptions(question.answer as string);
+    
+    return (
+      <div className="space-y-4">
+        <div className="p-2 rounded-md bg-[#2563EB]/20 text-white/80 text-sm mb-2">
+          Choose the correct answer to complete the sentence.
+        </div>
+        <RadioGroup 
+          value={answers[question.id] || ""}
+          onValueChange={handleAnswer}
+          className="space-y-4"
+        >
+          {options.map((option, index) => (
+            <div key={index} className="flex items-start space-x-3 bg-white/10 p-4 rounded-md hover:bg-white/20 transition-colors cursor-pointer">
+              <RadioGroupItem value={option} id={`option-fill-${index}`} className="mt-1" />
+              <Label 
+                htmlFor={`option-fill-${index}`} 
+                className="text-white flex-1 cursor-pointer"
+                onClick={() => handleAnswer(option)}
+              >
+                {option}
+              </Label>
+            </div>
+          ))}
+        </RadioGroup>
       </div>
-      <Input 
-        type="text" 
-        placeholder="Your answer..."
-        value={answers[question.id] || ""}
-        onChange={(e) => handleAnswer(e.target.value)}
-        className="bg-white/10 border-[#2563EB]/30 text-white p-6 text-lg"
-        autoFocus
-      />
-    </div>
-  );
+    );
+  };
 
   const handleDragEnd = (result: DropResult, question: Question) => {
     const { source, destination } = result;
