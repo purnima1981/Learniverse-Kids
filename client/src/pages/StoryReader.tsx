@@ -16,6 +16,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import ChapterQuestions from "@/components/ChapterQuestions";
 import chapterQuestions, { ChapterQuestionsMap } from "@/data/chapterQuestions";
+import InterChapterGame from "@/components/InterChapterGame";
 
 export default function StoryReader() {
   const { id: storyId, chapter: chapterNumberParam } = useParams();
@@ -105,6 +106,21 @@ export default function StoryReader() {
     if (story) {
       const nextChapterNum = StoryService.getNextChapterNumber(story, chapterNumber);
       if (nextChapterNum) {
+        // Show InterChapterGame if we have subjects and it's not the last chapter
+        if (story.subjects.length > 0) {
+          setShowInterChapterGame(true);
+        } else {
+          setLocation(`/story/${storyId}/${nextChapterNum}`);
+        }
+      }
+    }
+  };
+  
+  const handleInterChapterGameComplete = () => {
+    setShowInterChapterGame(false);
+    if (story) {
+      const nextChapterNum = StoryService.getNextChapterNumber(story, chapterNumber);
+      if (nextChapterNum) {
         setLocation(`/story/${storyId}/${nextChapterNum}`);
       }
     }
@@ -112,6 +128,7 @@ export default function StoryReader() {
   
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [quizAnalytics, setQuizAnalytics] = useState<any[]>([]);
+  const [showInterChapterGame, setShowInterChapterGame] = useState(false);
   
   // Reset quiz state when changing chapters
   useEffect(() => {
