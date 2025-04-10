@@ -291,10 +291,40 @@ const MicrogameContainer: React.FC<MicrogameContainerProps> = ({
           />
         );
       case "fill-in-blank":
+        // Ensure that all blanks have options for multiple choice
+        const blanksWithOptions = (content.blanks || []).map((blank: any) => {
+          // If the blank doesn't have options, generate some
+          if (!blank.options || !Array.isArray(blank.options) || blank.options.length < 3) {
+            // Make sure the correct answer is included in options
+            const correctAnswer = blank.correctAnswer;
+            
+            // Create a default set of options including the correct answer
+            // In a real app, these would be more carefully chosen alternatives
+            const defaultOptions = [
+              correctAnswer,
+              correctAnswer + " (wrong option)",
+              "Alternative Answer",
+              "Another Choice"
+            ];
+            
+            // Shuffle the options
+            const shuffledOptions = [...defaultOptions].sort(() => Math.random() - 0.5);
+            
+            // Return the blank with options
+            return {
+              ...blank,
+              options: shuffledOptions
+            };
+          }
+          return blank;
+        });
+        
+        console.log("Fill-in-blank game with options:", blanksWithOptions);
+        
         return (
           <FillInBlankGame
             text={content.text || ""}
-            blanks={content.blanks || []}
+            blanks={blanksWithOptions}
             config={{
               timeLimit: timeLimit > 0 ? timeLimit : undefined,
               showHints: content.showHints,
