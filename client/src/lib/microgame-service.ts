@@ -1,137 +1,116 @@
-// Microgame service for fetching and managing microgames
-
 import { Microgame, UserGameResult } from "@shared/schema";
-
-export type MicrogameType = 'quiz' | 'match' | 'arrange' | 'fill-in-blank';
-
-export interface MicrogameContent {
-  questions?: Array<{
-    question: string;
-    options?: string[];
-    correctAnswer: string | string[];
-    explanation?: string;
-  }>;
-  pairs?: Array<{
-    left: string;
-    right: string;
-  }>;
-  items?: string[];
-  correctOrder?: string[];
-  text?: string;
-  blanks?: Array<{
-    id: string;
-    correctAnswer: string;
-    options?: string[];
-  }>;
-  imageUrl?: string;
-}
+import { queryClient, apiRequest } from "@/lib/queryClient";
 
 export interface MicrogameConfig {
-  timeLimit?: number; // in seconds
+  timeLimit?: number;
   shuffleOptions?: boolean;
   showFeedback?: boolean;
-  showHints?: boolean;
   showExplanation?: boolean;
-  attemptsAllowed?: number;
+  showHints?: boolean;
 }
 
 export interface UserAnswer {
-  questionId?: string | number;
-  userAnswer: string | string[] | Record<string, string>;
-  isCorrect?: boolean;
-  timeTaken?: number; // in seconds
+  questionId?: number | string;
+  userAnswer: string | string[];
+  isCorrect: boolean;
 }
 
-// Fetch a random microgame by grade and optional subject
-export async function fetchRandomMicrogame(grade: string, subject?: string): Promise<Microgame> {
-  try {
-    const queryParams = new URLSearchParams();
-    queryParams.append('grade', grade);
-    if (subject) {
-      queryParams.append('subject', subject);
-    }
-    
-    const response = await fetch(`/api/microgames/random?${queryParams.toString()}`);
-    
-    if (!response.ok) {
-      throw new Error(`Failed to fetch microgame: ${response.statusText}`);
-    }
-    
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Error fetching random microgame:', error);
-    throw error;
-  }
-}
-
-// Fetch microgames by subject
-export async function fetchMicrogamesBySubject(subject: string): Promise<Microgame[]> {
-  try {
-    const response = await fetch(`/api/microgames/subject/${subject}`);
-    
-    if (!response.ok) {
-      throw new Error(`Failed to fetch microgames: ${response.statusText}`);
-    }
-    
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Error fetching microgames by subject:', error);
-    throw error;
-  }
-}
-
-// Save a user's result for a microgame
-export async function saveGameResult(microgameId: number, score: number, timeTaken?: number, answers?: UserAnswer[]): Promise<UserGameResult> {
-  try {
-    const response = await fetch('/api/microgames/results', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        microgameId,
-        score,
-        timeTaken,
-        answers: answers ? JSON.stringify(answers) : undefined,
-      }),
-    });
-    
-    if (!response.ok) {
-      throw new Error(`Failed to save game result: ${response.statusText}`);
-    }
-    
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Error saving game result:', error);
-    throw error;
-  }
-}
-
-// Check a single answer for correctness (used by various microgame types)
+/**
+ * Checks if a user's answer is correct
+ */
 export function checkAnswer(userAnswer: string | string[], correctAnswer: string | string[]): boolean {
   if (Array.isArray(userAnswer) && Array.isArray(correctAnswer)) {
-    // Compare arrays (order matters)
+    // For arrange/order type questions
     if (userAnswer.length !== correctAnswer.length) return false;
     return userAnswer.every((item, index) => item === correctAnswer[index]);
-  } else if (Array.isArray(userAnswer) && !Array.isArray(correctAnswer)) {
-    // User provided multiple answers but only one correct answer
-    return userAnswer.includes(correctAnswer);
-  } else if (!Array.isArray(userAnswer) && Array.isArray(correctAnswer)) {
-    // User provided one answer but multiple correct answers
-    return correctAnswer.includes(userAnswer);
+  } else if (Array.isArray(userAnswer)) {
+    // If user answer is an array but correct answer is a string (unexpected)
+    console.error("Mismatch in answer types: userAnswer is array, correctAnswer is string");
+    return false;
+  } else if (Array.isArray(correctAnswer)) {
+    // If correct answer is an array but user answer is a string (unexpected)
+    console.error("Mismatch in answer types: userAnswer is string, correctAnswer is array");
+    return false;
   } else {
-    // Simple string comparison
-    return userAnswer === correctAnswer;
+    // Simple string comparison for single answers
+    // Normalize both strings for comparison (trim whitespace, case insensitive)
+    return userAnswer.toString().trim().toLowerCase() === correctAnswer.toString().trim().toLowerCase();
   }
 }
 
-// Calculate score based on correct answers
-export function calculateScore(answers: UserAnswer[], totalQuestions: number, maxPoints: number = 100): number {
-  if (totalQuestions === 0) return 0;
-  
-  const correctAnswers = answers.filter(answer => answer.isCorrect).length;
-  return Math.round((correctAnswers / totalQuestions) * maxPoints);
+/**
+ * Fetches a random microgame appropriate for the student's grade level
+ * Optionally filtered by subject
+ */
+export async function fetchRandomMicrogame(gradeLevel: string, subject?: string): Promise<Microgame> {
+  try {
+    const queryParams = new URLSearchParams();
+    if (subject) queryParams.append('subject', subject);
+    queryParams.append('grade', gradeLevel);
+    
+    const response = await apiRequest('GET', `/api/microgames/random?${queryParams.toString()}`);
+    const data = await response.json();
+    
+    // Ensure the content is parsed if it's a string
+    if (data && typeof data.content === 'string') {
+      try {
+        data.content = JSON.parse(data.content);
+      } catch (e) {
+        console.warn("Could not parse microgame content JSON:", e);
+      }
+    }
+    
+    return data;
+  } catch (error) {
+    console.error("Error fetching random microgame:", error);
+    throw new Error("Failed to load a microgame");
+  }
+}
+
+/**
+ * Saves the result of a game
+ */
+export async function saveGameResult(
+  microgameId: number,
+  score: number,
+  timeTaken?: number,
+  answers?: UserAnswer[]
+): Promise<UserGameResult> {
+  try {
+    const response = await apiRequest('POST', '/api/user-game-results', {
+      microgameId,
+      score,
+      timeTaken,
+      answers: answers ? JSON.stringify(answers) : undefined,
+    });
+    
+    const data = await response.json();
+    
+    // Invalidate any cached game results
+    queryClient.invalidateQueries({ queryKey: ['/api/user-game-results'] });
+    
+    return data;
+  } catch (error) {
+    console.error("Error saving game result:", error);
+    throw new Error("Failed to save your progress");
+  }
+}
+
+/**
+ * Gets the user's previous results for a specific microgame
+ */
+export async function getUserGameResults(microgameId?: number): Promise<UserGameResult[]> {
+  try {
+    const endpoint = microgameId 
+      ? `/api/user-game-results?microgameId=${microgameId}` 
+      : '/api/user-game-results';
+      
+    const response = await apiRequest('GET', endpoint);
+    const data = await response.json();
+    
+    return data;
+  } catch (error) {
+    console.error("Error fetching user game results:", error);
+    throw new Error("Failed to load your progress");
+  }
 }
