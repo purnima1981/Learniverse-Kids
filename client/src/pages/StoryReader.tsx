@@ -130,12 +130,13 @@ export default function StoryReader() {
   const [quizAnalytics, setQuizAnalytics] = useState<any[]>([]);
   const [showInterChapterGame, setShowInterChapterGame] = useState(false);
   
-  // Reset quiz state when changing chapters
+  // Reset state when changing chapters
   useEffect(() => {
     setQuizCompleted(false);
     setQuizAnalytics([]);
     setShowQuestions(false);
     setHasReadStory(false); // Reset the reading state
+    setShowInterChapterGame(false); // Reset the inter-chapter game state
     
     console.log(`Chapter changed to ${chapterNumber}, reset UI state`);
   }, [chapterNumber]);
@@ -616,6 +617,21 @@ export default function StoryReader() {
           </div>
         </DialogContent>
       </Dialog>
+      {/* InterChapterGame - Show between chapters */}
+      {showInterChapterGame && nextChapter && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4 overflow-y-auto">
+          <div className="w-full max-w-4xl">
+            <InterChapterGame
+              storyId={storyIdNumber}
+              currentChapter={chapterNumber}
+              nextChapter={nextChapter}
+              subjects={story.subjects || []}
+              gradeLevel={story.gradeLevel || ""}
+              onContinue={handleInterChapterGameComplete}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
