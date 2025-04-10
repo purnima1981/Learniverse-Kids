@@ -78,7 +78,8 @@
           "type": "formula",
           "formula": "KE = ½ × m × v²",
           "formulaExplanation": "Kinetic energy equals half of mass (m) times velocity squared (v²). This means doubling the speed makes the energy four times greater!",
-          "mnemonic": "Remember 'Half MV Squared' - the faster something moves, the much more energy it has due to the squared velocity."
+          "mnemonic": "Remember 'Half MV Squared' - the faster something moves, the much more energy it has due to the squared velocity.",
+          "image": "/images/kinetic-energy.svg"
         },
         {
           "word": "air resistance",
