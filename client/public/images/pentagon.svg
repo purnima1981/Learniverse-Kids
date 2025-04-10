@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <title>Pentagon Shape</title>
+  <desc>A regular pentagon with five equal sides</desc>
+  
+  <!-- Pentagon with a light fill and border -->
+  <polygon 
+    points="100,25 170,69 150,140 50,140 30,69" 
+    fill="#10B981" 
+    fill-opacity="0.2" 
+    stroke="#10B981" 
+    stroke-width="3" 
+  />
+  
+  <!-- Center point -->
+  <circle cx="100" cy="100" r="3" fill="#D97706" />
+  
+  <!-- Lines from center to vertices -->
+  <line x1="100" y1="100" x2="100" y2="25" stroke="#2563EB" stroke-width="1" stroke-dasharray="3,3" />
+  <line x1="100" y1="100" x2="170" y2="69" stroke="#2563EB" stroke-width="1" stroke-dasharray="3,3" />
+  <line x1="100" y1="100" x2="150" y2="140" stroke="#2563EB" stroke-width="1" stroke-dasharray="3,3" />
+  <line x1="100" y1="100" x2="50" y2="140" stroke="#2563EB" stroke-width="1" stroke-dasharray="3,3" />
+  <line x1="100" y1="100" x2="30" y2="69" stroke="#2563EB" stroke-width="1" stroke-dasharray="3,3" />
+  
+  <!-- Labels -->
+  <text x="100" y="15" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#0F172A">
+    side 1
+  </text>
+  
+  <text x="180" y="69" font-family="Arial, sans-serif" font-size="12" text-anchor="start" fill="#0F172A">
+    side 2
+  </text>
+  
+  <text x="155" y="155" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#0F172A">
+    side 3
+  </text>
+  
+  <text x="45" y="155" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#0F172A">
+    side 4
+  </text>
+  
+  <text x="20" y="69" font-family="Arial, sans-serif" font-size="12" text-anchor="end" fill="#0F172A">
+    side 5
+  </text>
+  
+  <!-- Explain shape -->
+  <text x="100" y="180" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#0F172A">
+    Regular Pentagon
+  </text>
+  
+  <text x="100" y="195" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#0F172A">
+    5 equal sides and angles
+  </text>
+  
+  <!-- Vertices -->
+  <circle cx="100" cy="25" r="3" fill="#2563EB" />
+  <circle cx="170" cy="69" r="3" fill="#2563EB" />
+  <circle cx="150" cy="140" r="3" fill="#2563EB" />
+  <circle cx="50" cy="140" r="3" fill="#2563EB" />
+  <circle cx="30" cy="69" r="3" fill="#2563EB" />
+</svg>

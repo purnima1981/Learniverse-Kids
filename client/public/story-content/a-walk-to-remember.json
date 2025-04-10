@@ -26,7 +26,8 @@
           "type": "vocabulary",
           "mnemonic": "PENTA means five in Greek, like a PENTAgon has five sides and five angles. Think of your hand with five fingers as a 'PENTA-hand'.",
           "formula": "Area of regular pentagon = (1/4) × √(5 × (5 + 2 × √5)) × s²",
-          "formulaExplanation": "For a regular pentagon with side length s, this formula gives the area. The simpler way is to divide the pentagon into triangles from the center."
+          "formulaExplanation": "For a regular pentagon with side length s, this formula gives the area. The simpler way is to divide the pentagon into triangles from the center.",
+          "image": "/images/pentagon.svg"
         },
         {
           "word": "triangular",
@@ -36,7 +37,8 @@
           "type": "formula",
           "formula": "Area = (b × h) ÷ 2",
           "formulaExplanation": "The area of a triangle is half the product of its base (b) and height (h).",
-          "mnemonic": "TRI means three - think of a TRIangle with its three angles and three sides, or a TRIcycle with its three wheels. To find the area, remember 'Half of Base times Height'."
+          "mnemonic": "TRI means three - think of a TRIangle with its three angles and three sides, or a TRIcycle with its three wheels. To find the area, remember 'Half of Base times Height'.",
+          "image": "/images/triangle.svg"
         },
         {
           "word": "rhombus",
@@ -46,7 +48,8 @@
           "type": "formula",
           "formula": "Area = (d₁ × d₂) ÷ 2",
           "formulaExplanation": "The area of a rhombus equals half the product of its diagonals. Just multiply the lengths of the two diagonals and divide by 2.",
-          "mnemonic": "To remember the rhombus area formula, think: 'Diagonal Product, Cut in Half' - multiply the diagonals and divide by 2."
+          "mnemonic": "To remember the rhombus area formula, think: 'Diagonal Product, Cut in Half' - multiply the diagonals and divide by 2.",
+          "image": "/images/rhombus.svg"
         },
         {
           "word": "congruent",
@@ -64,7 +67,8 @@
           "type": "concept",
           "formula": "PE = m × g × h",
           "formulaExplanation": "Gravitational potential energy equals mass (m) times acceleration due to gravity (g) times height (h).",
-          "mnemonic": "Think 'Higher Up, More to Give' - the higher something is, the more potential energy it has to give when it falls."
+          "mnemonic": "Think 'Higher Up, More to Give' - the higher something is, the more potential energy it has to give when it falls.",
+          "image": "/images/potential-energy.svg"
         },
         {
           "word": "kinetic energy",
