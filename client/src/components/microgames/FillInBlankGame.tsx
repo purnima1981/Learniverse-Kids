@@ -10,7 +10,7 @@ import { MicrogameConfig, UserAnswer, checkAnswer } from "@/lib/microgame-servic
 interface Blank {
   id: string;
   correctAnswer: string;
-  options?: string[];
+  options: string[]; // Changed from optional to required
 }
 
 interface FillInBlankGameProps {
@@ -62,7 +62,8 @@ const FillInBlankGame: React.FC<FillInBlankGameProps> = ({
 
     blanks.forEach(blank => {
       const userAnswer = answers[blank.id] || "";
-      const isCorrect = checkAnswer(userAnswer.trim().toLowerCase(), blank.correctAnswer.toLowerCase());
+      // Direct string comparison since we're using select boxes
+      const isCorrect = userAnswer === blank.correctAnswer;
       newResults[blank.id] = isCorrect;
 
       const answerObject: UserAnswer = {
@@ -128,41 +129,28 @@ const FillInBlankGame: React.FC<FillInBlankGameProps> = ({
                 </div>
               )}
               
-              {blank.options ? (
-                <Select
-                  value={answers[blank.id] || ""}
-                  onValueChange={(value) => handleAnswerChange(blank.id, value)}
-                  disabled={submitted}
-                >
-                  <SelectTrigger 
-                    className={`
-                      ${isCorrect ? 'border-green-500 bg-green-50 dark:bg-green-950' : ''}
-                      ${isWrong ? 'border-red-500 bg-red-50 dark:bg-red-950' : ''}
-                    `}
-                  >
-                    <SelectValue placeholder="Select an answer" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="">Select an answer</SelectItem>
-                    {blank.options.map((option) => (
-                      <SelectItem key={option} value={option}>
-                        {option}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              ) : (
-                <Input
-                  value={answers[blank.id] || ""}
-                  onChange={(e) => handleAnswerChange(blank.id, e.target.value)}
-                  placeholder="Type your answer"
-                  disabled={submitted}
+              <Select
+                value={answers[blank.id] || ""}
+                onValueChange={(value) => handleAnswerChange(blank.id, value)}
+                disabled={submitted}
+              >
+                <SelectTrigger 
                   className={`
                     ${isCorrect ? 'border-green-500 bg-green-50 dark:bg-green-950' : ''}
                     ${isWrong ? 'border-red-500 bg-red-50 dark:bg-red-950' : ''}
                   `}
-                />
-              )}
+                >
+                  <SelectValue placeholder="Select an answer" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">Select an answer</SelectItem>
+                  {blank.options.map((option) => (
+                    <SelectItem key={option} value={option}>
+                      {option}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               
               {submitted && (
                 <div className={`text-sm ${isCorrect ? 'text-green-600' : 'text-red-600'}`}>
