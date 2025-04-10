@@ -13,7 +13,10 @@
           "word": "octagon",
           "definition": "A flat shape with eight straight sides and eight angles.",
           "context": "Stop signs are shaped like octagons, which are eight-sided figures.",
-          "subject": "Geometry"
+          "subject": "Geometry",
+          "mnemonic": "OCT-agon has 8 sides. Remember 'OCT' is like October, which was the 8th month in the ancient Roman calendar!",
+          "image": "/images/octagon.svg",
+          "type": "vocabulary"
         },
         {
           "word": "pentagon",
@@ -31,7 +34,11 @@
           "word": "rhombus",
           "definition": "A four-sided shape where all sides have equal length; a diamond shape.",
           "context": "Ethan drew a rhombus in the dirt and showed how a diagonal line splits it into two triangles.",
-          "subject": "Geometry"
+          "subject": "Geometry",
+          "type": "formula",
+          "formula": "Area = (d₁ × d₂) ÷ 2",
+          "formulaExplanation": "The area of a rhombus equals half the product of its diagonals. Just multiply the lengths of the two diagonals and divide by 2.",
+          "mnemonic": "To remember the rhombus area formula, think: 'Diagonal Product, Cut in Half' - multiply the diagonals and divide by 2."
         },
         {
           "word": "congruent",
