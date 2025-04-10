@@ -25,6 +25,11 @@ export interface VocabularyWord {
   subject?: string;
   synonyms?: string[];
   antonyms?: string[];
+  mnemonic?: string;
+  formula?: string;
+  formulaExplanation?: string;
+  type?: 'vocabulary' | 'formula' | 'concept';
+  image?: string;
 }
 
 export interface Question {

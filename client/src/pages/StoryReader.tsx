@@ -473,10 +473,14 @@ export default function StoryReader() {
         <DialogContent className="sm:max-w-md bg-gradient-to-br from-[#0F172A] to-[#2563EB] border-none">
           <DialogHeader>
             <DialogTitle className="text-center text-2xl font-bold text-white mb-2">
-              Vocabulary Flashcard
+              {selectedWord?.type === 'formula' ? 'Formula Flashcard' : 
+               selectedWord?.type === 'concept' ? 'Concept Flashcard' : 
+               'Vocabulary Flashcard'}
             </DialogTitle>
             <DialogDescription className="text-center text-white/70 text-sm">
-              Learn more about this vocabulary word
+              {selectedWord?.type === 'formula' ? 'Learn more about this mathematical formula' : 
+               selectedWord?.type === 'concept' ? 'Explore this important concept' : 
+               'Learn more about this vocabulary word'}
             </DialogDescription>
           </DialogHeader>
           
@@ -513,6 +517,45 @@ export default function StoryReader() {
                   <p className="italic text-white/90 bg-white/5 p-3 rounded border border-white/10">
                     "{selectedWord.context}"
                   </p>
+                  
+                  {/* Display formula if it exists */}
+                  {selectedWord.formula && (
+                    <div className="mt-4 bg-[#2563EB]/20 p-4 rounded-md border border-[#2563EB]/30">
+                      <h3 className="text-lg font-semibold text-[#2563EB] mb-2">Formula:</h3>
+                      <div className="text-white text-center font-mono text-xl p-2 bg-black/30 rounded mb-2">
+                        {selectedWord.formula}
+                      </div>
+                      {selectedWord.formulaExplanation && (
+                        <p className="text-white/90 text-sm italic">
+                          {selectedWord.formulaExplanation}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                  
+                  {/* Display mnemonic if it exists */}
+                  {selectedWord.mnemonic && (
+                    <div className="mt-4 bg-[#10B981]/20 p-4 rounded-md border border-[#10B981]/30">
+                      <h3 className="text-lg font-semibold text-[#10B981] mb-2">Memory Aid:</h3>
+                      <p className="text-white font-medium p-2 bg-black/20 rounded">
+                        {selectedWord.mnemonic}
+                      </p>
+                    </div>
+                  )}
+                  
+                  {/* Show image if it exists */}
+                  {selectedWord.image && (
+                    <div className="mt-4">
+                      <h3 className="text-lg font-semibold text-[#10B981] mb-2">Visual Reference:</h3>
+                      <div className="w-full h-48 bg-white/10 rounded-md flex justify-center items-center">
+                        <img 
+                          src={selectedWord.image} 
+                          alt={`Visual for ${selectedWord.word}`} 
+                          className="max-h-full max-w-full object-contain rounded"
+                        />
+                      </div>
+                    </div>
+                  )}
                   
                   {/* Show synonyms and antonyms only for Language Arts vocabulary */}
                   {selectedWord.subject === "Language Arts" && selectedWord.synonyms && selectedWord.synonyms.length > 0 && (
