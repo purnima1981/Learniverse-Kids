@@ -61,15 +61,27 @@ const MatchingGame: React.FC<MatchingGameProps> = ({
     const updatedMatches = { ...matches, [selectedLeft]: index };
     setMatches(updatedMatches);
     
+    // Get the correct answer from the current left item
+    const correctAnswer = pairs[selectedLeft].right;
+    // Get the user's selected answer from the right items
+    const userAnswer = rightItems[index];
+    
     // Check if correct
-    const correct = pairs[selectedLeft].right === rightItems[index];
+    const correct = correctAnswer === userAnswer;
+    console.log("Matching check:", { 
+      leftItem: pairs[selectedLeft].left,
+      correctAnswer,
+      userSelected: userAnswer,
+      isCorrect: correct
+    });
+    
     const updatedFeedback = { ...feedback, [selectedLeft]: correct };
     setFeedback(updatedFeedback);
     
     // Add to answers
     const newAnswer: UserAnswer = {
       questionId: selectedLeft,
-      userAnswer: rightItems[index],
+      userAnswer: userAnswer,
       isCorrect: correct,
     };
     const updatedAnswers = [...answers, newAnswer];
@@ -91,9 +103,12 @@ const MatchingGame: React.FC<MatchingGameProps> = ({
         setShowingFeedback(false);
         setSelectedLeft(null);
         
-        // Check if all items are matched
-        const allMatched = Object.values(updatedFeedback).filter(val => val).length === pairs.length;
-        if (allMatched) {
+        // Check if all items are matched correctly
+        const correctMatches = Object.entries(updatedFeedback)
+          .filter(([_, isCorrect]) => isCorrect)
+          .length;
+          
+        if (correctMatches === pairs.length) {
           handleComplete(updatedAnswers);
         }
       }, 1000);
@@ -106,21 +121,40 @@ const MatchingGame: React.FC<MatchingGameProps> = ({
       }
       setSelectedLeft(null);
       
-      // Check if all items are matched
-      const allMatched = Object.values(updatedFeedback).filter(val => val).length === pairs.length;
-      if (allMatched) {
+      // Check if all items are matched correctly
+      const correctMatches = Object.entries(updatedFeedback)
+        .filter(([_, isCorrect]) => isCorrect)
+        .length;
+        
+      if (correctMatches === pairs.length) {
         handleComplete(updatedAnswers);
       }
     }
   };
 
   const handleCheckAnswers = () => {
+    // Log for debugging
+    console.log("Checking all answers:", { 
+      pairs, 
+      matches, 
+      rightItems 
+    });
+    
     const allAnswers: UserAnswer[] = pairs.map((pair, index) => {
       const matchedRightIndex = matches[index];
       const userAnswer = matchedRightIndex !== undefined && matchedRightIndex !== null 
         ? rightItems[matchedRightIndex] 
         : "";
+      
+      // Compare the correct right answer with the user's selected right item
       const isCorrect = pair.right === userAnswer;
+      
+      console.log(`Pair ${index}:`, {
+        leftItem: pair.left,
+        correctAnswer: pair.right,
+        userSelected: userAnswer,
+        isCorrect
+      });
       
       return {
         questionId: index,

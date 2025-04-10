@@ -107,9 +107,15 @@ export default function StoryReader() {
       const nextChapterNum = StoryService.getNextChapterNumber(story, chapterNumber);
       if (nextChapterNum) {
         // Show InterChapterGame if we have subjects and it's not the last chapter
-        if (story.subjects.length > 0) {
+        if (story.subjects && story.subjects.length > 0) {
+          console.log("Showing InterChapterGame before next chapter", {
+            subjects: story.subjects,
+            currentChapter: chapterNumber,
+            nextChapter: nextChapterNum
+          });
           setShowInterChapterGame(true);
         } else {
+          console.log("No subjects found for story, skipping InterChapterGame");
           setLocation(`/story/${storyId}/${nextChapterNum}`);
         }
       }
@@ -193,6 +199,11 @@ export default function StoryReader() {
       title: "Quiz Completed!",
       description: readingTime ? `You completed the chapter in ${Math.floor(readingTime / 60)} minutes and ${readingTime % 60} seconds.` : "Great job completing the quiz!"
     });
+    
+    // Navigate to next chapter or show the interchapter game
+    setTimeout(() => {
+      navigateToNextChapter();
+    }, 1500);
   };
   
   const handleBookmark = () => {
