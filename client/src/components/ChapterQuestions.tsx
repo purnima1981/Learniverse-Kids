@@ -34,6 +34,8 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
   const [timer, setTimer] = useState(0);
   const [questionStartTime, setQuestionStartTime] = useState(Date.now());
   const [analytics, setAnalytics] = useState<QuestionAnalytics[]>([]);
+  const [flaggedQuestions, setFlaggedQuestions] = useState<number[]>([]);
+  const [skippedQuestions, setSkippedQuestions] = useState<number[]>([]);
   
   // For matching questions
   const [matchItems, setMatchItems] = useState<{[key: number]: {item: string, match: string}[]}>({});
@@ -69,6 +71,35 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
 
   const handleAnswer = (value: any) => {
     setAnswers(prev => ({ ...prev, [currentQuestion.id]: value }));
+  };
+
+  // Handle flagging a question for review later
+  const handleFlagQuestion = () => {
+    const questionId = currentQuestion.id;
+    if (flaggedQuestions.includes(questionId)) {
+      // If already flagged, unflag it
+      setFlaggedQuestions(prev => prev.filter(id => id !== questionId));
+    } else {
+      // Flag the question
+      setFlaggedQuestions(prev => [...prev, questionId]);
+    }
+  };
+
+  // Handle skipping a question
+  const handleSkipQuestion = () => {
+    // Add to skipped questions list
+    const questionId = currentQuestion.id;
+    if (!skippedQuestions.includes(questionId)) {
+      setSkippedQuestions(prev => [...prev, questionId]);
+    }
+    
+    // Move to next question
+    if (isLastQuestion) {
+      // If it's the last question, show results
+      setShowResults(true);
+    } else {
+      setCurrentQuestionIndex(prev => prev + 1);
+    }
   };
 
   const checkAnswer = () => {
@@ -353,6 +384,10 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
     const totalTimeSpent = analytics.reduce((total, item) => total + item.timeSpent, 0);
     const avgTimePerQuestion = Math.round(totalTimeSpent / analytics.length);
     
+    // Count flagged and skipped questions
+    const flaggedCount = flaggedQuestions.length;
+    const skippedCount = skippedQuestions.length;
+    
     const handleCompleteClick = () => {
       onComplete(analytics);
     };
@@ -374,7 +409,7 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
         <h3 className="text-2xl font-bold text-white mb-4">Chapter {chapterNumber} Quiz Results</h3>
         <div className="text-6xl font-bold mb-4 text-white">{score}/{questions.length}</div>
         
-        <div className="mb-4 flex justify-center gap-8">
+        <div className="mb-6 flex justify-center gap-8">
           <div className="text-center">
             <p className="text-white/70">Avg. Time per Question</p>
             <p className="text-2xl font-bold text-white">
@@ -387,6 +422,26 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
               {Math.round((score / questions.length) * 100)}%
             </p>
           </div>
+          
+          {(flaggedCount > 0 || skippedCount > 0) && (
+            <div className="text-center">
+              <p className="text-white/70">Question Status</p>
+              <div className="flex items-center gap-2 mt-1">
+                {flaggedCount > 0 && (
+                  <Badge variant="outline" className="border-yellow-500 text-yellow-500">
+                    <Flag className="h-3 w-3 mr-1" />
+                    {flaggedCount} Flagged
+                  </Badge>
+                )}
+                {skippedCount > 0 && (
+                  <Badge variant="outline" className="border-blue-500 text-blue-500">
+                    <SkipForward className="h-3 w-3 mr-1" />
+                    {skippedCount} Skipped
+                  </Badge>
+                )}
+              </div>
+            </div>
+          )}
         </div>
         
         <p className="text-lg mb-6 text-white">
@@ -435,7 +490,42 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
 
       <Card className="bg-[#0F172A]/60 border-[#2563EB]/30 p-6 mb-6">
         <div className="flex justify-between items-start mb-4">
-          <h3 className="text-xl font-medium text-white w-full">{currentQuestion.text}</h3>
+          <div className="flex flex-col">
+            <div className="flex items-center mb-2">
+              {currentQuestion.theme && (
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Badge 
+                        className={`mr-2 ${
+                          currentQuestion.theme === 'math' ? 'bg-green-600/80' : 
+                          currentQuestion.theme === 'science' ? 'bg-blue-600/80' : 
+                          currentQuestion.theme === 'language' ? 'bg-purple-600/80' : 
+                          'bg-amber-600/80'
+                        }`}
+                      >
+                        {currentQuestion.theme === 'math' && <BookOpen className="h-3 w-3 mr-1" />}
+                        {currentQuestion.theme === 'science' && <Zap className="h-3 w-3 mr-1" />}
+                        {currentQuestion.theme === 'language' && <BookOpen className="h-3 w-3 mr-1" />}
+                        {currentQuestion.theme === 'interdisciplinary' && <BookOpen className="h-3 w-3 mr-1" />}
+                        {currentQuestion.theme}
+                      </Badge>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>This question tests {currentQuestion.theme} concepts</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              )}
+              {flaggedQuestions.includes(currentQuestion.id) && (
+                <Badge variant="outline" className="border-yellow-500 text-yellow-500">
+                  <Flag className="h-3 w-3 mr-1" />
+                  Flagged
+                </Badge>
+              )}
+            </div>
+            <h3 className="text-xl font-medium text-white w-full">{currentQuestion.text}</h3>
+          </div>
           <div className="flex items-center text-white/70 text-sm whitespace-nowrap ml-4">
             <Clock className="h-4 w-4 mr-1" />
             <span>{Math.floor(timer / 60).toString().padStart(2, '0')}:{(timer % 60).toString().padStart(2, '0')}</span>
@@ -447,22 +537,67 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
         </div>
       </Card>
 
-      <div className="flex justify-between">
-        <Button 
-          variant="outline" 
-          onClick={() => currentQuestionIndex > 0 && setCurrentQuestionIndex(prev => prev - 1)}
-          disabled={currentQuestionIndex === 0 || showFeedback}
-          className="bg-white/10 hover:bg-white/20 text-white border-transparent"
-        >
-          Previous
-        </Button>
-        <Button 
-          onClick={checkAnswer}
-          disabled={!answers[currentQuestion.id] || showFeedback}
-          className="bg-[#10B981] hover:bg-[#0D9488] text-white"
-        >
-          Check Answer
-        </Button>
+      <div className="flex justify-between items-center">
+        <div className="flex gap-2">
+          <Button 
+            variant="outline" 
+            onClick={() => currentQuestionIndex > 0 && setCurrentQuestionIndex(prev => prev - 1)}
+            disabled={currentQuestionIndex === 0 || showFeedback}
+            className="bg-white/10 hover:bg-white/20 text-white border-transparent"
+          >
+            Previous
+          </Button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="outline"
+                  onClick={handleFlagQuestion}
+                  disabled={showFeedback}
+                  className={`border-transparent ${
+                    flaggedQuestions.includes(currentQuestion.id)
+                      ? 'bg-yellow-500/20 text-yellow-500 hover:bg-yellow-500/30'
+                      : 'bg-white/10 hover:bg-white/20 text-white'
+                  }`}
+                >
+                  <Flag className="h-4 w-4 mr-2" />
+                  {flaggedQuestions.includes(currentQuestion.id) ? 'Unflag' : 'Flag'}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Mark this question to review later</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+        
+        <div className="flex gap-2">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="outline"
+                  onClick={handleSkipQuestion}
+                  disabled={showFeedback}
+                  className="bg-white/10 hover:bg-white/20 text-white border-transparent"
+                >
+                  <SkipForward className="h-4 w-4 mr-2" />
+                  Skip
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Skip this question and come back later</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <Button 
+            onClick={checkAnswer}
+            disabled={!answers[currentQuestion.id] || showFeedback}
+            className="bg-[#10B981] hover:bg-[#0D9488] text-white"
+          >
+            Check Answer
+          </Button>
+        </div>
       </div>
     </div>
   );
