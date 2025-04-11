@@ -12,6 +12,8 @@ export interface Question {
   // Properties for hidden-word questions
   grid?: string[];
   words?: string[];
+  // Properties for word-sequence questions
+  wordSequence?: string[];
   // Common properties for all question types
   answer: string | string[];
   theme?: string;
