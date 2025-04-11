@@ -358,14 +358,14 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
                 <Checkbox 
                   id={`word-${index}`} 
                   checked={answers[question.id] && answers[question.id].includes(word)}
-                  onCheckedChange={(checked) => {
+                  onCheckedChange={(checked: boolean) => {
                     const currentAnswers = answers[question.id] || [];
                     if (checked) {
                       if (!currentAnswers.includes(word)) {
                         handleAnswer([...currentAnswers, word]);
                       }
                     } else {
-                      handleAnswer(currentAnswers.filter(w => w !== word));
+                      handleAnswer(currentAnswers.filter((w: string) => w !== word));
                     }
                   }}
                 />
@@ -412,6 +412,54 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
     );
   };
   
+  // Word Sequence (Ordering)
+  // Unscramble Question Handler
+  const renderUnscramble = (question: Question) => {
+    if (!question.letters) return null;
+    
+    // Split the letters by comma if provided as a comma-separated list
+    const wordList = question.letters.includes(',') ? 
+      question.letters.split(',') : 
+      [question.letters];
+    
+    return (
+      <div className="space-y-6">
+        <div className="p-3 rounded-md bg-[#2563EB]/20 text-white/80 text-sm mb-4">
+          Unscramble the letters to form the correct words.
+        </div>
+        
+        <div className="space-y-4">
+          {wordList.map((scrambledWord, wordIndex) => (
+            <div key={wordIndex} className="space-y-2">
+              <div className="font-mono text-white bg-white/10 p-3 rounded-md text-center text-lg tracking-wider">
+                {scrambledWord}
+              </div>
+              <div className="flex items-center">
+                <Input
+                  type="text"
+                  placeholder="Type your answer here"
+                  className="flex-1 bg-white/5 border-white/20 text-white"
+                  value={
+                    answers[question.id] && Array.isArray(answers[question.id]) 
+                      ? answers[question.id][wordIndex] || '' 
+                      : ''
+                  }
+                  onChange={(e) => {
+                    const currentAnswers = Array.isArray(answers[question.id]) 
+                      ? [...answers[question.id]] 
+                      : new Array(wordList.length).fill('');
+                    currentAnswers[wordIndex] = e.target.value.toUpperCase();
+                    handleAnswer(currentAnswers);
+                  }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
   // Word Sequence (Ordering)
   const [wordSequenceItems, setWordSequenceItems] = useState<{[key: number]: string[]}>({});
   
