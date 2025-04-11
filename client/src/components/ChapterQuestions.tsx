@@ -4,12 +4,14 @@ import { Card } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { CheckCircle, XCircle, Clock, X, GripVertical, Flag, SkipForward, BookOpen, Zap } from "lucide-react";
+import { CheckCircle, XCircle, Clock, X, GripVertical, Flag, SkipForward, BookOpen, Zap, RefreshCw } from "lucide-react";
 import { Question } from "@/data/chapterQuestions";
 import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Checkbox } from "@/components/ui/checkbox";
+// Force re-import to ensure we're using the latest version
+import chapterQuestionsData from "../data/chapterQuestions";
 
 interface QuestionAnalytics {
   questionId: number;
