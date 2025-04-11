@@ -14,6 +14,7 @@ function App() {
   return (
     <AuthProvider>
       <Switch>
+        {/* Test routes */}
         {/* Public routes */}
         <Route path="/auth" component={AuthPage} />
         <Route path="/story/:id/:chapter" component={StoryReader} />
