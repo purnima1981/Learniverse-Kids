@@ -1,14 +1,18 @@
 // Sample chapter questions based on the imported questions
 export interface Question {
   id: number;
-  type: 'multiple-choice' | 'fill-blank' | 'matching' | 'unscramble';
+  type: 'multiple-choice' | 'fill-blank' | 'matching' | 'unscramble' | 'hidden-word' | 'word-sequence' | 'true-false';
   text: string;
   options?: string[];
   items?: { item: string; match: string }[];
   letters?: string;
   answer: string | number | string[];
-  theme?: 'math' | 'science' | 'language' | 'interdisciplinary';
+  theme?: 'math' | 'science' | 'language' | 'interdisciplinary' | 'materials' | 'engineering';
   difficulty?: 'easy' | 'medium' | 'hard';
+  tags?: string[];
+  grid?: string[];
+  words?: string[];
+  wordSequence?: string[];
 }
 
 export type ChapterQuestionsMap = {
@@ -421,6 +425,181 @@ export const chapterQuestions: ChapterQuestionsMap = {
     },
   ],
   // Add more chapters as needed
+  '8001-4': [
+    {
+      id: 1,
+      type: 'multiple-choice',
+      text: 'Stop signs are shaped as octagons because:',
+      options: ['They\'re easier to make than circles', 'The unique shape is recognizable even when partially covered or at night', 'Octagons use less material than circles', 'They\'re less likely to roll away if knocked down'],
+      answer: 'b',
+      theme: 'math',
+      difficulty: 'easy',
+      tags: ['GEOMETRY', 'REAL-WORLD SHAPES', 'CRITICAL THINKING', 'EVERYDAY MATH']
+    },
+    {
+      id: 2,
+      type: 'matching',
+      text: 'Match the Shape with its real-world example from Ethan\'s walk:',
+      items: [
+        { item: 'Triangle', match: 'Roof' },
+        { item: 'Rhombus', match: 'Construction warning sign' },
+        { item: 'Pentagon', match: 'School zone sign' },
+        { item: 'Octagon', match: 'Stop sign' }
+      ],
+      answer: ['Triangle:Roof', 'Rhombus:Construction warning sign', 'Pentagon:School zone sign', 'Octagon:Stop sign'],
+      theme: 'math',
+      difficulty: 'easy',
+      tags: ['GEOMETRY', 'SHAPE RECOGNITION', 'VISUAL MATCHING', 'SPATIAL REASONING']
+    },
+    {
+      id: 3,
+      type: 'unscramble',
+      text: 'Unscramble these geometric shapes Ethan observed:',
+      letters: 'ARITGNEL,SOBMURH,NOGACOT,GANONTEP',
+      answer: ['TRIANGLE', 'RHOMBUS', 'OCTAGON', 'PENTAGON'],
+      theme: 'math',
+      difficulty: 'medium',
+      tags: ['GEOMETRY', 'VOCABULARY', 'WORD DECODING', 'SPELLING']
+    },
+    {
+      id: 4,
+      type: 'hidden-word',
+      text: 'Find four geometric shapes from the story hidden in this grid:',
+      grid: [
+        'TRIANGLEOP',
+        'QZXCNMLCE',
+        'RHOMBUSKTN',
+        'SDFGHUJKA',
+        'OCTAGONLGT',
+        'PENTAGONOA',
+        'QWERTYUING',
+        'ASDFGHJKLO'
+      ],
+      words: ['TRIANGLE', 'RHOMBUS', 'OCTAGON', 'PENTAGON'],
+      answer: ['TRIANGLE', 'RHOMBUS', 'OCTAGON', 'PENTAGON'],
+      theme: 'math',
+      difficulty: 'medium',
+      tags: ['GEOMETRY', 'VISUAL PERCEPTION', 'WORD SEARCH', 'ATTENTION TO DETAIL']
+    },
+    {
+      id: 5,
+      type: 'multiple-choice',
+      text: 'According to Ethan\'s explanation, if a roof is shaped like a triangle with a base of 8 meters and a height of 6 meters, what is its area?',
+      options: ['14 square meters', '24 square meters', '48 square meters', '16 square meters'],
+      answer: 'b',
+      theme: 'math',
+      difficulty: 'medium',
+      tags: ['GEOMETRY', 'AREA CALCULATION', 'TRIANGLE PROPERTIES', 'STATE MATH TEST']
+    },
+    {
+      id: 6,
+      type: 'multiple-choice',
+      text: 'As Ethan walked up the hill, his potential energy:',
+      options: ['Decreased', 'Remained the same', 'Increased', 'Changed to thermal energy'],
+      answer: 'c',
+      theme: 'science',
+      difficulty: 'medium',
+      tags: ['PHYSICS', 'ENERGY CONCEPTS', 'GRAVITATIONAL POTENTIAL', 'SCIENCE ASSESSMENT']
+    },
+    {
+      id: 7,
+      type: 'matching',
+      text: 'Connect each scenario from the walk with the primary type of energy involved:',
+      items: [
+        { item: 'Rock at the top of a hill', match: 'Potential energy' },
+        { item: 'Rock rolling down', match: 'Kinetic energy' },
+        { item: 'Wind pushing against Ethan', match: 'Mechanical energy' },
+        { item: 'Wind chimes making sound', match: 'Sound energy' }
+      ],
+      answer: ['Rock at the top of a hill:Potential energy', 'Rock rolling down:Kinetic energy', 'Wind pushing against Ethan:Mechanical energy', 'Wind chimes making sound:Sound energy'],
+      theme: 'science',
+      difficulty: 'medium',
+      tags: ['PHYSICS', 'ENERGY TRANSFORMATION', 'CONCEPTUAL UNDERSTANDING', 'SCIENCE OLYMPIAD']
+    },
+    {
+      id: 8,
+      type: 'unscramble',
+      text: 'Unscramble these physics terms Ethan used during the walk:',
+      letters: 'TNEPOITAL,CKNETII,RTAISECSNE,TIORNBAVI',
+      answer: ['POTENTIAL', 'KINETIC', 'RESISTANCE', 'VIBRATION'],
+      theme: 'science',
+      difficulty: 'hard',
+      tags: ['PHYSICS', 'SCIENTIFIC TERMINOLOGY', 'WORD SKILLS', 'VOCABULARY BUILDING']
+    },
+    {
+      id: 9,
+      type: 'fill-blank',
+      text: 'When the rock rolls down the hill, Ethan explained that potential energy transforms into __________ energy.',
+      answer: 'kinetic',
+      theme: 'science',
+      difficulty: 'medium',
+      tags: ['PHYSICS', 'ENERGY CONVERSION', 'CONCEPTUAL UNDERSTANDING', 'SCIENCE RECALL']
+    },
+    {
+      id: 10,
+      type: 'multiple-choice',
+      text: 'According to Ethan, stop signs are made of metal rather than wood because metal is:',
+      options: ['Cheaper', 'More colorful', 'More durable in outdoor conditions', 'Easier to recycle'],
+      answer: 'c',
+      theme: 'materials',
+      difficulty: 'easy',
+      tags: ['MATERIALS SCIENCE', 'PROPERTIES OF MATTER', 'ENGINEERING', 'LOGICAL REASONING']
+    },
+    {
+      id: 11,
+      type: 'true-false',
+      text: 'According to the story, Ethan used a stopwatch to measure their walking time.',
+      answer: 'false',
+      theme: 'language',
+      difficulty: 'easy',
+      tags: ['READING COMPREHENSION', 'DETAIL RECALL', 'CLOSE READING', 'STORY ANALYSIS']
+    },
+    {
+      id: 12,
+      type: 'matching',
+      text: 'Connect each concept from Ethan\'s walk with the scientific principle:',
+      items: [
+        { item: 'Rock rolling downhill', match: 'Energy conservation' },
+        { item: 'Wind pushing against Ethan', match: 'Air resistance' },
+        { item: 'Triangular roof strength', match: 'Structural stability' },
+        { item: 'Sound from wind chimes', match: 'Vibration creates sound waves' }
+      ],
+      answer: ['Rock rolling downhill:Energy conservation', 'Wind pushing against Ethan:Air resistance', 'Triangular roof strength:Structural stability', 'Sound from wind chimes:Vibration creates sound waves'],
+      theme: 'interdisciplinary',
+      difficulty: 'hard',
+      tags: ['INTERDISCIPLINARY', 'SCIENCE PRINCIPLES', 'CONCEPTUAL MATCHING', 'CRITICAL THINKING']
+    },
+    {
+      id: 13,
+      type: 'multiple-choice',
+      text: 'According to Ethan\'s explanation, triangular roofs are common because:',
+      options: ['Triangles are more attractive', 'Rain or snow slides off easily and they\'re structurally strong', 'They\'re cheaper to build', 'They provide more attic space'],
+      answer: 'b',
+      theme: 'engineering',
+      difficulty: 'medium',
+      tags: ['ENGINEERING', 'STRUCTURAL DESIGN', 'FUNCTIONAL REASONING', 'PRACTICAL SCIENCE']
+    },
+    {
+      id: 14,
+      type: 'word-sequence',
+      text: 'Based on Ethan\'s explanation, place these energy transformations in the correct order for a rock rolling down a hill:',
+      wordSequence: ['Kinetic energy increases', 'Rock is stationary at top of hill', 'Rock comes to rest at bottom', 'Potential energy decreases', 'Rock starts moving'],
+      answer: ['Rock is stationary at top of hill', 'Rock starts moving', 'Potential energy decreases', 'Kinetic energy increases', 'Rock comes to rest at bottom'],
+      theme: 'science',
+      difficulty: 'hard',
+      tags: ['PHYSICS', 'SEQUENTIAL REASONING', 'ENERGY TRANSFORMATION', 'LOGICAL ORDERING']
+    },
+    {
+      id: 15,
+      type: 'multiple-choice',
+      text: 'When Ethan leaned into the wind, which force did he specifically mention was acting on him?',
+      options: ['Gravity', 'Air resistance', 'Friction', 'Magnetic force'],
+      answer: 'b',
+      theme: 'science',
+      difficulty: 'medium',
+      tags: ['PHYSICS', 'FORCES', 'READING RECALL', 'SCIENTIFIC TERMINOLOGY']
+    }
+  ]
 };
 
 export default chapterQuestions;

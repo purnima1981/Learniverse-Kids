@@ -9,6 +9,7 @@ import { Question } from "@/data/chapterQuestions";
 import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface QuestionAnalytics {
   questionId: number;
@@ -322,6 +323,184 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
     );
   };
 
+  // Hidden Word (Word Search) Puzzle
+  const renderHiddenWord = (question: Question) => {
+    if (!question.grid || !question.words) return null;
+    
+    return (
+      <div className="space-y-4">
+        <div className="p-3 rounded-md bg-[#2563EB]/20 text-white/80 text-sm mb-2">
+          Find these words in the grid: {question.words.join(', ')}
+        </div>
+        
+        <div className="grid grid-cols-1 gap-4">
+          <div className="font-mono bg-white/10 p-4 rounded-md">
+            {question.grid.map((row, rowIndex) => (
+              <div key={rowIndex} className="flex justify-center">
+                {row.split('').map((char, charIndex) => (
+                  <span 
+                    key={`${rowIndex}-${charIndex}`} 
+                    className="w-8 h-8 flex items-center justify-center text-white"
+                  >
+                    {char}
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
+          
+          <div className="space-y-2">
+            {question.words.map((word, index) => (
+              <div 
+                key={index} 
+                className="flex items-center space-x-2"
+              >
+                <Checkbox 
+                  id={`word-${index}`} 
+                  checked={answers[question.id] && answers[question.id].includes(word)}
+                  onCheckedChange={(checked) => {
+                    const currentAnswers = answers[question.id] || [];
+                    if (checked) {
+                      if (!currentAnswers.includes(word)) {
+                        handleAnswer([...currentAnswers, word]);
+                      }
+                    } else {
+                      handleAnswer(currentAnswers.filter(w => w !== word));
+                    }
+                  }}
+                />
+                <Label htmlFor={`word-${index}`} className="text-white cursor-pointer">
+                  {word}
+                </Label>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+  
+  // True/False Question
+  const renderTrueFalse = (question: Question) => {
+    return (
+      <RadioGroup 
+        value={answers[question.id] || ""}
+        onValueChange={handleAnswer}
+        className="space-y-4"
+      >
+        <div className="flex items-start space-x-3 bg-white/10 p-4 rounded-md hover:bg-white/20 transition-colors cursor-pointer">
+          <RadioGroupItem value="true" id="true" className="mt-1" />
+          <Label 
+            htmlFor="true" 
+            className="text-white flex-1 cursor-pointer"
+            onClick={() => handleAnswer("true")}
+          >
+            True
+          </Label>
+        </div>
+        <div className="flex items-start space-x-3 bg-white/10 p-4 rounded-md hover:bg-white/20 transition-colors cursor-pointer">
+          <RadioGroupItem value="false" id="false" className="mt-1" />
+          <Label 
+            htmlFor="false" 
+            className="text-white flex-1 cursor-pointer"
+            onClick={() => handleAnswer("false")}
+          >
+            False
+          </Label>
+        </div>
+      </RadioGroup>
+    );
+  };
+  
+  // Word Sequence (Ordering)
+  const [wordSequenceItems, setWordSequenceItems] = useState<{[key: number]: string[]}>({});
+  
+  useEffect(() => {
+    if (currentQuestion?.type === 'word-sequence' && currentQuestion.wordSequence) {
+      if (!wordSequenceItems[currentQuestion.id]) {
+        setWordSequenceItems({
+          ...wordSequenceItems,
+          [currentQuestion.id]: [...currentQuestion.wordSequence].sort(() => Math.random() - 0.5)
+        });
+      }
+    }
+  }, [currentQuestion]);
+  
+  const handleWordSequenceDragEnd = (result: DropResult, question: Question) => {
+    const { source, destination } = result;
+    
+    if (!destination || source.droppableId !== destination.droppableId) {
+      return;
+    }
+    
+    if (source.index === destination.index) {
+      return;
+    }
+    
+    const items = [...wordSequenceItems[question.id]];
+    const [reorderedItem] = items.splice(source.index, 1);
+    items.splice(destination.index, 0, reorderedItem);
+    
+    setWordSequenceItems({
+      ...wordSequenceItems,
+      [question.id]: items
+    });
+    
+    handleAnswer(items);
+  };
+  
+  const renderWordSequence = (question: Question) => {
+    if (!question.wordSequence || !wordSequenceItems[question.id]) return null;
+    
+    return (
+      <div className="space-y-4">
+        <div className="p-3 rounded-md bg-[#2563EB]/20 text-white/80 text-sm mb-4">
+          Drag the items below to arrange them in the correct order.
+        </div>
+        
+        <DragDropContext onDragEnd={(result) => handleWordSequenceDragEnd(result, question)}>
+          <Droppable droppableId="word-sequence">
+            {(provided) => (
+              <div
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+                className="space-y-2"
+              >
+                {wordSequenceItems[question.id].map((item, index) => (
+                  <Draggable key={`${item}-${index}`} draggableId={`${item}-${index}`} index={index}>
+                    {(provided, snapshot) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        className={`flex items-center bg-white/10 p-3 rounded-md ${
+                          snapshot.isDragging ? 'border-2 border-[#10B981]' : ''
+                        }`}
+                      >
+                        <div 
+                          {...provided.dragHandleProps}
+                          className="mr-3 text-white/70 hover:text-white/90 cursor-grab"
+                        >
+                          <GripVertical className="h-5 w-5" />
+                        </div>
+                        <div className="text-white">
+                          {item}
+                        </div>
+                        <div className="ml-auto bg-white/20 w-7 h-7 rounded-full flex items-center justify-center text-white">
+                          {index + 1}
+                        </div>
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </div>
+    );
+  };
+  
   const renderQuestion = (question: Question) => {
     switch (question.type) {
       case 'multiple-choice':
@@ -330,6 +509,14 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
         return renderFillBlank(question);
       case 'matching':
         return renderMatching(question);
+      case 'unscramble':
+        return renderUnscramble(question);
+      case 'hidden-word':
+        return renderHiddenWord(question);
+      case 'true-false':
+        return renderTrueFalse(question);
+      case 'word-sequence':
+        return renderWordSequence(question);
       default:
         return <p className="text-white">Question type not supported yet</p>;
     }
