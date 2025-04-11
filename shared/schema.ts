@@ -322,3 +322,72 @@ export interface RegionalEpic {
     imageUrl?: string;  // Add optional image URL for story thumbnails
   }[];
 }
+
+// Questions schema
+export const questions = pgTable("questions", {
+  id: serial("id").primaryKey(),
+  chapterId: integer("chapter_id").notNull().references(() => chapters.id, { onDelete: "cascade" }),
+  type: text("type").notNull(), // 'multiple-choice', 'matching', 'fill-blank', 'unscramble', 'hidden-word', 'true-false', 'word-sequence'
+  text: text("text").notNull(),
+  options: jsonb("options"), // For multiple-choice questions
+  items: jsonb("items"), // For matching questions
+  answer: jsonb("answer").notNull(), // The correct answer(s)
+  theme: text("theme").notNull(), // 'math', 'science', 'language', 'engineering', 'materials', 'interdisciplinary'
+  difficulty: text("difficulty").notNull(), // 'easy', 'medium', 'hard'
+  tags: jsonb("tags"), // Array of string tags
+  isFlagged: boolean("is_flagged").default(false),
+  isSkipped: boolean("is_skipped").default(false),
+  // Additional fields for specific question types
+  letters: text("letters"), // For unscramble questions
+  grid: jsonb("grid"), // For hidden-word questions
+  words: jsonb("words"), // For hidden-word questions
+  wordSequence: jsonb("word_sequence"), // For word-sequence questions
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// User Question Responses schema
+export const userQuestionResponses = pgTable("user_question_responses", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  questionId: integer("question_id").notNull().references(() => questions.id, { onDelete: "cascade" }),
+  userAnswer: jsonb("user_answer").notNull(),
+  isCorrect: boolean("is_correct").notNull(),
+  timeTaken: integer("time_taken"), // in seconds
+  isFlagged: boolean("is_flagged").default(false),
+  isSkipped: boolean("is_skipped").default(false),
+  attemptedAt: timestamp("attempted_at").defaultNow(),
+});
+
+// Relations for questions
+export const questionsRelations = relations(questions, ({ one, many }) => ({
+  chapter: one(chapters, {
+    fields: [questions.chapterId],
+    references: [chapters.id]
+  }),
+  userResponses: many(userQuestionResponses)
+}));
+
+// Relations for user question responses
+export const userQuestionResponsesRelations = relations(userQuestionResponses, ({ one }) => ({
+  user: one(users, {
+    fields: [userQuestionResponses.userId],
+    references: [users.id]
+  }),
+  question: one(questions, {
+    fields: [userQuestionResponses.questionId],
+    references: [questions.id]
+  })
+}));
+
+// Create insert schemas for questions
+export const insertQuestionSchema = createInsertSchema(questions)
+  .omit({ id: true, createdAt: true, isFlagged: true, isSkipped: true });
+
+export const insertUserQuestionResponseSchema = createInsertSchema(userQuestionResponses)
+  .omit({ id: true, attemptedAt: true });
+
+// Question type definitions
+export type Question = typeof questions.$inferSelect;
+export type InsertQuestion = z.infer<typeof insertQuestionSchema>;
+export type UserQuestionResponse = typeof userQuestionResponses.$inferSelect;
+export type InsertUserQuestionResponse = z.infer<typeof insertUserQuestionResponseSchema>;

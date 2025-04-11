@@ -105,6 +105,23 @@ export interface IStorage {
   getUserGameResults(userId: number): Promise<UserGameResult[]>;
   getUserGameResultsByMicrogame(userId: number, microgameId: number): Promise<UserGameResult[]>;
   
+  // Questions
+  getQuestion(id: number): Promise<Question | undefined>;
+  getQuestionsByChapter(chapterId: number): Promise<Question[]>;
+  getQuestionsByType(type: string): Promise<Question[]>;
+  getQuestionsByTheme(theme: string): Promise<Question[]>;
+  getQuestionsByDifficulty(difficulty: string): Promise<Question[]>;
+  createQuestion(question: InsertQuestion): Promise<Question>;
+  updateQuestion(questionId: number, updates: Partial<Question>): Promise<void>;
+  deleteQuestion(questionId: number): Promise<void>;
+  importQuestionsForChapter(chapterId: number, questions: InsertQuestion[]): Promise<void>;
+  
+  // User Question Responses
+  saveUserQuestionResponse(response: InsertUserQuestionResponse): Promise<UserQuestionResponse>;
+  getUserQuestionResponses(userId: number): Promise<UserQuestionResponse[]>;
+  getUserQuestionResponsesByChapter(userId: number, chapterId: number): Promise<UserQuestionResponse[]>;
+  getUserAnswerHistory(userId: number, questionId: number): Promise<UserQuestionResponse[]>;
+  
   // Initial data seeding
   seedInitialData(): Promise<void>;
 }
