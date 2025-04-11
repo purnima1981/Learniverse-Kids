@@ -426,6 +426,7 @@ export const chapterQuestions: ChapterQuestionsMap = {
   ],
   // Add more chapters as needed
   '8001-4': [
+    // Level 1: Geometry Explorer
     {
       id: 1,
       type: 'multiple-choice',
@@ -598,6 +599,215 @@ export const chapterQuestions: ChapterQuestionsMap = {
       theme: 'science',
       difficulty: 'medium',
       tags: ['PHYSICS', 'FORCES', 'READING RECALL', 'SCIENTIFIC TERMINOLOGY']
+    },
+    // Level 3: Language Detective
+    {
+      id: 16,
+      type: 'multiple-choice',
+      text: 'In the story, when Ethan said "The wind is playing us a song," this is an example of:',
+      options: ['Simile', 'Metaphor', 'Personification', 'Hyperbole'],
+      answer: 'c',
+      theme: 'language',
+      difficulty: 'medium',
+      tags: ['LANGUAGE ARTS', 'LITERARY DEVICES', 'FIGURATIVE LANGUAGE', 'READING COMPREHENSION']
+    },
+    {
+      id: 17,
+      type: 'unscramble',
+      text: 'Unscramble this literary device that Ethan specifically mentioned:',
+      letters: 'FICAPORNNOSTIE',
+      answer: ['PERSONIFICATION'],
+      theme: 'language',
+      difficulty: 'hard',
+      tags: ['LANGUAGE ARTS', 'LITERARY TERMINOLOGY', 'VOCABULARY', 'ELA SKILLS']
+    },
+    {
+      id: 18,
+      type: 'matching',
+      text: 'Connect each sentence with whether it contains personification like Ethan used:',
+      items: [
+        { item: '"The wind howled loudly"', match: 'Contains personification' },
+        { item: '"The wind moved the branches"', match: 'Doesn\'t contain personification' },
+        { item: '"The sun smiled down on us"', match: 'Contains personification' },
+        { item: '"The rain fell heavily"', match: 'Doesn\'t contain personification' }
+      ],
+      answer: ['"The wind howled loudly":Contains personification', '"The wind moved the branches":Doesn\'t contain personification', '"The sun smiled down on us":Contains personification', '"The rain fell heavily":Doesn\'t contain personification'],
+      theme: 'language',
+      difficulty: 'medium',
+      tags: ['LANGUAGE ARTS', 'FIGURATIVE LANGUAGE', 'READING ANALYSIS', 'ELA ASSESSMENT']
+    },
+    {
+      id: 19,
+      type: 'multiple-choice',
+      text: 'Ethan\'s explanation of wind chimes demonstrates:',
+      options: ['Only scientific knowledge', 'Only creative thinking', 'Both scientific knowledge and literary awareness', 'Neither scientific nor literary concepts'],
+      answer: 'c',
+      theme: 'interdisciplinary',
+      difficulty: 'medium',
+      tags: ['INTERDISCIPLINARY', 'SCIENCE-ARTS CONNECTION', 'CRITICAL THINKING', 'COMPREHENSIVE ANALYSIS']
+    },
+    {
+      id: 20,
+      type: 'fill-blank',
+      text: 'When Ethan gave human qualities to the wind in his description, he was using the literary device called ____________.',
+      answer: 'personification',
+      theme: 'language',
+      difficulty: 'easy',
+      tags: ['LANGUAGE ARTS', 'LITERARY DEVICES', 'TERMINOLOGY RECALL', 'READING STANDARDS']
+    },
+    // Level 5: Problem Solver
+    {
+      id: 21,
+      type: 'multiple-choice',
+      text: 'If Ethan and his mother walked 2.8 miles in 45 minutes as stated in the story, what was their average speed?',
+      options: ['3.7 mph', '2.5 mph', '4.2 mph', '1.9 mph'],
+      answer: 'a',
+      theme: 'math',
+      difficulty: 'medium',
+      tags: ['MATHEMATICS', 'RATE CALCULATION', 'WORD PROBLEM', 'PRACTICAL MATH']
+    },
+    {
+      id: 22,
+      type: 'word-sequence',
+      text: 'Rearrange these words to form Ethan\'s explanation about triangular structures:',
+      wordSequence: ['STRONGEST', 'TRIANGLES', 'SHAPES', 'ARE', 'THE', 'ONE OF', 'BECAUSE', 'THEY', 'CAN', 'HANDLE', 'PRESSURE'],
+      answer: ['TRIANGLES', 'ARE', 'ONE OF', 'THE', 'STRONGEST', 'SHAPES', 'BECAUSE', 'THEY', 'CAN', 'HANDLE', 'PRESSURE'],
+      theme: 'language',
+      difficulty: 'medium',
+      tags: ['LANGUAGE ARTS', 'SENTENCE STRUCTURE', 'LOGICAL ORDERING', 'READING COMPREHENSION']
+    },
+    {
+      id: 23,
+      type: 'multiple-choice',
+      text: 'Based on the walking speed calculated from the story, if they maintained the same pace, how long would it take them to walk to the park that is 1.5 miles away?',
+      options: ['24 minutes', '30 minutes', '32 minutes', '45 minutes'],
+      answer: 'a',
+      theme: 'math',
+      difficulty: 'medium',
+      tags: ['MATHEMATICS', 'TIME CALCULATION', 'PROPORTIONAL REASONING', 'PRACTICAL APPLICATION']
+    },
+    // Level 6: Critical Thinker
+    {
+      id: 24,
+      type: 'multiple-choice',
+      text: 'Based on Ethan\'s explanation, triangular roofs are common because:',
+      options: ['Triangles are more attractive', 'Rain or snow slides off easily and they\'re structurally strong', 'They\'re cheaper to build', 'They provide more attic space'],
+      answer: 'b',
+      theme: 'engineering',
+      difficulty: 'medium',
+      tags: ['ENGINEERING', 'STRUCTURAL DESIGN', 'FUNCTIONAL REASONING', 'PRACTICAL SCIENCE']
+    },
+    {
+      id: 25,
+      type: 'multiple-choice',
+      text: 'Based on the story, Ethan\'s understanding of scientific concepts comes from:',
+      options: ['Repeating memorized facts without understanding', 'Trying to impress his mother', 'Connecting classroom learning to real-world observations', 'Reading about topics online'],
+      answer: 'c',
+      theme: 'interdisciplinary',
+      difficulty: 'medium',
+      tags: ['LEARNING ASSESSMENT', 'COGNITIVE DEVELOPMENT', 'READING INFERENCE', 'CHARACTER ANALYSIS']
+    },
+    // Level 7: SAT Champion
+    {
+      id: 26,
+      type: 'multiple-choice',
+      text: 'The passage suggests that Ethan\'s understanding of geometry is primarily based on:',
+      options: ['Classroom instruction', 'Real-world observations', 'Reading scientific books', 'Computer simulations'],
+      answer: 'b',
+      theme: 'interdisciplinary',
+      difficulty: 'hard',
+      tags: ['READING ANALYSIS', 'INFERENCE', 'SAT PREPARATION', 'TEXT INTERPRETATION']
+    },
+    {
+      id: 27,
+      type: 'multiple-choice',
+      text: 'Based on the story, what is the strongest evidence that Ethan enjoys sharing knowledge?',
+      options: ['He asks his mother questions', 'He eagerly explains concepts before she can respond', 'He measures the distance they walked', 'He wants to explore more places'],
+      answer: 'b',
+      theme: 'language',
+      difficulty: 'hard',
+      tags: ['READING ANALYSIS', 'EVIDENCE-BASED REASONING', 'SAT PREPARATION', 'CHARACTER ASSESSMENT']
+    },
+    {
+      id: 28,
+      type: 'multiple-choice',
+      text: 'According to Ethan\'s explanation, potential energy is most directly related to:',
+      options: ['Speed of movement', 'Material composition', 'Height above ground', 'Air resistance'],
+      answer: 'c',
+      theme: 'science',
+      difficulty: 'medium',
+      tags: ['PHYSICS', 'CONCEPTUAL UNDERSTANDING', 'SAT SCIENCE', 'READING COMPREHENSION']
+    },
+    {
+      id: 29,
+      type: 'multiple-choice',
+      text: 'When Ethan described wood as "coarse" compared to metal, he most likely meant it was:',
+      options: ['Flexible', 'Rough-textured', 'Waterproof', 'Environmentally friendly'],
+      answer: 'b',
+      theme: 'language',
+      difficulty: 'medium',
+      tags: ['VOCABULARY', 'CONTEXTUAL MEANING', 'SAT VERBAL', 'WORD INTERPRETATION']
+    },
+    // Level 8: Olympic Achiever
+    {
+      id: 30,
+      type: 'multiple-choice',
+      text: 'According to Ethan\'s explanation about rhombuses, if one has diagonals of 6 cm and 8 cm, what is its area?',
+      options: ['24 cm²', '48 cm²', '14 cm²', '24 cm²'],
+      answer: 'a',
+      theme: 'math',
+      difficulty: 'hard',
+      tags: ['GEOMETRY', 'ADVANCED CALCULATION', 'MATH OLYMPIAD', 'AREA FORMULAS']
+    },
+    {
+      id: 31,
+      type: 'fill-blank',
+      text: 'In the story, Ethan identifies several shapes. If "TRIANGLE" = 8 (because it has 8 letters) and "PENTAGON" = 8, what does "RHOMBUS" equal?',
+      answer: '7',
+      theme: 'math',
+      difficulty: 'hard',
+      tags: ['LOGIC', 'PATTERN RECOGNITION', 'MATHEMATICAL REASONING', 'BRAIN TEASER']
+    },
+    {
+      id: 32,
+      type: 'multiple-choice',
+      text: 'If Ethan weighs 35 kg and climbs a hill with a height of 20 meters, approximately how much potential energy does he gain based on his explanation? (g ≈ 10 m/s²)',
+      options: ['700 joules', '7,000 joules', '70 joules', '350 joules'],
+      answer: 'a',
+      theme: 'science',
+      difficulty: 'hard',
+      tags: ['PHYSICS', 'ENERGY CALCULATION', 'SCIENCE OLYMPIAD', 'FORMULA APPLICATION']
+    },
+    // Final Boss Level
+    {
+      id: 33,
+      type: 'multiple-choice',
+      text: 'Based on Ethan\'s observations about stop signs, which shape would be most efficient for designing a street sign that needs to be recognized from multiple angles?',
+      options: ['Circle', 'Square', 'Triangle', 'Octagon'],
+      answer: 'd',
+      theme: 'engineering',
+      difficulty: 'hard',
+      tags: ['ENGINEERING', 'DESIGN THINKING', 'PRACTICAL GEOMETRY', 'PROBLEM SOLVING']
+    },
+    {
+      id: 34,
+      type: 'multiple-choice',
+      text: 'According to Ethan\'s explanation, potential energy is to height as kinetic energy is to:',
+      options: ['Weight', 'Velocity', 'Mass', 'Temperature'],
+      answer: 'b',
+      theme: 'science',
+      difficulty: 'hard',
+      tags: ['PHYSICS', 'ANALOGICAL REASONING', 'CONCEPTUAL RELATIONSHIPS', 'SCIENCE APPLICATION']
+    },
+    {
+      id: 35,
+      type: 'multiple-choice',
+      text: 'A roof is in the shape of a triangle with sides of 5m, 5m, and 8m. Using the concepts Ethan described, what is its area?',
+      options: ['12 m²', '20 m²', '16 m²', '24 m²'],
+      answer: 'a',
+      theme: 'math',
+      difficulty: 'hard',
+      tags: ['GEOMETRY', 'ADVANCED CALCULATION', 'HERON\'S FORMULA', 'MATH COMPETITION']
     }
   ]
 };
