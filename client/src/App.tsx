@@ -7,6 +7,7 @@ import StoryReader from "@/pages/StoryReader";
 import AuthPage from "@/pages/auth-page";
 import RegionalStoriesPage from "@/pages/RegionalStoriesPage";
 import ReadingCoach from "@/pages/ReadingCoach";
+import TestQuestions from "@/pages/TestQuestions";
 import { ProtectedRoute } from "@/lib/protected-route";
 import { AuthProvider } from "@/hooks/use-auth";
 
@@ -15,6 +16,7 @@ function App() {
     <AuthProvider>
       <Switch>
         {/* Test routes */}
+        <Route path="/test/questions" component={TestQuestions} />
         {/* Public routes */}
         <Route path="/auth" component={AuthPage} />
         <Route path="/story/:id/:chapter" component={StoryReader} />
