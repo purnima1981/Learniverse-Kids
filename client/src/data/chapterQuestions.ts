@@ -24,6 +24,8 @@ export const chapterQuestions: ChapterQuestionsMap = {
       text: 'Ethan jogged downhill at 6 mph for 0.4 miles. How many minutes did that take?',
       options: ['3 minutes', '4 minutes', '5 minutes', '6 minutes'],
       answer: 'b',
+      theme: 'math',
+      difficulty: 'medium',
     },
     {
       id: 2,
@@ -31,6 +33,8 @@ export const chapterQuestions: ChapterQuestionsMap = {
       text: 'What kind of energy does the wind transfer to the chimes to create sound?',
       options: ['Thermal energy', 'Kinetic energy', 'Nuclear energy', 'Chemical energy'],
       answer: 'b',
+      theme: 'science',
+      difficulty: 'medium',
     },
     {
       id: 3,
@@ -38,6 +42,8 @@ export const chapterQuestions: ChapterQuestionsMap = {
       text: 'What happens to potential energy when Ethan walks downhill?',
       options: ['It increases', 'It decreases', 'It stays the same', 'It multiplies'],
       answer: 'b',
+      theme: 'science',
+      difficulty: 'medium',
     },
     {
       id: 4,
@@ -45,6 +51,8 @@ export const chapterQuestions: ChapterQuestionsMap = {
       text: 'If Ethan\'s average walking speed was 3.73 mph, how long would he take to walk 5 miles?',
       options: ['About 1 hour', 'About 1 hour and 15 minutes', 'About 1 hour and 20 minutes', 'About 1 hour and 30 minutes'],
       answer: 'c',
+      theme: 'math',
+      difficulty: 'medium',
     },
     {
       id: 5,
@@ -52,6 +60,8 @@ export const chapterQuestions: ChapterQuestionsMap = {
       text: 'What is the area of a triangle-shaped roof with base 10 ft and height 5 ft?',
       options: ['25 sq ft', '30 sq ft', '40 sq ft', '50 sq ft'],
       answer: 'a',
+      theme: 'math',
+      difficulty: 'medium',
     },
     {
       id: 6,
@@ -59,6 +69,8 @@ export const chapterQuestions: ChapterQuestionsMap = {
       text: 'Why are so many roofs shaped like triangles?',
       options: ['They look better', 'They are easier to build', 'They shed water and snow effectively', 'They use less material'],
       answer: 'c',
+      theme: 'interdisciplinary',
+      difficulty: 'easy',
     },
     {
       id: 7,
@@ -66,6 +78,8 @@ export const chapterQuestions: ChapterQuestionsMap = {
       text: 'Which word best describes Ethan\'s personality during the walk?',
       options: ['Curious', 'Bored', 'Tired', 'Anxious'],
       answer: 'a',
+      theme: 'language',
+      difficulty: 'easy',
     },
     {
       id: 8,
@@ -73,6 +87,8 @@ export const chapterQuestions: ChapterQuestionsMap = {
       text: 'What is the total duration of Ethan and Mom\'s walk if they left at 2:45 PM and returned at 3:30 PM?',
       options: ['30 minutes', '45 minutes', '60 minutes', '75 minutes'],
       answer: 'b',
+      theme: 'math',
+      difficulty: 'easy',
     },
     {
       id: 9,
@@ -80,12 +96,16 @@ export const chapterQuestions: ChapterQuestionsMap = {
       text: 'Which force did Ethan feel when he leaned into the wind?',
       options: ['Gravity', 'Air resistance', 'Friction', 'Magnetic force'],
       answer: 'b',
+      theme: 'science',
+      difficulty: 'medium',
     },
     {
       id: 10,
       type: 'fill-blank',
       text: 'What is Ethan demonstrating by observing shapes, energy, and materials during a walk?',
       answer: 'interdisciplinary thinking',
+      theme: 'interdisciplinary',
+      difficulty: 'medium',
     },
     {
       id: 11,
@@ -93,6 +113,8 @@ export const chapterQuestions: ChapterQuestionsMap = {
       text: 'If Ethan and Mom walked the same pace but took a 10-minute break, what was their total time outside?',
       options: ['35 minutes', '45 minutes', '55 minutes', '65 minutes'],
       answer: 'c',
+      theme: 'math',
+      difficulty: 'medium',
     },
     {
       id: 12,
@@ -100,12 +122,16 @@ export const chapterQuestions: ChapterQuestionsMap = {
       text: 'Why is glass used for windows instead of wood?',
       options: ['It\'s more durable', 'It allows light to pass through', 'It\'s cheaper', 'It\'s easier to install'],
       answer: 'b',
+      theme: 'science',
+      difficulty: 'easy',
     },
     {
       id: 13,
       type: 'fill-blank',
       text: 'What shape results if a square is split from corner to corner?',
       answer: 'triangles',
+      theme: 'math',
+      difficulty: 'easy',
     },
     {
       id: 14,
@@ -113,12 +139,16 @@ export const chapterQuestions: ChapterQuestionsMap = {
       text: 'What type of energy increases as Ethan and Mom walk uphill?',
       options: ['Kinetic energy', 'Thermal energy', 'Potential energy', 'Sound energy'],
       answer: 'c',
+      theme: 'science',
+      difficulty: 'medium',
     },
     {
       id: 15,
       type: 'fill-blank',
       text: 'What word means the same as \'coarse\' in the phrase \'wood feels coarse\'?',
       answer: 'rough',
+      theme: 'language',
+      difficulty: 'medium',
     },
     {
       id: 16,
@@ -126,18 +156,24 @@ export const chapterQuestions: ChapterQuestionsMap = {
       text: 'If Ethan made 4 equal stops along the 2.8-mile walk, how far apart were the stops?',
       options: ['0.56 miles', '0.7 miles', '1.4 miles', '2.0 miles'],
       answer: 'b',
+      theme: 'math',
+      difficulty: 'medium',
     },
     {
       id: 17,
       type: 'fill-blank',
       text: 'Potential Energy is to Height as Kinetic Energy is to ___?',
       answer: 'motion',
+      theme: 'science',
+      difficulty: 'medium',
     },
     {
       id: 18,
       type: 'fill-blank',
       text: 'How did the wind cause the wind chimes to make music?',
       answer: 'transferring kinetic energy',
+      theme: 'science',
+      difficulty: 'medium',
     },
     {
       id: 19,
@@ -145,6 +181,8 @@ export const chapterQuestions: ChapterQuestionsMap = {
       text: 'What emotion is shown when \'Ethan\'s eyes sparkled with enthusiasm\'?',
       options: ['Sadness', 'Excitement', 'Anger', 'Frustration'],
       answer: 'b',
+      theme: 'language',
+      difficulty: 'easy',
     },
     {
       id: 20,
@@ -156,6 +194,8 @@ export const chapterQuestions: ChapterQuestionsMap = {
         { item: 'Roof', match: 'Triangle' }
       ],
       answer: ['Stop sign:Octagon', 'School zone sign:Pentagon', 'Roof:Triangle'],
+      theme: 'math',
+      difficulty: 'medium',
     },
   ],
   // For Chapter 2 of story ID 8001 - Additional questions from the set
