@@ -15,7 +15,8 @@ import {
 } from "@/components/ui/dialog";
 import { Card, CardContent } from "@/components/ui/card";
 import ChapterQuestions from "@/components/ChapterQuestions";
-import chapterQuestions, { ChapterQuestionsMap } from "@/data/chapterQuestions";
+// We'll load the questions dynamically to ensure we get the latest version
+import ChapterQuestionsLoader from "@/components/ChapterQuestionsLoader";
 import InterChapterGame from "@/components/InterChapterGame";
 
 export default function StoryReader() {
@@ -93,13 +94,9 @@ export default function StoryReader() {
   };
   
   const handleNextChapter = () => {
-    // Check if we should show questions before going to the next chapter
-    const questions = chapterQuestions[`${storyIdNumber}-${chapterNumber}`];
-    if (questions && questions.length > 0) {
-      setShowQuestions(true);
-    } else {
-      navigateToNextChapter();
-    }
+    // Since we're now loading questions dynamically, just show the questions component
+    // which will handle the case when there are no questions
+    setShowQuestions(true);
   };
   
   const navigateToNextChapter = () => {
@@ -453,7 +450,8 @@ export default function StoryReader() {
           </Button>
           
           <div className="flex gap-3">
-            {chapterQuestions[`${storyIdNumber}-${chapterNumber}`] && !quizCompleted && (
+            {/* Show quiz button regardless, the loader will handle if there are no questions */}
+            {!quizCompleted && (
               <Button
                 variant="outline"
                 className={`${hasReadStory ? 'bg-[#2563EB] hover:bg-[#1E40AF]' : 'bg-gray-500'} text-white font-bold border-transparent`}
@@ -469,11 +467,10 @@ export default function StoryReader() {
               onClick={handleNextChapter}
               disabled={
                 !nextChapter || 
-                (chapterQuestions[`${storyIdNumber}-${chapterNumber}`] && 
-                !quizCompleted)
+                (!quizCompleted && hasReadStory) // Only require quiz completion if the user has read the story
               }
             >
-              {chapterQuestions[`${storyIdNumber}-${chapterNumber}`] && !quizCompleted ? (
+              {!quizCompleted && hasReadStory ? (
                 <>Complete Quiz to Continue</>
               ) : (
                 <>Next Chapter<ChevronRight className="h-5 w-5 ml-1" /></>
@@ -487,11 +484,12 @@ export default function StoryReader() {
       {showQuestions && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4 overflow-y-auto">
           <div className="w-full max-w-4xl glass-panel">
-            <ChapterQuestions 
-              questions={chapterQuestions[`${storyIdNumber}-${chapterNumber}`] || []}
+            {/* Dynamically import question data to avoid caching */}
+            <ChapterQuestionsLoader 
+              storyId={storyIdNumber}
+              chapterNumber={chapterNumber}
               onComplete={handleQuizComplete}
               onClose={() => setShowQuestions(false)}
-              chapterNumber={chapterNumber}
             />
           </div>
         </div>
