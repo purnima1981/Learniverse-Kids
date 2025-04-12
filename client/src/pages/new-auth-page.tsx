@@ -75,7 +75,8 @@ const features = [
 ];
 
 export default function NewAuthPage() {
-  const [showLogin, setShowLogin] = useState(false);
+  // Let's show login form by default instead of hiding it
+  const [showLogin, setShowLogin] = useState(true);
   const [showRegister, setShowRegister] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [forgotPasswordEmail, setForgotPasswordEmail] = useState("");
@@ -384,7 +385,7 @@ export default function NewAuthPage() {
         </div>
       </main>
       
-      {/* Login Modal */}
+      {/* Login Card - always visible (removed modal) */}
       {showLogin && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
           <Card className="w-full max-w-md bg-indigo-900/90 backdrop-blur-lg border border-indigo-700/50 shadow-2xl animate-glow">
