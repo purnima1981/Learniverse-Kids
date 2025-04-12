@@ -19,7 +19,7 @@ function App() {
         {/* Test routes */}
         <Route path="/test/questions" component={TestQuestions} />
         {/* Public routes */}
-        <Route path="/auth" component={EnhancedAuth} />
+        <Route path="/auth" component={AuthPage} />
         <Route path="/auth-old" component={AuthPage} />
         <Route path="/auth-enhanced" component={EnhancedAuth} />
         <Route path="/story/:id/:chapter" component={StoryReader} />
