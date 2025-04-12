@@ -3,7 +3,6 @@ import { Link, useLocation } from "wouter";
 import { ClockIcon, LogOut, Menu, Trash2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { useAuth } from "@/hooks/use-auth";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,18 +22,28 @@ import {
 } from "@/components/ui/alert-dialog";
 
 export default function Navigation() {
-  const { user, logoutMutation, deleteAccountMutation } = useAuth();
-  const [location] = useLocation();
+  // Removed auth dependency and created temporary user
+  const [location, setLocation] = useLocation();
   const [open, setOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  
+  // Temporary user object
+  const user = {
+    firstName: "Demo",
+    lastName: "User",
+    email: "demo@learniverse.com"
+  };
 
   const handleLogout = () => {
-    logoutMutation.mutate();
+    // Simple redirect to auth page instead of using mutations
+    setLocation('/auth');
   };
   
   const handleDeleteAccount = () => {
     setDeleteDialogOpen(false);
-    deleteAccountMutation.mutate();
+    // In a production environment this would delete the account
+    // For now, just redirect to auth page
+    setLocation('/auth');
   };
 
   const navLinks = [
