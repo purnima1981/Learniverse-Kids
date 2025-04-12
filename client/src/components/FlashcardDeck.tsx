@@ -119,11 +119,11 @@ export default function FlashcardDeck({ words, onClose, onSave }: FlashcardDeckP
           </Button>
         </div>
 
-        <div className="relative flex-1 flex justify-center items-center min-h-[400px] py-6">
+        <div className="relative flex-1 flex justify-center items-center min-h-[350px] py-6">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
-              className="absolute w-full max-w-lg"
+              className="absolute w-full max-w-3xl"
               initial={{ 
                 opacity: 0, 
                 x: direction === 'right' ? 200 : -200
@@ -139,7 +139,7 @@ export default function FlashcardDeck({ words, onClose, onSave }: FlashcardDeckP
               onDragEnd={handleDragEnd}
             >
               <div 
-                className={`relative w-full aspect-[3/2] cursor-pointer perspective-1000`}
+                className={`relative w-full aspect-[16/9] cursor-pointer perspective-1000`}
                 onClick={toggleFlip}
               >
                 <div 
@@ -161,12 +161,12 @@ export default function FlashcardDeck({ words, onClose, onSave }: FlashcardDeckP
 
                   {/* Back side */}
                   <div 
-                    className={`absolute w-full h-full backface-hidden rotate-y-180 glass-panel p-8 rounded-xl`}
+                    className={`absolute w-full h-full backface-hidden rotate-y-180 glass-panel p-6 rounded-xl flex flex-col justify-between`}
                   >
-                    <div className="text-white text-lg mb-4">
+                    <div className="text-white text-lg">
                       <span className="font-bold">Definition:</span> {currentWord.definition}
                     </div>
-                    <div className="text-white text-lg mb-4">
+                    <div className="text-white text-lg mt-4">
                       <span className="font-bold">Example:</span> <span className="italic">"{currentWord.context}"</span>
                     </div>
                     <div className="text-white/70 text-sm italic text-center mt-auto">

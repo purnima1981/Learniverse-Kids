@@ -10,3 +10,23 @@
 .rotate-y-180 {
   transform: rotateY(180deg);
 }
+
+.glass-panel {
+  background: rgba(30, 58, 138, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+@media (min-width: 768px) {
+  .aspect-[16/9] {
+    aspect-ratio: 16/9;
+  }
+}
+
+@media (max-width: 767px) {
+  .aspect-[16/9] {
+    aspect-ratio: 4/3;
+  }
+}
