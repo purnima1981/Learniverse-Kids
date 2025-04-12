@@ -1,5 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence, PanInfo } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { 
   ArrowLeft, 
@@ -7,9 +6,7 @@ import {
   Bookmark,
   X,
   Volume,
-  RefreshCw,
-  ThumbsUp,
-  ThumbsDown
+  RefreshCw
 } from 'lucide-react';
 import './FlashcardDeck.css';
 
@@ -27,9 +24,7 @@ type FlashcardDeckProps = {
 
 export default function FlashcardDeck({ words, onClose, onSave }: FlashcardDeckProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [flipped, setFlipped] = useState(false);
-  const [direction, setDirection] = useState<'left' | 'right' | null>(null);
-  const constraintsRef = useRef(null);
+  const [showDefinition, setShowDefinition] = useState(false);
   
   // Speech synthesis
   const speak = (text: string) => {
@@ -43,38 +38,22 @@ export default function FlashcardDeck({ words, onClose, onSave }: FlashcardDeckP
   const totalWords = words.length;
   const currentWord = words[currentIndex];
 
-  const handleDragEnd = (_e: MouseEvent, info: PanInfo) => {
-    if (info.offset.x < -100) {
-      // Swiped left
-      goToNext();
-    } else if (info.offset.x > 100) {
-      // Swiped right
-      goToPrevious();
-    }
-  };
-
   const goToPrevious = () => {
     if (currentIndex > 0) {
-      setFlipped(false);
-      setDirection('left');
-      setTimeout(() => {
-        setCurrentIndex(currentIndex - 1);
-      }, 300);
+      setShowDefinition(false);
+      setCurrentIndex(currentIndex - 1);
     }
   };
 
   const goToNext = () => {
     if (currentIndex < totalWords - 1) {
-      setFlipped(false);
-      setDirection('right');
-      setTimeout(() => {
-        setCurrentIndex(currentIndex + 1);
-      }, 300);
+      setShowDefinition(false);
+      setCurrentIndex(currentIndex + 1);
     }
   };
 
-  const toggleFlip = () => {
-    setFlipped(!flipped);
+  const toggleView = () => {
+    setShowDefinition(!showDefinition);
   };
 
   const saveToFlashcards = () => {
@@ -90,7 +69,7 @@ export default function FlashcardDeck({ words, onClose, onSave }: FlashcardDeckP
       } else if (e.key === 'ArrowRight') {
         goToNext();
       } else if (e.key === ' ' || e.key === 'Enter') {
-        toggleFlip();
+        toggleView();
       }
     };
 
@@ -98,15 +77,11 @@ export default function FlashcardDeck({ words, onClose, onSave }: FlashcardDeckP
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [currentIndex, flipped]);
+  }, [currentIndex, showDefinition]);
 
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div 
-        className="max-w-3xl w-full bg-transparent rounded-xl overflow-hidden flex flex-col"
-        ref={constraintsRef}
-        style={{maxHeight: '500px'}}
-      >
+      <div className="max-w-xl w-full bg-transparent rounded-xl overflow-hidden flex flex-col">
         <div className="flex justify-between items-center p-3">
           <h2 className="text-white text-lg font-bold">
             Vocabulary Flashcards ({currentIndex + 1}/{totalWords})
@@ -120,63 +95,37 @@ export default function FlashcardDeck({ words, onClose, onSave }: FlashcardDeckP
           </Button>
         </div>
 
-        <div className="relative flex-1 flex justify-center items-center py-3 px-4">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentIndex}
-              className="w-full mx-auto" 
-              initial={{ 
-                opacity: 0, 
-                x: direction === 'right' ? 200 : -200
-              }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ 
-                opacity: 0, 
-                x: direction === 'right' ? -200 : 200
-              }}
-              transition={{ duration: 0.3 }}
-              drag="x"
-              dragConstraints={constraintsRef}
-              onDragEnd={handleDragEnd}
-            >
-              {/* Simple card-based approach with fixed heights */}
-              <div className="w-full">
-                {/* Active card - either word or definition based on flip state */}
-                <div 
-                  className="glass-panel rounded-xl p-5 cursor-pointer transition-all duration-300 border-2 border-blue-300 shadow-lg shadow-blue-500/20 mx-auto max-w-2xl"
-                  onClick={toggleFlip}
-                  style={{height: '180px'}}
-                >
-                  {!flipped ? (
-                    // Word side
-                    <div className="flex flex-col justify-between h-full">
-                      <div className="text-center text-white text-3xl font-bold flex-1 flex items-center justify-center">
-                        {currentWord.word}
-                      </div>
-                      <div className="text-white/70 text-sm italic text-center">
-                        Click to see definition
-                      </div>
-                    </div>
-                  ) : (
-                    // Definition side
-                    <div className="flex flex-col justify-between h-full overflow-auto">
-                      <div className="flex-1">
-                        <div className="text-white text-lg mb-2">
-                          <span className="font-bold">Definition:</span> {currentWord.definition}
-                        </div>
-                        <div className="text-white text-lg">
-                          <span className="font-bold">Example:</span> <span className="italic">"{currentWord.context}"</span>
-                        </div>
-                      </div>
-                      <div className="text-white/70 text-sm italic text-center">
-                        Click to see word
-                      </div>
-                    </div>
-                  )}
+        <div className="p-4">
+          <div 
+            className="flashcard-panel rounded-xl p-4 cursor-pointer mx-auto"
+            onClick={toggleView}
+            style={{height: '170px'}}
+          >
+            {!showDefinition ? (
+              <div className="h-full flex flex-col justify-between">
+                <div className="text-center text-white text-3xl font-bold flex-1 flex items-center justify-center">
+                  {currentWord.word}
+                </div>
+                <div className="text-white/70 text-sm italic text-center mt-2">
+                  Click to see definition
                 </div>
               </div>
-            </motion.div>
-          </AnimatePresence>
+            ) : (
+              <div className="h-full flex flex-col justify-between overflow-auto">
+                <div>
+                  <div className="text-white text-lg mb-2">
+                    <span className="font-bold">Definition:</span> {currentWord.definition}
+                  </div>
+                  <div className="text-white text-lg">
+                    <span className="font-bold">Example:</span> <span className="italic">"{currentWord.context}"</span>
+                  </div>
+                </div>
+                <div className="text-white/70 text-sm italic text-center mt-2">
+                  Click to see word
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="flex justify-between items-center p-4 bg-gradient-to-t from-black/20 to-transparent">
@@ -187,10 +136,10 @@ export default function FlashcardDeck({ words, onClose, onSave }: FlashcardDeckP
             disabled={currentIndex === 0}
           >
             <ArrowLeft className="h-5 w-5 mr-1" />
-            Previous
+            <span className="hidden sm:inline">Previous</span>
           </Button>
 
-          <div className="flex space-x-3">
+          <div className="flex space-x-2">
             <Button 
               variant="ghost" 
               className="text-white hover:bg-white/10"
@@ -201,7 +150,7 @@ export default function FlashcardDeck({ words, onClose, onSave }: FlashcardDeckP
             <Button 
               variant="ghost" 
               className="text-white hover:bg-white/10"
-              onClick={toggleFlip}
+              onClick={toggleView}
             >
               <RefreshCw className="h-5 w-5" />
             </Button>
@@ -220,7 +169,7 @@ export default function FlashcardDeck({ words, onClose, onSave }: FlashcardDeckP
             onClick={goToNext}
             disabled={currentIndex === totalWords - 1}
           >
-            Next
+            <span className="hidden sm:inline">Next</span>
             <ArrowRight className="h-5 w-5 ml-1" />
           </Button>
         </div>
