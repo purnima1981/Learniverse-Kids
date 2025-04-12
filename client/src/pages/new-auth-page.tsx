@@ -28,6 +28,7 @@ import {
 
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
+import { useAuth } from "@/hooks/use-auth";
 
 // Import images and styles
 import learniverseIllustration from "../assets/images/space/space-bg.png";
@@ -104,16 +105,21 @@ export default function NewAuthPage() {
     setShowForgotPassword(false);
   };
 
+  const { loginMutation, registerMutation } = useAuth();
+
   const onLogin = async (data: LoginValues) => {
     try {
-      // Show a loading toast while "logging in"
+      // Show a loading toast while logging in
       toast({
         title: "Logging in...",
         description: "Preparing your learning adventure",
       });
       
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Convert email to username for the API
+      await loginMutation.mutateAsync({
+        username: data.email, // API expects 'username' but we're using email
+        password: data.password
+      });
       
       // Show success toast
       toast({
@@ -126,8 +132,8 @@ export default function NewAuthPage() {
       
       // Small delay before redirect for better UX
       setTimeout(() => {
-        // Redirect to theme selection
-        navigate("/theme-selection");
+        // Redirect to dashboard
+        navigate("/dashboard");
       }, 500);
     } catch (error) {
       toast({
@@ -140,7 +146,24 @@ export default function NewAuthPage() {
 
   const onRegister = async (data: RegisterValues) => {
     try {
-      // Simulated registration success
+      // Show a loading toast while registering
+      toast({
+        title: "Creating your account...",
+        description: "Preparing your learning adventure",
+      });
+      
+      // Convert to the format the API expects
+      await registerMutation.mutateAsync({
+        username: data.email, // API expects username field
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        password: data.password,
+        grade: data.grade,
+        gender: data.gender
+      });
+      
+      // Registration success
       toast({
         title: "Registration successful",
         description: "Welcome to Learniverse! Get ready for an amazing learning adventure.",
