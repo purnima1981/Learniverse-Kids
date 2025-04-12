@@ -13,6 +13,26 @@ import { Checkbox } from "@/components/ui/checkbox";
 // Force re-import to ensure we're using the latest version
 import chapterQuestionsData from "../data/chapterQuestions";
 
+// Add CSS for touch dragging
+const touchDragStyles = `
+  [data-draggable="true"].dragging {
+    opacity: 0.7;
+    transform: scale(1.02);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+  }
+  
+  @media (pointer: coarse) {
+    [data-draggable="true"] {
+      touch-action: none;
+    }
+  }
+`;
+
+const styleElement = document.createElement('style');
+styleElement.textContent = touchDragStyles;
+document.head.appendChild(styleElement);
+
 interface QuestionAnalytics {
   questionId: number;
   timeSpent: number; // in seconds
@@ -62,17 +82,10 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
     if (currentQuestion) {
       // Handle special question types
       if (currentQuestion.type === 'matching' && currentQuestion.items) {
-        // Initialize user answers for matching
-        if (!answers[currentQuestion.id]) {
-          const initialAnswers: Record<string, string> = {};
-          currentQuestion.items.forEach(item => {
-            initialAnswers[item.item] = "";
-          });
-          setAnswers(prev => ({
-            ...prev,
-            [currentQuestion.id]: initialAnswers
-          }));
-        }
+        // Always initialize matching items when changing questions to avoid sync issues
+        const items = [...currentQuestion.items];
+        const shuffledItems = [...items].sort(() => Math.random() - 0.5);
+        setMatchItems(prev => ({ ...prev, [currentQuestion.id]: shuffledItems }));
       }
     }
   }, [currentQuestionIndex]);
@@ -253,55 +266,106 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
     );
   };
 
-  const renderMatching = (question: Question) => {
-    if (!question.items) return null;
+  const handleDragEnd = (result: DropResult, question: Question) => {
+    const { source, destination } = result;
     
-    // Create a list of all possible matches for the dropdowns
-    const matchOptions = question.items.map(item => item.match);
+    // Return if dropped outside a droppable area or didn't move
+    if (!destination || (source.droppableId === destination.droppableId && source.index === destination.index)) {
+      return;
+    }
     
-    // Get the current user's answers for this question or initialize with empty object
-    const userAnswers = answers[question.id] || {};
+    // Get current matches for this question
+    const currentItems = [...(matchItems[question.id] || [])];
     
-    const handleMatchSelect = (termKey: string, selectedMatch: string) => {
-      // Update the answers for this term
-      const updatedAnswers = {
-        ...userAnswers,
-        [termKey]: selectedMatch
-      };
+    // Reorder the items
+    const [removed] = currentItems.splice(source.index, 1);
+    currentItems.splice(destination.index, 0, removed);
+    
+    // Update the state
+    setMatchItems({
+      ...matchItems,
+      [question.id]: currentItems,
+    });
+    
+    // Update the answer with the new order
+    const mappedAnswers = currentItems.map(item => `${item.item}:${item.match}`);
+    handleAnswer(mappedAnswers);
+  };
+  
+  // Touch support for drag and drop
+  const touchSupportRef = useRef<boolean>(false);
+  
+  useEffect(() => {
+    // Set up touch support for matching questions
+    if (currentQuestion?.type === 'matching' && !touchSupportRef.current) {
+      // Add a simple instruction for mobile users
+      const instruction = document.createElement('div');
+      instruction.className = 'p-2 bg-blue-500/20 text-white text-sm mt-2 mb-4 rounded';
+      instruction.innerHTML = 'For mobile devices: Tap and hold to drag items.';
       
-      handleAnswer(updatedAnswers);
-    };
+      setTimeout(() => {
+        const matchingContainer = document.querySelector('[data-droppable="true"]');
+        if (matchingContainer && matchingContainer.parentNode) {
+          matchingContainer.parentNode.insertBefore(instruction, matchingContainer);
+        }
+      }, 500);
+      
+      touchSupportRef.current = true;
+    }
+  }, [currentQuestion]);
+
+  const renderMatching = (question: Question) => {
+    if (!question.items || !matchItems[question.id]) return null;
     
     return (
       <div className="space-y-6">
-        <div className="p-3 rounded-md bg-[#2563EB]/20 text-white/80 text-sm mb-4">
-          Match each term with its correct definition by selecting from the dropdown.
+        <div className="p-3 rounded-md bg-[#2563EB]/20 text-white/80 text-sm mb-2">
+          Drag and drop items to match each term with its correct definition. 
         </div>
         
-        <div className="space-y-4">
-          {question.items.map((item, index) => (
-            <div key={index} className="bg-white/10 p-4 rounded-md">
-              <div className="flex items-center gap-4">
-                <div className="font-semibold text-white bg-[#2563EB]/40 px-3 py-2 rounded min-w-[150px]">
-                  {item.item}
-                </div>
-                
-                <select
-                  value={userAnswers[item.item] || ""}
-                  onChange={(e) => handleMatchSelect(item.item, e.target.value)}
-                  className="flex-1 bg-white/5 border border-white/20 text-white p-2 rounded-md"
-                >
-                  <option value="">Select a match...</option>
-                  {matchOptions.map((match, matchIndex) => (
-                    <option key={matchIndex} value={match}>
-                      {match}
-                    </option>
-                  ))}
-                </select>
+        <DragDropContext onDragEnd={(result) => handleDragEnd(result, question)}>
+          <Droppable droppableId="matching-items">
+            {(provided) => (
+              <div
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+                className="space-y-3"
+                data-droppable="true"
+              >
+                {matchItems[question.id].map((item, index) => (
+                  <Draggable key={`${item.item}-${index}`} draggableId={`${item.item}-${index}`} index={index}>
+                    {(provided, snapshot) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        className={`flex items-center bg-white/10 p-4 rounded-md ${
+                          snapshot.isDragging ? 'border-2 border-[#10B981]' : ''
+                        }`}
+                        data-draggable="true"
+                      >
+                        <div 
+                          {...provided.dragHandleProps}
+                          className="mr-3 text-white/70 hover:text-white/90 cursor-grab"
+                        >
+                          <GripVertical className="h-5 w-5" />
+                        </div>
+                        <div className="flex flex-1 justify-between gap-2">
+                          <div className="font-semibold text-white bg-[#2563EB]/40 px-3 py-2 rounded">
+                            {item.item}
+                          </div>
+                          <div className="text-white flex-1 text-right bg-[#0F172A]/60 px-3 py-2 rounded">
+                            {item.match}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
               </div>
-            </div>
-          ))}
-        </div>
+            )}
+          </Droppable>
+        </DragDropContext>
       </div>
     );
   };
