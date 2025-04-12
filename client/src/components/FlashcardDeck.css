@@ -1,20 +1,10 @@
-.perspective-1000 {
-  perspective: 1000px;
-}
-.preserve-3d {
-  transform-style: preserve-3d;
-}
-.backface-hidden {
-  backface-visibility: hidden;
-}
-.rotate-y-180 {
-  transform: rotateY(180deg);
+.flashcard-panel {
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.2), rgba(30, 70, 150, 0.4));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  transition: all 0.2s ease;
 }
 
-.glass-panel {
-  background: rgba(30, 58, 138, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+.flashcard-panel:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
 }
