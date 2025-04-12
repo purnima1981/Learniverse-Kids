@@ -175,11 +175,11 @@ export default function NewAuthPage() {
           <div className="w-full lg:w-7/12">
             {/* Top half - Image */}
             <div className="mb-8">
-              <div className="relative">
+              <div className="relative mx-auto" style={{ maxWidth: "400px" }}>
                 <img 
                   src={learniverseIllustration} 
                   alt="Learniverse illustration"
-                  className="rounded-lg shadow-xl border-2 border-indigo-600/50 w-full"
+                  className="rounded-lg shadow-xl border-2 border-indigo-600/50 w-full h-auto"
                 />
                 <div className="absolute -top-4 -right-4 bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold py-2 px-4 rounded-full transform rotate-12">
                   Grades 1-8
