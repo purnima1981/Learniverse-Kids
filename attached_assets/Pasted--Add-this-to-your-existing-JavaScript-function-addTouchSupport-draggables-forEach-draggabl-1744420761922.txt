@@ -1,0 +1,79 @@
+// Add this to your existing JavaScript
+function addTouchSupport() {
+  draggables.forEach(draggable => {
+    draggable.addEventListener('touchstart', handleTouchStart, { passive: false });
+    draggable.addEventListener('touchmove', handleTouchMove, { passive: false });
+    draggable.addEventListener('touchend', handleTouchEnd, { passive: false });
+  });
+  
+  let touchedElement = null;
+  let initialX, initialY;
+  
+  function handleTouchStart(e) {
+    e.preventDefault();
+    touchedElement = this;
+    initialX = e.touches[0].clientX;
+    initialY = e.touches[0].clientY;
+    this.classList.add('dragging');
+  }
+  
+  function handleTouchMove(e) {
+    e.preventDefault();
+    if (!touchedElement) return;
+    
+    // Move the element with the touch
+    const touchX = e.touches[0].clientX;
+    const touchY = e.touches[0].clientY;
+    
+    touchedElement.style.position = 'absolute';
+    touchedElement.style.left = touchX - 50 + 'px'; // Adjust as needed
+    touchedElement.style.top = touchY - 50 + 'px';  // Adjust as needed
+  }
+  
+  function handleTouchEnd(e) {
+    e.preventDefault();
+    if (!touchedElement) return;
+    
+    touchedElement.classList.remove('dragging');
+    
+    // Check if element is over a drop zone
+    const touchX = e.changedTouches[0].clientX;
+    const touchY = e.changedTouches[0].clientY;
+    
+    dropZones.forEach(zone => {
+      const rect = zone.getBoundingClientRect();
+      if (
+        touchX >= rect.left && touchX <= rect.right &&
+        touchY >= rect.top && touchY <= rect.bottom
+      ) {
+        // Simulate a drop
+        const draggedItemId = touchedElement.getAttribute('data-id');
+        const targetId = zone.getAttribute('data-target');
+        
+        if (correctAnswers[draggedItemId] === targetId) {
+          zone.classList.add('correct');
+          zone.appendChild(touchedElement);
+          touchedElement.removeAttribute('style');
+          touchedElement.setAttribute('draggable', 'false');
+          touchedElement.style.cursor = 'default';
+          checkAllMatched();
+        } else {
+          zone.classList.add('incorrect');
+          setTimeout(() => {
+            zone.classList.remove('incorrect');
+          }, 1000);
+          touchedElement.removeAttribute('style');
+        }
+      }
+    });
+    
+    // Reset if not dropped in a drop zone
+    if (touchedElement.style.position === 'absolute') {
+      touchedElement.removeAttribute('style');
+    }
+    
+    touchedElement = null;
+  }
+}
+
+addTouchSupport();
