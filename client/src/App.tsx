@@ -13,7 +13,7 @@ import { AuthProvider } from "@/hooks/use-auth";
 
 function App() {
   return (
-    <AuthProvider>
+    <>
       <Switch>
         {/* Test routes */}
         <Route path="/test/questions" component={TestQuestions} />
@@ -50,7 +50,7 @@ function App() {
         <Route component={NotFound} />
       </Switch>
       <Toaster />
-    </AuthProvider>
+    </>
   );
 }
 
