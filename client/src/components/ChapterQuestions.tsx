@@ -502,120 +502,188 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
   const [selectionStart, setSelectionStart] = useState<{row: number, col: number} | null>(null);
   const [selectionEnd, setSelectionEnd] = useState<{row: number, col: number} | null>(null);
   const [isSelecting, setIsSelecting] = useState<boolean>(false);
-  const [selectedCells, setSelectedCells] = useState<{[key: string]: boolean}>({});
+  const [selectedCells, setSelectedCells] = useState<{[key: string]: string}>({});
   const [foundWords, setFoundWords] = useState<{[key: string]: {cells: string[], direction: string}}>({});
+  const [lastFoundWord, setLastFoundWord] = useState<string | null>(null);
+  const [showFoundMessage, setShowFoundMessage] = useState<boolean>(false);
   const gridRef = useRef<HTMLDivElement>(null);
 
-  // Direction constants
-  const DIRECTIONS = {
-    HORIZONTAL: 'horizontal',
-    VERTICAL: 'vertical',
-    DIAGONAL_DOWN: 'diagonal-down',
-    DIAGONAL_UP: 'diagonal-up',
-  };
-
-  // Check if a word is found based on current selection
-  const checkForWord = (grid: string[], words: string[], startCell: {row: number, col: number}, endCell: {row: number, col: number}) => {
-    if (!startCell || !endCell) return null;
-
-    const rowDiff = endCell.row - startCell.row;
-    const colDiff = endCell.col - startCell.col;
-    let direction = '';
-    let selectedWord = '';
-    let cells: string[] = [];
-
-    // Determine direction
-    if (rowDiff === 0 && colDiff !== 0) {
-      direction = DIRECTIONS.HORIZONTAL;
-    } else if (rowDiff !== 0 && colDiff === 0) {
-      direction = DIRECTIONS.VERTICAL;
-    } else if (rowDiff !== 0 && colDiff !== 0 && Math.abs(rowDiff) === Math.abs(colDiff)) {
-      direction = rowDiff * colDiff > 0 ? DIRECTIONS.DIAGONAL_DOWN : DIRECTIONS.DIAGONAL_UP;
-    } else {
-      return null; // Not a straight line
-    }
-
-    // Get the word based on direction
-    const rowStep = rowDiff === 0 ? 0 : rowDiff > 0 ? 1 : -1;
-    const colStep = colDiff === 0 ? 0 : colDiff > 0 ? 1 : -1;
-    const steps = Math.max(Math.abs(rowDiff), Math.abs(colDiff));
-
-    for (let i = 0; i <= steps; i++) {
-      const row = startCell.row + i * rowStep;
-      const col = startCell.col + i * colStep;
-      if (row >= 0 && row < grid.length && col >= 0 && col < grid[0].length) {
-        selectedWord += grid[row][col];
-        cells.push(`${row}-${col}`);
+  // Initialize found words when question changes
+  useEffect(() => {
+    if (currentQuestion?.type === 'hidden-word') {
+      // Reset found words
+      setFoundWords({});
+      setSelectedCells({});
+      
+      // Initialize found words from saved answers
+      if (answers[currentQuestion.id] && Array.isArray(answers[currentQuestion.id])) {
+        const answerArray = answers[currentQuestion.id] as string[];
+        
+        // Highlight previously found words
+        answerArray.forEach(word => {
+          // We don't have cell info for previously found words, so we'll mark them as found without highlighting
+          setFoundWords(prev => ({
+            ...prev,
+            [word]: { cells: [], direction: '' }
+          }));
+        });
       }
     }
+  }, [currentQuestionIndex]);
 
-    // Check if the word matches any of the target words (forward or backward)
-    const wordForward = selectedWord;
-    const wordBackward = selectedWord.split('').reverse().join('');
+  // Clear found word message after a delay
+  useEffect(() => {
+    if (showFoundMessage) {
+      const timer = setTimeout(() => {
+        setShowFoundMessage(false);
+        setLastFoundWord(null);
+      }, 2000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [showFoundMessage]);
+
+  // Check if a word is found based on selection
+  const checkWordSelection = (grid: string[], words: string[], cells: {[key: string]: string}) => {
+    const selectedLetters = Object.values(cells).join('');
+    if (!selectedLetters || selectedLetters.length < 2) return null;
     
-    let foundWord = words.find(word => word.toUpperCase() === wordForward.toUpperCase());
+    // Check if selected letters form a word (forward or backward)
+    const wordForward = selectedLetters;
+    const wordBackward = selectedLetters.split('').reverse().join('');
+    
+    // Find in target words
+    let foundWord = words.find(word => 
+      word.toUpperCase().replace(/\s/g, '') === wordForward.toUpperCase().replace(/\s/g, '')
+    );
+    let reversed = false;
     
     if (!foundWord) {
-      foundWord = words.find(word => word.toUpperCase() === wordBackward.toUpperCase());
-      if (foundWord) {
-        // If found backward, reverse the cells array
-        cells = cells.reverse();
+      foundWord = words.find(word => 
+        word.toUpperCase().replace(/\s/g, '') === wordBackward.toUpperCase().replace(/\s/g, '')
+      );
+      reversed = !!foundWord;
+    }
+    
+    // Get cell keys
+    const cellKeys = Object.keys(cells);
+    if (reversed) {
+      cellKeys.reverse();
+    }
+    
+    return foundWord ? { word: foundWord, cells: cellKeys } : null;
+  };
+
+  const handleStartSelection = (rowIndex: number, colIndex: number, letter: string) => {
+    // Don't allow selection if cell is already part of a found word
+    const cellKey = `${rowIndex}-${colIndex}`;
+    
+    // Check if cell is part of any found word
+    for (const data of Object.values(foundWords)) {
+      if (data.cells.includes(cellKey)) {
+        return; // Already part of a found word
       }
     }
     
-    return foundWord ? { word: foundWord, cells, direction } : null;
-  };
-
-  const handleStartSelection = (rowIndex: number, colIndex: number) => {
     setSelectionStart({ row: rowIndex, col: colIndex });
     setIsSelecting(true);
-    setSelectionEnd(null);
-    setSelectedCells({});
+    
+    // Initialize selection with first letter
+    setSelectedCells({ [cellKey]: letter });
   };
 
-  const handleMoveSelection = (rowIndex: number, colIndex: number) => {
+  const handleMoveSelection = (rowIndex: number, colIndex: number, letter: string) => {
     if (!isSelecting || !selectionStart) return;
     
-    setSelectionEnd({ row: rowIndex, col: colIndex });
+    const cellKey = `${rowIndex}-${colIndex}`;
     
-    // Calculate selected cells
-    const cells: {[key: string]: boolean} = {};
+    // Check if this cell is already part of a found word
+    for (const data of Object.values(foundWords)) {
+      if (data.cells.includes(cellKey)) {
+        return; // Already part of a found word
+      }
+    }
     
+    // Only allow selections in straight lines (horizontal, vertical, diagonal)
     const rowDiff = rowIndex - selectionStart.row;
     const colDiff = colIndex - selectionStart.col;
     
-    if (Math.abs(rowDiff) === Math.abs(colDiff) || rowDiff === 0 || colDiff === 0) {
+    // Check if it's a straight line (horizontal, vertical, diagonal)
+    if (rowDiff === 0 || colDiff === 0 || Math.abs(rowDiff) === Math.abs(colDiff)) {
+      // Get all cells in the line from start to current position
+      const newSelectedCells: {[key: string]: string} = {};
+      
+      const startRow = selectionStart.row;
+      const startCol = selectionStart.col;
+      
       const rowStep = rowDiff === 0 ? 0 : rowDiff > 0 ? 1 : -1;
       const colStep = colDiff === 0 ? 0 : colDiff > 0 ? 1 : -1;
       const steps = Math.max(Math.abs(rowDiff), Math.abs(colDiff));
       
       for (let i = 0; i <= steps; i++) {
-        const row = selectionStart.row + i * rowStep;
-        const col = selectionStart.col + i * colStep;
-        cells[`${row}-${col}`] = true;
+        const r = startRow + i * rowStep;
+        const c = startCol + i * colStep;
+        const key = `${r}-${c}`;
+        
+        // Check if cell is not part of a found word
+        let isPartOfFoundWord = false;
+        for (const data of Object.values(foundWords)) {
+          if (data.cells.includes(key)) {
+            isPartOfFoundWord = true;
+            break;
+          }
+        }
+        
+        if (!isPartOfFoundWord) {
+          // Add this cell to selection with its letter
+          // Using the provided letter for the first cell, or get from grid for others
+          if (i === 0 && r === selectionStart.row && c === selectionStart.col) {
+            newSelectedCells[key] = letter;
+          } else {
+            // Use DOM as fallback to get the letter if we don't have access to the grid
+            const cellLetter = document.querySelector(
+              `[data-cell-key="${key}"]`
+            )?.textContent?.trim() || letter;
+            
+            newSelectedCells[key] = cellLetter;
+          }
+        }
       }
+      
+      setSelectedCells(newSelectedCells);
+      setSelectionEnd({ row: rowIndex, col: colIndex });
     }
-    
-    setSelectedCells(cells);
   };
 
   const handleEndSelection = (question: Question) => {
-    if (!isSelecting || !selectionStart || !selectionEnd || !question.grid || !question.words) {
+    if (!isSelecting || !question.grid || !question.words) {
       setIsSelecting(false);
       return;
     }
     
-    const wordResult = checkForWord(question.grid, question.words, selectionStart, selectionEnd);
+    // Check if we have a valid word
+    const wordResult = checkWordSelection(question.grid, question.words, selectedCells);
     
     if (wordResult) {
+      // Check if this word is already found
+      if (foundWords[wordResult.word]) {
+        setSelectedCells({});
+        setIsSelecting(false);
+        return;
+      }
+      
       // Add the found word to the state
       setFoundWords(prev => ({
         ...prev,
         [wordResult.word]: {
           cells: wordResult.cells,
-          direction: wordResult.direction
+          direction: '' // Direction is not important for this implementation
         }
       }));
+      
+      // Show found word message
+      setLastFoundWord(wordResult.word);
+      setShowFoundMessage(true);
       
       // Update answer for the question
       const currentAnswers = answers[question.id] || [];
@@ -645,84 +713,145 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
     };
   }, [isSelecting]);
 
+  // Reset word search state when moving to a new question
+  useEffect(() => {
+    setSelectionStart(null);
+    setSelectionEnd(null);
+    setIsSelecting(false);
+    setSelectedCells({});
+    setFoundWords({});
+    setLastFoundWord(null);
+    setShowFoundMessage(false);
+  }, [currentQuestionIndex]);
+
   const renderHiddenWord = (question: Question) => {
     if (!question.grid || !question.words) return null;
+    
+    // Calculate how many words are found
+    const foundCount = Object.keys(foundWords).length;
+    const totalWords = question.words.length;
     
     return (
       <div className="space-y-4">
         <div className="p-3 rounded-md bg-[#2563EB]/20 text-white/80 text-sm mb-2">
-          Find these words by dragging across letters in the grid: {question.words.join(', ')}
+          Find these words by dragging across letters in the grid. Found {foundCount} of {totalWords} words.
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div 
-            className="font-mono bg-white/10 p-4 rounded-md select-none" 
-            ref={gridRef}
-            onMouseUp={() => handleEndSelection(question)}
-            onTouchEnd={() => handleEndSelection(question)}
-          >
-            {question.grid.map((row, rowIndex) => (
-              <div key={rowIndex} className="flex justify-center">
-                {row.split('').map((char, colIndex) => {
-                  const cellKey = `${rowIndex}-${colIndex}`;
-                  const isSelected = selectedCells[cellKey];
-                  let cellClass = "w-8 h-8 flex items-center justify-center text-white cursor-pointer select-none";
-                  
-                  // Check if this cell is part of any found word
-                  let isFound = false;
-                  let foundWord = "";
-                  for (const [word, data] of Object.entries(foundWords)) {
-                    if (data.cells.includes(cellKey)) {
-                      isFound = true;
-                      foundWord = word;
-                      break;
+          <div className="relative">
+            <div 
+              className="font-mono bg-white/10 p-4 rounded-md select-none" 
+              ref={gridRef}
+              onMouseUp={() => handleEndSelection(question)}
+              onMouseLeave={() => {
+                if (isSelecting) {
+                  setSelectedCells({});
+                  setIsSelecting(false);
+                }
+              }}
+              onTouchEnd={() => handleEndSelection(question)}
+            >
+              {question.grid.map((row, rowIndex) => (
+                <div key={rowIndex} className="flex justify-center">
+                  {row.split('').map((char, colIndex) => {
+                    const cellKey = `${rowIndex}-${colIndex}`;
+                    
+                    // Check if this cell is part of current selection
+                    const isSelected = cellKey in selectedCells;
+                    
+                    // Check if this cell is part of any found word
+                    let isFound = false;
+                    let foundWord = "";
+                    for (const [word, data] of Object.entries(foundWords)) {
+                      if (data.cells.includes(cellKey)) {
+                        isFound = true;
+                        foundWord = word;
+                        break;
+                      }
                     }
-                  }
-                  
-                  if (isFound) {
-                    cellClass += " bg-green-600/60";
-                  } else if (isSelected) {
-                    cellClass += " bg-blue-600/40";
-                  } else {
-                    cellClass += " hover:bg-white/10";
-                  }
-                  
-                  return (
-                    <div 
-                      key={`${rowIndex}-${colIndex}`} 
-                      className={cellClass}
-                      onMouseDown={() => handleStartSelection(rowIndex, colIndex)}
-                      onMouseEnter={() => handleMoveSelection(rowIndex, colIndex)}
-                      onTouchStart={() => handleStartSelection(rowIndex, colIndex)}
-                      onTouchMove={(e) => {
-                        if (!gridRef.current || !isSelecting) return;
-                        
-                        const touch = e.touches[0];
-                        const grid = gridRef.current;
-                        const rect = grid.getBoundingClientRect();
-                        
-                        // Calculate which cell was touched
-                        const x = touch.clientX - rect.left;
-                        const y = touch.clientY - rect.top;
-                        
-                        const cellWidth = rect.width / row.length;
-                        const cellHeight = rect.height / question.grid.length;
-                        
-                        const touchColIndex = Math.floor(x / cellWidth);
-                        const touchRowIndex = Math.floor(y / cellHeight);
-                        
-                        if (touchRowIndex >= 0 && touchRowIndex < question.grid.length &&
-                            touchColIndex >= 0 && touchColIndex < row.length) {
-                          handleMoveSelection(touchRowIndex, touchColIndex);
-                        }
-                      }}
-                    >
-                      {char}
-                    </div>
-                  );
-                })}
+                    
+                    // Style based on state
+                    let cellClass = "w-9 h-9 flex items-center justify-center text-lg font-medium select-none";
+                    
+                    if (isFound) {
+                      cellClass += " bg-green-600 text-white rounded-md";
+                    } else if (isSelected) {
+                      cellClass += " bg-blue-500 text-white rounded-md";
+                    } else {
+                      cellClass += " text-white cursor-pointer hover:bg-white/20 hover:rounded-md transition-colors";
+                    }
+                    
+                    return (
+                      <div 
+                        key={`${rowIndex}-${colIndex}`} 
+                        className={cellClass}
+                        data-cell-key={cellKey}
+                        onMouseDown={() => handleStartSelection(rowIndex, colIndex, char)}
+                        onMouseEnter={() => handleMoveSelection(rowIndex, colIndex, char)}
+                        onTouchStart={() => handleStartSelection(rowIndex, colIndex, char)}
+                        onTouchMove={(e) => {
+                          if (!gridRef.current || !isSelecting || !question.grid) return;
+                          
+                          e.preventDefault(); // Prevent scroll while selecting
+                          
+                          const touch = e.touches[0];
+                          const grid = gridRef.current;
+                          const rect = grid.getBoundingClientRect();
+                          
+                          // Calculate which cell was touched
+                          const x = touch.clientX - rect.left;
+                          const y = touch.clientY - rect.top;
+                          
+                          // Get row length and grid length safely
+                          const rowLength = row.length;
+                          const gridLength = question.grid.length;
+                          
+                          // Calculate cell dimensions
+                          const cellWidth = rect.width / rowLength;
+                          const cellHeight = rect.height / gridLength;
+                          
+                          // Determine which cell was touched
+                          const touchColIndex = Math.floor(x / cellWidth);
+                          const touchRowIndex = Math.floor(y / cellHeight);
+                          
+                          // Ensure indices are within bounds
+                          if (touchRowIndex >= 0 && touchRowIndex < gridLength &&
+                              touchColIndex >= 0 && touchColIndex < rowLength) {
+                            // Get the character from the grid safely
+                            try {
+                              const gridRow = question.grid[touchRowIndex];
+                              if (gridRow && typeof gridRow === 'string') {
+                                const cellChar = gridRow[touchColIndex] || '';
+                                handleMoveSelection(touchRowIndex, touchColIndex, cellChar);
+                              }
+                            } catch (err) {
+                              // Fallback to get the letter from DOM if grid access fails
+                              const cellLetter = document.querySelector(
+                                `[data-cell-key="${touchRowIndex}-${touchColIndex}"]`
+                              )?.textContent?.trim() || '';
+                              
+                              handleMoveSelection(touchRowIndex, touchColIndex, cellLetter);
+                            }
+                          }
+                        }}
+                      >
+                        {char}
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+            
+            {/* Word found notification */}
+            {showFoundMessage && lastFoundWord && (
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+                              bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg 
+                              flex items-center transition-opacity duration-300 animate-bounce">
+                <CheckCircle className="mr-2 h-5 w-5" />
+                <span className="font-medium">{lastFoundWord} Found!</span>
               </div>
-            ))}
+            )}
           </div>
           
           <div className="space-y-3">
@@ -732,14 +861,16 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
             
             <div className="space-y-2">
               {question.words.map((word, index) => {
-                const found = answers[question.id] && answers[question.id].includes(word);
+                const found = word in foundWords || (answers[question.id] && 
+                  Array.isArray(answers[question.id]) && 
+                  answers[question.id].includes(word));
                 
                 return (
                   <div 
                     key={index} 
                     className={`flex items-center p-2 rounded-md ${found ? 'bg-green-600/20' : 'bg-white/10'}`}
                   >
-                    {found && <CheckCircle className="h-4 w-4 text-green-500 mr-2" />}
+                    {found && <CheckCircle className="h-5 w-5 text-green-500 mr-2" />}
                     <span className={`${found ? 'text-green-400 font-medium' : 'text-white'}`}>
                       {word}
                     </span>
@@ -749,13 +880,19 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
             </div>
             
             <div className="mt-4 p-3 bg-[#0F172A]/60 rounded-md text-white/70 text-sm">
-              <p className="mb-1">Drag across letters to find words:</p>
-              <ul className="list-disc list-inside space-y-1">
-                <li>Horizontally (→)</li>
-                <li>Vertically (↓)</li>
-                <li>Diagonally (↘ or ↗)</li>
-                <li>Forwards or backwards</li>
-              </ul>
+              <p className="mb-1 font-medium text-white">How to play:</p>
+              <ol className="list-decimal list-inside space-y-1 pl-1">
+                <li>Find words in the grid</li>
+                <li>Click and drag to select letters</li>
+                <li>Words can run in any direction:
+                  <ul className="list-disc list-inside pl-4 mt-1 text-xs">
+                    <li>Horizontally (→ or ←)</li>
+                    <li>Vertically (↓ or ↑)</li>
+                    <li>Diagonally (↘ ↗ ↙ ↖)</li>
+                  </ul>
+                </li>
+                <li>When you find a word, it will be highlighted</li>
+              </ol>
             </div>
           </div>
         </div>
