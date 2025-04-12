@@ -107,7 +107,7 @@ export default function NewAuthPage() {
   });
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-gradient-to-b from-indigo-950 to-blue-900">
+    <div className="min-h-screen overflow-x-hidden bg-gradient-to-b from-indigo-950 to-blue-900 animate-gradient">
       {/* Hero section with navigation */}
       <header className="relative overflow-hidden">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -115,19 +115,36 @@ export default function NewAuthPage() {
           <div className="stars-medium"></div>
           <div className="comet-1"></div>
           <div className="comet-2"></div>
+          <div className="comet-3"></div>
+          
+          {/* Space particles */}
+          <div className="space-particles">
+            {Array.from({ length: 20 }).map((_, i) => (
+              <div 
+                key={i} 
+                className="particle" 
+                style={{ 
+                  left: `${Math.random() * 100}%`, 
+                  top: `${Math.random() * 100}%`, 
+                  animationDelay: `${Math.random() * 15}s`,
+                  animationDuration: `${15 + Math.random() * 10}s`
+                }}
+              />
+            ))}
+          </div>
         </div>
         
         <div className="container relative z-10 mx-auto px-4 py-8">
           <div className="flex items-center justify-between">
-            <div className="flex items-center">
+            <div className="flex items-center fade-in">
               <Rocket className="h-10 w-10 text-yellow-400 mr-3 animate-pulse" />
               <h1 className="text-3xl font-bold text-white">Learniverse</h1>
             </div>
             
-            <div className="flex gap-4">
+            <div className="flex gap-4 fade-in">
               <Button 
                 variant="outline" 
-                className="bg-transparent border-white text-white hover:bg-white/10"
+                className="bg-transparent border-white text-white hover:bg-white/10 hover:border-blue-400 transition-all duration-300"
                 onClick={() => {
                   setShowLogin(true);
                   setShowRegister(false);
@@ -137,7 +154,7 @@ export default function NewAuthPage() {
               </Button>
               
               <Button 
-                className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white"
+                className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white animate-pulse-slow"
                 onClick={() => {
                   setShowRegister(true);
                   setShowLogin(false);
@@ -154,7 +171,7 @@ export default function NewAuthPage() {
       <main className="container mx-auto px-4 pb-16">
         {/* Hero content */}
         <div className="flex flex-col lg:flex-row items-center justify-between my-8 lg:my-16 gap-8">
-          <div className="lg:w-1/2">
+          <div className="lg:w-1/2 slide-in-left">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
               Where Learning and Adventure Connect
             </h2>
@@ -165,7 +182,7 @@ export default function NewAuthPage() {
             
             <Button 
               size="lg"
-              className="bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-black font-bold text-lg px-8 py-6"
+              className="bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-black font-bold text-lg px-8 py-6 animate-glow"
               onClick={() => {
                 setShowRegister(true);
                 setShowLogin(false);
@@ -186,14 +203,14 @@ export default function NewAuthPage() {
             </div>
           </div>
           
-          <div className="lg:w-1/2">
-            <div className="relative">
+          <div className="lg:w-1/2 slide-in-right">
+            <div className="relative float">
               <img 
                 src={learniverseIllustration} 
                 alt="Learniverse platform preview"
                 className="rounded-xl shadow-2xl border-2 border-indigo-600/50 w-full h-auto"
               />
-              <div className="absolute -top-4 -right-4 bg-gradient-to-r from-emerald-500 to-green-500 text-white font-bold py-2 px-4 rounded-full shadow-lg">
+              <div className="absolute -top-4 -right-4 bg-gradient-to-r from-emerald-500 to-green-500 text-white font-bold py-2 px-4 rounded-full shadow-lg animate-pulse-slow">
                 New Curriculum
               </div>
             </div>
@@ -221,7 +238,7 @@ export default function NewAuthPage() {
           {features.map((feature, index) => (
             <div 
               key={index}
-              className="bg-indigo-900/40 backdrop-blur-sm rounded-xl p-6 border border-indigo-700/30 hover:border-blue-500/50 transition-all hover:shadow-lg group"
+              className={`bg-indigo-900/40 backdrop-blur-sm rounded-xl p-6 border border-indigo-700/30 hover:border-blue-500/50 transition-all hover:shadow-lg group fade-in-delay-${index + 1}`}
             >
               <div className="p-3 bg-indigo-800/50 rounded-full inline-block mb-4 group-hover:bg-indigo-700/70 transition-colors">
                 {feature.icon}
@@ -313,10 +330,10 @@ export default function NewAuthPage() {
       {/* Login Modal */}
       {showLogin && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
-          <Card className="w-full max-w-md bg-indigo-900/90 backdrop-blur-lg border border-indigo-700/50 shadow-2xl">
+          <Card className="w-full max-w-md bg-indigo-900/90 backdrop-blur-lg border border-indigo-700/50 shadow-2xl animate-glow">
             <CardContent className="pt-6">
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-white">Log In</h2>
+                <h2 className="text-2xl font-bold text-white fade-in">Log In</h2>
                 <button 
                   onClick={() => setShowLogin(false)}
                   className="text-blue-300 hover:text-white"
@@ -331,7 +348,7 @@ export default function NewAuthPage() {
                     control={loginForm.control}
                     name="email"
                     render={({ field }) => (
-                      <FormItem>
+                      <FormItem className="fade-in-delay-1">
                         <FormLabel className="text-blue-100">Email Address</FormLabel>
                         <FormControl>
                           <Input
@@ -349,7 +366,7 @@ export default function NewAuthPage() {
                     control={loginForm.control}
                     name="password"
                     render={({ field }) => (
-                      <FormItem>
+                      <FormItem className="fade-in-delay-2">
                         <FormLabel className="text-blue-100">Password</FormLabel>
                         <FormControl>
                           <Input
@@ -366,12 +383,12 @@ export default function NewAuthPage() {
 
                   <Button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-lg"
+                    className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-lg animate-gradient fade-in-delay-3"
                   >
                     Log In
                   </Button>
                   
-                  <div className="text-center mt-4">
+                  <div className="text-center mt-4 fade-in-delay-4">
                     <button 
                       type="button" 
                       className="text-blue-300 hover:text-blue-100"
@@ -393,10 +410,10 @@ export default function NewAuthPage() {
       {/* Register Modal */}
       {showRegister && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
-          <Card className="w-full max-w-md bg-indigo-900/90 backdrop-blur-lg border border-indigo-700/50 shadow-2xl">
+          <Card className="w-full max-w-md bg-indigo-900/90 backdrop-blur-lg border border-indigo-700/50 shadow-2xl animate-glow-green">
             <CardContent className="pt-6">
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-white">Create Your Account</h2>
+                <h2 className="text-2xl font-bold text-white fade-in">Create Your Account</h2>
                 <button 
                   onClick={() => setShowRegister(false)}
                   className="text-blue-300 hover:text-white"
@@ -407,7 +424,7 @@ export default function NewAuthPage() {
               
               <Form {...registerForm}>
                 <form onSubmit={registerForm.handleSubmit(onRegister)} className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-4 fade-in-delay-1">
                     <FormField
                       control={registerForm.control}
                       name="firstName"
@@ -449,7 +466,7 @@ export default function NewAuthPage() {
                     control={registerForm.control}
                     name="email"
                     render={({ field }) => (
-                      <FormItem>
+                      <FormItem className="fade-in-delay-2">
                         <FormLabel className="text-blue-100">Email Address</FormLabel>
                         <FormControl>
                           <Input
@@ -467,7 +484,7 @@ export default function NewAuthPage() {
                     control={registerForm.control}
                     name="password"
                     render={({ field }) => (
-                      <FormItem>
+                      <FormItem className="fade-in-delay-2">
                         <FormLabel className="text-blue-100">Password</FormLabel>
                         <FormControl>
                           <Input
@@ -482,7 +499,7 @@ export default function NewAuthPage() {
                     )}
                   />
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-4 fade-in-delay-3">
                     <FormField
                       control={registerForm.control}
                       name="grade"
@@ -541,12 +558,12 @@ export default function NewAuthPage() {
 
                   <Button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-lg font-semibold"
+                    className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-lg font-semibold animate-gradient fade-in-delay-4"
                   >
                     Start Your Free Account
                   </Button>
                   
-                  <div className="text-center mt-4">
+                  <div className="text-center mt-4 fade-in-delay-4">
                     <button 
                       type="button" 
                       className="text-blue-300 hover:text-blue-100"
