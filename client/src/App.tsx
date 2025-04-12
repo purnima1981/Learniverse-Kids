@@ -5,6 +5,7 @@ import ThemeSelection from "@/pages/ThemeSelection";
 import Dashboard from "@/pages/Dashboard";
 import StoryReader from "@/pages/StoryReader";
 import AuthPage from "@/pages/auth-page";
+import NewAuthPage from "@/pages/new-auth-page";
 import EnhancedAuth from "@/pages/enhanced-auth";
 import RegionalStoriesPage from "@/pages/RegionalStoriesPage";
 import ReadingCoach from "@/pages/ReadingCoach";
@@ -19,7 +20,7 @@ function App() {
         {/* Test routes */}
         <Route path="/test/questions" component={TestQuestions} />
         {/* Public routes */}
-        <Route path="/auth" component={AuthPage} />
+        <Route path="/auth" component={NewAuthPage} />
         <Route path="/auth-old" component={AuthPage} />
         <Route path="/auth-enhanced" component={EnhancedAuth} />
         <Route path="/story/:id/:chapter" component={StoryReader} />
