@@ -25,7 +25,7 @@ import {
   Brain, Users, BarChart, CalendarDays, Puzzle, 
   Lightbulb, Scroll, Mountain, ChevronRight, CheckCircle
 } from "lucide-react";
-import { useAuth } from "@/hooks/use-auth";
+
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
 
@@ -77,57 +77,72 @@ const features = [
 export default function NewAuthPage() {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
-  const { loginMutation, registerMutation, user } = useAuth();
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [forgotPasswordEmail, setForgotPasswordEmail] = useState("");
   const { toast } = useToast();
   const [, navigate] = useLocation();
   
-  // Redirect if already logged in
-  if (user) {
-    navigate("/dashboard");
-    return null;
-  }
+  // Instead of checking user from authentication provider
+  // We'll rely on form submission only for this demo
+  
+  const handleForgotPassword = () => {
+    if (!forgotPasswordEmail.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+      toast({
+        variant: "destructive",
+        title: "Invalid email",
+        description: "Please enter a valid email address",
+      });
+      return;
+    }
+    
+    // Show success message - in a real app this would trigger password reset process
+    toast({
+      title: "Password reset email sent",
+      description: `Instructions have been sent to ${forgotPasswordEmail}`,
+    });
+    setShowForgotPassword(false);
+  };
 
   const onLogin = async (data: LoginValues) => {
     try {
-      await loginMutation.mutateAsync({ 
-        email: data.email, 
-        password: data.password 
-      });
+      // Simulated login success
       toast({
         title: "Login successful",
         description: "Welcome back to Learniverse!",
       });
       setShowLogin(false);
+      
+      // Redirect to dashboard would happen in a real app
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 1500);
     } catch (error) {
       toast({
         variant: "destructive",
         title: "Login failed",
-        description: error instanceof Error ? error.message : "Please check your credentials and try again.",
+        description: "Please check your credentials and try again.",
       });
     }
   };
 
   const onRegister = async (data: RegisterValues) => {
     try {
-      await registerMutation.mutateAsync({
-        firstName: data.firstName,
-        lastName: data.lastName,
-        email: data.email,
-        password: data.password,
-        grade: data.grade,
-        gender: data.gender,
-        role: 'student'
-      });
+      // Simulated registration success
       toast({
         title: "Registration successful",
         description: "Welcome to Learniverse! Get ready for an amazing learning adventure.",
       });
       setShowRegister(false);
+      
+      // Redirect to theme selection would happen in a real app
+      setTimeout(() => {
+        navigate("/theme-selection");
+      }, 1500);
     } catch (error) {
       toast({
         variant: "destructive",
         title: "Registration failed",
-        description: error instanceof Error ? error.message : "Please check your information and try again.",
+        description: "Please check your information and try again.",
       });
     }
   };
@@ -434,7 +449,18 @@ export default function NewAuthPage() {
                     Log In
                   </Button>
                   
-                  <div className="text-center mt-4 fade-in-delay-4">
+                  <div className="flex flex-col items-center space-y-2 mt-4 fade-in-delay-4">
+                    <button 
+                      type="button" 
+                      className="text-blue-300 hover:text-blue-100 text-sm"
+                      onClick={() => {
+                        setShowForgotPassword(true);
+                        setShowLogin(false);
+                      }}
+                    >
+                      Forgot your password?
+                    </button>
+                    
                     <button 
                       type="button" 
                       className="text-blue-300 hover:text-blue-100"
@@ -623,6 +649,62 @@ export default function NewAuthPage() {
                   </div>
                 </form>
               </Form>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+      
+      {/* Forgot Password Modal */}
+      {showForgotPassword && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+          <Card className="w-full max-w-md bg-indigo-900/90 backdrop-blur-lg border border-indigo-700/50 shadow-2xl animate-glow">
+            <CardContent className="pt-6">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold text-white fade-in">Reset Your Password</h2>
+                <button 
+                  onClick={() => setShowForgotPassword(false)}
+                  className="text-blue-300 hover:text-white"
+                >
+                  ✕
+                </button>
+              </div>
+              
+              <div className="space-y-4">
+                <p className="text-blue-100 fade-in-delay-1">
+                  Enter your email address and we'll send you instructions to reset your password.
+                </p>
+                
+                <div className="fade-in-delay-2">
+                  <FormLabel className="text-blue-100">Email Address</FormLabel>
+                  <Input
+                    type="email"
+                    placeholder="your.email@example.com"
+                    className="bg-blue-900/50 border-blue-700/50 text-white mt-1"
+                    value={forgotPasswordEmail}
+                    onChange={(e) => setForgotPasswordEmail(e.target.value)}
+                  />
+                </div>
+
+                <Button
+                  onClick={handleForgotPassword}
+                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-lg animate-gradient fade-in-delay-3"
+                >
+                  Send Reset Link
+                </Button>
+                
+                <div className="text-center mt-4 fade-in-delay-4">
+                  <button 
+                    type="button" 
+                    className="text-blue-300 hover:text-blue-100"
+                    onClick={() => {
+                      setShowForgotPassword(false);
+                      setShowLogin(true);
+                    }}
+                  >
+                    Back to Login
+                  </button>
+                </div>
+              </div>
             </CardContent>
           </Card>
         </div>
