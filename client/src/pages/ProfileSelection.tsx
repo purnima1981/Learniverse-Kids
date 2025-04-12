@@ -33,6 +33,7 @@ import {
   UserCircle, Plus, Edit, Star, LogOut, ChevronRight, Rocket, GraduationCap, 
   Sparkles, Pencil, Trash2 
 } from 'lucide-react';
+import { COLORS } from '@/lib/colors';
 
 // Define avatar colors
 const AVATAR_COLORS = [
@@ -229,25 +230,25 @@ export default function ProfileSelection() {
 
   if (isLoading || !user) {
     return (
-      <div className="flex h-screen w-full items-center justify-center bg-gradient-to-br from-indigo-900 to-blue-900">
-        <div className="animate-pulse text-white text-2xl">Loading profiles...</div>
+      <div className={`flex h-screen w-full items-center justify-center bg-gradient-to-br ${COLORS.BG_GRADIENT_FROM} ${COLORS.BG_GRADIENT_TO}`}>
+        <div className={`animate-pulse ${COLORS.TEXT_PRIMARY} text-2xl`}>Loading profiles...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-900 to-blue-900 text-white">
+    <div className={`min-h-screen bg-gradient-to-br ${COLORS.BG_GRADIENT_FROM} ${COLORS.BG_GRADIENT_TO} ${COLORS.TEXT_PRIMARY}`}>
       <div className="container mx-auto px-4 py-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4">Who's Learning Today?</h1>
-          <p className="text-xl text-blue-200">Choose a profile to continue your learning journey</p>
+          <p className={`text-xl ${COLORS.TEXT_SECONDARY}`}>Choose a profile to continue your learning journey</p>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
           {/* Parent Profile Card */}
           <Card 
-            className="bg-blue-800/40 backdrop-blur-md border border-blue-700/30 shadow-xl overflow-hidden 
-                      hover:border-blue-400 transition-all cursor-pointer group"
+            className={`${COLORS.CARD_BG} backdrop-blur-md border ${COLORS.CARD_BORDER} shadow-xl overflow-hidden 
+                      hover:${COLORS.CARD_BORDER_HOVER} transition-all cursor-pointer group`}
             onClick={handleParentSelect}
           >
             <CardContent className="p-4 flex flex-col items-center justify-center text-center h-full">
@@ -271,8 +272,8 @@ export default function ProfileSelection() {
           {profiles?.map((profile) => (
             <Card 
               key={profile.id}
-              className="bg-blue-800/40 backdrop-blur-md border border-blue-700/30 shadow-xl overflow-hidden 
-                        hover:border-blue-400 transition-all cursor-pointer group"
+              className={`${COLORS.CARD_BG} backdrop-blur-md border ${COLORS.CARD_BORDER} shadow-xl overflow-hidden 
+                        hover:${COLORS.CARD_BORDER_HOVER} transition-all cursor-pointer group`}
               onClick={() => handleProfileSelect(profile)}
             >
               <CardContent className="p-4 flex flex-col items-center justify-center text-center h-full relative">
@@ -307,15 +308,15 @@ export default function ProfileSelection() {
                             name="name"
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel className="text-blue-100">Name</FormLabel>
+                                <FormLabel className={COLORS.TEXT_MUTED}>Name</FormLabel>
                                 <FormControl>
                                   <Input 
                                     placeholder="Profile name" 
-                                    className="bg-blue-800/50 border-blue-700/50 text-white"
+                                    className={`${COLORS.INPUT_BG} ${COLORS.INPUT_BORDER} ${COLORS.TEXT_PRIMARY}`}
                                     {...field} 
                                   />
                                 </FormControl>
-                                <FormMessage className="text-red-300" />
+                                <FormMessage className={COLORS.TEXT_ERROR} />
                               </FormItem>
                             )}
                           />
@@ -394,17 +395,17 @@ export default function ProfileSelection() {
                                 e.stopPropagation();
                                 deleteProfileMutation.mutate(profile.id);
                               }}
-                              className="bg-red-600 hover:bg-red-700"
+                              className={COLORS.BUTTON_DESTRUCTIVE}
                             >
                               Delete
                             </Button>
                             <div className="space-x-2">
                               <DialogClose asChild>
-                                <Button variant="outline" className="border-blue-600 text-blue-200 hover:bg-blue-800">
+                                <Button variant="outline" className={COLORS.BUTTON_OUTLINE}>
                                   Cancel
                                 </Button>
                               </DialogClose>
-                              <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
+                              <Button type="submit" className={COLORS.BUTTON_PRIMARY}>
                                 Save Changes
                               </Button>
                             </div>
@@ -433,18 +434,18 @@ export default function ProfileSelection() {
           {/* Add Profile Card */}
           <Dialog open={showAddProfile} onOpenChange={setShowAddProfile}>
             <DialogTrigger asChild>
-              <Card className="bg-blue-800/20 backdrop-blur-md border border-blue-700/30 border-dashed shadow-xl 
-                              hover:bg-blue-800/40 transition-all cursor-pointer h-full">
+              <Card className={`${COLORS.CARD_BG} backdrop-blur-md border ${COLORS.CARD_BORDER} border-dashed shadow-xl 
+                              hover:${COLORS.CARD_BG_HOVER} transition-all cursor-pointer h-full`}>
                 <CardContent className="p-4 flex flex-col items-center justify-center text-center h-full">
                   <div className="h-24 w-24 rounded-full bg-blue-900/50 flex items-center justify-center mb-4">
-                    <Plus className="h-10 w-10 text-blue-300" />
+                    <Plus className={`h-10 w-10 ${COLORS.TEXT_TERTIARY}`} />
                   </div>
-                  <h3 className="text-lg font-semibold text-blue-300">Add Profile</h3>
-                  <p className="text-sm text-blue-200 mt-1">Create a new child profile</p>
+                  <h3 className={`text-lg font-semibold ${COLORS.TEXT_TERTIARY} mb-1`}>Add Profile</h3>
+                  <p className={`text-sm ${COLORS.TEXT_SECONDARY} mt-1`}>Create a new child profile</p>
                 </CardContent>
               </Card>
             </DialogTrigger>
-            <DialogContent className="bg-blue-900 border-blue-700 text-white">
+            <DialogContent className={`${COLORS.DIALOG_BG} ${COLORS.DIALOG_BORDER} ${COLORS.TEXT_PRIMARY}`}>
               <DialogHeader>
                 <DialogTitle>Create New Profile</DialogTitle>
               </DialogHeader>
@@ -455,15 +456,15 @@ export default function ProfileSelection() {
                     name="name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-blue-100">Name</FormLabel>
+                        <FormLabel className={COLORS.TEXT_MUTED}>Name</FormLabel>
                         <FormControl>
                           <Input 
                             placeholder="Profile name" 
-                            className="bg-blue-800/50 border-blue-700/50 text-white"
+                            className={`${COLORS.INPUT_BG} ${COLORS.INPUT_BORDER} ${COLORS.TEXT_PRIMARY}`}
                             {...field} 
                           />
                         </FormControl>
-                        <FormMessage className="text-red-300" />
+                        <FormMessage className={COLORS.TEXT_ERROR} />
                       </FormItem>
                     )}
                   />
@@ -534,7 +535,7 @@ export default function ProfileSelection() {
                     </div>
                   </div>
                   <DialogFooter className="mt-6">
-                    <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
+                    <Button type="submit" className={COLORS.BUTTON_PRIMARY}>
                       Create Profile
                     </Button>
                   </DialogFooter>
