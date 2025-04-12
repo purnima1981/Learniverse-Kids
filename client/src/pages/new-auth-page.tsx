@@ -26,7 +26,7 @@ import {
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Sparkles, Rocket, Star, Globe, Book, Atom } from "lucide-react";
+import { Sparkles, Rocket, Star, Globe, Book, Atom, Brain, Users, BarChart } from "lucide-react";
 
 // Import images and styles
 import learniverseIllustration from "../assets/images/space/space-bg.png";
@@ -51,6 +51,39 @@ type RegisterValues = z.infer<typeof registerSchema>;
 
 export default function NewAuthPage() {
   const [activeTab, setActiveTab] = useState("login");
+  const [activeHighlight, setActiveHighlight] = useState(0);
+
+  // Highlights data
+  const highlights = [
+    {
+      title: "Story-Based Learning",
+      description: "Learn through engaging adventures that make academic concepts come alive",
+      icon: <Book className="h-5 w-5 text-cyan-400" />
+    },
+    {
+      title: "Subject Connections",
+      description: "See how math, science, and language arts connect in our interdisciplinary approach",
+      icon: <Atom className="h-5 w-5 text-green-400" />
+    },
+    {
+      title: "AI Reading Coach",
+      description: "Get personalized reading assistance with our advanced AI companion",
+      icon: <Sparkles className="h-5 w-5 text-yellow-400" />
+    },
+    {
+      title: "Interactive Tools",
+      description: "Engage with quizzes, flashcards, and educational games to reinforce learning",
+      icon: <Star className="h-5 w-5 text-purple-400" />
+    }
+  ];
+
+  // Auto-rotate through highlights
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setActiveHighlight((prev) => (prev + 1) % highlights.length);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [activeHighlight, highlights.length]);
 
   // For demo purposes, simulate form submission
   const onLogin = async (data: LoginValues) => {
@@ -96,11 +129,45 @@ export default function NewAuthPage() {
                 <Rocket className="h-10 w-10 text-yellow-400 mr-4" />
                 <h1 className="text-4xl font-bold text-white">Learniverse</h1>
               </div>
-              <h2 className="text-2xl font-semibold text-white mb-4">Welcome to a Universe of Learning</h2>
+              <h2 className="text-2xl font-semibold text-white mb-4">Where Learning and Adventure Connect</h2>
               <p className="text-xl text-blue-100">
                 Embark on an educational journey through space and time, connecting subjects in ways 
                 you've never experienced before.
               </p>
+            </div>
+            
+            {/* Rotating highlights */}
+            <div className="mt-6 relative h-28">
+              {highlights.map((highlight, index) => (
+                <div 
+                  key={index}
+                  className={`absolute inset-0 transition-opacity duration-700 flex items-center bg-blue-900/40 rounded-xl p-4 border border-blue-700/30 ${
+                    index === activeHighlight ? "opacity-100" : "opacity-0 pointer-events-none"
+                  }`}
+                >
+                  <div className="mr-4 p-2 bg-indigo-800/50 rounded-full">
+                    {highlight.icon}
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-white">{highlight.title}</h3>
+                    <p className="text-blue-100">{highlight.description}</p>
+                  </div>
+                </div>
+              ))}
+              
+              {/* Indicator dots */}
+              <div className="absolute -bottom-6 left-0 right-0 flex justify-center space-x-2">
+                {highlights.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setActiveHighlight(index)}
+                    className={`w-2.5 h-2.5 rounded-full transition-all ${
+                      index === activeHighlight ? "bg-cyan-400 w-5" : "bg-blue-800/80"
+                    }`}
+                    aria-label={`Highlight ${index + 1}`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
           
@@ -112,7 +179,7 @@ export default function NewAuthPage() {
                 alt="Learniverse illustration"
                 className="rounded-lg shadow-xl border-2 border-indigo-600/50 w-full h-auto"
               />
-              <div className="absolute -top-4 -right-4 bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold py-2 px-4 rounded-full transform rotate-12">
+              <div className="absolute -top-4 -right-4 bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold py-2 px-4 rounded-full transform rotate-12 animate-pulse">
                 Grades 1-8
               </div>
             </div>
@@ -120,38 +187,38 @@ export default function NewAuthPage() {
           
           {/* Quadrant 3: Bottom Left - Educational Benefits */}
           <div className="p-6">
-            <h3 className="text-xl font-semibold text-white mb-4">Educational Benefits</h3>
-            <div className="grid grid-cols-1 gap-4">
+            <h3 className="text-xl font-semibold text-white mb-4">Key Features</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-blue-900/40 rounded-xl p-4 border border-blue-700/30">
                 <div className="flex items-center mb-2">
-                  <Globe className="h-5 w-5 text-cyan-400 mr-2" />
-                  <h4 className="text-lg font-semibold text-white">Themed Journeys</h4>
+                  <Brain className="h-5 w-5 text-cyan-400 mr-2" />
+                  <h4 className="text-lg font-semibold text-white">Interdisciplinary</h4>
                 </div>
-                <p className="text-blue-100">Embark on educational adventures through interactive stories that make learning engaging</p>
+                <p className="text-blue-100">Math, science, and language arts connected in meaningful ways</p>
               </div>
               
               <div className="bg-blue-900/40 rounded-xl p-4 border border-blue-700/30">
                 <div className="flex items-center mb-2">
-                  <Atom className="h-5 w-5 text-green-400 mr-2" />
-                  <h4 className="text-lg font-semibold text-white">Subject Connections</h4>
+                  <Globe className="h-5 w-5 text-green-400 mr-2" />
+                  <h4 className="text-lg font-semibold text-white">Cultural Diversity</h4>
                 </div>
-                <p className="text-blue-100">See how math, science, and language arts connect in our interdisciplinary approach</p>
+                <p className="text-blue-100">Stories and themes from various cultures for a global perspective</p>
               </div>
               
               <div className="bg-blue-900/40 rounded-xl p-4 border border-blue-700/30">
                 <div className="flex items-center mb-2">
-                  <Sparkles className="h-5 w-5 text-yellow-400 mr-2" />
-                  <h4 className="text-lg font-semibold text-white">AI Reading Coach</h4>
+                  <Users className="h-5 w-5 text-yellow-400 mr-2" />
+                  <h4 className="text-lg font-semibold text-white">Personalized</h4>
                 </div>
-                <p className="text-blue-100">Get personalized reading assistance with our advanced AI companion</p>
+                <p className="text-blue-100">Adaptive learning paths that adjust to each student's needs</p>
               </div>
               
               <div className="bg-blue-900/40 rounded-xl p-4 border border-blue-700/30">
                 <div className="flex items-center mb-2">
-                  <Star className="h-5 w-5 text-purple-400 mr-2" />
-                  <h4 className="text-lg font-semibold text-white">Interactive Learning</h4>
+                  <BarChart className="h-5 w-5 text-purple-400 mr-2" />
+                  <h4 className="text-lg font-semibold text-white">Progress Tracking</h4>
                 </div>
-                <p className="text-blue-100">Engage with interactive quizzes, flashcards and educational games</p>
+                <p className="text-blue-100">Visual dashboards showing growth across all subject areas</p>
               </div>
             </div>
           </div>
@@ -214,9 +281,9 @@ export default function NewAuthPage() {
 
                         <Button
                           type="submit"
-                          className="w-full"
+                          className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:bg-blue-700"
                         >
-                          Login
+                          Start Your Journey
                         </Button>
                       </form>
                     </Form>
@@ -360,10 +427,16 @@ export default function NewAuthPage() {
 
                         <Button
                           type="submit"
-                          className="w-full"
+                          className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:bg-cyan-700"
                         >
-                          Register
+                          Create Your Account
                         </Button>
+
+                        <p className="text-center text-sm text-blue-200 mt-4">
+                          By creating an account, you are agreeing to our
+                          <a href="#" className="text-cyan-400 hover:underline ml-1">Terms of Service</a> and
+                          <a href="#" className="text-cyan-400 hover:underline ml-1">Privacy Policy</a>
+                        </p>
                       </form>
                     </Form>
                   </TabsContent>
