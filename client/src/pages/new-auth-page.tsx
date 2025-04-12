@@ -3,12 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
-import {
   Form,
   FormControl,
   FormField,
@@ -29,7 +23,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { 
   Sparkles, Rocket, Star, Globe, Book, Atom, 
   Brain, Users, BarChart, CalendarDays, Puzzle, 
-  Lightbulb, Scroll, Mountain
+  Lightbulb, Scroll, Mountain, ChevronRight, CheckCircle
 } from "lucide-react";
 
 // Import images and styles
@@ -53,61 +47,33 @@ const registerSchema = z.object({
 type LoginValues = z.infer<typeof loginSchema>;
 type RegisterValues = z.infer<typeof registerSchema>;
 
+// Key features data
+const features = [
+  {
+    title: "Weekly Learning Adventures",
+    description: "Progress through story chapters that align with your school curriculum",
+    icon: <CalendarDays className="h-6 w-6 text-cyan-500" />
+  },
+  {
+    title: "Interdisciplinary Stories",
+    description: "Math, science, and language arts seamlessly integrated in immersive stories",
+    icon: <Atom className="h-6 w-6 text-green-500" />
+  },
+  {
+    title: "Interactive Reasoning",
+    description: "Develop critical thinking through story puzzles and creative challenges",
+    icon: <Puzzle className="h-6 w-6 text-purple-500" />
+  },
+  {
+    title: "AI Reading Coach",
+    description: "Get personalized reading assistance with our advanced AI companion",
+    icon: <Sparkles className="h-6 w-6 text-amber-500" />
+  }
+];
+
 export default function NewAuthPage() {
-  const [activeTab, setActiveTab] = useState("login");
-  const [activeHighlight, setActiveHighlight] = useState(0);
-
-  // Highlights data with expanded unique value propositions
-  const highlights = [
-    {
-      title: "Weekly Learning Adventures",
-      description: "Progress through story chapters that align perfectly with your school curriculum",
-      icon: <CalendarDays className="h-5 w-5 text-cyan-400" />
-    },
-    {
-      title: "Interdisciplinary Stories",
-      description: "Experience how math, science, and language arts connect in immersive storylines",
-      icon: <Atom className="h-5 w-5 text-green-400" />
-    },
-    {
-      title: "Personal Theme Selection",
-      description: "Choose your learning environment - space, mythology, sports, and more",
-      icon: <Mountain className="h-5 w-5 text-indigo-400" />
-    },
-    {
-      title: "Continuous Narrative",
-      description: "Follow an engaging story that unfolds throughout the school year",
-      icon: <Book className="h-5 w-5 text-yellow-400" />
-    },
-    {
-      title: "Real-World Connections",
-      description: "Apply what you learn to relatable, real-world scenarios",
-      icon: <Globe className="h-5 w-5 text-blue-400" />
-    },
-    {
-      title: "AI Reading Coach",
-      description: "Get personalized reading assistance with our advanced AI companion",
-      icon: <Sparkles className="h-5 w-5 text-purple-400" />
-    },
-    {
-      title: "Creative Expression",
-      description: "Blend creative writing with STEM learning in interactive activities",
-      icon: <Scroll className="h-5 w-5 text-pink-400" />
-    },
-    {
-      title: "Interactive Reasoning",
-      description: "Solve puzzles and mysteries that develop critical thinking skills",
-      icon: <Puzzle className="h-5 w-5 text-amber-400" />
-    }
-  ];
-
-  // Auto-rotate through highlights
-  React.useEffect(() => {
-    const timer = setTimeout(() => {
-      setActiveHighlight((prev) => (prev + 1) % highlights.length);
-    }, 5000);
-    return () => clearTimeout(timer);
-  }, [activeHighlight, highlights.length]);
+  const [showLogin, setShowLogin] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
 
   // For demo purposes, simulate form submission
   const onLogin = async (data: LoginValues) => {
@@ -141,356 +107,472 @@ export default function NewAuthPage() {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-purple-900 to-blue-900 overflow-hidden">
-      {/* Animated space elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="stars-small"></div>
-        <div className="stars-medium"></div>
-        <div className="stars-large"></div>
-        <div className="comet-1"></div>
-        <div className="comet-2"></div>
-        <div className="comet-3"></div>
-      </div>
-      
-      <div className="container relative z-10 mx-auto py-6">
-        {/* Main 2x2 grid layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          
-          {/* Quadrant 1: Top Left - Welcome & Highlights */}
-          <div className="p-6 flex flex-col justify-center">
-            <div className="mb-6">
-              <div className="flex items-center mb-4">
-                <Rocket className="h-10 w-10 text-yellow-400 mr-4 animate-pulse" />
-                <h1 className="text-4xl font-bold text-white">Learniverse</h1>
-              </div>
-              <h2 className="text-2xl font-semibold text-white mb-4">Where Learning and Adventure Connect</h2>
-              <p className="text-xl text-blue-100">
-                Embark on an educational journey through space and time, connecting subjects in ways 
-                you've never experienced before.
-              </p>
+    <div className="min-h-screen overflow-x-hidden bg-gradient-to-b from-indigo-950 to-blue-900">
+      {/* Hero section with navigation */}
+      <header className="relative overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="stars-small"></div>
+          <div className="stars-medium"></div>
+          <div className="comet-1"></div>
+          <div className="comet-2"></div>
+        </div>
+        
+        <div className="container relative z-10 mx-auto px-4 py-8">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <Rocket className="h-10 w-10 text-yellow-400 mr-3 animate-pulse" />
+              <h1 className="text-3xl font-bold text-white">Learniverse</h1>
             </div>
             
-            {/* Rotating highlights */}
-            <div className="mt-6 relative h-28">
-              {highlights.map((highlight, index) => (
-                <div 
-                  key={index}
-                  className={`absolute inset-0 transition-opacity duration-700 flex items-center bg-blue-900/40 backdrop-blur-sm rounded-xl p-4 border border-blue-700/30 ${
-                    index === activeHighlight ? "opacity-100" : "opacity-0 pointer-events-none"
-                  }`}
-                >
-                  <div className="mr-4 p-2 bg-indigo-800/50 rounded-full">
-                    {highlight.icon}
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white">{highlight.title}</h3>
-                    <p className="text-blue-100">{highlight.description}</p>
-                  </div>
-                </div>
-              ))}
+            <div className="flex gap-4">
+              <Button 
+                variant="outline" 
+                className="bg-transparent border-white text-white hover:bg-white/10"
+                onClick={() => {
+                  setShowLogin(true);
+                  setShowRegister(false);
+                }}
+              >
+                Log In
+              </Button>
               
-              {/* Indicator dots */}
-              <div className="absolute -bottom-6 left-0 right-0 flex justify-center space-x-2">
-                {highlights.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setActiveHighlight(index)}
-                    className={`w-2.5 h-2.5 rounded-full transition-all ${
-                      index === activeHighlight ? "bg-cyan-400 w-5" : "bg-blue-800/80"
-                    }`}
-                    aria-label={`Highlight ${index + 1}`}
-                  />
-                ))}
+              <Button 
+                className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white"
+                onClick={() => {
+                  setShowRegister(true);
+                  setShowLogin(false);
+                }}
+              >
+                Sign Up Free
+              </Button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Main content */}
+      <main className="container mx-auto px-4 pb-16">
+        {/* Hero content */}
+        <div className="flex flex-col lg:flex-row items-center justify-between my-8 lg:my-16 gap-8">
+          <div className="lg:w-1/2">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              Where Learning and Adventure Connect
+            </h2>
+            <p className="text-xl text-blue-100 mb-8">
+              Embark on an educational journey through story-based learning that connects math, science, and language arts 
+              in ways you've never experienced before.
+            </p>
+            
+            <Button 
+              size="lg"
+              className="bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-black font-bold text-lg px-8 py-6"
+              onClick={() => {
+                setShowRegister(true);
+                setShowLogin(false);
+              }}
+            >
+              Start Your Learning Adventure
+              <ChevronRight className="ml-2 h-5 w-5" />
+            </Button>
+            
+            <div className="mt-8 flex items-center">
+              <div className="px-4 py-2 bg-indigo-800/60 rounded-lg border border-indigo-700/30 text-white">
+                <span className="font-bold">For Grades 1-8</span>
+              </div>
+              <div className="h-8 border-l border-indigo-400/30 mx-4"></div>
+              <div className="text-blue-100">
+                <span className="font-bold">Parents & Teachers:</span> Request a demo
               </div>
             </div>
           </div>
           
-          {/* Quadrant 2: Top Right - Space Image */}
-          <div className="p-6 flex justify-center items-center">
-            <div className="relative mx-auto" style={{ maxWidth: "350px" }}>
+          <div className="lg:w-1/2">
+            <div className="relative">
               <img 
                 src={learniverseIllustration} 
-                alt="Learniverse illustration"
-                className="rounded-lg shadow-xl border-2 border-indigo-600/50 w-full h-auto"
+                alt="Learniverse platform preview"
+                className="rounded-xl shadow-2xl border-2 border-indigo-600/50 w-full h-auto"
               />
-              <div className="absolute -top-4 -right-4 bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold py-2 px-4 rounded-full transform rotate-12 animate-pulse">
-                Grades 1-8
-              </div>
-              <div className="absolute -bottom-4 -left-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold py-2 px-4 rounded-full shadow-lg">
-                Story-Based Learning
+              <div className="absolute -top-4 -right-4 bg-gradient-to-r from-emerald-500 to-green-500 text-white font-bold py-2 px-4 rounded-full shadow-lg">
+                New Curriculum
               </div>
             </div>
-          </div>
-          
-          {/* Quadrant 3: Bottom Left - "What Sets Us Apart" Section */}
-          <div className="p-6">
-            <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
-              <Lightbulb className="h-5 w-5 text-yellow-400 mr-2" />
-              What Sets Us Apart
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-blue-900/40 backdrop-blur-sm rounded-xl p-4 border border-blue-700/30 hover:border-cyan-500/50 transition-colors">
-                <div className="flex items-center mb-2">
-                  <Brain className="h-5 w-5 text-cyan-400 mr-2" />
-                  <h4 className="text-lg font-semibold text-white">Truly Interdisciplinary</h4>
-                </div>
-                <p className="text-blue-100">Math, science, and language arts seamlessly woven into one continuous story</p>
-              </div>
-              
-              <div className="bg-blue-900/40 backdrop-blur-sm rounded-xl p-4 border border-blue-700/30 hover:border-green-500/50 transition-colors">
-                <div className="flex items-center mb-2">
-                  <CalendarDays className="h-5 w-5 text-green-400 mr-2" />
-                  <h4 className="text-lg font-semibold text-white">Week-by-Week Adventure</h4>
-                </div>
-                <p className="text-blue-100">Stories synchronized with your school curriculum for relevant, timely learning</p>
-              </div>
-              
-              <div className="bg-blue-900/40 backdrop-blur-sm rounded-xl p-4 border border-blue-700/30 hover:border-yellow-500/50 transition-colors">
-                <div className="flex items-center mb-2">
-                  <Users className="h-5 w-5 text-yellow-400 mr-2" />
-                  <h4 className="text-lg font-semibold text-white">Thematic Choice</h4>
-                </div>
-                <p className="text-blue-100">Choose your story world - learn the same concepts in your preferred setting</p>
-              </div>
-              
-              <div className="bg-blue-900/40 backdrop-blur-sm rounded-xl p-4 border border-blue-700/30 hover:border-purple-500/50 transition-colors">
-                <div className="flex items-center mb-2">
-                  <Puzzle className="h-5 w-5 text-purple-400 mr-2" />
-                  <h4 className="text-lg font-semibold text-white">Reasoning & Creativity</h4>
-                </div>
-                <p className="text-blue-100">Develop critical thinking through interactive story puzzles and creative challenges</p>
-              </div>
-            </div>
-          </div>
-          
-          {/* Quadrant 4: Bottom Right - Registration Form */}
-          <div className="p-6">
-            <Card className="bg-indigo-900/40 backdrop-blur-sm border border-indigo-700/30 shadow-lg">
-              <CardContent className="pt-6">
-                <Tabs
-                  defaultValue="login"
-                  value={activeTab}
-                  onValueChange={setActiveTab}
-                  className="w-full"
-                >
-                  <TabsList className="grid w-full grid-cols-2 mb-6">
-                    <TabsTrigger value="login">Login</TabsTrigger>
-                    <TabsTrigger value="register">Register</TabsTrigger>
-                  </TabsList>
-
-                  {/* Login Form */}
-                  <TabsContent value="login">
-                    <Form {...loginForm}>
-                      <form onSubmit={loginForm.handleSubmit(onLogin)} className="space-y-4">
-                        <FormField
-                          control={loginForm.control}
-                          name="email"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-blue-100">Email Address</FormLabel>
-                              <FormControl>
-                                <Input
-                                  placeholder="your.email@example.com"
-                                  className="bg-blue-900/50 border-blue-700/50 text-white"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-
-                        <FormField
-                          control={loginForm.control}
-                          name="password"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-blue-100">Password</FormLabel>
-                              <FormControl>
-                                <Input
-                                  type="password"
-                                  placeholder="••••••••"
-                                  className="bg-blue-900/50 border-blue-700/50 text-white"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-
-                        <Button
-                          type="submit"
-                          className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:bg-blue-700"
-                        >
-                          Continue Your Journey
-                        </Button>
-                      </form>
-                    </Form>
-                  </TabsContent>
-
-                  {/* Register Form */}
-                  <TabsContent value="register">
-                    <Form {...registerForm}>
-                      <form onSubmit={registerForm.handleSubmit(onRegister)} className="space-y-4">
-                        <div className="grid grid-cols-2 gap-4">
-                          <FormField
-                            control={registerForm.control}
-                            name="firstName"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel className="text-blue-100">First Name</FormLabel>
-                                <FormControl>
-                                  <Input
-                                    placeholder="First name"
-                                    className="bg-blue-900/50 border-blue-700/50 text-white"
-                                    {...field}
-                                  />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-
-                          <FormField
-                            control={registerForm.control}
-                            name="lastName"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel className="text-blue-100">Last Name</FormLabel>
-                                <FormControl>
-                                  <Input
-                                    placeholder="Last name"
-                                    className="bg-blue-900/50 border-blue-700/50 text-white"
-                                    {...field}
-                                  />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </div>
-
-                        <FormField
-                          control={registerForm.control}
-                          name="email"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-blue-100">Email Address</FormLabel>
-                              <FormControl>
-                                <Input
-                                  placeholder="your.email@example.com"
-                                  className="bg-blue-900/50 border-blue-700/50 text-white"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-
-                        <FormField
-                          control={registerForm.control}
-                          name="password"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="text-blue-100">Password</FormLabel>
-                              <FormControl>
-                                <Input
-                                  type="password"
-                                  placeholder="••••••••"
-                                  className="bg-blue-900/50 border-blue-700/50 text-white"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-
-                        <div className="grid grid-cols-2 gap-4">
-                          <FormField
-                            control={registerForm.control}
-                            name="grade"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel className="text-blue-100">Grade</FormLabel>
-                                <Select
-                                  onValueChange={field.onChange}
-                                  defaultValue={field.value}
-                                >
-                                  <FormControl>
-                                    <SelectTrigger className="bg-blue-900/50 border-blue-700/50 text-white">
-                                      <SelectValue placeholder="Select Grade" />
-                                    </SelectTrigger>
-                                  </FormControl>
-                                  <SelectContent className="bg-blue-900 border-blue-700 text-white">
-                                    {Array.from({ length: 8 }, (_, i) => i + 1).map((grade) => (
-                                      <SelectItem key={grade} value={grade.toString()}>
-                                        Grade {grade}
-                                      </SelectItem>
-                                    ))}
-                                  </SelectContent>
-                                </Select>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-
-                          <FormField
-                            control={registerForm.control}
-                            name="gender"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel className="text-blue-100">Gender</FormLabel>
-                                <Select
-                                  onValueChange={field.onChange}
-                                  defaultValue={field.value}
-                                >
-                                  <FormControl>
-                                    <SelectTrigger className="bg-blue-900/50 border-blue-700/50 text-white">
-                                      <SelectValue placeholder="Select Gender" />
-                                    </SelectTrigger>
-                                  </FormControl>
-                                  <SelectContent className="bg-blue-900 border-blue-700 text-white">
-                                    <SelectItem value="male">Male</SelectItem>
-                                    <SelectItem value="female">Female</SelectItem>
-                                    <SelectItem value="other">Other</SelectItem>
-                                    <SelectItem value="prefer_not_to_say">Prefer not to say</SelectItem>
-                                  </SelectContent>
-                                </Select>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </div>
-
-                        <Button
-                          type="submit"
-                          className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:bg-cyan-700"
-                        >
-                          Begin Your Adventure
-                        </Button>
-
-                        <p className="text-center text-sm text-blue-200 mt-4">
-                          By creating an account, you are agreeing to our
-                          <a href="#" className="text-cyan-400 hover:underline ml-1">Terms of Service</a> and
-                          <a href="#" className="text-cyan-400 hover:underline ml-1">Privacy Policy</a>
-                        </p>
-                      </form>
-                    </Form>
-                  </TabsContent>
-                </Tabs>
-              </CardContent>
-            </Card>
           </div>
         </div>
         
-        {/* Footer */}
-        <div className="mt-8 text-center text-blue-200 text-sm">
-          <p>Learniverse: Transforming education through interdisciplinary, story-based learning</p>
+        {/* What makes us different */}
+        <div className="text-center mb-16">
+          <div className="inline-block mb-4 px-6 py-2 bg-indigo-800/40 rounded-full border border-indigo-700/30">
+            <span className="text-cyan-400 font-semibold">What Makes Us Different</span>
+          </div>
+          
+          <h3 className="text-3xl font-bold text-white mb-4">
+            A Revolutionarily Different Learning Experience
+          </h3>
+          
+          <p className="text-xl text-blue-100 max-w-3xl mx-auto">
+            Learniverse is the only educational platform that brings subjects together through continuous 
+            weekly adventures that follow your school curriculum.
+          </p>
         </div>
-      </div>
+        
+        {/* Features grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          {features.map((feature, index) => (
+            <div 
+              key={index}
+              className="bg-indigo-900/40 backdrop-blur-sm rounded-xl p-6 border border-indigo-700/30 hover:border-blue-500/50 transition-all hover:shadow-lg group"
+            >
+              <div className="p-3 bg-indigo-800/50 rounded-full inline-block mb-4 group-hover:bg-indigo-700/70 transition-colors">
+                {feature.icon}
+              </div>
+              <h4 className="text-xl font-bold text-white mb-2">
+                {feature.title}
+              </h4>
+              <p className="text-blue-100">
+                {feature.description}
+              </p>
+            </div>
+          ))}
+        </div>
+        
+        {/* Comparison section */}
+        <div className="bg-indigo-900/40 backdrop-blur-sm rounded-xl p-8 border border-indigo-700/30 mb-16">
+          <h3 className="text-2xl font-bold text-white mb-6 flex items-center">
+            <CheckCircle className="h-6 w-6 text-green-500 mr-3" />
+            Only Learniverse Offers All These Features
+          </h3>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="flex items-start">
+              <CheckCircle className="h-5 w-5 text-green-500 mr-3 mt-1 flex-shrink-0" />
+              <div>
+                <h4 className="text-lg font-bold text-white">Weekly Curriculum Alignment</h4>
+                <p className="text-blue-100">Stories synchronized perfectly with your school's weekly lessons</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start">
+              <CheckCircle className="h-5 w-5 text-green-500 mr-3 mt-1 flex-shrink-0" />
+              <div>
+                <h4 className="text-lg font-bold text-white">True Interdisciplinary Learning</h4>
+                <p className="text-blue-100">Subjects interwoven in a single narrative, not taught separately</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start">
+              <CheckCircle className="h-5 w-5 text-green-500 mr-3 mt-1 flex-shrink-0" />
+              <div>
+                <h4 className="text-lg font-bold text-white">Thematic Personalization</h4>
+                <p className="text-blue-100">Choose your preferred story world while learning the same concepts</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start">
+              <CheckCircle className="h-5 w-5 text-green-500 mr-3 mt-1 flex-shrink-0" />
+              <div>
+                <h4 className="text-lg font-bold text-white">Creative Writing + STEM</h4>
+                <p className="text-blue-100">Blend creative expression with technical learning activities</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start">
+              <CheckCircle className="h-5 w-5 text-green-500 mr-3 mt-1 flex-shrink-0" />
+              <div>
+                <h4 className="text-lg font-bold text-white">Continuous Narrative</h4>
+                <p className="text-blue-100">An engaging story that unfolds throughout the school year</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start">
+              <CheckCircle className="h-5 w-5 text-green-500 mr-3 mt-1 flex-shrink-0" />
+              <div>
+                <h4 className="text-lg font-bold text-white">Advanced AI Reading Coach</h4>
+                <p className="text-blue-100">Personalized reading assistance using cutting-edge technology</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {/* Testimonials summary */}
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center mb-4">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <Star key={star} className="h-6 w-6 text-yellow-400 fill-yellow-400" />
+            ))}
+          </div>
+          <h3 className="text-2xl font-bold text-white mb-2">
+            Trusted by students, parents, and teachers
+          </h3>
+          <p className="text-xl text-blue-100">
+            Join thousands of others on a revolutionary learning journey
+          </p>
+        </div>
+      </main>
+      
+      {/* Login Modal */}
+      {showLogin && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+          <Card className="w-full max-w-md bg-indigo-900/90 backdrop-blur-lg border border-indigo-700/50 shadow-2xl">
+            <CardContent className="pt-6">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold text-white">Log In</h2>
+                <button 
+                  onClick={() => setShowLogin(false)}
+                  className="text-blue-300 hover:text-white"
+                >
+                  ✕
+                </button>
+              </div>
+              
+              <Form {...loginForm}>
+                <form onSubmit={loginForm.handleSubmit(onLogin)} className="space-y-4">
+                  <FormField
+                    control={loginForm.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-blue-100">Email Address</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="your.email@example.com"
+                            className="bg-blue-900/50 border-blue-700/50 text-white"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={loginForm.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-blue-100">Password</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="password"
+                            placeholder="••••••••"
+                            className="bg-blue-900/50 border-blue-700/50 text-white"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <Button
+                    type="submit"
+                    className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-lg"
+                  >
+                    Log In
+                  </Button>
+                  
+                  <div className="text-center mt-4">
+                    <button 
+                      type="button" 
+                      className="text-blue-300 hover:text-blue-100"
+                      onClick={() => {
+                        setShowLogin(false);
+                        setShowRegister(true);
+                      }}
+                    >
+                      Don't have an account? Sign up
+                    </button>
+                  </div>
+                </form>
+              </Form>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+      
+      {/* Register Modal */}
+      {showRegister && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+          <Card className="w-full max-w-md bg-indigo-900/90 backdrop-blur-lg border border-indigo-700/50 shadow-2xl">
+            <CardContent className="pt-6">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold text-white">Create Your Account</h2>
+                <button 
+                  onClick={() => setShowRegister(false)}
+                  className="text-blue-300 hover:text-white"
+                >
+                  ✕
+                </button>
+              </div>
+              
+              <Form {...registerForm}>
+                <form onSubmit={registerForm.handleSubmit(onRegister)} className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <FormField
+                      control={registerForm.control}
+                      name="firstName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-blue-100">First Name</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="First name"
+                              className="bg-blue-900/50 border-blue-700/50 text-white"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={registerForm.control}
+                      name="lastName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-blue-100">Last Name</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Last name"
+                              className="bg-blue-900/50 border-blue-700/50 text-white"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  <FormField
+                    control={registerForm.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-blue-100">Email Address</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="your.email@example.com"
+                            className="bg-blue-900/50 border-blue-700/50 text-white"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={registerForm.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-blue-100">Password</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="password"
+                            placeholder="••••••••"
+                            className="bg-blue-900/50 border-blue-700/50 text-white"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <FormField
+                      control={registerForm.control}
+                      name="grade"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-blue-100">Grade</FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger className="bg-blue-900/50 border-blue-700/50 text-white">
+                                <SelectValue placeholder="Select Grade" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent className="bg-blue-900 border-blue-700 text-white">
+                              {Array.from({ length: 8 }, (_, i) => i + 1).map((grade) => (
+                                <SelectItem key={grade} value={grade.toString()}>
+                                  Grade {grade}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={registerForm.control}
+                      name="gender"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-blue-100">Gender</FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger className="bg-blue-900/50 border-blue-700/50 text-white">
+                                <SelectValue placeholder="Select Gender" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent className="bg-blue-900 border-blue-700 text-white">
+                              <SelectItem value="male">Male</SelectItem>
+                              <SelectItem value="female">Female</SelectItem>
+                              <SelectItem value="other">Other</SelectItem>
+                              <SelectItem value="prefer_not_to_say">Prefer not to say</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  <Button
+                    type="submit"
+                    className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-lg font-semibold"
+                  >
+                    Start Your Free Account
+                  </Button>
+                  
+                  <div className="text-center mt-4">
+                    <button 
+                      type="button" 
+                      className="text-blue-300 hover:text-blue-100"
+                      onClick={() => {
+                        setShowRegister(false);
+                        setShowLogin(true);
+                      }}
+                    >
+                      Already have an account? Log in
+                    </button>
+                  </div>
+                </form>
+              </Form>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+      
+      {/* Footer */}
+      <footer className="bg-indigo-950 py-8 border-t border-indigo-900/30">
+        <div className="container mx-auto px-4 text-center">
+          <p className="text-blue-200 text-sm">
+            Learniverse © {new Date().getFullYear()} - Transforming education through interdisciplinary, story-based learning
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }
