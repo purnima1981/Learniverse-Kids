@@ -28,7 +28,7 @@ import {
 
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
-import { useAuth } from "@/hooks/use-auth";
+// Removed useAuth import to fix duplicate AuthProvider issue
 
 // Import images and styles
 import learniverseIllustration from "../assets/images/space/space-bg.png";
