@@ -25,6 +25,9 @@ import {
   Brain, Users, BarChart, CalendarDays, Puzzle, 
   Lightbulb, Scroll, Mountain, ChevronRight, CheckCircle
 } from "lucide-react";
+import { useAuth } from "@/hooks/use-auth";
+import { useToast } from "@/hooks/use-toast";
+import { useLocation } from "wouter";
 
 // Import images and styles
 import learniverseIllustration from "../assets/images/space/space-bg.png";
@@ -74,16 +77,59 @@ const features = [
 export default function NewAuthPage() {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
+  const { loginMutation, registerMutation, user } = useAuth();
+  const { toast } = useToast();
+  const [, navigate] = useLocation();
+  
+  // Redirect if already logged in
+  if (user) {
+    navigate("/dashboard");
+    return null;
+  }
 
-  // For demo purposes, simulate form submission
   const onLogin = async (data: LoginValues) => {
-    console.log("Login data:", data);
-    alert(`Login attempted with: ${data.email}`);
+    try {
+      await loginMutation.mutateAsync({ 
+        email: data.email, 
+        password: data.password 
+      });
+      toast({
+        title: "Login successful",
+        description: "Welcome back to Learniverse!",
+      });
+      setShowLogin(false);
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Login failed",
+        description: error instanceof Error ? error.message : "Please check your credentials and try again.",
+      });
+    }
   };
 
   const onRegister = async (data: RegisterValues) => {
-    console.log("Register data:", data);
-    alert(`Registration attempted for: ${data.email}`);
+    try {
+      await registerMutation.mutateAsync({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        password: data.password,
+        grade: data.grade,
+        gender: data.gender,
+        role: 'student'
+      });
+      toast({
+        title: "Registration successful",
+        description: "Welcome to Learniverse! Get ready for an amazing learning adventure.",
+      });
+      setShowRegister(false);
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Registration failed",
+        description: error instanceof Error ? error.message : "Please check your information and try again.",
+      });
+    }
   };
 
   const loginForm = useForm<LoginValues>({
