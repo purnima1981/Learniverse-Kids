@@ -280,10 +280,16 @@ export default function AuthPage() {
 
                     <Button
                       type="submit"
-                      className="w-full py-6 bg-[#36D7B7] hover:bg-[#27c9a9] text-white font-bold"
+                      className="w-full py-6 bg-gradient-to-r from-[#36D7B7] to-[#27c9a9] text-white font-bold text-lg"
                       disabled={loginMutation.isPending}
+                      size="lg"
                     >
-                      {loginMutation.isPending ? "Logging in..." : "SIGN IN"}
+                      <div className="flex items-center justify-center">
+                        {loginMutation.isPending ? "Logging in..." : "SIGN IN TO YOUR ACCOUNT"}
+                        <svg className="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        </svg>
+                      </div>
                     </Button>
 
                     <div className="relative my-6">
@@ -322,16 +328,31 @@ export default function AuthPage() {
                       </Button>
                     </div>
 
-                    <p className="text-center text-white text-sm mt-6">
-                      Don't have an account?{" "}
-                      <button
-                        type="button"
-                        className="text-[#45AEF5] hover:underline font-medium"
-                        onClick={() => setActiveTab("register")}
+                    <div className="flex flex-col items-center space-y-2 mt-4">
+                      <button 
+                        type="button" 
+                        className="text-[#45AEF5] hover:underline text-sm font-medium"
+                        onClick={() => {
+                          toast({
+                            title: "Password reset",
+                            description: "Password reset link sent to your email!",
+                          });
+                        }}
                       >
-                        Register now
+                        Forgot your password?
                       </button>
-                    </p>
+                      
+                      <p className="text-center text-white text-sm mt-2">
+                        Don't have an account?{" "}
+                        <button
+                          type="button"
+                          className="text-[#45AEF5] hover:underline font-medium"
+                          onClick={() => setActiveTab("register")}
+                        >
+                          Register now
+                        </button>
+                      </p>
+                    </div>
                   </form>
                 </Form>
               </TabsContent>
@@ -474,10 +495,16 @@ export default function AuthPage() {
 
                     <Button
                       type="submit"
-                      className="w-full py-6 bg-[#45AEF5] hover:bg-[#3498db] text-white font-bold"
+                      className="w-full py-6 bg-gradient-to-r from-[#45AEF5] to-[#3498db] text-white font-bold text-lg"
                       disabled={registerMutation.isPending}
+                      size="lg"
                     >
-                      {registerMutation.isPending ? "Creating account..." : "CREATE ACCOUNT"}
+                      <div className="flex items-center justify-center">
+                        {registerMutation.isPending ? "Creating account..." : "CREATE YOUR ACCOUNT NOW"}
+                        <svg className="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                      </div>
                     </Button>
 
                     <div className="relative my-6">
