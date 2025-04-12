@@ -60,12 +60,10 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
     // Initialize matching items if this is a matching question
     if (questions[currentQuestionIndex]?.type === 'matching' && questions[currentQuestionIndex]?.items) {
       const currentId = questions[currentQuestionIndex].id;
-      if (!matchItems[currentId]) {
-        // Initialize with shuffled matches
-        const items = [...questions[currentQuestionIndex].items!];
-        const shuffledItems = [...items].sort(() => Math.random() - 0.5);
-        setMatchItems({ ...matchItems, [currentId]: shuffledItems });
-      }
+      // Always initialize matching items when changing questions to avoid sync issues
+      const items = [...questions[currentQuestionIndex].items!];
+      const shuffledItems = [...items].sort(() => Math.random() - 0.5);
+      setMatchItems(prev => ({ ...prev, [currentId]: shuffledItems }));
     }
   }, [currentQuestionIndex]);
 
@@ -325,244 +323,57 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
     );
   };
 
-  // Hidden Word (Word Search) Puzzle with interactive word selection
-  const [selectedCells, setSelectedCells] = useState<string[]>([]);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startCell, setStartCell] = useState<{row: number, col: number} | null>(null);
-  const [currentCell, setCurrentCell] = useState<{row: number, col: number} | null>(null);
-  const [foundWords, setFoundWords] = useState<{[questionId: number]: string[]}>({});
-  
-  // Function to check if current selection forms a valid word
-  const checkWordSelection = (question: Question) => {
-    if (!question.grid || !question.words || !startCell || !currentCell) return;
-    
-    const rowDiff = currentCell.row - startCell.row;
-    const colDiff = currentCell.col - startCell.col;
-    const length = Math.max(Math.abs(rowDiff), Math.abs(colDiff)) + 1;
-    
-    // Determine direction (horizontal, vertical, diagonal)
-    let rowIncrement = 0;
-    let colIncrement = 0;
-    
-    if (rowDiff !== 0) rowIncrement = rowDiff > 0 ? 1 : -1;
-    if (colDiff !== 0) colIncrement = colDiff > 0 ? 1 : -1;
-    
-    // Extract the word from the grid
-    let selectedWord = '';
-    for (let i = 0; i < length; i++) {
-      const row = startCell.row + i * rowIncrement;
-      const col = startCell.col + i * colIncrement;
-      if (row >= 0 && row < question.grid.length && col >= 0 && col < question.grid[0].length) {
-        selectedWord += question.grid[row][col];
-      }
-    }
-    
-    // Check if the word exists in the word list (forward or backward)
-    const reversedWord = selectedWord.split('').reverse().join('');
-    const wordMatches = question.words.find(word => 
-      word === selectedWord || word === reversedWord
-    );
-    
-    if (wordMatches) {
-      // Add to found words
-      const currentFound = foundWords[question.id] || [];
-      if (!currentFound.includes(wordMatches)) {
-        const updatedFound = [...currentFound, wordMatches];
-        setFoundWords({
-          ...foundWords,
-          [question.id]: updatedFound
-        });
-        
-        // Update answer
-        handleAnswer(updatedFound);
-      }
-    }
-    
-    // Clear selection after checking
-    setSelectedCells([]);
-    setStartCell(null);
-    setCurrentCell(null);
-  };
-  
-  // Function to handle mouse or touch start on a cell
-  const handleCellStart = (rowIndex: number, colIndex: number) => {
-    setIsDragging(true);
-    setStartCell({ row: rowIndex, col: colIndex });
-    setCurrentCell({ row: rowIndex, col: colIndex });
-    setSelectedCells([`${rowIndex}-${colIndex}`]);
-  };
-  
-  // Function to handle mouse or touch move over a cell
-  const handleCellMove = (rowIndex: number, colIndex: number) => {
-    if (!isDragging || !startCell) return;
-    
-    // Update current cell
-    setCurrentCell({ row: rowIndex, col: colIndex });
-    
-    // Calculate cells in the line between start and current
-    const rowDiff = rowIndex - startCell.row;
-    const colDiff = colIndex - startCell.col;
-    const length = Math.max(Math.abs(rowDiff), Math.abs(colDiff)) + 1;
-    
-    // Determine direction
-    let rowIncrement = 0;
-    let colIncrement = 0;
-    
-    if (rowDiff !== 0) rowIncrement = rowDiff > 0 ? 1 : -1;
-    if (colDiff !== 0) colIncrement = colDiff > 0 ? 1 : -1;
-    
-    // Highlight cells in the selection path
-    const newSelectedCells = [];
-    for (let i = 0; i < length; i++) {
-      const row = startCell.row + i * rowIncrement;
-      const col = startCell.col + i * colIncrement;
-      if (row >= 0 && row < (currentQuestion.grid?.length || 0) && 
-          col >= 0 && col < (currentQuestion.grid?.[0].length || 0)) {
-        newSelectedCells.push(`${row}-${col}`);
-      }
-    }
-    
-    setSelectedCells(newSelectedCells);
-  };
-  
-  // Function to handle mouse or touch end
-  const handleCellEnd = (question: Question) => {
-    if (isDragging) {
-      checkWordSelection(question);
-      setIsDragging(false);
-    }
-  };
-  
-  // Function to determine if a cell is part of a found word
-  const isCellInFoundWord = (question: Question, rowIndex: number, colIndex: number) => {
-    const questionFoundWords = foundWords[question.id] || [];
-    if (questionFoundWords.length === 0) return false;
-    
-    // For each found word, check if this cell is part of it
-    for (const word of questionFoundWords) {
-      // Check all possible directions
-      const directions = [
-        { rowInc: 0, colInc: 1 },  // Horizontal →
-        { rowInc: 0, colInc: -1 }, // Horizontal ←
-        { rowInc: 1, colInc: 0 },  // Vertical ↓
-        { rowInc: -1, colInc: 0 }, // Vertical ↑
-        { rowInc: 1, colInc: 1 },  // Diagonal ↘
-        { rowInc: -1, colInc: -1 },// Diagonal ↖
-        { rowInc: 1, colInc: -1 }, // Diagonal ↙
-        { rowInc: -1, colInc: 1 }  // Diagonal ↗
-      ];
-      
-      for (const dir of directions) {
-        let matches = true;
-        for (let i = 0; i < word.length; i++) {
-          const row = rowIndex + i * dir.rowInc;
-          const col = colIndex + i * dir.colInc;
-          
-          if (row < 0 || row >= question.grid!.length || 
-              col < 0 || col >= question.grid![0].length || 
-              question.grid![row][col] !== word[i]) {
-            matches = false;
-            break;
-          }
-        }
-        
-        if (matches) return true;
-      }
-    }
-    
-    return false;
-  };
-  
+  // Hidden Word (Word Search) Puzzle
   const renderHiddenWord = (question: Question) => {
     if (!question.grid || !question.words) return null;
-    
-    // Initialize found words for this question if not already
-    useEffect(() => {
-      if (question.type === 'hidden-word' && question.id) {
-        setFoundWords(prev => ({
-          ...prev,
-          [question.id]: prev[question.id] || []
-        }));
-      }
-    }, [question.id]);
     
     return (
       <div className="space-y-4">
         <div className="p-3 rounded-md bg-[#2563EB]/20 text-white/80 text-sm mb-2">
-          Find these words in the grid by dragging to select them:
+          Find these words in the grid: {question.words.join(', ')}
         </div>
         
         <div className="grid grid-cols-1 gap-4">
-          <div 
-            className="font-mono bg-white/10 p-4 rounded-md cursor-pointer select-none"
-            onMouseUp={() => handleCellEnd(question)}
-            onTouchEnd={() => handleCellEnd(question)}
-            onMouseLeave={() => {
-              if (isDragging) {
-                handleCellEnd(question);
-              }
-            }}
-          >
+          <div className="font-mono bg-white/10 p-4 rounded-md">
             {question.grid.map((row, rowIndex) => (
               <div key={rowIndex} className="flex justify-center">
-                {row.split('').map((char, colIndex) => {
-                  const cellId = `${rowIndex}-${colIndex}`;
-                  const isSelected = selectedCells.includes(cellId);
-                  const isFoundWord = isCellInFoundWord(question, rowIndex, colIndex);
-                  
-                  return (
-                    <span 
-                      key={cellId} 
-                      className={`
-                        w-8 h-8 flex items-center justify-center 
-                        ${isSelected ? 'bg-[#2563EB]/50 text-white font-bold' : ''} 
-                        ${isFoundWord ? 'bg-[#10B981]/50 text-white font-bold' : 'text-white'} 
-                        rounded-sm transition-colors
-                      `}
-                      onMouseDown={(e) => {
-                        e.preventDefault();
-                        handleCellStart(rowIndex, colIndex);
-                      }}
-                      onTouchStart={() => handleCellStart(rowIndex, colIndex)}
-                      onMouseEnter={() => handleCellMove(rowIndex, colIndex)}
-                      onTouchMove={(e) => {
-                        if (!isDragging) return;
-                        const touch = e.touches[0];
-                        const element = document.elementFromPoint(touch.clientX, touch.clientY);
-                        const cellCoords = element?.getAttribute('data-cell');
-                        if (cellCoords) {
-                          const [row, col] = cellCoords.split('-').map(Number);
-                          handleCellMove(row, col);
-                        }
-                      }}
-                      data-cell={`${rowIndex}-${colIndex}`}
-                    >
-                      {char}
-                    </span>
-                  );
-                })}
+                {row.split('').map((char, charIndex) => (
+                  <span 
+                    key={`${rowIndex}-${charIndex}`} 
+                    className="w-8 h-8 flex items-center justify-center text-white"
+                  >
+                    {char}
+                  </span>
+                ))}
               </div>
             ))}
           </div>
           
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-            {question.words.map((word, index) => {
-              const isFound = (foundWords[question.id] || []).includes(word);
-              return (
-                <div 
-                  key={index} 
-                  className={`
-                    flex items-center space-x-2 p-2 rounded-md
-                    ${isFound ? 'bg-[#10B981]/30 text-white' : 'bg-white/10 text-white/70'}
-                  `}
-                >
-                  {isFound && <CheckCircle className="h-4 w-4 text-[#10B981]" />}
-                  <span className={isFound ? 'line-through font-medium' : ''}>
-                    {word}
-                  </span>
-                </div>
-              );
-            })}
+          <div className="space-y-2">
+            {question.words.map((word, index) => (
+              <div 
+                key={index} 
+                className="flex items-center space-x-2"
+              >
+                <Checkbox 
+                  id={`word-${index}`} 
+                  checked={answers[question.id] && answers[question.id].includes(word)}
+                  onCheckedChange={(checked: boolean) => {
+                    const currentAnswers = answers[question.id] || [];
+                    if (checked) {
+                      if (!currentAnswers.includes(word)) {
+                        handleAnswer([...currentAnswers, word]);
+                      }
+                    } else {
+                      handleAnswer(currentAnswers.filter((w: string) => w !== word));
+                    }
+                  }}
+                />
+                <Label htmlFor={`word-${index}`} className="text-white cursor-pointer">
+                  {word}
+                </Label>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -601,146 +412,45 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
     );
   };
   
-  // Word Sequence (Ordering)
-  // Unscramble Question Handler with interactive letter tiles
-  const [scrambledLetters, setScrambledLetters] = useState<{[key: number]: {char: string, used: boolean}[][]}>({});
-  const [userAnswers, setUserAnswers] = useState<{[key: number]: string[]}>({});
-
-  // Initialize scrambled letters once for each question
-  useEffect(() => {
-    if (currentQuestion?.type === 'unscramble' && currentQuestion.letters && !scrambledLetters[currentQuestion.id]) {
-      // Process scrambled words
-      const wordList = currentQuestion.letters.includes(',') ? 
-        currentQuestion.letters.split(',') : 
-        [currentQuestion.letters];
-      
-      const letterArrays = wordList.map(word => {
-        return word.split('').map(char => ({ char, used: false }));
-      });
-      
-      setScrambledLetters({ 
-        ...scrambledLetters, 
-        [currentQuestion.id]: letterArrays 
-      });
-      
-      // Initialize user answers
-      setUserAnswers({
-        ...userAnswers,
-        [currentQuestion.id]: Array(wordList.length).fill('')
-      });
-    }
-  }, [currentQuestion]);
-
-  // Handle selecting a letter tile
-  const handleLetterSelect = (questionId: number, wordIndex: number, letterIndex: number) => {
-    const currentScrambled = [...scrambledLetters[questionId]];
-    const letter = currentScrambled[wordIndex][letterIndex];
-    
-    // Don't allow selecting already used letters
-    if (letter.used) return;
-    
-    // Mark letter as used
-    letter.used = true;
-    currentScrambled[wordIndex][letterIndex] = letter;
-    setScrambledLetters({
-      ...scrambledLetters,
-      [questionId]: currentScrambled
-    });
-    
-    // Add letter to user answer
-    const updatedAnswer = [...userAnswers[questionId]];
-    updatedAnswer[wordIndex] = updatedAnswer[wordIndex] + letter.char;
-    setUserAnswers({
-      ...userAnswers,
-      [questionId]: updatedAnswer
-    });
-    
-    // Update answer for validation
-    const currentAnswers = Array.isArray(answers[questionId]) ? 
-      [...answers[questionId]] : 
-      Array(currentScrambled.length).fill('');
-    
-    currentAnswers[wordIndex] = updatedAnswer[wordIndex];
-    handleAnswer(currentAnswers);
-  };
-  
-  // Handle clearing the user's answer
-  const handleClearAnswer = (questionId: number, wordIndex: number) => {
-    // Reset all letters to unused
-    const currentScrambled = [...scrambledLetters[questionId]];
-    currentScrambled[wordIndex] = currentScrambled[wordIndex].map(letter => ({
-      ...letter,
-      used: false
-    }));
-    
-    setScrambledLetters({
-      ...scrambledLetters,
-      [questionId]: currentScrambled
-    });
-    
-    // Clear user answer
-    const updatedAnswer = [...userAnswers[questionId]];
-    updatedAnswer[wordIndex] = '';
-    setUserAnswers({
-      ...userAnswers,
-      [questionId]: updatedAnswer
-    });
-    
-    // Update answer for validation
-    const currentAnswers = Array.isArray(answers[questionId]) ? 
-      [...answers[questionId]] : 
-      Array(currentScrambled.length).fill('');
-    
-    currentAnswers[wordIndex] = '';
-    handleAnswer(currentAnswers);
-  };
-  
+  // Unscramble Question Handler
   const renderUnscramble = (question: Question) => {
-    if (!question.letters || !scrambledLetters[question.id]) return null;
+    if (!question.letters) return null;
+    
+    // Split the letters by comma if provided as a comma-separated list
+    const wordList = question.letters.includes(',') ? 
+      question.letters.split(',').map(s => s.trim()) : 
+      [question.letters];
     
     return (
       <div className="space-y-6">
         <div className="p-3 rounded-md bg-[#2563EB]/20 text-white/80 text-sm mb-4">
-          Tap the letter tiles to unscramble each word.
+          Unscramble the letters to form the correct words.
         </div>
         
-        <div className="space-y-6">
-          {scrambledLetters[question.id].map((letters, wordIndex) => (
-            <div key={wordIndex} className="space-y-3 bg-white/5 p-4 rounded-md">
-              {/* User's answer display */}
-              <div className="flex items-center justify-center min-h-[3rem] bg-white/10 p-3 rounded-md text-center text-xl tracking-wider border border-white/20">
-                {userAnswers[question.id]?.[wordIndex] || <span className="text-white/40">Your answer will appear here</span>}
+        <div className="space-y-4">
+          {wordList.map((scrambledWord, wordIndex) => (
+            <div key={wordIndex} className="space-y-2">
+              <div className="font-mono text-white bg-white/10 p-3 rounded-md text-center text-lg tracking-wider">
+                {scrambledWord}
               </div>
-              
-              {/* Letter tiles */}
-              <div className="flex flex-wrap justify-center gap-2 mt-3">
-                {letters.map((letter, letterIndex) => (
-                  <button
-                    key={letterIndex}
-                    className={`
-                      w-10 h-10 flex items-center justify-center 
-                      text-lg font-medium rounded-md transition-all
-                      ${letter.used 
-                        ? 'bg-white/20 text-white/40 cursor-not-allowed' 
-                        : 'bg-[#2563EB]/70 text-white hover:bg-[#2563EB] cursor-pointer'}
-                    `}
-                    onClick={() => handleLetterSelect(question.id, wordIndex, letterIndex)}
-                    disabled={letter.used}
-                  >
-                    {letter.char}
-                  </button>
-                ))}
-              </div>
-              
-              {/* Clear button */}
-              <div className="flex justify-center mt-2">
-                <button
-                  className="flex items-center gap-2 px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-md text-sm text-white/80"
-                  onClick={() => handleClearAnswer(question.id, wordIndex)}
-                >
-                  <RefreshCw className="h-4 w-4" />
-                  Clear & Reset
-                </button>
+              <div className="flex items-center">
+                <Input
+                  type="text"
+                  placeholder="Type your answer here"
+                  className="flex-1 bg-white/5 border-white/20 text-white"
+                  value={
+                    answers[question.id] && Array.isArray(answers[question.id]) 
+                      ? answers[question.id][wordIndex] || '' 
+                      : ''
+                  }
+                  onChange={(e) => {
+                    const currentAnswers = Array.isArray(answers[question.id]) 
+                      ? [...answers[question.id]] 
+                      : new Array(wordList.length).fill('');
+                    currentAnswers[wordIndex] = e.target.value.toUpperCase();
+                    handleAnswer(currentAnswers);
+                  }}
+                />
               </div>
             </div>
           ))}
