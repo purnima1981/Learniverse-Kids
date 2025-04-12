@@ -1,0 +1,50 @@
+.stars-1,
+.stars-2,
+.stars-3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+}
+
+.stars-1 {
+  background-image: radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0, 0, 0, 0)),
+                    radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0, 0, 0, 0)),
+                    radial-gradient(1px 1px at 90px 40px, #ffffff, rgba(0, 0, 0, 0)),
+                    radial-gradient(2px 2px at 160px 120px, #ffffff, rgba(0, 0, 0, 0));
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  opacity: 0.5;
+  animation: starsAnimation 300s linear infinite;
+}
+
+.stars-2 {
+  background-image: radial-gradient(2px 2px at 100px 50px, #ffffff, rgba(0, 0, 0, 0)),
+                    radial-gradient(2px 2px at 200px 100px, #ffffff, rgba(0, 0, 0, 0)),
+                    radial-gradient(1px 1px at 300px 30px, #ffffff, rgba(0, 0, 0, 0));
+  background-repeat: repeat;
+  background-size: 300px 300px;
+  opacity: 0.3;
+  animation: starsAnimation 200s linear infinite;
+}
+
+.stars-3 {
+  background-image: radial-gradient(1px 1px at 50px 160px, #ffffff, rgba(0, 0, 0, 0)),
+                    radial-gradient(1px 1px at 150px 230px, #ffffff, rgba(0, 0, 0, 0)),
+                    radial-gradient(1px 1px at 250px 180px, #ffffff, rgba(0, 0, 0, 0));
+  background-repeat: repeat;
+  background-size: 270px 270px;
+  opacity: 0.4;
+  animation: starsAnimation 150s linear infinite;
+}
+
+@keyframes starsAnimation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
