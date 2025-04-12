@@ -216,33 +216,26 @@ export default function NewAuthPage() {
             <div className="flex gap-4 fade-in">
               <Button 
                 variant="outline" 
-                className="bg-transparent border-white text-white hover:bg-white/10 hover:border-blue-400 transition-all duration-300 text-xl font-bold px-6 py-6"
+                className="bg-transparent border-white text-white hover:bg-white/10 hover:border-blue-400 transition-all duration-300 text-base font-bold py-2 px-8 rounded-full h-12 w-36"
                 onClick={() => {
                   setShowLogin(true);
                   setShowRegister(false);
                 }}
               >
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1">
                   LOG IN
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 16l-4-4m0 0l4-4m-4 4h14"></path>
-                  </svg>
+                  <ChevronRight className="h-4 w-4" />
                 </div>
               </Button>
               
               <Button 
-                className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white animate-pulse-slow text-xl font-bold px-6 py-6"
+                className="bg-cyan-500 hover:bg-cyan-600 text-white text-base font-bold py-2 px-6 rounded-full h-12 w-44"
                 onClick={() => {
                   setShowRegister(true);
                   setShowLogin(false);
                 }}
               >
-                <div className="flex items-center gap-2">
-                  SIGN UP FREE
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                  </svg>
-                </div>
+                SIGN UP FREE
               </Button>
             </div>
           </div>
