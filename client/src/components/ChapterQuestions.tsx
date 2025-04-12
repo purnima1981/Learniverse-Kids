@@ -943,7 +943,8 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
       case 'unscramble':
         return renderUnscramble(question);
       case 'hidden-word':
-        // Skip word search questions for now
+        // This case should never happen now that we're filtering these questions,
+        // but keeping as a fallback just in case
         return (
           <div className="p-4 bg-blue-800/30 rounded-lg text-white text-center">
             <p className="text-lg font-medium mb-2">Word Search Question</p>
@@ -953,7 +954,7 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
               onClick={() => {
                 // Mark as skipped and proceed to next question
                 setSkippedQuestions([...skippedQuestions, currentQuestion.id]);
-                goToNextQuestion();
+                handleSkipQuestion();
               }}
             >
               Skip to Next Question

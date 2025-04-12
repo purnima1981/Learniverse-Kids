@@ -26,12 +26,18 @@ export default function ChapterQuestionsLoader({
         // Use dynamic import to bypass caching
         const questionModule = await import("@/data/chapterQuestions");
         const chapterKey = `${storyId}-${chapterNumber}`;
-        const questionData = questionModule.default[chapterKey] || [];
         
-        console.log(`Loaded ${questionData.length} questions for chapter ${chapterKey}`);
-        console.log("Question types:", questionData.map(q => q.type));
+        // Get all questions from the chapter
+        const allQuestions = questionModule.default[chapterKey] || [];
         
-        setQuestions(questionData);
+        // Filter out word search questions
+        const filteredQuestions = allQuestions.filter(q => q.type !== 'hidden-word');
+        
+        console.log(`Loaded ${allQuestions.length} questions for chapter ${chapterKey}`);
+        console.log(`Removed ${allQuestions.length - filteredQuestions.length} word search questions`);
+        console.log("Question types remaining:", filteredQuestions.map(q => q.type));
+        
+        setQuestions(filteredQuestions);
         setLoading(false);
       } catch (error) {
         console.error("Error loading questions:", error);
