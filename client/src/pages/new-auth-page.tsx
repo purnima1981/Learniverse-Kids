@@ -202,23 +202,33 @@ export default function NewAuthPage() {
             <div className="flex gap-4 fade-in">
               <Button 
                 variant="outline" 
-                className="bg-transparent border-white text-white hover:bg-white/10 hover:border-blue-400 transition-all duration-300"
+                className="bg-transparent border-white text-white hover:bg-white/10 hover:border-blue-400 transition-all duration-300 text-xl font-bold px-6 py-6"
                 onClick={() => {
                   setShowLogin(true);
                   setShowRegister(false);
                 }}
               >
-                Log In
+                <div className="flex items-center gap-2">
+                  LOG IN
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 16l-4-4m0 0l4-4m-4 4h14"></path>
+                  </svg>
+                </div>
               </Button>
               
               <Button 
-                className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white animate-pulse-slow"
+                className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white animate-pulse-slow text-xl font-bold px-6 py-6"
                 onClick={() => {
                   setShowRegister(true);
                   setShowLogin(false);
                 }}
               >
-                Sign Up Free
+                <div className="flex items-center gap-2">
+                  SIGN UP FREE
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                  </svg>
+                </div>
               </Button>
             </div>
           </div>
@@ -379,9 +389,37 @@ export default function NewAuthPage() {
           <h3 className="text-2xl font-bold text-white mb-2">
             Trusted by students, parents, and teachers
           </h3>
-          <p className="text-xl text-blue-100">
+          <p className="text-xl text-blue-100 mb-8">
             Join thousands of others on a revolutionary learning journey
           </p>
+          
+          {/* Big prominent login button */}
+          <div className="flex flex-col items-center justify-center mt-8 mb-16">
+            <Button 
+              size="lg"
+              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-lg font-bold px-16 py-8 animate-pulse-slow"
+              onClick={() => {
+                setShowLogin(true);
+                setShowRegister(false);
+              }}
+            >
+              <div className="flex items-center justify-center gap-3">
+                <div className="text-3xl font-bold">SIGN IN</div>
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                </svg>
+              </div>
+            </Button>
+            <button 
+              type="button" 
+              className="text-blue-300 hover:text-blue-100 mt-4 text-lg"
+              onClick={() => {
+                setShowForgotPassword(true);
+              }}
+            >
+              Forgot your password?
+            </button>
+          </div>
         </div>
       </main>
       
