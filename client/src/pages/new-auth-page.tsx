@@ -412,7 +412,7 @@ export default function NewAuthPage() {
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
           <div className="flex w-full max-w-4xl shadow-2xl rounded-xl overflow-hidden">
             {/* Left side with illustration */}
-            <div className="w-2/5 bg-[#00c8ff] p-8 relative" style={{ backgroundColor: "#00c8ff" }}>
+            <div className="w-2/5 p-8 relative" style={{ backgroundColor: "#00d2ff", background: "#00d2ff" }}>
               <div className="flex justify-center mb-8">
                 <div className="text-white text-2xl font-bold flex items-center">
                   <Rocket className="h-8 w-8 text-yellow-400 mr-2" />
@@ -588,7 +588,7 @@ export default function NewAuthPage() {
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
           <div className="flex w-full max-w-4xl shadow-2xl rounded-xl overflow-hidden">
             {/* Left side with illustration */}
-            <div className="w-2/5 bg-gradient-to-b from-purple-500 to-purple-700 p-8 relative">
+            <div className="w-2/5 p-8 relative" style={{ background: "linear-gradient(to bottom, rgb(168, 85, 247), rgb(126, 34, 206))" }}>
               <div className="flex justify-center mb-8">
                 <div className="text-white text-2xl font-bold flex items-center">
                   <Rocket className="h-8 w-8 text-yellow-400 mr-2" />
