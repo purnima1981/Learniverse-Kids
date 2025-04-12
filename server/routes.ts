@@ -4,7 +4,7 @@ import { storage } from "./storage";
 import { z } from "zod";
 import express from "express";
 import { setupAuth } from "./auth";
-import { insertUserSchema, insertUserGameResultSchema, users } from "@shared/schema";
+import { insertUserSchema, insertUserGameResultSchema, insertProfileSchema, users } from "@shared/schema";
 import { analyzeReading, generateReadingPassage } from "./services/openai";
 import { and, desc, eq } from "drizzle-orm";
 
@@ -411,6 +411,254 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(results);
     } catch (error) {
       console.error(`Error fetching user results for microgame ${req.params.microgameId}:`, error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Profile Management API Routes
+
+  // Get all profiles for the current user
+  app.get("/api/profiles", requireAuth, async (req, res) => {
+    try {
+      const userId = req.user!.id;
+      const profiles = await storage.getProfilesByUserId(userId);
+      res.json(profiles);
+    } catch (error) {
+      console.error("Error fetching profiles:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Get a specific profile
+  app.get("/api/profiles/:id", requireAuth, async (req, res) => {
+    try {
+      const profileId = parseInt(req.params.id);
+      
+      if (isNaN(profileId)) {
+        return res.status(400).json({ message: "Invalid profile ID" });
+      }
+      
+      const profile = await storage.getProfile(profileId);
+      
+      if (!profile) {
+        return res.status(404).json({ message: "Profile not found" });
+      }
+      
+      // Check that the profile belongs to the current user
+      if (profile.userId !== req.user!.id) {
+        return res.status(403).json({ message: "Access denied" });
+      }
+      
+      res.json(profile);
+    } catch (error) {
+      console.error(`Error fetching profile ${req.params.id}:`, error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Create a new profile
+  app.post("/api/profiles", requireAuth, async (req, res) => {
+    try {
+      const userId = req.user!.id;
+      
+      const data = insertProfileSchema.parse({
+        ...req.body,
+        userId,
+        isDefault: false
+      });
+      
+      const profile = await storage.createProfile(data);
+      
+      res.status(201).json(profile);
+    } catch (error) {
+      console.error("Error creating profile:", error);
+      
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Invalid data", errors: error.errors });
+      }
+      
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Update a profile
+  app.patch("/api/profiles/:id", requireAuth, async (req, res) => {
+    try {
+      const profileId = parseInt(req.params.id);
+      
+      if (isNaN(profileId)) {
+        return res.status(400).json({ message: "Invalid profile ID" });
+      }
+      
+      const profile = await storage.getProfile(profileId);
+      
+      if (!profile) {
+        return res.status(404).json({ message: "Profile not found" });
+      }
+      
+      // Check that the profile belongs to the current user
+      if (profile.userId !== req.user!.id) {
+        return res.status(403).json({ message: "Access denied" });
+      }
+      
+      await storage.updateProfile(profileId, req.body);
+      
+      const updatedProfile = await storage.getProfile(profileId);
+      
+      res.json(updatedProfile);
+    } catch (error) {
+      console.error(`Error updating profile ${req.params.id}:`, error);
+      
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Invalid data", errors: error.errors });
+      }
+      
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Delete a profile
+  app.delete("/api/profiles/:id", requireAuth, async (req, res) => {
+    try {
+      const profileId = parseInt(req.params.id);
+      
+      if (isNaN(profileId)) {
+        return res.status(400).json({ message: "Invalid profile ID" });
+      }
+      
+      const profile = await storage.getProfile(profileId);
+      
+      if (!profile) {
+        return res.status(404).json({ message: "Profile not found" });
+      }
+      
+      // Check that the profile belongs to the current user
+      if (profile.userId !== req.user!.id) {
+        return res.status(403).json({ message: "Access denied" });
+      }
+      
+      await storage.deleteProfile(profileId);
+      
+      res.status(204).end();
+    } catch (error) {
+      console.error(`Error deleting profile ${req.params.id}:`, error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Set a profile as default
+  app.post("/api/profiles/:id/default", requireAuth, async (req, res) => {
+    try {
+      const profileId = parseInt(req.params.id);
+      
+      if (isNaN(profileId)) {
+        return res.status(400).json({ message: "Invalid profile ID" });
+      }
+      
+      const profile = await storage.getProfile(profileId);
+      
+      if (!profile) {
+        return res.status(404).json({ message: "Profile not found" });
+      }
+      
+      // Check that the profile belongs to the current user
+      if (profile.userId !== req.user!.id) {
+        return res.status(403).json({ message: "Access denied" });
+      }
+      
+      await storage.setDefaultProfile(profileId);
+      
+      res.json({ message: "Profile set as default" });
+    } catch (error) {
+      console.error(`Error setting profile ${req.params.id} as default:`, error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Get progress data for a specific profile
+  app.get("/api/profiles/:id/progress", requireAuth, async (req, res) => {
+    try {
+      const profileId = parseInt(req.params.id);
+      
+      if (isNaN(profileId)) {
+        return res.status(400).json({ message: "Invalid profile ID" });
+      }
+      
+      const profile = await storage.getProfile(profileId);
+      
+      if (!profile) {
+        return res.status(404).json({ message: "Profile not found" });
+      }
+      
+      // Check that the profile belongs to the current user
+      if (profile.userId !== req.user!.id) {
+        return res.status(403).json({ message: "Access denied" });
+      }
+      
+      // Get user progress for the profile
+      const progress = await storage.getUserProgress(profile.userId);
+      
+      res.json(progress);
+    } catch (error) {
+      console.error(`Error fetching progress for profile ${req.params.id}:`, error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+  
+  // Get question responses for a specific profile
+  app.get("/api/profiles/:id/question-responses", requireAuth, async (req, res) => {
+    try {
+      const profileId = parseInt(req.params.id);
+      
+      if (isNaN(profileId)) {
+        return res.status(400).json({ message: "Invalid profile ID" });
+      }
+      
+      const profile = await storage.getProfile(profileId);
+      
+      if (!profile) {
+        return res.status(404).json({ message: "Profile not found" });
+      }
+      
+      // Check that the profile belongs to the current user
+      if (profile.userId !== req.user!.id) {
+        return res.status(403).json({ message: "Access denied" });
+      }
+      
+      // For now, we'll use mock data
+      res.json([]);
+    } catch (error) {
+      console.error(`Error fetching question responses for profile ${req.params.id}:`, error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+  
+  // Get game results for a specific profile
+  app.get("/api/profiles/:id/game-results", requireAuth, async (req, res) => {
+    try {
+      const profileId = parseInt(req.params.id);
+      
+      if (isNaN(profileId)) {
+        return res.status(400).json({ message: "Invalid profile ID" });
+      }
+      
+      const profile = await storage.getProfile(profileId);
+      
+      if (!profile) {
+        return res.status(404).json({ message: "Profile not found" });
+      }
+      
+      // Check that the profile belongs to the current user
+      if (profile.userId !== req.user!.id) {
+        return res.status(403).json({ message: "Access denied" });
+      }
+      
+      // Get game results for the profile
+      const results = await storage.getUserGameResults(profile.userId);
+      
+      res.json(results);
+    } catch (error) {
+      console.error(`Error fetching game results for profile ${req.params.id}:`, error);
       res.status(500).json({ message: "Internal server error" });
     }
   });
