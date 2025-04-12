@@ -287,61 +287,11 @@ export default function NewAuthPage() {
           
           <div className="lg:w-1/2 slide-in-right">
             <div className="relative float">
-              {/* Mathematical orbit system */}
-              <div className="relative w-full h-72 bg-indigo-900/40 rounded-xl shadow-2xl border-2 border-indigo-600/50 overflow-hidden">
-                {/* Circular orbits */}
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72">
-                  <div className="absolute inset-4 border-2 border-white/20 rounded-full animate-spin-slower"></div>
-                  <div className="absolute inset-8 border border-white/15 rounded-full animate-spin-slow" style={{ animationDirection: 'reverse' }}></div>
-                  <div className="absolute inset-16 border border-white/10 rounded-full animate-spin-slow"></div>
-                  
-                  {/* Mathematical symbols */}
-                  <div className="absolute top-8 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                    <div className="flex items-center justify-center w-14 h-14 rounded-full bg-purple-500 shadow-lg animate-float-slow">
-                      <span className="text-white text-2xl font-bold">π</span>
-                    </div>
-                  </div>
-                  
-                  <div className="absolute top-1/2 right-10 transform translate-y-1/2">
-                    <div className="flex items-center justify-center w-12 h-12 rounded-full bg-yellow-300 shadow-lg animate-float">
-                      <span className="text-indigo-900 text-xl font-bold">∑</span>
-                    </div>
-                  </div>
-                  
-                  <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2">
-                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-teal-400 shadow-lg animate-float-slow">
-                      <span className="text-indigo-900 text-lg font-bold">∞</span>
-                    </div>
-                  </div>
-                  
-                  <div className="absolute top-1/2 left-10 transform -translate-y-1/2">
-                    <div className="flex items-center justify-center w-12 h-12 rounded-full bg-blue-400 shadow-lg animate-float">
-                      <span className="text-white text-lg font-bold">⚛</span>
-                    </div>
-                  </div>
-                  
-                  {/* Center planet */}
-                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-gradient-to-br from-indigo-600 to-purple-600 shadow-lg animate-pulse-slow">
-                    <div className="absolute inset-1 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500"></div>
-                    <div className="absolute inset-4 rounded-full bg-gradient-to-br from-indigo-400 to-purple-400 opacity-70"></div>
-                  </div>
-                </div>
-                
-                {/* Stars and constellations */}
-                <div className="absolute top-10 left-10 w-2 h-2 bg-white rounded-full animate-pulse-slow"></div>
-                <div className="absolute top-20 left-20 w-1 h-1 bg-white rounded-full animate-pulse-slow"></div>
-                <div className="absolute bottom-15 right-30 w-1 h-1 bg-white rounded-full animate-pulse-slow"></div>
-                <div className="absolute bottom-40 right-20 w-2 h-2 bg-white rounded-full animate-pulse-slow"></div>
-                
-                {/* Shooting star */}
-                <div className="absolute top-10 right-10 w-20 h-px bg-gradient-to-r from-transparent via-white to-transparent transform -rotate-45 animate-pulse-slow"></div>
-                
-                {/* Text overlay */}
-                <div className="absolute bottom-4 left-0 right-0 text-center">
-                  <h3 className="text-white text-xl font-bold">Interactive Learning Universe</h3>
-                  <p className="text-blue-200 text-sm">Explore our story-based interdisciplinary adventures</p>
-                </div>
-              </div>
+              <img 
+                src={learniverseIllustration} 
+                alt="Learniverse platform preview"
+                className="rounded-xl shadow-2xl border-2 border-indigo-600/50 w-full h-auto"
+              />
               <div className="absolute -top-4 -right-4 bg-gradient-to-r from-emerald-500 to-green-500 text-white font-bold py-2 px-4 rounded-full shadow-lg animate-pulse-slow">
                 New Curriculum
               </div>
