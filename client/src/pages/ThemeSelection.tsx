@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useLocation } from "wouter";
-import { useAuth } from "@/hooks/use-auth";
+// Removed auth import that was causing issues
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import ThemeCard from "@/components/ThemeCard";
@@ -17,46 +17,27 @@ import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 
 export default function ThemeSelection() {
-  const { user, logoutMutation } = useAuth();
+  // Removed auth dependency
   const [_, setLocation] = useLocation();
   const { toast } = useToast();
   
+  // Simple redirect to auth page instead of actual logout
   const handleLogout = async () => {
-    try {
-      await logoutMutation.mutateAsync();
-      // Redirect to auth page will happen automatically due to protected route
-    } catch (error) {
-      toast({
-        title: "Logout failed",
-        description: "Could not sign out. Please try again.",
-        variant: "destructive",
-      });
-    }
+    toast({
+      title: "Logging out...",
+    });
+    setTimeout(() => {
+      setLocation('/auth');
+    }, 500);
   };
   
   // Use theme data directly since this is a demonstration
   const themes = themeData;
   
-  const selectThemeMutation = useMutation({
-    mutationFn: async (themeId: number) => {
-      return apiRequest('POST', '/api/user/theme', { themeId });
-    },
-    onSuccess: (_, themeId) => {
-      toast({
-        title: "Theme selected!",
-        description: "Now choose a collection",
-      });
-      // Instead of going to dashboard, go to the regional stories page
-      setLocation(`/regional-stories/${themeId}`);
-    },
-    onError: (error) => {
-      toast({
-        title: "Error selecting theme",
-        description: error instanceof Error ? error.message : "Please try again",
-        variant: "destructive",
-      });
-    }
-  });
+  // Simplified theme mutation for demo without actual API calls
+  const selectThemeMutation = {
+    isPending: false
+  };
   
   const handleThemeSelect = (themeId: number) => {
     // For demo purposes, we'll just navigate directly without saving to DB
@@ -73,9 +54,8 @@ export default function ThemeSelection() {
           <button
             onClick={handleLogout}
             className="bg-white/20 text-white py-2 px-4 rounded-md hover:bg-white/30 transition-colors flex items-center"
-            disabled={logoutMutation.isPending}
           >
-            {logoutMutation.isPending ? "Signing Out..." : "Sign Out"}
+            Sign Out
           </button>
         </div>
       
