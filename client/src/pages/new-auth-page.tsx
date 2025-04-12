@@ -435,10 +435,59 @@ export default function NewAuthPage() {
       {/* Login Card - always visible (removed modal) */}
       {showLogin && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
-          <Card className="w-full max-w-md bg-indigo-900/90 backdrop-blur-lg border border-indigo-700/50 shadow-2xl animate-glow">
-            <CardContent className="pt-6">
+          <div className="flex w-full max-w-4xl shadow-2xl rounded-xl overflow-hidden">
+            {/* Left side with illustration */}
+            <div className="w-2/5 bg-gradient-to-b from-cyan-400 to-blue-600 p-8 relative">
+              <div className="flex justify-center mb-8">
+                <div className="text-white text-2xl font-bold flex items-center">
+                  <Rocket className="h-8 w-8 text-yellow-400 mr-2" />
+                  Learniverse
+                </div>
+              </div>
+              
+              {/* Space-themed decorative elements */}
+              <div className="relative h-full">
+                {/* Learniverse-themed decorations */}
+                <div className="absolute top-5 left-5 w-16 h-16 bg-yellow-300 rounded-full opacity-10 animate-pulse-slow"></div>
+                <div className="absolute top-1/3 right-10 w-8 h-8 bg-blue-300 rounded-full opacity-20 animate-ping-slow"></div>
+                <div className="absolute bottom-40 left-20 w-12 h-12 bg-purple-400 rounded-full opacity-20 animate-ping-slow"></div>
+                
+                {/* Planets and stars */}
+                <div className="absolute top-1/4 left-1/4 w-20 h-20 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 opacity-70 shadow-lg animate-float-slow">
+                  <div className="absolute inset-1 rounded-full bg-gradient-to-br from-purple-400 to-indigo-500 opacity-80"></div>
+                </div>
+                
+                <div className="absolute bottom-20 right-5 w-16 h-16 rounded-full bg-gradient-to-br from-blue-400 to-teal-500 opacity-70 shadow-lg animate-float">
+                  <div className="absolute top-2 left-2 w-3 h-3 rounded-full bg-white opacity-50"></div>
+                </div>
+                
+                {/* Learning symbols */}
+                <div className="absolute bottom-40 right-10 text-white opacity-50 transform rotate-12 animate-float-slow text-2xl">∑</div>
+                <div className="absolute top-32 left-10 text-white opacity-50 transform -rotate-12 animate-float text-2xl">π</div>
+                <div className="absolute bottom-20 left-10 text-white opacity-50 transform -rotate-6 animate-float-slow text-2xl">≡</div>
+                
+                {/* Orbiting dots */}
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                  <div className="w-36 h-36 rounded-full border border-blue-300/20 relative animate-spin-slow">
+                    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-yellow-300"></div>
+                  </div>
+                  <div className="w-24 h-24 rounded-full border border-purple-300/20 relative animate-spin-slower">
+                    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-green-300"></div>
+                  </div>
+                </div>
+                
+                <img 
+                  src={learniverseIllustration} 
+                  alt="Learniverse Students" 
+                  className="absolute bottom-5 left-1/2 transform -translate-x-1/2 w-40 h-auto rounded-lg shadow-lg"
+                />
+              </div>
+            </div>
+            
+            {/* Right side with form */}
+            <div className="w-3/5 bg-indigo-950 p-8 text-white">
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-white fade-in">Log In</h2>
+                <h2 className="text-3xl font-bold text-white">Sign in to Learniverse</h2>
                 <button 
                   onClick={() => setShowLogin(false)}
                   className="text-blue-300 hover:text-white"
@@ -453,12 +502,24 @@ export default function NewAuthPage() {
                     control={loginForm.control}
                     name="email"
                     render={({ field }) => (
-                      <FormItem className="fade-in-delay-1">
-                        <FormLabel className="text-blue-100">Email Address</FormLabel>
+                      <FormItem>
+                        <div className="flex justify-between">
+                          <FormLabel className="text-blue-100 font-medium">Email Address</FormLabel>
+                          <button 
+                            type="button" 
+                            className="text-blue-300 text-sm hover:text-blue-100"
+                            onClick={() => {
+                              setShowForgotPassword(true);
+                              setShowLogin(false);
+                            }}
+                          >
+                            Forgot username?
+                          </button>
+                        </div>
                         <FormControl>
                           <Input
                             placeholder="your.email@example.com"
-                            className="bg-blue-900/50 border-blue-700/50 text-white"
+                            className="bg-indigo-900/50 border-indigo-700 text-white focus:border-blue-500"
                             {...field}
                           />
                         </FormControl>
@@ -471,13 +532,25 @@ export default function NewAuthPage() {
                     control={loginForm.control}
                     name="password"
                     render={({ field }) => (
-                      <FormItem className="fade-in-delay-2">
-                        <FormLabel className="text-blue-100">Password</FormLabel>
+                      <FormItem>
+                        <div className="flex justify-between">
+                          <FormLabel className="text-blue-100 font-medium">Password</FormLabel>
+                          <button 
+                            type="button" 
+                            className="text-blue-300 text-sm hover:text-blue-100"
+                            onClick={() => {
+                              setShowForgotPassword(true);
+                              setShowLogin(false);
+                            }}
+                          >
+                            Forgot password?
+                          </button>
+                        </div>
                         <FormControl>
                           <Input
                             type="password"
                             placeholder="••••••••"
-                            className="bg-blue-900/50 border-blue-700/50 text-white"
+                            className="bg-indigo-900/50 border-indigo-700 text-white focus:border-blue-500"
                             {...field}
                           />
                         </FormControl>
@@ -486,53 +559,106 @@ export default function NewAuthPage() {
                     )}
                   />
 
+                  <div className="flex items-center my-4">
+                    <input
+                      type="checkbox"
+                      id="remember"
+                      className="h-4 w-4 text-blue-600 rounded border-indigo-700 bg-indigo-900/50"
+                    />
+                    <label htmlFor="remember" className="ml-2 text-blue-100">
+                      Remember
+                    </label>
+                  </div>
+
                   <Button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-xl font-bold py-6 animate-pulse mt-6 shadow-lg"
-                    size="lg"
+                    className="w-full bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-bold py-3 rounded-md"
                   >
-                    <div className="flex items-center justify-center">
-                      SIGN IN *
-                    </div>
+                    Sign in
                   </Button>
                   
-                  <div className="flex flex-col items-center space-y-2 mt-4 fade-in-delay-4">
+                  <div className="flex items-center justify-center mt-6">
+                    <span className="text-blue-100">Not a member yet?</span>
                     <button 
                       type="button" 
-                      className="text-blue-300 hover:text-blue-100 text-sm"
-                      onClick={() => {
-                        setShowForgotPassword(true);
-                        setShowLogin(false);
-                      }}
-                    >
-                      Forgot your password?
-                    </button>
-                    
-                    <button 
-                      type="button" 
-                      className="text-blue-300 hover:text-blue-100"
+                      className="ml-2 text-blue-300 font-medium hover:text-blue-100"
                       onClick={() => {
                         setShowLogin(false);
                         setShowRegister(true);
                       }}
                     >
-                      Don't have an account? Sign up
+                      Join now &gt;
                     </button>
                   </div>
                 </form>
               </Form>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
       )}
       
       {/* Register Modal */}
       {showRegister && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
-          <Card className="w-full max-w-md bg-indigo-900/90 backdrop-blur-lg border border-indigo-700/50 shadow-2xl animate-glow-green">
-            <CardContent className="pt-6">
+          <div className="flex w-full max-w-4xl shadow-2xl rounded-xl overflow-hidden">
+            {/* Left side with illustration */}
+            <div className="w-2/5 bg-gradient-to-b from-purple-500 to-indigo-700 p-8 relative">
+              <div className="flex justify-center mb-8">
+                <div className="text-white text-2xl font-bold flex items-center">
+                  <Rocket className="h-8 w-8 text-yellow-400 mr-2" />
+                  Learniverse
+                </div>
+              </div>
+              
+              {/* Space-themed decorative elements */}
+              <div className="relative h-full">
+                {/* Learniverse-themed decorations */}
+                <div className="absolute top-5 right-5 w-16 h-16 bg-purple-300 rounded-full opacity-10 animate-pulse-slow"></div>
+                <div className="absolute top-1/3 left-10 w-8 h-8 bg-indigo-300 rounded-full opacity-20 animate-ping-slow"></div>
+                <div className="absolute bottom-40 right-20 w-12 h-12 bg-blue-400 rounded-full opacity-20 animate-ping-slow"></div>
+                
+                {/* Planets and stars */}
+                <div className="absolute top-1/4 right-1/4 w-20 h-20 rounded-full bg-gradient-to-br from-teal-500 to-cyan-600 opacity-70 shadow-lg animate-float-slow">
+                  <div className="absolute inset-1 rounded-full bg-gradient-to-br from-teal-400 to-cyan-500 opacity-80"></div>
+                </div>
+                
+                <div className="absolute bottom-20 left-5 w-16 h-16 rounded-full bg-gradient-to-br from-yellow-400 to-amber-500 opacity-70 shadow-lg animate-float">
+                  <div className="absolute top-2 left-2 w-3 h-3 rounded-full bg-white opacity-50"></div>
+                </div>
+                
+                {/* Learning symbols */}
+                <div className="absolute bottom-40 left-10 text-white opacity-50 transform rotate-12 animate-float-slow text-2xl">⚛</div>
+                <div className="absolute top-32 right-10 text-white opacity-50 transform -rotate-12 animate-float text-2xl">∞</div>
+                <div className="absolute bottom-20 right-10 text-white opacity-50 transform -rotate-6 animate-float-slow text-2xl">∝</div>
+                
+                {/* Constellations */}
+                <div className="absolute top-1/3 left-1/3">
+                  <div className="flex items-center justify-center">
+                    <div className="w-1 h-1 bg-white rounded-full"></div>
+                    <div className="w-8 h-px bg-white/30"></div>
+                    <div className="w-1 h-1 bg-white rounded-full"></div>
+                    <div className="w-10 h-px bg-white/30 rotate-45"></div>
+                    <div className="w-1 h-1 bg-white rounded-full"></div>
+                  </div>
+                  <div className="flex items-center justify-center mt-5">
+                    <div className="w-1 h-1 bg-white rounded-full"></div>
+                    <div className="w-6 h-px bg-white/30"></div>
+                    <div className="w-1 h-1 bg-white rounded-full"></div>
+                  </div>
+                </div>
+                
+                <img 
+                  src={learniverseIllustration} 
+                  alt="Learniverse Students" 
+                  className="absolute bottom-5 left-1/2 transform -translate-x-1/2 w-40 h-auto rounded-lg shadow-lg"
+                />
+              </div>
+            </div>
+            
+            {/* Right side with form */}
+            <div className="w-3/5 bg-indigo-950 p-8 text-white">
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-white fade-in">Create Your Account</h2>
+                <h2 className="text-3xl font-bold text-white">Create Your Account</h2>
                 <button 
                   onClick={() => setShowRegister(false)}
                   className="text-blue-300 hover:text-white"
@@ -543,17 +669,17 @@ export default function NewAuthPage() {
               
               <Form {...registerForm}>
                 <form onSubmit={registerForm.handleSubmit(onRegister)} className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4 fade-in-delay-1">
+                  <div className="grid grid-cols-2 gap-4">
                     <FormField
                       control={registerForm.control}
                       name="firstName"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-blue-100">First Name</FormLabel>
+                          <FormLabel className="text-blue-100 font-medium">First Name</FormLabel>
                           <FormControl>
                             <Input
                               placeholder="First name"
-                              className="bg-blue-900/50 border-blue-700/50 text-white"
+                              className="bg-indigo-900/50 border-indigo-700 text-white focus:border-blue-500"
                               {...field}
                             />
                           </FormControl>
@@ -567,11 +693,11 @@ export default function NewAuthPage() {
                       name="lastName"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-blue-100">Last Name</FormLabel>
+                          <FormLabel className="text-blue-100 font-medium">Last Name</FormLabel>
                           <FormControl>
                             <Input
                               placeholder="Last name"
-                              className="bg-blue-900/50 border-blue-700/50 text-white"
+                              className="bg-indigo-900/50 border-indigo-700 text-white focus:border-blue-500"
                               {...field}
                             />
                           </FormControl>
@@ -585,12 +711,12 @@ export default function NewAuthPage() {
                     control={registerForm.control}
                     name="email"
                     render={({ field }) => (
-                      <FormItem className="fade-in-delay-2">
-                        <FormLabel className="text-blue-100">Email Address</FormLabel>
+                      <FormItem>
+                        <FormLabel className="text-blue-100 font-medium">Email Address</FormLabel>
                         <FormControl>
                           <Input
                             placeholder="your.email@example.com"
-                            className="bg-blue-900/50 border-blue-700/50 text-white"
+                            className="bg-indigo-900/50 border-indigo-700 text-white focus:border-blue-500"
                             {...field}
                           />
                         </FormControl>
@@ -603,13 +729,13 @@ export default function NewAuthPage() {
                     control={registerForm.control}
                     name="password"
                     render={({ field }) => (
-                      <FormItem className="fade-in-delay-2">
-                        <FormLabel className="text-blue-100">Password</FormLabel>
+                      <FormItem>
+                        <FormLabel className="text-blue-100 font-medium">Password</FormLabel>
                         <FormControl>
                           <Input
                             type="password"
                             placeholder="••••••••"
-                            className="bg-blue-900/50 border-blue-700/50 text-white"
+                            className="bg-indigo-900/50 border-indigo-700 text-white focus:border-blue-500"
                             {...field}
                           />
                         </FormControl>
@@ -618,23 +744,23 @@ export default function NewAuthPage() {
                     )}
                   />
 
-                  <div className="grid grid-cols-2 gap-4 fade-in-delay-3">
+                  <div className="grid grid-cols-2 gap-4">
                     <FormField
                       control={registerForm.control}
                       name="grade"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-blue-100">Grade</FormLabel>
+                          <FormLabel className="text-blue-100 font-medium">Grade</FormLabel>
                           <Select
                             onValueChange={field.onChange}
                             defaultValue={field.value}
                           >
                             <FormControl>
-                              <SelectTrigger className="bg-blue-900/50 border-blue-700/50 text-white">
+                              <SelectTrigger className="bg-indigo-900/50 border-indigo-700 text-white focus:border-blue-500">
                                 <SelectValue placeholder="Select Grade" />
                               </SelectTrigger>
                             </FormControl>
-                            <SelectContent className="bg-blue-900 border-blue-700 text-white">
+                            <SelectContent className="bg-indigo-900 border-indigo-700">
                               {Array.from({ length: 8 }, (_, i) => i + 1).map((grade) => (
                                 <SelectItem key={grade} value={grade.toString()}>
                                   Grade {grade}
@@ -652,17 +778,17 @@ export default function NewAuthPage() {
                       name="gender"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-blue-100">Gender</FormLabel>
+                          <FormLabel className="text-blue-100 font-medium">Gender</FormLabel>
                           <Select
                             onValueChange={field.onChange}
                             defaultValue={field.value}
                           >
                             <FormControl>
-                              <SelectTrigger className="bg-blue-900/50 border-blue-700/50 text-white">
+                              <SelectTrigger className="bg-indigo-900/50 border-indigo-700 text-white focus:border-blue-500">
                                 <SelectValue placeholder="Select Gender" />
                               </SelectTrigger>
                             </FormControl>
-                            <SelectContent className="bg-blue-900 border-blue-700 text-white">
+                            <SelectContent className="bg-indigo-900 border-indigo-700">
                               <SelectItem value="male">Male</SelectItem>
                               <SelectItem value="female">Female</SelectItem>
                               <SelectItem value="other">Other</SelectItem>
@@ -677,38 +803,88 @@ export default function NewAuthPage() {
 
                   <Button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-xl font-bold py-6 animate-pulse mt-6 shadow-lg"
-                    size="lg"
+                    className="w-full bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white font-bold py-3 rounded-md mt-6"
                   >
-                    <div className="text-xl font-bold">SIGN UP *</div>
+                    Sign up
                   </Button>
                   
-                  <div className="text-center mt-4 fade-in-delay-4">
+                  <div className="flex items-center justify-center mt-6">
+                    <span className="text-blue-100">Already have an account?</span>
                     <button 
                       type="button" 
-                      className="text-blue-300 hover:text-blue-100"
+                      className="ml-2 text-blue-300 font-medium hover:text-blue-100"
                       onClick={() => {
                         setShowRegister(false);
                         setShowLogin(true);
                       }}
                     >
-                      Already have an account? Log in
+                      Log in &gt;
                     </button>
                   </div>
                 </form>
               </Form>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
       )}
       
       {/* Forgot Password Modal */}
       {showForgotPassword && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
-          <Card className="w-full max-w-md bg-indigo-900/90 backdrop-blur-lg border border-indigo-700/50 shadow-2xl animate-glow">
-            <CardContent className="pt-6">
+          <div className="flex w-full max-w-4xl shadow-2xl rounded-xl overflow-hidden">
+            {/* Left side with illustration */}
+            <div className="w-2/5 bg-gradient-to-b from-blue-500 to-blue-700 p-8 relative">
+              <div className="flex justify-center mb-8">
+                <div className="text-white text-2xl font-bold flex items-center">
+                  <Rocket className="h-8 w-8 text-yellow-400 mr-2" />
+                  Learniverse
+                </div>
+              </div>
+              
+              {/* Space-themed decorative elements */}
+              <div className="relative h-full">
+                {/* Learniverse-themed decorations */}
+                <div className="absolute top-10 left-10 w-16 h-16 bg-blue-300 rounded-full opacity-10 animate-pulse-slow"></div>
+                <div className="absolute top-1/3 right-5 w-8 h-8 bg-cyan-300 rounded-full opacity-20 animate-ping-slow"></div>
+                
+                {/* Email-related animation */}
+                <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/3">
+                  <div className="w-24 h-16 rounded-lg border-2 border-white/30 relative">
+                    <div className="absolute top-0 left-0 w-full h-full">
+                      <div className="absolute h-0 w-0 border-l-[12px] border-l-transparent border-b-[10px] border-b-white/30 border-r-[12px] border-r-transparent top-[-10px] left-1/2 transform -translate-x-1/2"></div>
+                    </div>
+                    
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-pulse-slow">
+                      <div className="w-16 h-2 bg-white/50 rounded-full mb-2"></div>
+                      <div className="w-10 h-2 bg-white/50 rounded-full"></div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Lock icon */}
+                <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2">
+                  <div className="w-12 h-6 rounded-t-lg bg-white/30 flex justify-center">
+                    <div className="w-4 h-3 rounded-t-md bg-blue-700/50 mt-1"></div>
+                  </div>
+                  <div className="w-16 h-14 rounded-md bg-white/30 relative">
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-blue-700/50">
+                      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-white/70"></div>
+                    </div>
+                  </div>
+                </div>
+                
+                <img 
+                  src={learniverseIllustration} 
+                  alt="Learniverse Students" 
+                  className="absolute bottom-5 left-1/2 transform -translate-x-1/2 w-40 h-auto rounded-lg shadow-lg"
+                />
+              </div>
+            </div>
+            
+            {/* Right side with form */}
+            <div className="w-3/5 bg-indigo-950 p-8 text-white">
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-white fade-in">Reset Your Password</h2>
+                <h2 className="text-3xl font-bold text-white">Reset Your Password</h2>
                 <button 
                   onClick={() => setShowForgotPassword(false)}
                   className="text-blue-300 hover:text-white"
@@ -717,17 +893,17 @@ export default function NewAuthPage() {
                 </button>
               </div>
               
-              <div className="space-y-4">
-                <p className="text-blue-100 fade-in-delay-1">
+              <div className="space-y-6">
+                <p className="text-blue-100">
                   Enter your email address and we'll send you instructions to reset your password.
                 </p>
                 
-                <div className="fade-in-delay-2">
-                  <FormLabel className="text-blue-100">Email Address</FormLabel>
+                <div>
+                  <FormLabel className="text-blue-100 font-medium">Email Address</FormLabel>
                   <Input
                     type="email"
                     placeholder="your.email@example.com"
-                    className="bg-blue-900/50 border-blue-700/50 text-white mt-1"
+                    className="bg-indigo-900/50 border-indigo-700 text-white focus:border-blue-500 mt-1"
                     value={forgotPasswordEmail}
                     onChange={(e) => setForgotPasswordEmail(e.target.value)}
                   />
@@ -735,18 +911,12 @@ export default function NewAuthPage() {
 
                 <Button
                   onClick={handleForgotPassword}
-                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-lg font-bold py-3 animate-gradient fade-in-delay-3"
-                  size="lg"
+                  className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-bold py-3 rounded-md"
                 >
-                  <div className="flex items-center justify-center">
-                    Send Password Reset Link
-                    <svg className="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                    </svg>
-                  </div>
+                  Send Password Reset Link
                 </Button>
                 
-                <div className="text-center mt-4 fade-in-delay-4">
+                <div className="flex items-center justify-center mt-6">
                   <button 
                     type="button" 
                     className="text-blue-300 hover:text-blue-100"
@@ -759,8 +929,8 @@ export default function NewAuthPage() {
                   </button>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
       )}
       
