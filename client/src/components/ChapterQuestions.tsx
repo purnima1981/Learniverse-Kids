@@ -84,8 +84,21 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
       if (currentQuestion.type === 'matching' && currentQuestion.items) {
         // Always initialize matching items when changing questions to avoid sync issues
         const items = [...currentQuestion.items];
+        // Shuffle the items for the matching game
         const shuffledItems = [...items].sort(() => Math.random() - 0.5);
         setMatchItems(prev => ({ ...prev, [currentQuestion.id]: shuffledItems }));
+        
+        // Initialize answers structure for this question if not already present
+        if (!answers[currentQuestion.id]) {
+          const initialAnswers: Record<string, string> = {};
+          currentQuestion.items.forEach(item => {
+            initialAnswers[item.item] = "";
+          });
+          setAnswers(prev => ({
+            ...prev,
+            [currentQuestion.id]: initialAnswers
+          }));
+        }
       }
     }
   }, [currentQuestionIndex]);
@@ -131,15 +144,30 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
     const currentAnswer = answers[currentQuestion.id];
     let correct = false;
 
-    if (Array.isArray(currentQuestion.answer)) {
-      // For matching questions
+    if (currentQuestion.type === 'matching' && currentQuestion.items) {
+      // For matching questions with the new format (object with term-definition pairs)
+      const userAnswers = currentAnswer || {};
+      
+      // Check if all terms have a selected answer
+      const hasAllAnswers = currentQuestion.items.every(item => 
+        userAnswers.hasOwnProperty(item.item) && userAnswers[item.item]
+      );
+      
+      if (hasAllAnswers) {
+        // Check if all matches are correct
+        correct = currentQuestion.items.every(item => 
+          userAnswers[item.item] === item.match
+        );
+      }
+    } else if (Array.isArray(currentQuestion.answer)) {
+      // For array-based answers (word-sequence, hidden-word, etc.)
       correct = JSON.stringify(currentAnswer) === JSON.stringify(currentQuestion.answer);
     } else if (currentQuestion.type === 'fill-blank') {
       // For fill in the blank questions, compare with the correct answer
       // We're now using an exact match since we've switched to multiple choice
       correct = currentAnswer === currentQuestion.answer;
     } else {
-      // For multiple choice
+      // For multiple choice, true-false, etc.
       correct = currentAnswer === currentQuestion.answer;
     }
 
@@ -295,13 +323,16 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
   // Touch support for drag and drop
   const touchSupportRef = useRef<boolean>(false);
   
+  // Track shuffled matching answers
+  const [matchAnswers, setMatchAnswers] = useState<{[key: number]: string[]}>({});
+  
   useEffect(() => {
     // Set up touch support for matching questions
     if (currentQuestion?.type === 'matching' && !touchSupportRef.current) {
       // Add a simple instruction for mobile users
       const instruction = document.createElement('div');
       instruction.className = 'p-2 bg-blue-500/20 text-white text-sm mt-2 mb-4 rounded';
-      instruction.innerHTML = 'For mobile devices: Tap and hold to drag items.';
+      instruction.innerHTML = 'For mobile devices: Drag the answers on the right to match with terms on the left.';
       
       setTimeout(() => {
         const matchingContainer = document.querySelector('[data-droppable="true"]');
@@ -313,58 +344,155 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
       touchSupportRef.current = true;
     }
   }, [currentQuestion]);
+  
+  // Initialize shuffled answers for matching questions
+  useEffect(() => {
+    if (currentQuestion?.type === 'matching' && currentQuestion.items && !matchAnswers[currentQuestion.id]) {
+      // Get all the possible answers (definitions)
+      const answers = currentQuestion.items.map(item => item.match);
+      
+      // Shuffle the answers
+      const shuffledAnswers = [...answers].sort(() => Math.random() - 0.5);
+      
+      setMatchAnswers(prev => ({
+        ...prev,
+        [currentQuestion.id]: shuffledAnswers
+      }));
+    }
+  }, [currentQuestion]);
+
+  // Handle dragging and dropping answers
+  const handleMatchingDragEnd = (result: DropResult, question: Question) => {
+    const { source, destination } = result;
+    
+    // Return if dropped outside a droppable area or didn't move
+    if (!destination) {
+      return;
+    }
+    
+    // If dragging within the same droppable (reordering the answers)
+    if (source.droppableId === destination.droppableId) {
+      const answerList = [...matchAnswers[question.id]];
+      const [removed] = answerList.splice(source.index, 1);
+      answerList.splice(destination.index, 0, removed);
+      
+      setMatchAnswers({
+        ...matchAnswers,
+        [question.id]: answerList
+      });
+      return;
+    }
+    
+    // Handle dragging from answer list to a term slot
+    if (!question.items) {
+      return;
+    }
+    
+    const termIndex = parseInt(destination.droppableId.split('-')[1]);
+    const answerIndex = source.index;
+    
+    // Make sure the index is valid
+    if (termIndex < 0 || termIndex >= question.items.length) {
+      return;
+    }
+    
+    // Get the current term and the selected answer
+    const term = question.items[termIndex].item;
+    const selectedAnswer = matchAnswers[question.id][answerIndex];
+    
+    // Create or update the selection
+    const updatedAnswers = {
+      ...answers[question.id] || {},
+      [term]: selectedAnswer
+    };
+    
+    // Update the answers state
+    handleAnswer(updatedAnswers);
+  };
 
   const renderMatching = (question: Question) => {
-    if (!question.items || !matchItems[question.id]) return null;
+    if (!question.items || !matchAnswers[question.id]) return null;
     
     return (
-      <div className="space-y-6">
+      <div className="space-y-4">
         <div className="p-3 rounded-md bg-[#2563EB]/20 text-white/80 text-sm mb-2">
-          Drag and drop items to match each term with its correct definition. 
+          Drag the definitions from the right column to match with the terms on the left.
         </div>
         
-        <DragDropContext onDragEnd={(result) => handleDragEnd(result, question)}>
-          <Droppable droppableId="matching-items">
-            {(provided) => (
-              <div
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-                className="space-y-3"
-                data-droppable="true"
-              >
-                {matchItems[question.id].map((item, index) => (
-                  <Draggable key={`${item.item}-${index}`} draggableId={`${item.item}-${index}`} index={index}>
+        <DragDropContext onDragEnd={(result) => handleMatchingDragEnd(result, question)}>
+          <div className="grid grid-cols-2 gap-4">
+            {/* Left side - Terms */}
+            <div className="space-y-3">
+              <div className="text-white font-semibold text-center pb-2 border-b border-white/30">
+                Terms
+              </div>
+              
+              {question.items.map((item, index) => (
+                <div key={`term-${index}`} className="bg-white/10 p-3 rounded-md">
+                  <div className="text-white font-medium mb-2">{item.item}</div>
+                  
+                  <Droppable droppableId={`term-${index}`}>
                     {(provided, snapshot) => (
                       <div
                         ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        className={`flex items-center bg-white/10 p-4 rounded-md ${
-                          snapshot.isDragging ? 'border-2 border-[#10B981]' : ''
-                        }`}
-                        data-draggable="true"
+                        {...provided.droppableProps}
+                        className={`h-10 border ${snapshot.isDraggingOver ? 'border-green-500 bg-green-500/10' : 'border-white/30'} rounded-md min-h-[2.5rem]`}
+                        data-droppable={`term-${index}`}
                       >
-                        <div 
-                          {...provided.dragHandleProps}
-                          className="mr-3 text-white/70 hover:text-white/90 cursor-grab"
-                        >
-                          <GripVertical className="h-5 w-5" />
-                        </div>
-                        <div className="flex flex-1 justify-between gap-2">
-                          <div className="font-semibold text-white bg-[#2563EB]/40 px-3 py-2 rounded">
-                            {item.item}
+                        {/* Show selected answer if one exists */}
+                        {answers[question.id] && answers[question.id][item.item] && (
+                          <div className="text-white p-2 text-sm">
+                            {answers[question.id][item.item]}
                           </div>
-                          <div className="text-white flex-1 text-right bg-[#0F172A]/60 px-3 py-2 rounded">
-                            {item.match}
-                          </div>
-                        </div>
+                        )}
+                        {provided.placeholder}
                       </div>
                     )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
+                  </Droppable>
+                </div>
+              ))}
+            </div>
+            
+            {/* Right side - Answers */}
+            <div className="space-y-3">
+              <div className="text-white font-semibold text-center pb-2 border-b border-white/30">
+                Definitions
               </div>
-            )}
-          </Droppable>
+              
+              <Droppable droppableId="answers-list">
+                {(provided) => (
+                  <div 
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                    className="space-y-2"
+                    data-droppable="true"
+                  >
+                    {matchAnswers[question.id].map((answer, index) => (
+                      <Draggable key={`answer-${index}`} draggableId={`answer-${index}`} index={index}>
+                        {(provided, snapshot) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            className={`flex items-center bg-[#0F172A]/60 p-3 rounded-md cursor-grab ${
+                              snapshot.isDragging ? 'border-2 border-[#10B981] shadow-lg' : ''
+                            }`}
+                            data-draggable="true"
+                          >
+                            <div className="text-white text-sm flex-1">
+                              {answer}
+                            </div>
+                            <GripVertical className="h-5 w-5 text-white/70 ml-2" />
+                          </div>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </div>
+          </div>
         </DragDropContext>
       </div>
     );
@@ -622,11 +750,11 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
 
   const renderFeedback = () => {
     const displayCorrectAnswer = () => {
-      if (currentQuestion.type === 'matching' && Array.isArray(currentQuestion.answer)) {
+      if (currentQuestion.type === 'matching' && currentQuestion.items) {
         return (
           <div className="mt-3 space-y-2">
             <p className="text-white font-medium mb-2">The correct matches are:</p>
-            {currentQuestion.items?.map((item, index) => (
+            {currentQuestion.items.map((item, index) => (
               <div key={index} className="flex space-x-2 text-sm bg-white/10 p-2 rounded">
                 <span className="text-[#10B981] font-semibold">{item.item}:</span>
                 <span className="text-white">{item.match}</span>
