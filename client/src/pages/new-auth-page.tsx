@@ -112,10 +112,8 @@ export default function NewAuthPage() {
       });
       setShowLogin(false);
       
-      // Redirect to dashboard would happen in a real app
-      setTimeout(() => {
-        navigate("/dashboard");
-      }, 1500);
+      // Immediate redirect to theme selection
+      navigate("/theme-selection");
     } catch (error) {
       toast({
         variant: "destructive",
@@ -134,10 +132,8 @@ export default function NewAuthPage() {
       });
       setShowRegister(false);
       
-      // Redirect to theme selection would happen in a real app
-      setTimeout(() => {
-        navigate("/theme-selection");
-      }, 1500);
+      // Immediate redirect to theme selection
+      navigate("/theme-selection");
     } catch (error) {
       toast({
         variant: "destructive",
