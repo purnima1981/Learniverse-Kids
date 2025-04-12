@@ -124,7 +124,7 @@ export default function NewAuthPage() {
       // Show success toast
       toast({
         title: "Login successful!",
-        description: "Welcome back to Learniverse! Taking you to your dashboard...",
+        description: "Welcome back to Learniverse! Taking you to theme selection...",
         variant: "default",
       });
       
@@ -132,8 +132,8 @@ export default function NewAuthPage() {
       
       // Small delay before redirect for better UX
       setTimeout(() => {
-        // Redirect to dashboard
-        navigate("/dashboard");
+        // Redirect to theme selection page first, not directly to dashboard
+        navigate("/theme-selection");
       }, 500);
     } catch (error) {
       toast({
