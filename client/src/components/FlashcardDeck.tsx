@@ -103,11 +103,12 @@ export default function FlashcardDeck({ words, onClose, onSave }: FlashcardDeckP
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div 
-        className="max-w-5xl w-full bg-transparent rounded-xl overflow-hidden flex flex-col"
+        className="max-w-3xl w-full bg-transparent rounded-xl overflow-hidden flex flex-col"
         ref={constraintsRef}
+        style={{maxHeight: '500px'}}
       >
-        <div className="flex justify-between items-center p-4">
-          <h2 className="text-white text-xl font-bold">
+        <div className="flex justify-between items-center p-3">
+          <h2 className="text-white text-lg font-bold">
             Vocabulary Flashcards ({currentIndex + 1}/{totalWords})
           </h2>
           <Button 
@@ -119,11 +120,11 @@ export default function FlashcardDeck({ words, onClose, onSave }: FlashcardDeckP
           </Button>
         </div>
 
-        <div className="relative flex-1 flex justify-center items-center py-6 px-4">
+        <div className="relative flex-1 flex justify-center items-center py-3 px-4">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
-              className="w-full max-w-4xl mx-auto"
+              className="w-full mx-auto" 
               initial={{ 
                 opacity: 0, 
                 x: direction === 'right' ? 200 : -200
@@ -138,47 +139,40 @@ export default function FlashcardDeck({ words, onClose, onSave }: FlashcardDeckP
               dragConstraints={constraintsRef}
               onDragEnd={handleDragEnd}
             >
-              {/* Using a side-by-side horizontal approach instead of flip animation */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-                {/* Word card */}
+              {/* Simple card-based approach with fixed heights */}
+              <div className="w-full">
+                {/* Active card - either word or definition based on flip state */}
                 <div 
-                  className={`glass-panel rounded-xl p-6 cursor-pointer transition-all duration-300 ${
-                    !flipped ? 'border-2 border-blue-300 shadow-lg shadow-blue-500/20' : 'opacity-70'
-                  }`}
+                  className="glass-panel rounded-xl p-5 cursor-pointer transition-all duration-300 border-2 border-blue-300 shadow-lg shadow-blue-500/20 mx-auto max-w-2xl"
                   onClick={toggleFlip}
-                  style={{minHeight: '200px'}}
+                  style={{height: '180px'}}
                 >
-                  <div className="flex flex-col justify-between h-full">
-                    <div className="text-center text-white text-3xl font-bold flex-1 flex items-center justify-center">
-                      {currentWord.word}
-                    </div>
-                    <div className="text-white/70 text-sm italic text-center mt-4">
-                      {flipped ? '' : 'Click to see definition'}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Definition card */}
-                <div 
-                  className={`glass-panel rounded-xl p-6 cursor-pointer transition-all duration-300 ${
-                    flipped ? 'border-2 border-blue-300 shadow-lg shadow-blue-500/20' : 'opacity-70'
-                  }`}
-                  onClick={toggleFlip}
-                  style={{minHeight: '200px'}}
-                >
-                  <div className="flex flex-col justify-between h-full">
-                    <div>
-                      <div className="text-white text-lg">
-                        <span className="font-bold">Definition:</span> {currentWord.definition}
+                  {!flipped ? (
+                    // Word side
+                    <div className="flex flex-col justify-between h-full">
+                      <div className="text-center text-white text-3xl font-bold flex-1 flex items-center justify-center">
+                        {currentWord.word}
                       </div>
-                      <div className="text-white text-lg mt-4">
-                        <span className="font-bold">Example:</span> <span className="italic">"{currentWord.context}"</span>
+                      <div className="text-white/70 text-sm italic text-center">
+                        Click to see definition
                       </div>
                     </div>
-                    <div className="text-white/70 text-sm italic text-center mt-4">
-                      {flipped ? 'Click to see word' : ''}
+                  ) : (
+                    // Definition side
+                    <div className="flex flex-col justify-between h-full overflow-auto">
+                      <div className="flex-1">
+                        <div className="text-white text-lg mb-2">
+                          <span className="font-bold">Definition:</span> {currentWord.definition}
+                        </div>
+                        <div className="text-white text-lg">
+                          <span className="font-bold">Example:</span> <span className="italic">"{currentWord.context}"</span>
+                        </div>
+                      </div>
+                      <div className="text-white/70 text-sm italic text-center">
+                        Click to see word
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </motion.div>
