@@ -6,6 +6,7 @@ export const COLORS = {
   BG_GRADIENT_FROM: 'from-indigo-950',
   BG_GRADIENT_VIA: 'via-blue-950',
   BG_GRADIENT_TO: 'to-indigo-900',
+  APP_BACKGROUND: 'bg-gradient-to-br from-indigo-900 to-blue-900',
   
   // Card/Element Background
   CARD_BG: 'bg-blue-900/20',
