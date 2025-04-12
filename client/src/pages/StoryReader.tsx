@@ -354,20 +354,14 @@ export default function StoryReader() {
         
         <div className="relative">
           {!hasReadStory && (
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0F172A] to-transparent h-32 flex flex-col items-center justify-end pb-4 z-10">
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0F172A] to-transparent h-28 flex flex-col items-center justify-end pb-6 z-10">
               <Button 
                 variant="outline"
-                className="bg-[#2563EB] hover:bg-[#1E40AF] text-white border-transparent mb-4 px-6 py-2 text-base font-semibold shadow-lg"
+                className="bg-[#2563EB] hover:bg-[#1E40AF] text-white border-transparent px-6 py-2 text-base font-semibold shadow-lg"
                 onClick={completeReading}
               >
                 Mark as Read
               </Button>
-              <div className="flex items-center justify-center mb-1">
-                <span className="text-white/80 text-sm flex items-center">
-                  Continue reading the story
-                  <ChevronRight className="h-4 w-4 ml-1 rotate-90" />
-                </span>
-              </div>
             </div>
           )}
           
