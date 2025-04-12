@@ -943,7 +943,23 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
       case 'unscramble':
         return renderUnscramble(question);
       case 'hidden-word':
-        return renderHiddenWord(question);
+        // Skip word search questions for now
+        return (
+          <div className="p-4 bg-blue-800/30 rounded-lg text-white text-center">
+            <p className="text-lg font-medium mb-2">Word Search Question</p>
+            <p>This question type has been temporarily disabled.</p>
+            <Button 
+              className="mt-4 bg-blue-600 hover:bg-blue-700"
+              onClick={() => {
+                // Mark as skipped and proceed to next question
+                setSkippedQuestions([...skippedQuestions, currentQuestion.id]);
+                goToNextQuestion();
+              }}
+            >
+              Skip to Next Question
+            </Button>
+          </div>
+        );
       case 'true-false':
         return renderTrueFalse(question);
       case 'word-sequence':
