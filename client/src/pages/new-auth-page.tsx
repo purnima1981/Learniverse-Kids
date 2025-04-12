@@ -677,15 +677,10 @@ export default function NewAuthPage() {
 
                   <Button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-lg font-bold py-3 animate-gradient fade-in-delay-4"
+                    className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-xl font-bold py-6 animate-pulse mt-6 shadow-lg"
                     size="lg"
                   >
-                    <div className="flex items-center justify-center">
-                      Create Your Account Now
-                      <svg className="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                      </svg>
-                    </div>
+                    <div className="text-xl font-bold">SIGN UP *</div>
                   </Button>
                   
                   <div className="text-center mt-4 fade-in-delay-4">
