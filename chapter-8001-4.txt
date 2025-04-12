@@ -1,0 +1,543 @@
+  '8001-4': [
+    // Level 1: Geometry Explorer
+    {
+      id: 1,
+      type: 'multiple-choice',
+      text: 'Stop signs are shaped as octagons because:',
+      options: ['They\'re easier to make than circles', 'The unique shape is recognizable even when partially covered or at night', 'Octagons use less material than circles', 'They\'re less likely to roll away if knocked down'],
+      answer: 'b',
+      theme: 'math',
+      difficulty: 'easy',
+      tags: ['GEOMETRY', 'REAL-WORLD SHAPES', 'CRITICAL THINKING', 'EVERYDAY MATH']
+    },
+    {
+      id: 2,
+      type: 'matching',
+      text: 'Match the Shape with its real-world example from Ethan\'s walk:',
+      items: [
+        { item: 'Triangle', match: 'Roof' },
+        { item: 'Rhombus', match: 'Construction warning sign' },
+        { item: 'Pentagon', match: 'School zone sign' },
+        { item: 'Octagon', match: 'Stop sign' }
+      ],
+      answer: ['Triangle:Roof', 'Rhombus:Construction warning sign', 'Pentagon:School zone sign', 'Octagon:Stop sign'],
+      theme: 'math',
+      difficulty: 'easy',
+      tags: ['GEOMETRY', 'SHAPE RECOGNITION', 'VISUAL MATCHING', 'SPATIAL REASONING']
+    },
+    {
+      id: 3,
+      type: 'unscramble',
+      text: 'Unscramble these geometric shapes Ethan observed:',
+      letters: 'ARITGNEL,SOBMURH,NOGACOT,GANONTEP',
+      answer: ['TRIANGLE', 'RHOMBUS', 'OCTAGON', 'PENTAGON'],
+      theme: 'math',
+      difficulty: 'medium',
+      tags: ['GEOMETRY', 'VOCABULARY', 'WORD DECODING', 'SPELLING']
+    },
+    {
+      id: 4,
+      type: 'hidden-word',
+      text: 'Find four geometric shapes from the story hidden in this grid:',
+      grid: [
+        'TRIANGLEOP',
+        'QZXCNMLCE',
+        'RHOMBUSKTN',
+        'SDFGHUJKA',
+        'OCTAGONLGT',
+        'PENTAGONOA',
+        'QWERTYUING',
+        'ASDFGHJKLO'
+      ],
+      words: ['TRIANGLE', 'RHOMBUS', 'OCTAGON', 'PENTAGON'],
+      answer: ['TRIANGLE', 'RHOMBUS', 'OCTAGON', 'PENTAGON'],
+      theme: 'math',
+      difficulty: 'medium',
+      tags: ['GEOMETRY', 'VISUAL PERCEPTION', 'WORD SEARCH', 'ATTENTION TO DETAIL']
+    },
+    {
+      id: 5,
+      type: 'multiple-choice',
+      text: 'According to Ethan\'s explanation, if a roof is shaped like a triangle with a base of 8 meters and a height of 6 meters, what is its area?',
+      options: ['14 square meters', '24 square meters', '48 square meters', '16 square meters'],
+      answer: 'b',
+      theme: 'math',
+      difficulty: 'medium',
+      tags: ['GEOMETRY', 'AREA CALCULATION', 'TRIANGLE PROPERTIES', 'STATE MATH TEST']
+    },
+    {
+      id: 6,
+      type: 'multiple-choice',
+      text: 'As Ethan walked up the hill, his potential energy:',
+      options: ['Decreased', 'Remained the same', 'Increased', 'Changed to thermal energy'],
+      answer: 'c',
+      theme: 'science',
+      difficulty: 'medium',
+      tags: ['PHYSICS', 'ENERGY CONCEPTS', 'GRAVITATIONAL POTENTIAL', 'SCIENCE ASSESSMENT']
+    },
+    {
+      id: 7,
+      type: 'matching',
+      text: 'Connect each scenario from the walk with the primary type of energy involved:',
+      items: [
+        { item: 'Rock at the top of a hill', match: 'Potential energy' },
+        { item: 'Rock rolling down', match: 'Kinetic energy' },
+        { item: 'Wind pushing against Ethan', match: 'Mechanical energy' },
+        { item: 'Wind chimes making sound', match: 'Sound energy' }
+      ],
+      answer: ['Rock at the top of a hill:Potential energy', 'Rock rolling down:Kinetic energy', 'Wind pushing against Ethan:Mechanical energy', 'Wind chimes making sound:Sound energy'],
+      theme: 'science',
+      difficulty: 'medium',
+      tags: ['PHYSICS', 'ENERGY TRANSFORMATION', 'CONCEPTUAL UNDERSTANDING', 'SCIENCE OLYMPIAD']
+    },
+    {
+      id: 8,
+      type: 'unscramble',
+      text: 'Unscramble these physics terms Ethan used during the walk:',
+      letters: 'TNEPOITAL,CKNETII,RTAISECSNE,TIORNBAVI',
+      answer: ['POTENTIAL', 'KINETIC', 'RESISTANCE', 'VIBRATION'],
+      theme: 'science',
+      difficulty: 'hard',
+      tags: ['PHYSICS', 'SCIENTIFIC TERMINOLOGY', 'WORD SKILLS', 'VOCABULARY BUILDING']
+    },
+    {
+      id: 9,
+      type: 'fill-blank',
+      text: 'When the rock rolls down the hill, Ethan explained that potential energy transforms into __________ energy.',
+      answer: 'kinetic',
+      theme: 'science',
+      difficulty: 'medium',
+      tags: ['PHYSICS', 'ENERGY CONVERSION', 'CONCEPTUAL UNDERSTANDING', 'SCIENCE RECALL']
+    },
+    {
+      id: 10,
+      type: 'multiple-choice',
+      text: 'According to Ethan, stop signs are made of metal rather than wood because metal is:',
+      options: ['Cheaper', 'More colorful', 'More durable in outdoor conditions', 'Easier to recycle'],
+      answer: 'c',
+      theme: 'materials',
+      difficulty: 'easy',
+      tags: ['MATERIALS SCIENCE', 'PROPERTIES OF MATTER', 'ENGINEERING', 'LOGICAL REASONING']
+    },
+    {
+      id: 11,
+      type: 'true-false',
+      text: 'According to the story, Ethan used a stopwatch to measure their walking time.',
+      answer: 'false',
+      theme: 'language',
+      difficulty: 'easy',
+      tags: ['READING COMPREHENSION', 'DETAIL RECALL', 'CLOSE READING', 'STORY ANALYSIS']
+    },
+    {
+      id: 12,
+      type: 'matching',
+      text: 'Connect each concept from Ethan\'s walk with the scientific principle:',
+      items: [
+        { item: 'Rock rolling downhill', match: 'Energy conservation' },
+        { item: 'Wind pushing against Ethan', match: 'Air resistance' },
+        { item: 'Triangular roof strength', match: 'Structural stability' },
+        { item: 'Sound from wind chimes', match: 'Vibration creates sound waves' }
+      ],
+      answer: ['Rock rolling downhill:Energy conservation', 'Wind pushing against Ethan:Air resistance', 'Triangular roof strength:Structural stability', 'Sound from wind chimes:Vibration creates sound waves'],
+      theme: 'interdisciplinary',
+      difficulty: 'hard',
+      tags: ['INTERDISCIPLINARY', 'SCIENCE PRINCIPLES', 'CONCEPTUAL MATCHING', 'CRITICAL THINKING']
+    },
+    {
+      id: 13,
+      type: 'multiple-choice',
+      text: 'According to Ethan\'s explanation, triangular roofs are common because:',
+      options: ['Triangles are more attractive', 'Rain or snow slides off easily and they\'re structurally strong', 'They\'re cheaper to build', 'They provide more attic space'],
+      answer: 'b',
+      theme: 'engineering',
+      difficulty: 'medium',
+      tags: ['ENGINEERING', 'STRUCTURAL DESIGN', 'FUNCTIONAL REASONING', 'PRACTICAL SCIENCE']
+    },
+    {
+      id: 14,
+      type: 'word-sequence',
+      text: 'Based on Ethan\'s explanation, place these energy transformations in the correct order for a rock rolling down a hill:',
+      wordSequence: ['Kinetic energy increases', 'Rock is stationary at top of hill', 'Rock comes to rest at bottom', 'Potential energy decreases', 'Rock starts moving'],
+      answer: ['Rock is stationary at top of hill', 'Rock starts moving', 'Potential energy decreases', 'Kinetic energy increases', 'Rock comes to rest at bottom'],
+      theme: 'science',
+      difficulty: 'hard',
+      tags: ['PHYSICS', 'SEQUENTIAL REASONING', 'ENERGY TRANSFORMATION', 'LOGICAL ORDERING']
+    },
+    {
+      id: 15,
+      type: 'multiple-choice',
+      text: 'When Ethan leaned into the wind, which force did he specifically mention was acting on him?',
+      options: ['Gravity', 'Air resistance', 'Friction', 'Magnetic force'],
+      answer: 'b',
+      theme: 'science',
+      difficulty: 'medium',
+      tags: ['PHYSICS', 'FORCES', 'READING RECALL', 'SCIENTIFIC TERMINOLOGY']
+    },
+    {
+      id: 16,
+      type: 'multiple-choice',
+      text: 'In the story, when Ethan said "The wind is playing us a song," this is an example of:',
+      options: ['Simile', 'Metaphor', 'Personification', 'Hyperbole'],
+      answer: 'c',
+      theme: 'language',
+      difficulty: 'medium',
+      tags: ['LANGUAGE ARTS', 'LITERARY DEVICES', 'FIGURATIVE LANGUAGE', 'READING COMPREHENSION']
+    },
+    {
+      id: 17,
+      type: 'unscramble',
+      text: 'Unscramble this literary device that Ethan specifically mentioned:',
+      letters: 'FICAPORNNOSTIE',
+      answer: ['PERSONIFICATION'],
+      theme: 'language',
+      difficulty: 'hard',
+      tags: ['LANGUAGE ARTS', 'LITERARY TERMINOLOGY', 'VOCABULARY', 'ELA SKILLS']
+    },
+    {
+      id: 18,
+      type: 'matching',
+      text: 'Connect each sentence with whether it contains personification like Ethan used:',
+      items: [
+        { item: '"The wind howled loudly"', match: 'Contains personification' },
+        { item: '"The wind moved the branches"', match: 'Doesn\'t contain personification' },
+        { item: '"The sun smiled down on us"', match: 'Contains personification' },
+        { item: '"The rain fell heavily"', match: 'Doesn\'t contain personification' }
+      ],
+      answer: ['"The wind howled loudly":Contains personification', '"The wind moved the branches":Doesn\'t contain personification', '"The sun smiled down on us":Contains personification', '"The rain fell heavily":Doesn\'t contain personification'],
+      theme: 'language',
+      difficulty: 'medium',
+      tags: ['LANGUAGE ARTS', 'FIGURATIVE LANGUAGE', 'READING ANALYSIS', 'ELA ASSESSMENT']
+    },
+    {
+      id: 19,
+      type: 'multiple-choice',
+      text: 'Ethan\'s explanation of wind chimes demonstrates:',
+      options: ['Only scientific knowledge', 'Only creative thinking', 'Both scientific knowledge and literary awareness', 'Neither scientific nor literary concepts'],
+      answer: 'c',
+      theme: 'interdisciplinary',
+      difficulty: 'medium',
+      tags: ['INTERDISCIPLINARY', 'SCIENCE-ARTS CONNECTION', 'CRITICAL THINKING', 'COMPREHENSIVE ANALYSIS']
+    },
+    {
+      id: 20,
+      type: 'fill-blank',
+      text: 'When Ethan gave human qualities to the wind in his description, he was using the literary device called ____________.',
+      answer: 'personification',
+      theme: 'language',
+      difficulty: 'easy',
+      tags: ['LANGUAGE ARTS', 'LITERARY DEVICES', 'TERMINOLOGY RECALL', 'READING STANDARDS']
+    },
+    {
+      id: 21,
+      type: 'multiple-choice',
+      text: 'If Ethan and his mother walked 2.8 miles in 45 minutes as stated in the story, what was their average speed?',
+      options: ['3.7 mph', '2.5 mph', '4.2 mph', '1.9 mph'],
+      answer: 'a',
+      theme: 'math',
+      difficulty: 'medium',
+      tags: ['MATHEMATICS', 'RATE CALCULATION', 'WORD PROBLEM', 'PRACTICAL MATH']
+    },
+    {
+      id: 22,
+      type: 'word-sequence',
+      text: 'Rearrange these words to form Ethan\'s explanation about triangular structures:',
+      wordSequence: ['STRONGEST', 'TRIANGLES', 'SHAPES', 'ARE', 'THE', 'ONE OF', 'BECAUSE', 'THEY', 'CAN', 'HANDLE', 'PRESSURE'],
+      answer: ['TRIANGLES', 'ARE', 'ONE OF', 'THE', 'STRONGEST', 'SHAPES', 'BECAUSE', 'THEY', 'CAN', 'HANDLE', 'PRESSURE'],
+      theme: 'language',
+      difficulty: 'medium',
+      tags: ['LANGUAGE ARTS', 'SENTENCE STRUCTURE', 'LOGICAL ORDERING', 'READING COMPREHENSION']
+    },
+    {
+      id: 23,
+      type: 'multiple-choice',
+      text: 'Based on the walking speed calculated from the story, if they maintained the same pace, how long would it take them to walk to the park that is 1.5 miles away?',
+      options: ['24 minutes', '30 minutes', '32 minutes', '45 minutes'],
+      answer: 'a',
+      theme: 'math',
+      difficulty: 'medium',
+      tags: ['MATHEMATICS', 'TIME CALCULATION', 'PROPORTIONAL REASONING', 'PRACTICAL APPLICATION']
+    },
+    {
+      id: 24,
+      type: 'multiple-choice',
+      text: 'Based on Ethan\'s explanation, triangular roofs are common because:',
+      options: ['Triangles are more attractive', 'Rain or snow slides off easily and they\'re structurally strong', 'They\'re cheaper to build', 'They provide more attic space'],
+      answer: 'b',
+      theme: 'engineering',
+      difficulty: 'medium',
+      tags: ['ENGINEERING', 'STRUCTURAL DESIGN', 'FUNCTIONAL REASONING', 'PRACTICAL SCIENCE']
+    },
+    {
+      id: 25,
+      type: 'multiple-choice',
+      text: 'Based on the story, Ethan\'s understanding of scientific concepts comes from:',
+      options: ['Repeating memorized facts without understanding', 'Trying to impress his mother', 'Connecting classroom learning to real-world observations', 'Reading about topics online'],
+      answer: 'c',
+      theme: 'interdisciplinary',
+      difficulty: 'medium',
+      tags: ['LEARNING ASSESSMENT', 'COGNITIVE DEVELOPMENT', 'READING INFERENCE', 'CHARACTER ANALYSIS']
+    },
+    {
+      id: 26,
+      type: 'multiple-choice',
+      text: 'The passage suggests that Ethan\'s understanding of geometry is primarily based on:',
+      options: ['Classroom instruction', 'Real-world observations', 'Reading scientific books', 'Computer simulations'],
+      answer: 'b',
+      theme: 'interdisciplinary',
+      difficulty: 'hard',
+      tags: ['READING ANALYSIS', 'INFERENCE', 'SAT PREPARATION', 'TEXT INTERPRETATION']
+    },
+    {
+      id: 27,
+      type: 'multiple-choice',
+      text: 'Based on the story, what is the strongest evidence that Ethan enjoys sharing knowledge?',
+      options: ['He asks his mother questions', 'He eagerly explains concepts before she can respond', 'He measures the distance they walked', 'He wants to explore more places'],
+      answer: 'b',
+      theme: 'language',
+      difficulty: 'hard',
+      tags: ['READING ANALYSIS', 'EVIDENCE-BASED REASONING', 'SAT PREPARATION', 'CHARACTER ASSESSMENT']
+    },
+    {
+      id: 28,
+      type: 'multiple-choice',
+      text: 'According to Ethan\'s explanation, potential energy is most directly related to:',
+      options: ['Speed of movement', 'Material composition', 'Height above ground', 'Air resistance'],
+      answer: 'c',
+      theme: 'science',
+      difficulty: 'medium',
+      tags: ['PHYSICS', 'CONCEPTUAL UNDERSTANDING', 'SAT SCIENCE', 'READING COMPREHENSION']
+    },
+    {
+      id: 29,
+      type: 'multiple-choice',
+      text: 'When Ethan described wood as "coarse" compared to metal, he most likely meant it was:',
+      options: ['Flexible', 'Rough-textured', 'Waterproof', 'Environmentally friendly'],
+      answer: 'b',
+      theme: 'language',
+      difficulty: 'medium',
+      tags: ['VOCABULARY', 'CONTEXTUAL MEANING', 'SAT VERBAL', 'WORD INTERPRETATION']
+    },
+    {
+      id: 30,
+      type: 'multiple-choice',
+      text: 'Based on the mother\'s responses in the story, her attitude toward learning could best be described as:',
+      options: ['Disinterested', 'Encouraging curiosity', 'Overly critical', 'Solely focused on formal education'],
+      answer: 'b',
+      theme: 'language',
+      difficulty: 'medium',
+      tags: ['CHARACTER ANALYSIS', 'READING INFERENCE', 'SAT READING', 'TEXTUAL EVIDENCE']
+    },
+    {
+      id: 31,
+      type: 'fill-blank',
+      text: 'A roof is in the shape of a triangle with sides of 5m, 5m, and 8m. Using the concepts Ethan described, its area is _________ square meters.',
+      answer: '12',
+      theme: 'math',
+      difficulty: 'hard',
+      tags: ['GEOMETRY', 'ADVANCED CALCULATION', 'HERON\'S FORMULA', 'MATH COMPETITION']
+    },
+    {
+      id: 32,
+      type: 'multiple-choice',
+      text: 'According to Ethan\'s explanation about rhombuses, if one has diagonals of 6 cm and 8 cm, what is its area?',
+      options: ['24 cm²', '48 cm²', '14 cm²', '24 cm²'],
+      answer: 'a',
+      theme: 'math',
+      difficulty: 'hard',
+      tags: ['GEOMETRY', 'ADVANCED CALCULATION', 'MATH OLYMPIAD', 'AREA FORMULAS']
+    },
+    {
+      id: 33,
+      type: 'multiple-choice',
+      text: 'If Ethan weighs 35 kg and climbs a hill with a height of 20 meters, approximately how much potential energy does he gain based on his explanation? (g ≈ 10 m/s²)',
+      options: ['700 joules', '7,000 joules', '70 joules', '350 joules'],
+      answer: 'b',
+      theme: 'science',
+      difficulty: 'hard',
+      tags: ['PHYSICS', 'ENERGY CALCULATION', 'SCIENCE OLYMPIAD', 'FORMULA APPLICATION']
+    },
+    {
+      id: 34,
+      type: 'multiple-choice',
+      text: 'According to Ethan\'s explanation, potential energy is to height as kinetic energy is to:',
+      options: ['Weight', 'Velocity', 'Mass', 'Temperature'],
+      answer: 'b',
+      theme: 'science',
+      difficulty: 'medium',
+      tags: ['PHYSICS', 'ANALOGICAL REASONING', 'CONCEPTUAL RELATIONSHIPS', 'SCIENCE APPLICATION']
+    },
+    {
+      id: 35,
+      type: 'multiple-choice',
+      text: 'Which shape mentioned in the story does NOT belong in this group?',
+      options: ['Rhombus', 'Diamond', 'Rectangle', 'Quadrilateral'],
+      answer: 'c',
+      theme: 'math',
+      difficulty: 'medium',
+      tags: ['GEOMETRY', 'CLASSIFICATION', 'LOGICAL REASONING', 'CATEGORY EXCLUSION']
+    },
+    {
+      id: 36,
+      type: 'hidden-word',
+      text: 'Find five material properties Ethan discussed in this word search:',
+      grid: [
+        'TRANSPARENTA',
+        'DFGHJKLCXZA',
+        'QWERTYUIOAS',
+        'ABFLEXIBLER',
+        'SDFGHJKLZAE',
+        'BZXCVBNMQWE',
+        'LIGHTWEIGHTT',
+        'ERTYUIOPQWE'
+      ],
+      words: ['TRANSPARENT', 'FLEXIBLE', 'LIGHTWEIGHT', 'DURABLE', 'COARSE'],
+      answer: ['TRANSPARENT', 'FLEXIBLE', 'LIGHTWEIGHT', 'DURABLE', 'COARSE'],
+      theme: 'materials',
+      difficulty: 'medium',
+      tags: ['MATERIALS SCIENCE', 'PROPERTY VOCABULARY', 'VISUAL SCANNING', 'SCIENCE TERMINOLOGY']
+    },
+    {
+      id: 37,
+      type: 'multiple-choice',
+      text: 'Based on how Ethan applied geometry during the walk, understanding geometry is useful in everyday life because:',
+      options: ['It helps with calculating large numbers', 'It improves spelling abilities', 'It helps recognize patterns and solve spatial problems', 'It\'s only useful for architects and engineers'],
+      answer: 'c',
+      theme: 'math',
+      difficulty: 'medium',
+      tags: ['PRACTICAL GEOMETRY', 'REAL-WORLD APPLICATION', 'CRITICAL THINKING', 'STEM REASONING']
+    },
+    {
+      id: 38,
+      type: 'unscramble',
+      text: 'Unscramble these material properties mentioned in the story:',
+      letters: 'LEBARDU,PARTSTANERN,SESLITRNE,SEACOR',
+      answer: ['DURABLE', 'TRANSPARENT', 'RESILIENT', 'COARSE'],
+      theme: 'materials',
+      difficulty: 'medium',
+      tags: ['MATERIALS SCIENCE', 'DESCRIPTIVE VOCABULARY', 'SPELLING', 'PROPERTY TERMINOLOGY']
+    },
+    {
+      id: 39,
+      type: 'multiple-choice',
+      text: 'Ethan jogged downhill at 6 mph for 0.4 miles. How many minutes did that take?',
+      options: ['2 minutes', '4 minutes', '6 minutes', '24 minutes'],
+      answer: 'b',
+      theme: 'math',
+      difficulty: 'medium',
+      tags: ['MATH', 'SPEED/TIME', 'CALCULATION', 'PRACTICAL APPLICATION']
+    },
+    {
+      id: 40,
+      type: 'multiple-choice',
+      text: 'What kind of energy does the wind transfer to the chimes to create sound?',
+      options: ['Chemical energy', 'Nuclear energy', 'Mechanical energy', 'Thermal energy'],
+      answer: 'c',
+      theme: 'science',
+      difficulty: 'easy',
+      tags: ['SCIENCE', 'ENERGY TRANSFER', 'CONCEPTUAL UNDERSTANDING', 'PHYSICS']
+    },
+    {
+      id: 41,
+      type: 'matching',
+      text: 'Match each object with its shape:',
+      items: [
+        { item: 'Stop sign', match: 'Octagon' },
+        { item: 'School zone sign', match: 'Pentagon' },
+        { item: 'Roof', match: 'Triangle' },
+        { item: 'Construction sign', match: 'Diamond' }
+      ],
+      answer: ['Stop sign:Octagon', 'School zone sign:Pentagon', 'Roof:Triangle', 'Construction sign:Diamond'],
+      theme: 'math',
+      difficulty: 'medium',
+      tags: ['MATH', 'SHAPES', 'RECOGNITION', 'REAL-WORLD APPLICATION']
+    },
+    {
+      id: 42,
+      type: 'multiple-choice',
+      text: 'If Ethan walked 2.8 miles and took 5600 steps, what is his average stride length in feet? (1 mile = 5280 ft)',
+      options: ['2.6 feet', '2.5 feet', '3.0 feet', '1.5 feet'],
+      answer: 'a',
+      theme: 'math',
+      difficulty: 'hard',
+      tags: ['MATH', 'DISTANCE', 'MEASUREMENT', 'CONVERSION']
+    },
+    {
+      id: 43,
+      type: 'true-false',
+      text: 'In the story, Ethan claimed that a diagonal splits a rhombus into two congruent triangles.',
+      answer: 'true',
+      theme: 'math',
+      difficulty: 'medium',
+      tags: ['GEOMETRY', 'SHAPE PROPERTIES', 'SPATIAL REASONING', 'MATH FACTS']
+    },
+    {
+      id: 44,
+      type: 'multiple-choice',
+      text: 'Based on Ethan\'s drawing in the dirt, if you split a rhombus along its diagonal, what do you get?',
+      options: ['Two rectangles', 'Two triangles', 'Four triangles', 'Two trapezoids'],
+      answer: 'b',
+      theme: 'math',
+      difficulty: 'medium',
+      tags: ['GEOMETRY', 'SHAPE DECOMPOSITION', 'SPATIAL REASONING', 'MATHEMATICAL VISUALIZATION']
+    },
+    {
+      id: 45,
+      type: 'multiple-choice',
+      text: 'Based on the analogies in the story, air is to wind as water is to:',
+      options: ['Rain', 'Current', 'Steam', 'Ice'],
+      answer: 'b',
+      theme: 'language',
+      difficulty: 'medium',
+      tags: ['ANALOGICAL REASONING', 'CONCEPTUAL RELATIONSHIPS', 'LOGICAL THINKING', 'VERBAL REASONING']
+    },
+    {
+      id: 46,
+      type: 'multiple-choice',
+      text: 'Based on Ethan\'s explanation of wind chimes, to create a descending musical scale, how should you arrange tubes from left to right?',
+      options: ['Shortest to longest', 'Longest to shortest', 'Random arrangement', 'Alternating long and short'],
+      answer: 'b',
+      theme: 'interdisciplinary',
+      difficulty: 'medium',
+      tags: ['MUSIC PHYSICS', 'SOUND PROPERTIES', 'APPLICATION THINKING', 'INTERDISCIPLINARY']
+    },
+    {
+      id: 47,
+      type: 'multiple-choice',
+      text: 'According to Ethan, the primary reason triangles are used in construction is:',
+      options: ['They use less material than other shapes', 'They\'re more aesthetically pleasing', 'They maintain their shape under pressure', 'They\'re easier to manufacture'],
+      answer: 'c',
+      theme: 'engineering',
+      difficulty: 'medium',
+      tags: ['ENGINEERING', 'STRUCTURAL PRINCIPLES', 'DESIGN REASONING', 'APPLIED GEOMETRY']
+    },
+    {
+      id: 48,
+      type: 'hidden-word',
+      text: 'Find these energy-related terms Ethan explained in the grid:',
+      grid: [
+        'POTENTIALGT',
+        'SDCVIBRATEB',
+        'KFGHJKINETIH',
+        'LDFGHRESIQW',
+        'FORCEZXERTY',
+        'SOUNDMNBCVZ',
+        'MOMENTUM123',
+        'FRICTIONSDF'
+      ],
+      words: ['POTENTIAL', 'KINETIC', 'FORCE', 'SOUND', 'VIBRATE', 'FRICTION', 'MOMENTUM'],
+      answer: ['POTENTIAL', 'KINETIC', 'FORCE', 'SOUND', 'VIBRATE', 'FRICTION', 'MOMENTUM'],
+      theme: 'science',
+      difficulty: 'medium',
+      tags: ['PHYSICS', 'ENERGY TERMS', 'VOCABULARY', 'SCIENTIFIC CONCEPTS']
+    },
+    {
+      id: 49,
+      type: 'multiple-choice',
+      text: 'What does Ethan mean when he says the wind has a personality?',
+      options: ['The wind is alive', 'He\'s using personification to describe the wind\'s variable nature', 'He believes wind has consciousness', 'He\'s confused about scientific concepts'],
+      answer: 'b',
+      theme: 'language',
+      difficulty: 'medium',
+      tags: ['LANGUAGE ARTS', 'FIGURATIVE LANGUAGE', 'READING COMPREHENSION', 'LITERARY ANALYSIS']
+    }
+  ],
