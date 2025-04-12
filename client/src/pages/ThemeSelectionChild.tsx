@@ -22,6 +22,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { apiRequest, queryClient } from '@/lib/queryClient';
 import { Theme, Profile } from '@shared/schema';
+import { COLORS, THEME_COLORS } from '@/lib/colors';
 import { 
   Rocket, 
   History, 
@@ -114,8 +115,8 @@ export default function ThemeSelectionChild() {
 
   if (isLoading || profileLoading || !themes) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-900 to-blue-900">
-        <div className="animate-pulse text-white text-2xl">Loading themes...</div>
+      <div className={`flex items-center justify-center min-h-screen ${COLORS.APP_BACKGROUND}`}>
+        <div className={`animate-pulse ${COLORS.TEXT_PRIMARY} text-2xl`}>Loading themes...</div>
       </div>
     );
   }
@@ -126,10 +127,10 @@ export default function ThemeSelectionChild() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-900 to-blue-900 text-white">
+    <div className={`min-h-screen ${COLORS.APP_BACKGROUND} ${COLORS.TEXT_PRIMARY}`}>
       <div className="container mx-auto px-4 py-12">
         <div className="flex items-center mb-12">
-          <Button variant="ghost" onClick={goBack} className="mr-4 text-blue-300 hover:text-white">
+          <Button variant="ghost" onClick={goBack} className={`mr-4 ${COLORS.TEXT_TERTIARY} hover:${COLORS.TEXT_PRIMARY}`}>
             <ArrowLeft className="h-5 w-5 mr-2" />
             Back to Profiles
           </Button>
@@ -203,7 +204,7 @@ export default function ThemeSelectionChild() {
                     </div>
                   </div>
                   <CardTitle className="text-2xl mt-4">{theme.name}</CardTitle>
-                  <CardDescription className="text-white/80">
+                  <CardDescription className={COLORS.TEXT_SECONDARY}>
                     {description}
                   </CardDescription>
                 </CardHeader>
@@ -224,7 +225,7 @@ export default function ThemeSelectionChild() {
                   </div>
                 </CardContent>
                 <CardFooter className="pt-0">
-                  <Button className="w-full bg-white/20 hover:bg-white/30 backdrop-blur-md">
+                  <Button className={`w-full ${COLORS.BUTTON_SECONDARY} backdrop-blur-md`}>
                     Select This Theme
                   </Button>
                 </CardFooter>
@@ -235,18 +236,18 @@ export default function ThemeSelectionChild() {
       </div>
 
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
-        <DialogContent className="bg-blue-900 border-blue-700 text-white">
+        <DialogContent className={`${COLORS.DIALOG_BG} ${COLORS.DIALOG_BORDER} ${COLORS.TEXT_PRIMARY}`}>
           <DialogHeader>
             <DialogTitle>Confirm Theme Selection</DialogTitle>
-            <DialogDescription className="text-blue-200">
+            <DialogDescription className={COLORS.TEXT_SECONDARY}>
               {selectedTheme && (
-                <>You've selected the <span className="text-white font-semibold">{selectedTheme.name}</span> theme.</>
+                <>You've selected the <span className={`${COLORS.TEXT_PRIMARY} font-semibold`}>{selectedTheme.name}</span> theme.</>
               )}
             </DialogDescription>
           </DialogHeader>
 
           <div className="py-4">
-            <p className="text-blue-100">
+            <p className={COLORS.TEXT_MUTED}>
               This theme will be used to personalize your learning experience. 
               You can change your theme selection later from your profile settings.
             </p>
@@ -256,13 +257,13 @@ export default function ThemeSelectionChild() {
             <Button 
               variant="outline" 
               onClick={() => setShowDialog(false)}
-              className="border-blue-700 text-blue-200 hover:bg-blue-800"
+              className={COLORS.BUTTON_OUTLINE}
             >
               Cancel
             </Button>
             <Button 
               onClick={confirmThemeSelection}
-              className="bg-blue-600 hover:bg-blue-700"
+              className={COLORS.BUTTON_PRIMARY}
             >
               Continue with this Theme
             </Button>
