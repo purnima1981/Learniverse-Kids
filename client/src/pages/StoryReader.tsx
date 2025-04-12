@@ -497,9 +497,9 @@ export default function StoryReader() {
 
       {/* Flashcard Dialog */}
       <Dialog open={showFlashcard} onOpenChange={setShowFlashcard}>
-        <DialogContent className="sm:max-w-md bg-gradient-to-br from-[#0F172A] to-[#2563EB] border-none">
+        <DialogContent className="sm:max-w-lg bg-gray-800 border-none max-h-[90vh] overflow-auto">
           <DialogHeader>
-            <DialogTitle className="text-center text-2xl font-bold text-white mb-2">
+            <DialogTitle className="text-center text-xl font-bold text-white mb-2">
               {selectedWord?.type === 'formula' ? 'Formula Flashcard' : 
                selectedWord?.type === 'concept' ? 'Concept Flashcard' : 
                'Vocabulary Flashcard'}
