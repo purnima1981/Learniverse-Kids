@@ -411,7 +411,7 @@ export default function NewAuthPage() {
           <div className="flex flex-col items-center justify-center mt-8 mb-16">
             <Button 
               size="lg"
-              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-lg font-bold px-16 py-8 animate-pulse-slow"
+              className="bg-blue-500 hover:bg-blue-600 text-white text-lg font-bold px-16 py-6 rounded-md w-80"
               onClick={() => {
                 setShowLogin(true);
                 setShowRegister(false);
