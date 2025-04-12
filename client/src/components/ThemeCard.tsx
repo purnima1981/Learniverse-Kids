@@ -97,7 +97,7 @@ export default function ThemeCard({ theme, onSelect, isSelecting }: ThemeCardPro
       onHoverEnd={() => setIsHovered(false)}
     >
       <Card 
-        className={`theme-card rounded-xl overflow-hidden cursor-pointer shadow-xl bg-gradient-to-br ${getThemeColors(theme.id)} border-white/20 h-[380px] transition-all duration-300`}
+        className={`theme-card rounded-xl overflow-hidden cursor-pointer shadow-xl bg-gradient-to-br ${getThemeColors(theme.id)} border-white/20 h-[400px] transition-all duration-300`}
         onClick={handleClick}
       >
         <div className="w-full h-52 relative overflow-hidden">
@@ -166,21 +166,21 @@ export default function ThemeCard({ theme, onSelect, isSelecting }: ThemeCardPro
             
             <h3 className="font-bold text-xl text-white mb-2">{theme.name}</h3>
             
-            <p className="text-white/90 text-sm leading-relaxed line-clamp-3">
+            <p className="text-white/90 text-sm leading-relaxed line-clamp-3 min-h-[4.5rem] mb-2">
               {truncateDescription(theme.description)}
             </p>
           </motion.div>
           
-          {/* Select button that becomes more visible on hover */}
+          {/* Select button that becomes more visible on hover - centered and full width */}
           <motion.div 
-            className="mt-3 flex justify-end"
+            className="mt-4 flex justify-center"
             initial={{ opacity: 0.7 }}
             animate={isHovered ? { opacity: 1 } : { opacity: 0.7 }}
             transition={{ duration: 0.3 }}
           >
-            <Badge className="bg-white/30 hover:bg-white/50 text-white px-3 py-1 cursor-pointer transition-all duration-300">
+            <button className="bg-white/30 hover:bg-white/50 text-white px-4 py-2 rounded-md cursor-pointer transition-all duration-300 w-full font-medium text-center shadow-md">
               Select Theme
-            </Badge>
+            </button>
           </motion.div>
         </div>
       </Card>
