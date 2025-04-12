@@ -1,6 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
 import { useLocation, useParams } from "wouter";
-// Removed useAuth import to fix error
 import { useToast } from "@/hooks/use-toast";
 import { regionalEpicsData } from "@/data/regional-epics";
 import { RegionalEpic, Theme } from "@shared/schema";
@@ -15,7 +14,6 @@ import { cn } from "@/lib/utils";
 
 export default function RegionalStoriesPage() {
   const { themeId } = useParams();
-  // Removed user dependency
   const { toast } = useToast();
   const [_, setLocation] = useLocation();
   const [selectedTheme, setSelectedTheme] = useState<Theme | null>(null);
