@@ -287,11 +287,61 @@ export default function NewAuthPage() {
           
           <div className="lg:w-1/2 slide-in-right">
             <div className="relative float">
-              <img 
-                src={learniverseIllustration} 
-                alt="Learniverse platform preview"
-                className="rounded-xl shadow-2xl border-2 border-indigo-600/50 w-full h-auto"
-              />
+              {/* Mathematical orbit system */}
+              <div className="relative w-full h-72 bg-indigo-900/40 rounded-xl shadow-2xl border-2 border-indigo-600/50 overflow-hidden">
+                {/* Circular orbits */}
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72">
+                  <div className="absolute inset-4 border-2 border-white/20 rounded-full animate-spin-slower"></div>
+                  <div className="absolute inset-8 border border-white/15 rounded-full animate-spin-slow" style={{ animationDirection: 'reverse' }}></div>
+                  <div className="absolute inset-16 border border-white/10 rounded-full animate-spin-slow"></div>
+                  
+                  {/* Mathematical symbols */}
+                  <div className="absolute top-8 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                    <div className="flex items-center justify-center w-14 h-14 rounded-full bg-purple-500 shadow-lg animate-float-slow">
+                      <span className="text-white text-2xl font-bold">π</span>
+                    </div>
+                  </div>
+                  
+                  <div className="absolute top-1/2 right-10 transform translate-y-1/2">
+                    <div className="flex items-center justify-center w-12 h-12 rounded-full bg-yellow-300 shadow-lg animate-float">
+                      <span className="text-indigo-900 text-xl font-bold">∑</span>
+                    </div>
+                  </div>
+                  
+                  <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-teal-400 shadow-lg animate-float-slow">
+                      <span className="text-indigo-900 text-lg font-bold">∞</span>
+                    </div>
+                  </div>
+                  
+                  <div className="absolute top-1/2 left-10 transform -translate-y-1/2">
+                    <div className="flex items-center justify-center w-12 h-12 rounded-full bg-blue-400 shadow-lg animate-float">
+                      <span className="text-white text-lg font-bold">⚛</span>
+                    </div>
+                  </div>
+                  
+                  {/* Center planet */}
+                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-gradient-to-br from-indigo-600 to-purple-600 shadow-lg animate-pulse-slow">
+                    <div className="absolute inset-1 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500"></div>
+                    <div className="absolute inset-4 rounded-full bg-gradient-to-br from-indigo-400 to-purple-400 opacity-70"></div>
+                  </div>
+                </div>
+                
+                {/* Stars and constellations */}
+                <div className="absolute top-10 left-10 w-2 h-2 bg-white rounded-full animate-pulse-slow"></div>
+                <div className="absolute top-20 left-20 w-1 h-1 bg-white rounded-full animate-pulse-slow"></div>
+                <div className="absolute bottom-15 right-30 w-1 h-1 bg-white rounded-full animate-pulse-slow"></div>
+                <div className="absolute bottom-40 right-20 w-2 h-2 bg-white rounded-full animate-pulse-slow"></div>
+                
+                {/* Shooting star */}
+                <div className="absolute top-10 right-10 w-20 h-px bg-gradient-to-r from-transparent via-white to-transparent transform -rotate-45 animate-pulse-slow"></div>
+                
+                {/* Text overlay */}
+                <div className="absolute bottom-4 left-0 right-0 text-center">
+                  <h3 className="text-white text-xl font-bold">Interactive Learning Universe</h3>
+                  <p className="text-blue-200 text-sm">Explore our story-based interdisciplinary adventures</p>
+                </div>
+              </div>
               <div className="absolute -top-4 -right-4 bg-gradient-to-r from-emerald-500 to-green-500 text-white font-bold py-2 px-4 rounded-full shadow-lg animate-pulse-slow">
                 New Curriculum
               </div>
@@ -437,7 +487,7 @@ export default function NewAuthPage() {
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
           <div className="flex w-full max-w-4xl shadow-2xl rounded-xl overflow-hidden">
             {/* Left side with illustration */}
-            <div className="w-2/5 bg-gradient-to-b from-cyan-400 to-blue-600 p-8 relative">
+            <div className="w-2/5 bg-[#00BFFF] p-8 relative">
               <div className="flex justify-center mb-8">
                 <div className="text-white text-2xl font-bold flex items-center">
                   <Rocket className="h-8 w-8 text-yellow-400 mr-2" />
@@ -447,50 +497,61 @@ export default function NewAuthPage() {
               
               {/* Space-themed decorative elements */}
               <div className="relative h-full">
-                {/* Learniverse-themed decorations */}
-                <div className="absolute top-5 left-5 w-16 h-16 bg-yellow-300 rounded-full opacity-10 animate-pulse-slow"></div>
-                <div className="absolute top-1/3 right-10 w-8 h-8 bg-blue-300 rounded-full opacity-20 animate-ping-slow"></div>
-                <div className="absolute bottom-40 left-20 w-12 h-12 bg-purple-400 rounded-full opacity-20 animate-ping-slow"></div>
-                
-                {/* Planets and stars */}
-                <div className="absolute top-1/4 left-1/4 w-20 h-20 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 opacity-70 shadow-lg animate-float-slow">
-                  <div className="absolute inset-1 rounded-full bg-gradient-to-br from-purple-400 to-indigo-500 opacity-80"></div>
-                </div>
-                
-                <div className="absolute bottom-20 right-5 w-16 h-16 rounded-full bg-gradient-to-br from-blue-400 to-teal-500 opacity-70 shadow-lg animate-float">
-                  <div className="absolute top-2 left-2 w-3 h-3 rounded-full bg-white opacity-50"></div>
-                </div>
-                
-                {/* Learning symbols */}
-                <div className="absolute bottom-40 right-10 text-white opacity-50 transform rotate-12 animate-float-slow text-2xl">∑</div>
-                <div className="absolute top-32 left-10 text-white opacity-50 transform -rotate-12 animate-float text-2xl">π</div>
-                <div className="absolute bottom-20 left-10 text-white opacity-50 transform -rotate-6 animate-float-slow text-2xl">≡</div>
-                
-                {/* Orbiting dots */}
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                  <div className="w-36 h-36 rounded-full border border-blue-300/20 relative animate-spin-slow">
-                    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-yellow-300"></div>
+                {/* Mathematical orbit system */}
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48">
+                  {/* Circular orbits */}
+                  <div className="absolute inset-0 border-2 border-white/20 rounded-full animate-spin-slower"></div>
+                  <div className="absolute inset-4 border border-white/15 rounded-full animate-spin-slow" style={{ animationDirection: 'reverse' }}></div>
+                  <div className="absolute inset-8 border border-white/10 rounded-full animate-spin-slow"></div>
+                  
+                  {/* Mathematical symbols */}
+                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                    <div className="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500 shadow-lg animate-float-slow">
+                      <span className="text-white text-xl font-bold">π</span>
+                    </div>
                   </div>
-                  <div className="w-24 h-24 rounded-full border border-purple-300/20 relative animate-spin-slower">
-                    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-green-300"></div>
+                  
+                  <div className="absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-1/2">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-yellow-300 shadow-lg animate-float">
+                      <span className="text-indigo-900 text-xl font-bold">∑</span>
+                    </div>
+                  </div>
+                  
+                  <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2">
+                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-lime-300 shadow-lg animate-float-slow">
+                      <span className="text-indigo-900 text-lg font-bold">∞</span>
+                    </div>
                   </div>
                 </div>
                 
-                <img 
-                  src={learniverseIllustration} 
-                  alt="Learniverse Students" 
-                  className="absolute bottom-5 left-1/2 transform -translate-x-1/2 w-40 h-auto rounded-lg shadow-lg"
-                />
+                {/* Small decorative planets */}
+                <div className="absolute top-20 left-5 w-4 h-4 bg-yellow-300 rounded-full animate-pulse-slow"></div>
+                <div className="absolute bottom-28 right-8 w-3 h-3 bg-white rounded-full animate-pulse-slow"></div>
+                <div className="absolute top-1/4 right-10 w-5 h-5 bg-lime-300 rounded-full animate-ping-slow"></div>
+                
+                {/* Shooting star */}
+                <div className="absolute top-16 right-16 w-20 h-px bg-gradient-to-r from-transparent via-white to-transparent transform -rotate-45 animate-pulse-slow"></div>
+                
+                {/* Constellation */}
+                <div className="absolute bottom-16 left-8">
+                  <div className="flex items-start">
+                    <div className="w-1 h-1 bg-white rounded-full"></div>
+                    <div className="w-8 h-px bg-white/30 transform rotate-45"></div>
+                    <div className="w-1 h-1 bg-white rounded-full"></div>
+                    <div className="w-6 h-px bg-white/30 transform -rotate-12"></div>
+                    <div className="w-1 h-1 bg-white rounded-full"></div>
+                  </div>
+                </div>
               </div>
             </div>
             
             {/* Right side with form */}
-            <div className="w-3/5 bg-indigo-950 p-8 text-white">
+            <div className="w-3/5 bg-[#1e1e3f] p-8 text-white">
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-3xl font-bold text-white">Sign in to Learniverse</h2>
                 <button 
                   onClick={() => setShowLogin(false)}
-                  className="text-blue-300 hover:text-white"
+                  className="text-gray-300 hover:text-white"
                 >
                   ✕
                 </button>
@@ -504,10 +565,10 @@ export default function NewAuthPage() {
                     render={({ field }) => (
                       <FormItem>
                         <div className="flex justify-between">
-                          <FormLabel className="text-blue-100 font-medium">Email Address</FormLabel>
+                          <FormLabel className="text-gray-200 font-medium">Email Address</FormLabel>
                           <button 
                             type="button" 
-                            className="text-blue-300 text-sm hover:text-blue-100"
+                            className="text-blue-300 text-sm hover:text-white"
                             onClick={() => {
                               setShowForgotPassword(true);
                               setShowLogin(false);
@@ -519,7 +580,7 @@ export default function NewAuthPage() {
                         <FormControl>
                           <Input
                             placeholder="your.email@example.com"
-                            className="bg-indigo-900/50 border-indigo-700 text-white focus:border-blue-500"
+                            className="bg-[#2d2d5b] border-[#5555aa] text-white focus:border-[#7f7fce]"
                             {...field}
                           />
                         </FormControl>
@@ -534,10 +595,10 @@ export default function NewAuthPage() {
                     render={({ field }) => (
                       <FormItem>
                         <div className="flex justify-between">
-                          <FormLabel className="text-blue-100 font-medium">Password</FormLabel>
+                          <FormLabel className="text-gray-200 font-medium">Password</FormLabel>
                           <button 
                             type="button" 
-                            className="text-blue-300 text-sm hover:text-blue-100"
+                            className="text-blue-300 text-sm hover:text-white"
                             onClick={() => {
                               setShowForgotPassword(true);
                               setShowLogin(false);
@@ -550,7 +611,7 @@ export default function NewAuthPage() {
                           <Input
                             type="password"
                             placeholder="••••••••"
-                            className="bg-indigo-900/50 border-indigo-700 text-white focus:border-blue-500"
+                            className="bg-[#2d2d5b] border-[#5555aa] text-white focus:border-[#7f7fce]"
                             {...field}
                           />
                         </FormControl>
@@ -563,25 +624,25 @@ export default function NewAuthPage() {
                     <input
                       type="checkbox"
                       id="remember"
-                      className="h-4 w-4 text-blue-600 rounded border-indigo-700 bg-indigo-900/50"
+                      className="h-4 w-4 text-green-500 rounded border-[#5555aa] bg-[#2d2d5b]"
                     />
-                    <label htmlFor="remember" className="ml-2 text-blue-100">
+                    <label htmlFor="remember" className="ml-2 text-gray-200">
                       Remember
                     </label>
                   </div>
 
                   <Button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-bold py-3 rounded-md"
+                    className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-md"
                   >
                     Sign in
                   </Button>
                   
                   <div className="flex items-center justify-center mt-6">
-                    <span className="text-blue-100">Not a member yet?</span>
+                    <span className="text-gray-300">Not a member yet?</span>
                     <button 
                       type="button" 
-                      className="ml-2 text-blue-300 font-medium hover:text-blue-100"
+                      className="ml-2 text-blue-300 font-medium hover:text-white"
                       onClick={() => {
                         setShowLogin(false);
                         setShowRegister(true);
@@ -612,46 +673,57 @@ export default function NewAuthPage() {
               
               {/* Space-themed decorative elements */}
               <div className="relative h-full">
-                {/* Learniverse-themed decorations */}
-                <div className="absolute top-5 right-5 w-16 h-16 bg-purple-300 rounded-full opacity-10 animate-pulse-slow"></div>
-                <div className="absolute top-1/3 left-10 w-8 h-8 bg-indigo-300 rounded-full opacity-20 animate-ping-slow"></div>
-                <div className="absolute bottom-40 right-20 w-12 h-12 bg-blue-400 rounded-full opacity-20 animate-ping-slow"></div>
-                
-                {/* Planets and stars */}
-                <div className="absolute top-1/4 right-1/4 w-20 h-20 rounded-full bg-gradient-to-br from-teal-500 to-cyan-600 opacity-70 shadow-lg animate-float-slow">
-                  <div className="absolute inset-1 rounded-full bg-gradient-to-br from-teal-400 to-cyan-500 opacity-80"></div>
-                </div>
-                
-                <div className="absolute bottom-20 left-5 w-16 h-16 rounded-full bg-gradient-to-br from-yellow-400 to-amber-500 opacity-70 shadow-lg animate-float">
-                  <div className="absolute top-2 left-2 w-3 h-3 rounded-full bg-white opacity-50"></div>
-                </div>
-                
-                {/* Learning symbols */}
-                <div className="absolute bottom-40 left-10 text-white opacity-50 transform rotate-12 animate-float-slow text-2xl">⚛</div>
-                <div className="absolute top-32 right-10 text-white opacity-50 transform -rotate-12 animate-float text-2xl">∞</div>
-                <div className="absolute bottom-20 right-10 text-white opacity-50 transform -rotate-6 animate-float-slow text-2xl">∝</div>
-                
-                {/* Constellations */}
-                <div className="absolute top-1/3 left-1/3">
-                  <div className="flex items-center justify-center">
-                    <div className="w-1 h-1 bg-white rounded-full"></div>
-                    <div className="w-8 h-px bg-white/30"></div>
-                    <div className="w-1 h-1 bg-white rounded-full"></div>
-                    <div className="w-10 h-px bg-white/30 rotate-45"></div>
-                    <div className="w-1 h-1 bg-white rounded-full"></div>
+                {/* Mathematical orbit system */}
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48">
+                  {/* Circular orbits */}
+                  <div className="absolute inset-0 border-2 border-white/20 rounded-full animate-spin-slower"></div>
+                  <div className="absolute inset-4 border border-white/15 rounded-full animate-spin-slow" style={{ animationDirection: 'reverse' }}></div>
+                  <div className="absolute inset-8 border border-white/10 rounded-full animate-spin-slow"></div>
+                  
+                  {/* Mathematical symbols */}
+                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                    <div className="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-500 shadow-lg animate-float-slow">
+                      <span className="text-white text-xl font-bold">∆</span>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-center mt-5">
-                    <div className="w-1 h-1 bg-white rounded-full"></div>
-                    <div className="w-6 h-px bg-white/30"></div>
-                    <div className="w-1 h-1 bg-white rounded-full"></div>
+                  
+                  <div className="absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-1/2">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-yellow-300 shadow-lg animate-float">
+                      <span className="text-indigo-900 text-xl font-bold">⚛</span>
+                    </div>
+                  </div>
+                  
+                  <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2">
+                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-purple-400 shadow-lg animate-float-slow">
+                      <span className="text-white text-lg font-bold">∞</span>
+                    </div>
+                  </div>
+                  
+                  <div className="absolute top-1/2 left-0 transform -translate-x-1/2 -translate-y-1/2">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-pink-400 shadow-lg animate-float">
+                      <span className="text-white text-lg font-bold">∑</span>
+                    </div>
                   </div>
                 </div>
                 
-                <img 
-                  src={learniverseIllustration} 
-                  alt="Learniverse Students" 
-                  className="absolute bottom-5 left-1/2 transform -translate-x-1/2 w-40 h-auto rounded-lg shadow-lg"
-                />
+                {/* Small decorative planets */}
+                <div className="absolute top-20 left-5 w-4 h-4 bg-yellow-300 rounded-full animate-pulse-slow"></div>
+                <div className="absolute bottom-28 right-8 w-3 h-3 bg-white rounded-full animate-pulse-slow"></div>
+                <div className="absolute top-1/4 right-10 w-5 h-5 bg-lime-300 rounded-full animate-ping-slow"></div>
+                
+                {/* Shooting star */}
+                <div className="absolute top-16 right-16 w-20 h-px bg-gradient-to-r from-transparent via-white to-transparent transform -rotate-45 animate-pulse-slow"></div>
+                
+                {/* Constellation */}
+                <div className="absolute bottom-16 left-8">
+                  <div className="flex items-start">
+                    <div className="w-1 h-1 bg-white rounded-full"></div>
+                    <div className="w-8 h-px bg-white/30 transform rotate-45"></div>
+                    <div className="w-1 h-1 bg-white rounded-full"></div>
+                    <div className="w-6 h-px bg-white/30 transform -rotate-12"></div>
+                    <div className="w-1 h-1 bg-white rounded-full"></div>
+                  </div>
+                </div>
               </div>
             </div>
             
@@ -873,11 +945,22 @@ export default function NewAuthPage() {
                   </div>
                 </div>
                 
-                <img 
-                  src={learniverseIllustration} 
-                  alt="Learniverse Students" 
-                  className="absolute bottom-5 left-1/2 transform -translate-x-1/2 w-40 h-auto rounded-lg shadow-lg"
-                />
+                {/* Space-themed decorative elements */}
+                <div className="absolute bottom-5 left-0 right-0">
+                  <div className="w-full h-12 bg-gradient-to-r from-blue-900 via-blue-700 to-blue-900 opacity-40 rounded-b-lg"></div>
+                  <div className="absolute bottom-4 left-4">
+                    <div className="w-3 h-3 bg-white rounded-full animate-pulse-slow"></div>
+                  </div>
+                  <div className="absolute bottom-8 left-1/3">
+                    <div className="w-2 h-2 bg-white rounded-full animate-pulse-slow"></div>
+                  </div>
+                  <div className="absolute bottom-6 right-1/4">
+                    <div className="w-1 h-1 bg-white rounded-full animate-ping-slow"></div>
+                  </div>
+                  <div className="absolute bottom-2 right-8">
+                    <div className="w-2 h-2 bg-white rounded-full animate-pulse-slow"></div>
+                  </div>
+                </div>
               </div>
             </div>
             
