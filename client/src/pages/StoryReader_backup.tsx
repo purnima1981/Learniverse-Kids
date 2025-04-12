@@ -383,44 +383,119 @@ export default function StoryReader() {
               
               <p className="mb-4">"I think it has something to do with rain or snow sliding off easily," I guessed.</p>
               
-              <p className="mb-4">"That's right," Ethan nodded, "but it's also about <span className="font-bold text-[#2563EB] cursor-pointer hover:underline" onClick={() => currentChapter.vocabularyWords && handleWordClick(currentChapter.vocabularyWords[3])}>structural integrity</span>. Triangles are super strong shapes because they can't be deformed without changing the length of their sides."</p>
+              <p className="mb-4">"That's right," Ethan said. "But there's more! Triangles are one of the strongest shapes in geometry—they can handle a lot of pressure from wind or heavy snow without collapsing."</p>
               
-              <p className="mb-4">Our walk continued toward the park, where the first signs of spring were emerging. We measured our shadows and talked about how they changed with the sun's position. When we saw a bicycle, Ethan excitedly pointed out that its wheels demonstrated <span className="font-bold text-[#2563EB] cursor-pointer hover:underline" onClick={() => currentChapter.vocabularyWords && handleWordClick(currentChapter.vocabularyWords[4])}>rotational motion</span>, and how the metal frame balanced strength with weight.</p>
+              <p className="mb-4">He picked up a stick and drew a <span className="font-bold text-[#10B981] cursor-pointer hover:underline" onClick={() => currentChapter.vocabularyWords && handleWordClick(currentChapter.vocabularyWords[3])}>rhombus</span> in the dirt. "Look at this," he said excitedly. "If I draw a diagonal line across this rhombus, it splits into two triangles! And if we measure the diagonals, we can even calculate the area of the rhombus using those triangles."</p>
               
-              <p className="mb-4">The neighborhood pond with its <span className="font-bold text-[#10B981] cursor-pointer hover:underline" onClick={() => currentChapter.vocabularyWords && handleWordClick(currentChapter.vocabularyWords[5])}>circular</span> shape became our next classroom. "The surface tension of water creates interesting patterns," Ethan observed as he tossed a pebble, watching the <span className="font-bold text-[#2563EB] cursor-pointer hover:underline" onClick={() => currentChapter.vocabularyWords && handleWordClick(currentChapter.vocabularyWords[6])}>concentric</span> ripples expand outward.</p>
+              <p className="mb-4">As we continued walking, we passed by a diamond-shaped road sign warning drivers about construction ahead. Ethan stopped to observe it closely. "Mom, look at this sign! If you stand behind it, the support pillars divide it into two equal triangles."</p>
               
-              <p className="mb-4">I marveled at how our simple walk had become a natural showcase for science and math. We'd encountered geometry in architecture, physics in motion, and materials science in everyday objects.</p>
+              <p className="mb-4">"You're absolutely right!" I said. "That's geometry in action. A diagonal line splits a diamond—or rhombus—into two <span className="font-bold text-[#10B981] cursor-pointer hover:underline" onClick={() => currentChapter.vocabularyWords && handleWordClick(currentChapter.vocabularyWords[4])}>congruent</span> triangles."</p>
               
-              <p className="mb-4">At the playground, we examined the <span className="font-bold text-[#D97706] cursor-pointer hover:underline" onClick={() => currentChapter.vocabularyWords && handleWordClick(currentChapter.vocabularyWords[7])}>composite</span> materials used in the equipment. Ethan explained how they combined different properties to achieve both durability and safety.</p>
+              <p className="mb-4">Ethan grinned. "Geometry is everywhere if you just look for it!"</p>
               
-              <p className="mb-4">As we began our journey home, measuring our walking pace, I asked, "What did you learn in school this week that you saw on our walk today?"</p>
+              <p className="mb-4">Our path led us up a gentle hill, prompting a conversation about energy and work. "Mom," Ethan called back, "do you know what happens to our energy as we climb?"</p>
               
-              <p className="mb-4">Ethan's face lit up. "We're studying simple machines in science class. That seesaw is a perfect example of a <span className="font-bold text-[#2563EB] cursor-pointer hover:underline" onClick={() => currentChapter.vocabularyWords && handleWordClick(currentChapter.vocabularyWords[8])}>lever</span>, and the slide demonstrates <span className="font-bold text-[#2563EB] cursor-pointer hover:underline" onClick={() => currentChapter.vocabularyWords && handleWordClick(currentChapter.vocabularyWords[9])}>gravitational potential energy</span> turning into kinetic energy!"</p>
+              <p className="mb-4">"What do you mean?" I asked.</p>
               
-              <p className="mb-4">By the time we arrived home, we'd walked exactly 1.8 miles in 45 minutes. Ethan calculated our average walking speed: "That's 2.4 miles per hour, Mom!"</p>
+              <p className="mb-4">"When we walk uphill," he explained, "our bodies store energy because of our height above the ground. That's called <span className="font-bold text-[#2563EB] cursor-pointer hover:underline" onClick={() => currentChapter.vocabularyWords && handleWordClick(currentChapter.vocabularyWords[5])}>potential energy</span>! The higher we go, the more potential energy we gain."</p>
               
-              <p className="mb-4">Our Sunday afternoon stroll had transformed into an immersive learning adventure, connecting classroom concepts with the real world in memorable ways. As we stepped through our front door, I realized these walks were teaching both of us to see the extraordinary science, math, and engineering hidden within our ordinary neighborhood.</p>
+              <p className="mb-4">"That makes sense," I said as I caught up with him at the top of the hill. "What happens to that energy when we go back down?"</p>
+              
+              <p className="mb-4">"It turns into <span className="font-bold text-[#2563EB] cursor-pointer hover:underline" onClick={() => currentChapter.vocabularyWords && handleWordClick(currentChapter.vocabularyWords[6])}>kinetic energy</span>—the energy of motion!" Ethan said excitedly. "Think about rolling a ball down this hill—it speeds up as it goes down because its potential energy is turning into kinetic energy."</p>
+              
+              <p className="mb-4">To demonstrate, Ethan picked up a small rock and let it roll down the hill. "See? The rock is accelerating just like I said!"</p>
+              
+              <p className="mb-4">At the top of the hill, a strong breeze greeted us. Ethan spread his arms wide and leaned into the wind. "Mom, it feels like the wind is trying to push us back home!" he laughed.</p>
+              
+              <p className="mb-4">"That's <span className="font-bold text-[#2563EB] cursor-pointer hover:underline" onClick={() => currentChapter.vocabularyWords && handleWordClick(currentChapter.vocabularyWords[7])}>air resistance</span>," Ethan explained before I could respond. "It's a force that impedes us when we move forward against the wind."</p>
+              
+              <p className="mb-4">We passed by a neighbor's house with wind chimes hanging on their porch. The breeze made them tinkle softly. "Mom, do you know how wind chimes make music?" Ethan asked.</p>
+              
+              <p className="mb-4">"No idea—tell me!" I said.</p>
+              
+              <p className="mb-4">"The wind transfers kinetic energy to the chimes," he explained patiently. "That energy makes them vibrate and create sound waves that travel through the air to our ears."</p>
+              
+              <p className="mb-4">He paused and then added thoughtfully: "The wind is playing us a song—kind of like it has its own personality!"</p>
+              
+              <p className="mb-4">"Wait," I interrupted playfully. "That sounds like <span className="font-bold text-[#8B5CF6] cursor-pointer hover:underline" onClick={() => currentChapter.vocabularyWords && handleWordClick(currentChapter.vocabularyWords[8])}>personification</span>! You're giving human qualities to something non-human."</p>
+              
+              <p className="mb-4">"You're right!" Ethan laughed. "Personification is one of my favorite literary devices."</p>
+              
+              <p className="mb-4">As we neared home after our 2.8-mile journey (yes, Ethan insisted on measuring it), he noticed something interesting about our surroundings: "Mom, everything around us is made of different materials—wood fences, metal stop signs, glass windows… Do you know why people choose certain materials for specific things?"</p>
+              
+              <p className="mb-4">"I'm guessing it depends on what they need," I replied.</p>
+              
+              <p className="mb-4">"Exactly!" Ethan said eagerly. "Metal is durable and doesn't break easily—that's why stop signs are made of metal instead of wood or plastic. Glass is transparent so light can pass through it—that's why windows are made of glass."</p>
+              
+              <p className="mb-4">He touched the wooden fence next to us and added thoughtfully: "Wood feels coarse compared to metal and isn't as <span className="font-bold text-[#D97706] cursor-pointer hover:underline" onClick={() => currentChapter.vocabularyWords && handleWordClick(currentChapter.vocabularyWords[9])}>resilient</span> outdoors unless treated properly."</p>
+              
+              <p className="mb-4">"Wow," I said again. "You've really been paying attention to everything around you!"</p>
+              
+              <p className="mb-4">By the time we reached home at 3:30 PM, Ethan was glowing with excitement about everything he had shared during our walk. As we stepped onto our porch, he turned to me and said with a big smile: "Mom, let's explore more places next weekend! Maybe that park in the next neighborhood?"</p>
+              
+              <p className="mb-4">"Of course," I replied warmly. And just like that, our ordinary walk transformed into an unforgettable journey filled with curiosity and discovery—led by my brilliant son.</p>
             </div>
           </div>
         </div>
+        
+        <div className="flex justify-between mt-8">
+          <Button
+            variant="outline"
+            className="bg-white/20 hover:bg-white/30 text-white border-transparent"
+            onClick={handlePreviousChapter}
+            disabled={!prevChapter}
+          >
+            <ChevronLeft className="h-5 w-5 mr-1" />
+            Previous Chapter
+          </Button>
+          
+          <div className="flex gap-3">
+            {/* Show quiz button regardless, the loader will handle if there are no questions */}
+            {!quizCompleted && (
+              <Button
+                variant="outline"
+                className={`${hasReadStory ? 'bg-[#2563EB] hover:bg-[#1E40AF]' : 'bg-gray-500'} text-white font-bold border-transparent`}
+                onClick={() => setShowQuestions(true)}
+                disabled={!hasReadStory}
+              >
+                {hasReadStory ? 'Take Chapter Quiz' : 'Finish Reading Story'}
+              </Button>
+            )}
+            
+            <Button
+              className="bg-[#10B981] hover:bg-[#0D9488] text-white font-bold"
+              onClick={handleNextChapter}
+              disabled={
+                !nextChapter || 
+                (!quizCompleted && hasReadStory) // Only require quiz completion if the user has read the story
+              }
+            >
+              {!quizCompleted && hasReadStory ? (
+                <>Complete Quiz to Continue</>
+              ) : (
+                <>Next Chapter<ChevronRight className="h-5 w-5 ml-1" /></>
+              )}
+            </Button>
+          </div>
+        </div>
       </div>
-      
-      {/* Chapter questions */}
-      {showQuestions && currentChapter && (
-        <div className="fixed inset-0 bg-black/80 z-50 overflow-y-auto py-8">
-          <div className="max-w-4xl mx-auto px-4">
-            <ChapterQuestionsLoader
+
+      {/* Chapter Questions */}
+      {showQuestions && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4 overflow-y-auto">
+          <div className="w-full max-w-4xl glass-panel">
+            {/* Dynamically import question data to avoid caching */}
+            <ChapterQuestionsLoader 
               storyId={storyIdNumber}
               chapterNumber={chapterNumber}
               onComplete={handleQuizComplete}
               onClose={() => setShowQuestions(false)}
-              readingTime={readingStartTime ? Math.floor((Date.now() - readingStartTime) / 1000) : 0}
             />
           </div>
         </div>
       )}
 
-      {/* Flashcard Dialog - Horizontal layout */}
+      {/* Flashcard Dialog */}
       <Dialog open={showFlashcard} onOpenChange={setShowFlashcard}>
         <DialogContent className="sm:max-w-4xl w-[95vw] bg-gradient-to-br from-[#0F172A] to-[#2563EB] border-none">
           <DialogHeader>
@@ -479,7 +554,7 @@ export default function StoryReader() {
                 </Card>
               </div>
               
-              {/* Additional content */}
+              {/* Formula section */}
               {selectedWord.formula && (
                 <div className="mt-4 bg-[#2563EB]/20 p-4 rounded-md border border-[#2563EB]/30">
                   <h3 className="text-lg font-semibold text-[#2563EB] mb-2">Formula:</h3>
@@ -494,6 +569,7 @@ export default function StoryReader() {
                 </div>
               )}
               
+              {/* Mnemonic section */}
               {selectedWord.mnemonic && (
                 <div className="mt-4 bg-[#10B981]/20 p-4 rounded-md border border-[#10B981]/30">
                   <h3 className="text-lg font-semibold text-[#10B981] mb-2">Memory Aid:</h3>
@@ -503,6 +579,7 @@ export default function StoryReader() {
                 </div>
               )}
               
+              {/* Image section */}
               {selectedWord.image && (
                 <div className="mt-4">
                   <h3 className="text-lg font-semibold text-[#10B981] mb-2">Visual Reference:</h3>
@@ -516,6 +593,7 @@ export default function StoryReader() {
                 </div>
               )}
               
+              {/* Synonyms section */}
               {selectedWord.subject === "Language Arts" && selectedWord.synonyms && selectedWord.synonyms.length > 0 && (
                 <div className="mt-4">
                   <h3 className="text-lg font-semibold text-[#8B5CF6] mb-2">Synonyms:</h3>
@@ -529,6 +607,7 @@ export default function StoryReader() {
                 </div>
               )}
               
+              {/* Antonyms section */}
               {selectedWord.subject === "Language Arts" && selectedWord.antonyms && selectedWord.antonyms.length > 0 && (
                 <div className="mt-4">
                   <h3 className="text-lg font-semibold text-[#8B5CF6] mb-2">Antonyms:</h3>
@@ -555,7 +634,6 @@ export default function StoryReader() {
           </div>
         </DialogContent>
       </Dialog>
-      
       {/* InterChapterGame - Show between chapters */}
       {showInterChapterGame && nextChapter && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4 overflow-y-auto">
