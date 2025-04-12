@@ -1172,7 +1172,7 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
         </div>
       </Card>
 
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center mt-6 pb-4">
         <div className="flex gap-2">
           <Button 
             variant="outline" 
@@ -1228,7 +1228,7 @@ export default function ChapterQuestions({ questions, onComplete, chapterNumber,
           <Button 
             onClick={checkAnswer}
             disabled={!answers[currentQuestion.id] || showFeedback}
-            className="bg-[#10B981] hover:bg-[#0D9488] text-white"
+            className="bg-[#10B981] hover:bg-[#0D9488] text-white font-medium"
           >
             Check Answer
           </Button>

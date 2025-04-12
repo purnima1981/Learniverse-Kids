@@ -479,7 +479,7 @@ export default function StoryReader() {
       {/* Chapter Questions */}
       {showQuestions && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4 overflow-y-auto">
-          <div className="w-full max-w-4xl glass-panel">
+          <div className="w-full max-w-4xl glass-panel mb-10 mt-6 pt-6">
             {/* Dynamically import question data to avoid caching */}
             <ChapterQuestionsLoader 
               storyId={storyIdNumber}
