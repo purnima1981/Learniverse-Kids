@@ -412,7 +412,7 @@ export default function NewAuthPage() {
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
           <div className="flex w-full max-w-4xl shadow-2xl rounded-xl overflow-hidden">
             {/* Left side with illustration */}
-            <div className="w-2/5 bg-[#00d2ff] p-8 relative">
+            <div className="w-2/5 bg-[#00c8ff] p-8 relative" style={{ backgroundColor: "#00c8ff" }}>
               <div className="flex justify-center mb-8">
                 <div className="text-white text-2xl font-bold flex items-center">
                   <Rocket className="h-8 w-8 text-yellow-400 mr-2" />
@@ -558,7 +558,7 @@ export default function NewAuthPage() {
 
                   <Button
                     type="submit"
-                    className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-md"
+                    className="w-full bg-[#37cf65] hover:bg-[#2bb555] text-white font-bold py-3 rounded-md"
                   >
                     Sign in
                   </Button>
@@ -800,7 +800,7 @@ export default function NewAuthPage() {
 
                   <Button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white font-bold py-3 rounded-md mt-6"
+                    className="w-full bg-gradient-to-r from-purple-500 to-violet-600 hover:from-purple-600 hover:to-violet-700 text-white font-bold py-3 rounded-md mt-6"
                   >
                     Sign up
                   </Button>
