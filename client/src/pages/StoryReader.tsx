@@ -513,43 +513,47 @@ export default function StoryReader() {
           
           {selectedWord && (
             <div className="py-4">
-              <Card className="bg-white/10 overflow-hidden">
+              <Card className="bg-gray-800 overflow-hidden border border-gray-700">
                 {selectedWord.subject && (
                   <div className={`text-xs uppercase tracking-wider text-white text-center py-1 ${
-                    selectedWord.subject === 'Geometry' ? 'bg-[#10B981]/70' :
-                    selectedWord.subject === 'Physics' ? 'bg-[#2563EB]/70' :
-                    selectedWord.subject === 'Materials Science' ? 'bg-[#D97706]/70' :
-                    selectedWord.subject === 'Language Arts' ? 'bg-[#8B5CF6]/70' :
-                    'bg-[#2563EB]/70'
+                    selectedWord.subject === 'Geometry' ? 'bg-green-800' :
+                    selectedWord.subject === 'Physics' ? 'bg-blue-800' :
+                    selectedWord.subject === 'Materials Science' ? 'bg-amber-800' :
+                    selectedWord.subject === 'Language Arts' ? 'bg-purple-800' :
+                    'bg-blue-800'
                   }`}>
                     {selectedWord.subject}
                   </div>
                 )}
                 <div className={`p-4 ${
-                  selectedWord.subject === 'Geometry' ? 'bg-[#10B981]/50' :
-                  selectedWord.subject === 'Physics' ? 'bg-[#2563EB]/50' :
-                  selectedWord.subject === 'Materials Science' ? 'bg-[#D97706]/50' :
-                  selectedWord.subject === 'Language Arts' ? 'bg-[#8B5CF6]/50' :
-                  'bg-[#2563EB]/50'
+                  selectedWord.subject === 'Geometry' ? 'bg-green-900/50' :
+                  selectedWord.subject === 'Physics' ? 'bg-blue-900/50' :
+                  selectedWord.subject === 'Materials Science' ? 'bg-amber-900/50' :
+                  selectedWord.subject === 'Language Arts' ? 'bg-purple-900/50' :
+                  'bg-blue-900/50'
                 }`}>
                   <h2 className="text-xl font-bold text-center text-white mb-1">
                     {selectedWord.word}
                   </h2>
                 </div>
                 <CardContent className="p-6">
-                  <h3 className="text-lg font-semibold text-[#10B981] mb-2">Definition:</h3>
-                  <p className="text-white mb-4">{selectedWord.definition}</p>
+                  <div className="bg-gray-700 p-4 rounded-md border border-green-500/30 mb-4">
+                    <h3 className="text-lg font-semibold text-green-400 mb-2">Definition:</h3>
+                    <p className="text-white">{selectedWord.definition}</p>
+                  </div>
                   
-                  <h3 className="text-lg font-semibold text-[#10B981] mb-2">Example:</h3>
-                  <p className="italic text-white/90 bg-white/5 p-3 rounded border border-white/10">
-                    "{selectedWord.context}"
-                  </p>
+                  <div className="bg-gray-700 p-4 rounded-md border border-green-500/30">
+                    <h3 className="text-lg font-semibold text-green-400 mb-2">Example:</h3>
+                    <p className="italic text-white/90 bg-gray-800 p-3 rounded border border-gray-600">
+                      "{selectedWord.context}"
+                    </p>
+                  </div>
                   
                   {/* Display formula if it exists */}
                   {selectedWord.formula && (
-                    <div className="mt-4 bg-[#2563EB]/20 p-4 rounded-md border border-[#2563EB]/30">
-                      <h3 className="text-lg font-semibold text-[#2563EB] mb-2">Formula:</h3>
-                      <div className="text-white text-center font-mono text-xl p-2 bg-black/30 rounded mb-2">
+                    <div className="mt-4 bg-gray-700 p-4 rounded-md border border-blue-500/30">
+                      <h3 className="text-lg font-semibold text-blue-400 mb-2">Formula:</h3>
+                      <div className="text-white text-center font-mono text-xl p-2 bg-black/30 rounded mb-2" style={{maxWidth: "100%", overflow: "auto"}}>
                         {selectedWord.formula}
                       </div>
                       {selectedWord.formulaExplanation && (
@@ -562,9 +566,9 @@ export default function StoryReader() {
                   
                   {/* Display mnemonic if it exists */}
                   {selectedWord.mnemonic && (
-                    <div className="mt-4 bg-[#10B981]/20 p-4 rounded-md border border-[#10B981]/30">
-                      <h3 className="text-lg font-semibold text-[#10B981] mb-2">Memory Aid:</h3>
-                      <p className="text-white font-medium p-2 bg-black/20 rounded">
+                    <div className="mt-4 bg-gray-700 p-4 rounded-md border border-green-500/30">
+                      <h3 className="text-lg font-semibold text-green-400 mb-2">Memory Aid:</h3>
+                      <p className="text-white font-medium p-3 bg-gray-800 rounded border border-gray-600">
                         {selectedWord.mnemonic}
                       </p>
                     </div>
@@ -572,13 +576,13 @@ export default function StoryReader() {
                   
                   {/* Show image if it exists */}
                   {selectedWord.image && (
-                    <div className="mt-4">
-                      <h3 className="text-lg font-semibold text-[#10B981] mb-2">Visual Reference:</h3>
-                      <div className="w-full h-48 bg-white/10 rounded-md flex justify-center items-center">
+                    <div className="mt-4 bg-gray-700 p-4 rounded-md border border-green-500/30">
+                      <h3 className="text-lg font-semibold text-green-400 mb-2">Visual Reference:</h3>
+                      <div className="w-full bg-gray-800 rounded-md flex justify-center items-center p-2" style={{maxHeight: "200px"}}>
                         <img 
                           src={selectedWord.image} 
                           alt={`Visual for ${selectedWord.word}`} 
-                          className="max-h-full max-w-full object-contain rounded"
+                          className="max-h-[180px] max-w-full object-contain rounded"
                         />
                       </div>
                     </div>
@@ -586,11 +590,11 @@ export default function StoryReader() {
                   
                   {/* Show synonyms and antonyms only for Language Arts vocabulary */}
                   {selectedWord.subject === "Language Arts" && selectedWord.synonyms && selectedWord.synonyms.length > 0 && (
-                    <div className="mt-4">
-                      <h3 className="text-lg font-semibold text-[#8B5CF6] mb-2">Synonyms:</h3>
+                    <div className="mt-4 bg-gray-700 p-4 rounded-md border border-purple-500/30">
+                      <h3 className="text-lg font-semibold text-purple-400 mb-2">Synonyms:</h3>
                       <div className="flex flex-wrap gap-2">
                         {selectedWord.synonyms.map((synonym, index) => (
-                          <span key={index} className="px-2 py-1 bg-[#8B5CF6]/20 text-white rounded text-sm">
+                          <span key={index} className="px-2 py-1 bg-purple-500/20 text-white rounded text-sm">
                             {synonym}
                           </span>
                         ))}
@@ -599,11 +603,11 @@ export default function StoryReader() {
                   )}
                   
                   {selectedWord.subject === "Language Arts" && selectedWord.antonyms && selectedWord.antonyms.length > 0 && (
-                    <div className="mt-4">
-                      <h3 className="text-lg font-semibold text-[#8B5CF6] mb-2">Antonyms:</h3>
+                    <div className="mt-4 bg-gray-700 p-4 rounded-md border border-purple-500/30">
+                      <h3 className="text-lg font-semibold text-purple-400 mb-2">Antonyms:</h3>
                       <div className="flex flex-wrap gap-2">
                         {selectedWord.antonyms.map((antonym, index) => (
-                          <span key={index} className="px-2 py-1 bg-[#8B5CF6]/10 text-white/80 rounded text-sm border border-[#8B5CF6]/30">
+                          <span key={index} className="px-2 py-1 bg-purple-500/10 text-white/90 rounded text-sm border border-purple-500/20">
                             {antonym}
                           </span>
                         ))}
@@ -615,13 +619,13 @@ export default function StoryReader() {
             </div>
           )}
           
-          <div className="flex justify-center mt-2">
+          <div className="flex justify-center mt-4">
             <Button 
               variant="outline" 
-              className="bg-[#2563EB]/30 hover:bg-[#2563EB]/50 border-[#10B981]/50 text-white"
+              className="bg-gray-700 hover:bg-gray-600 border-gray-600 text-white px-6 py-2"
               onClick={closeFlashcard}
             >
-              Close
+              Close Flashcard
             </Button>
           </div>
         </DialogContent>
