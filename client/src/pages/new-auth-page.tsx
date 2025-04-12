@@ -440,9 +440,15 @@ export default function NewAuthPage() {
 
                   <Button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-lg animate-gradient fade-in-delay-3"
+                    className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-lg font-bold py-3 animate-gradient fade-in-delay-3"
+                    size="lg"
                   >
-                    Log In
+                    <div className="flex items-center justify-center">
+                      Log In to Your Account
+                      <svg className="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                      </svg>
+                    </div>
                   </Button>
                   
                   <div className="flex flex-col items-center space-y-2 mt-4 fade-in-delay-4">
@@ -626,9 +632,15 @@ export default function NewAuthPage() {
 
                   <Button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-lg font-semibold animate-gradient fade-in-delay-4"
+                    className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-lg font-bold py-3 animate-gradient fade-in-delay-4"
+                    size="lg"
                   >
-                    Start Your Free Account
+                    <div className="flex items-center justify-center">
+                      Create Your Account Now
+                      <svg className="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                      </svg>
+                    </div>
                   </Button>
                   
                   <div className="text-center mt-4 fade-in-delay-4">
@@ -683,9 +695,15 @@ export default function NewAuthPage() {
 
                 <Button
                   onClick={handleForgotPassword}
-                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-lg animate-gradient fade-in-delay-3"
+                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-lg font-bold py-3 animate-gradient fade-in-delay-3"
+                  size="lg"
                 >
-                  Send Reset Link
+                  <div className="flex items-center justify-center">
+                    Send Password Reset Link
+                    <svg className="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                  </div>
                 </Button>
                 
                 <div className="text-center mt-4 fade-in-delay-4">
