@@ -400,17 +400,9 @@ export default function NewAuthPage() {
             Join thousands of others on a revolutionary learning journey
           </p>
           
-          {/* Just the "Forgot password" link without the big SIGN IN button */}
-          <div className="flex flex-col items-center justify-center mt-8 mb-16">
-            <button 
-              type="button" 
-              className="text-blue-300 hover:text-blue-100 text-lg"
-              onClick={() => {
-                setShowForgotPassword(true);
-              }}
-            >
-              Forgot your password?
-            </button>
+          {/* No "Forgot password" link in the testimonial section */}
+          <div className="mt-8 mb-16">
+            {/* Empty space where the link used to be */}
           </div>
         </div>
       </main>
