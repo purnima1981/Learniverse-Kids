@@ -26,7 +26,11 @@ import {
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Sparkles, Rocket, Star, Globe, Book, Atom, Brain, Users, BarChart } from "lucide-react";
+import { 
+  Sparkles, Rocket, Star, Globe, Book, Atom, 
+  Brain, Users, BarChart, CalendarDays, Puzzle, 
+  Lightbulb, Scroll, Mountain
+} from "lucide-react";
 
 // Import images and styles
 import learniverseIllustration from "../assets/images/space/space-bg.png";
@@ -53,27 +57,47 @@ export default function NewAuthPage() {
   const [activeTab, setActiveTab] = useState("login");
   const [activeHighlight, setActiveHighlight] = useState(0);
 
-  // Highlights data
+  // Highlights data with expanded unique value propositions
   const highlights = [
     {
-      title: "Story-Based Learning",
-      description: "Learn through engaging adventures that make academic concepts come alive",
-      icon: <Book className="h-5 w-5 text-cyan-400" />
+      title: "Weekly Learning Adventures",
+      description: "Progress through story chapters that align perfectly with your school curriculum",
+      icon: <CalendarDays className="h-5 w-5 text-cyan-400" />
     },
     {
-      title: "Subject Connections",
-      description: "See how math, science, and language arts connect in our interdisciplinary approach",
+      title: "Interdisciplinary Stories",
+      description: "Experience how math, science, and language arts connect in immersive storylines",
       icon: <Atom className="h-5 w-5 text-green-400" />
+    },
+    {
+      title: "Personal Theme Selection",
+      description: "Choose your learning environment - space, mythology, sports, and more",
+      icon: <Mountain className="h-5 w-5 text-indigo-400" />
+    },
+    {
+      title: "Continuous Narrative",
+      description: "Follow an engaging story that unfolds throughout the school year",
+      icon: <Book className="h-5 w-5 text-yellow-400" />
+    },
+    {
+      title: "Real-World Connections",
+      description: "Apply what you learn to relatable, real-world scenarios",
+      icon: <Globe className="h-5 w-5 text-blue-400" />
     },
     {
       title: "AI Reading Coach",
       description: "Get personalized reading assistance with our advanced AI companion",
-      icon: <Sparkles className="h-5 w-5 text-yellow-400" />
+      icon: <Sparkles className="h-5 w-5 text-purple-400" />
     },
     {
-      title: "Interactive Tools",
-      description: "Engage with quizzes, flashcards, and educational games to reinforce learning",
-      icon: <Star className="h-5 w-5 text-purple-400" />
+      title: "Creative Expression",
+      description: "Blend creative writing with STEM learning in interactive activities",
+      icon: <Scroll className="h-5 w-5 text-pink-400" />
+    },
+    {
+      title: "Interactive Reasoning",
+      description: "Solve puzzles and mysteries that develop critical thinking skills",
+      icon: <Puzzle className="h-5 w-5 text-amber-400" />
     }
   ];
 
@@ -118,7 +142,17 @@ export default function NewAuthPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-purple-900 to-blue-900 overflow-hidden">
-      <div className="container mx-auto py-6">
+      {/* Animated space elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="stars-small"></div>
+        <div className="stars-medium"></div>
+        <div className="stars-large"></div>
+        <div className="comet-1"></div>
+        <div className="comet-2"></div>
+        <div className="comet-3"></div>
+      </div>
+      
+      <div className="container relative z-10 mx-auto py-6">
         {/* Main 2x2 grid layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           
@@ -126,7 +160,7 @@ export default function NewAuthPage() {
           <div className="p-6 flex flex-col justify-center">
             <div className="mb-6">
               <div className="flex items-center mb-4">
-                <Rocket className="h-10 w-10 text-yellow-400 mr-4" />
+                <Rocket className="h-10 w-10 text-yellow-400 mr-4 animate-pulse" />
                 <h1 className="text-4xl font-bold text-white">Learniverse</h1>
               </div>
               <h2 className="text-2xl font-semibold text-white mb-4">Where Learning and Adventure Connect</h2>
@@ -141,7 +175,7 @@ export default function NewAuthPage() {
               {highlights.map((highlight, index) => (
                 <div 
                   key={index}
-                  className={`absolute inset-0 transition-opacity duration-700 flex items-center bg-blue-900/40 rounded-xl p-4 border border-blue-700/30 ${
+                  className={`absolute inset-0 transition-opacity duration-700 flex items-center bg-blue-900/40 backdrop-blur-sm rounded-xl p-4 border border-blue-700/30 ${
                     index === activeHighlight ? "opacity-100" : "opacity-0 pointer-events-none"
                   }`}
                 >
@@ -182,50 +216,56 @@ export default function NewAuthPage() {
               <div className="absolute -top-4 -right-4 bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold py-2 px-4 rounded-full transform rotate-12 animate-pulse">
                 Grades 1-8
               </div>
+              <div className="absolute -bottom-4 -left-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold py-2 px-4 rounded-full shadow-lg">
+                Story-Based Learning
+              </div>
             </div>
           </div>
           
-          {/* Quadrant 3: Bottom Left - Educational Benefits */}
+          {/* Quadrant 3: Bottom Left - "What Sets Us Apart" Section */}
           <div className="p-6">
-            <h3 className="text-xl font-semibold text-white mb-4">Key Features</h3>
+            <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
+              <Lightbulb className="h-5 w-5 text-yellow-400 mr-2" />
+              What Sets Us Apart
+            </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-blue-900/40 rounded-xl p-4 border border-blue-700/30">
+              <div className="bg-blue-900/40 backdrop-blur-sm rounded-xl p-4 border border-blue-700/30 hover:border-cyan-500/50 transition-colors">
                 <div className="flex items-center mb-2">
                   <Brain className="h-5 w-5 text-cyan-400 mr-2" />
-                  <h4 className="text-lg font-semibold text-white">Interdisciplinary</h4>
+                  <h4 className="text-lg font-semibold text-white">Truly Interdisciplinary</h4>
                 </div>
-                <p className="text-blue-100">Math, science, and language arts connected in meaningful ways</p>
+                <p className="text-blue-100">Math, science, and language arts seamlessly woven into one continuous story</p>
               </div>
               
-              <div className="bg-blue-900/40 rounded-xl p-4 border border-blue-700/30">
+              <div className="bg-blue-900/40 backdrop-blur-sm rounded-xl p-4 border border-blue-700/30 hover:border-green-500/50 transition-colors">
                 <div className="flex items-center mb-2">
-                  <Globe className="h-5 w-5 text-green-400 mr-2" />
-                  <h4 className="text-lg font-semibold text-white">Cultural Diversity</h4>
+                  <CalendarDays className="h-5 w-5 text-green-400 mr-2" />
+                  <h4 className="text-lg font-semibold text-white">Week-by-Week Adventure</h4>
                 </div>
-                <p className="text-blue-100">Stories and themes from various cultures for a global perspective</p>
+                <p className="text-blue-100">Stories synchronized with your school curriculum for relevant, timely learning</p>
               </div>
               
-              <div className="bg-blue-900/40 rounded-xl p-4 border border-blue-700/30">
+              <div className="bg-blue-900/40 backdrop-blur-sm rounded-xl p-4 border border-blue-700/30 hover:border-yellow-500/50 transition-colors">
                 <div className="flex items-center mb-2">
                   <Users className="h-5 w-5 text-yellow-400 mr-2" />
-                  <h4 className="text-lg font-semibold text-white">Personalized</h4>
+                  <h4 className="text-lg font-semibold text-white">Thematic Choice</h4>
                 </div>
-                <p className="text-blue-100">Adaptive learning paths that adjust to each student's needs</p>
+                <p className="text-blue-100">Choose your story world - learn the same concepts in your preferred setting</p>
               </div>
               
-              <div className="bg-blue-900/40 rounded-xl p-4 border border-blue-700/30">
+              <div className="bg-blue-900/40 backdrop-blur-sm rounded-xl p-4 border border-blue-700/30 hover:border-purple-500/50 transition-colors">
                 <div className="flex items-center mb-2">
-                  <BarChart className="h-5 w-5 text-purple-400 mr-2" />
-                  <h4 className="text-lg font-semibold text-white">Progress Tracking</h4>
+                  <Puzzle className="h-5 w-5 text-purple-400 mr-2" />
+                  <h4 className="text-lg font-semibold text-white">Reasoning & Creativity</h4>
                 </div>
-                <p className="text-blue-100">Visual dashboards showing growth across all subject areas</p>
+                <p className="text-blue-100">Develop critical thinking through interactive story puzzles and creative challenges</p>
               </div>
             </div>
           </div>
           
           {/* Quadrant 4: Bottom Right - Registration Form */}
           <div className="p-6">
-            <Card className="bg-indigo-900/40 border border-indigo-700/30 shadow-lg">
+            <Card className="bg-indigo-900/40 backdrop-blur-sm border border-indigo-700/30 shadow-lg">
               <CardContent className="pt-6">
                 <Tabs
                   defaultValue="login"
@@ -283,7 +323,7 @@ export default function NewAuthPage() {
                           type="submit"
                           className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:bg-blue-700"
                         >
-                          Start Your Journey
+                          Continue Your Journey
                         </Button>
                       </form>
                     </Form>
@@ -429,7 +469,7 @@ export default function NewAuthPage() {
                           type="submit"
                           className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:bg-cyan-700"
                         >
-                          Create Your Account
+                          Begin Your Adventure
                         </Button>
 
                         <p className="text-center text-sm text-blue-200 mt-4">
@@ -444,6 +484,11 @@ export default function NewAuthPage() {
               </CardContent>
             </Card>
           </div>
+        </div>
+        
+        {/* Footer */}
+        <div className="mt-8 text-center text-blue-200 text-sm">
+          <p>Learniverse: Transforming education through interdisciplinary, story-based learning</p>
         </div>
       </div>
     </div>
