@@ -43,10 +43,10 @@ export const chapterQuestions: ChapterQuestionsMap = {
       type: 'matching',
       text: 'Match the Shape with its real-world example from Ethan\'s walk:',
       items: [
-        { item: 'Triangle', match: 'Roof' },
-        { item: 'Rhombus', match: 'Construction warning sign' },
-        { item: 'Pentagon', match: 'School zone sign' },
-        { item: 'Octagon', match: 'Stop sign' }
+        { item: 'Triangle', match: 'School zone sign' },
+        { item: 'Rhombus', match: 'Stop sign' },
+        { item: 'Pentagon', match: 'roof' },
+        { item: 'Octagon', match: 'Construction warning sign' }
       ],
       answer: ['triangle=roof', 'rhombus=construction warning sign', 'pentagon=school zone sign', 'octagon=stop sign'],
       theme: 'math',
@@ -121,7 +121,7 @@ export const chapterQuestions: ChapterQuestionsMap = {
       id: 8,
       type: 'unscramble',
       text: 'Unscramble these energy types discussed during Ethan\'s walk:',
-      letters: 'TENTIAKL TENTIAPOL DWIN NOITOM',
+      letters: 'TENTIAK TENTIAPOL DWIN NOITOM',
       answer: ['KINETIC', 'POTENTIAL', 'WIND', 'MOTION'],
       theme: 'science',
       difficulty: 'medium',
