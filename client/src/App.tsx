@@ -9,6 +9,8 @@ import NewAuthPage from "@/pages/new-auth-page";
 import RegionalStoriesPage from "@/pages/RegionalStoriesPage";
 import ReadingCoach from "@/pages/ReadingCoach";
 import TestQuestions from "@/pages/TestQuestions";
+import ProfileSelection from "@/pages/ProfileSelection";
+import ParentDashboard from "@/pages/ParentDashboard";
 import { ProtectedRoute } from "@/lib/protected-route";
 import { AuthProvider } from "@/hooks/use-auth";
 
@@ -22,6 +24,10 @@ function App() {
         <Route path="/auth" component={NewAuthPage} />
         <Route path="/auth-old" component={AuthPage} />
         <Route path="/story/:id/:chapter" component={StoryReader} />
+        
+        {/* Profile routes */}
+        <ProtectedRoute path="/profiles" component={ProfileSelection} />
+        <ProtectedRoute path="/parent-dashboard" component={ParentDashboard} />
         
         {/* Protected routes */}
         <ProtectedRoute path="/dashboard" component={Dashboard} />
