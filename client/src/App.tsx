@@ -9,7 +9,6 @@ import RegionalStoriesPage from "@/pages/RegionalStoriesPage";
 import ReadingCoach from "@/pages/ReadingCoach";
 import TestQuestions from "@/pages/TestQuestions";
 import { ProtectedRoute } from "@/lib/protected-route";
-import { AuthProvider } from "@/hooks/use-auth";
 
 function App() {
   return (
