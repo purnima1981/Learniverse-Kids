@@ -354,24 +354,26 @@ export default function StoryReader() {
         
         <div className="relative">
           {!hasReadStory && (
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0F172A] to-transparent h-20 flex flex-col items-center justify-end pb-2 z-10">
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0F172A] to-transparent h-32 flex flex-col items-center justify-end pb-4 z-10">
               <Button 
                 variant="outline"
-                className="bg-[#2563EB] hover:bg-[#1E40AF] text-white border-transparent mb-3"
+                className="bg-[#2563EB] hover:bg-[#1E40AF] text-white border-transparent mb-4 px-6 py-2 text-base font-semibold shadow-lg"
                 onClick={completeReading}
               >
                 Mark as Read
               </Button>
-              <span className="text-white/70 text-sm flex items-center">
-                Continue reading the story
-                <ChevronRight className="h-4 w-4 ml-1 rotate-90" />
-              </span>
+              <div className="flex items-center justify-center mb-1">
+                <span className="text-white/80 text-sm flex items-center">
+                  Continue reading the story
+                  <ChevronRight className="h-4 w-4 ml-1 rotate-90" />
+                </span>
+              </div>
             </div>
           )}
           
           <div 
             ref={contentRef}
-            className="prose prose-lg prose-invert max-w-none text-white max-h-[60vh] overflow-y-auto px-2 pr-4"
+            className="prose prose-lg prose-invert max-w-none text-white min-h-[50vh] overflow-y-auto px-2 pr-4 pb-24"
           >
             {/* Hardcoded highlighted vocabulary */}
             <div className="content">
