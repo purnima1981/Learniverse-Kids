@@ -107,16 +107,13 @@ export default function NewAuthPage() {
   const onLogin = async (data: LoginValues) => {
     try {
       // Show a loading toast while "logging in"
-      const loadingToast = toast({
+      toast({
         title: "Logging in...",
         description: "Preparing your learning adventure",
       });
       
       // Simulate API call delay
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Remove loading toast
-      toast.dismiss(loadingToast);
       
       // Show success toast
       toast({
@@ -420,12 +417,7 @@ export default function NewAuthPage() {
                 setShowRegister(false);
               }}
             >
-              <div className="flex items-center justify-center gap-3">
-                <div className="text-3xl font-bold">SIGN IN</div>
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                </svg>
-              </div>
+              <div className="text-3xl font-bold">SIGN IN *</div>
             </Button>
             <button 
               type="button" 
@@ -499,11 +491,8 @@ export default function NewAuthPage() {
                     className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-xl font-bold py-6 animate-pulse mt-6 shadow-lg"
                     size="lg"
                   >
-                    <div className="flex items-center justify-center gap-3">
-                      SIGN IN
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                      </svg>
+                    <div className="flex items-center justify-center">
+                      SIGN IN *
                     </div>
                   </Button>
                   
