@@ -407,21 +407,11 @@ export default function NewAuthPage() {
             Join thousands of others on a revolutionary learning journey
           </p>
           
-          {/* Big prominent login button */}
+          {/* Just the "Forgot password" link without the big SIGN IN button */}
           <div className="flex flex-col items-center justify-center mt-8 mb-16">
-            <Button 
-              size="lg"
-              className="bg-blue-500 hover:bg-blue-600 text-white text-lg font-bold px-16 py-6 rounded-md w-80"
-              onClick={() => {
-                setShowLogin(true);
-                setShowRegister(false);
-              }}
-            >
-              <div className="text-3xl font-bold">SIGN IN *</div>
-            </Button>
             <button 
               type="button" 
-              className="text-blue-300 hover:text-blue-100 mt-4 text-lg"
+              className="text-blue-300 hover:text-blue-100 text-lg"
               onClick={() => {
                 setShowForgotPassword(true);
               }}
