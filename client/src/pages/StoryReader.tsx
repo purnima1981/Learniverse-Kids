@@ -81,7 +81,7 @@ export default function StoryReader() {
   }, [storyId, chapterNumberParam, toast, storyIdNumber, chapterNumber]);
   
   const handleGoBack = () => {
-    setLocation("/"); // Return to Dashboard
+    setLocation("/dashboard"); // Return to Dashboard explicitly, instead of root
   };
   
   const handlePreviousChapter = () => {
