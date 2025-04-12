@@ -196,6 +196,7 @@ export default function ProfileSelection() {
       ...data,
       userId: user?.id as number,
       avatar: avatarColor,
+      isDefault: false, // Required field for new profiles
     };
 
     if (editingProfile) {
@@ -206,11 +207,11 @@ export default function ProfileSelection() {
   };
 
   const handleProfileSelect = (profile: Profile) => {
-    navigate(`/theme-selection?profileId=${profile.id}`);
+    navigate(`/theme-selection-child?profileId=${profile.id}`);
   };
 
   const handleParentSelect = () => {
-    navigate('/dashboard'); // Parent goes straight to dashboard
+    navigate('/parent-dashboard'); // Parent goes to the comprehensive dashboard
   };
 
   const handleLogout = async () => {

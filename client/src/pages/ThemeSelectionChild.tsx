@@ -21,7 +21,7 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { apiRequest, queryClient } from '@/lib/queryClient';
-import { Theme } from '@shared/schema';
+import { Theme, Profile } from '@shared/schema';
 import { 
   Rocket, 
   History, 
@@ -59,7 +59,7 @@ export default function ThemeSelectionChild() {
   });
 
   // Get user's selected profile
-  const { data: profile, isLoading: profileLoading } = useQuery({
+  const { data: profile, isLoading: profileLoading } = useQuery<Profile>({
     queryKey: ['/api/profiles', profileId],
     enabled: !!profileId,
   });
