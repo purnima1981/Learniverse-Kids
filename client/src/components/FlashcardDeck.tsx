@@ -8,7 +8,6 @@ import {
   Volume,
   RefreshCw
 } from 'lucide-react';
-import './FlashcardDeck.css';
 
 export type VocabularyWord = {
   word: string;
@@ -81,8 +80,8 @@ export default function FlashcardDeck({ words, onClose, onSave }: FlashcardDeckP
 
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="max-w-xl w-full bg-transparent rounded-xl overflow-hidden flex flex-col">
-        <div className="flex justify-between items-center p-3">
+      <div className="max-w-xl w-full bg-gray-800/80 rounded-xl overflow-hidden shadow-xl">
+        <div className="flex justify-between items-center p-3 border-b border-gray-700">
           <h2 className="text-white text-lg font-bold">
             Vocabulary Flashcards ({currentIndex + 1}/{totalWords})
           </h2>
@@ -97,38 +96,40 @@ export default function FlashcardDeck({ words, onClose, onSave }: FlashcardDeckP
 
         <div className="p-4">
           <div 
-            className="flashcard-panel rounded-xl p-4 cursor-pointer mx-auto"
             onClick={toggleView}
-            style={{height: '170px'}}
+            className="bg-gray-700/60 cursor-pointer rounded-lg border border-blue-500/40 shadow-md overflow-hidden mx-auto"
+            style={{width: '100%', maxWidth: '450px', height: '160px'}}
           >
-            {!showDefinition ? (
-              <div className="h-full flex flex-col justify-between">
-                <div className="text-center text-white text-3xl font-bold flex-1 flex items-center justify-center">
-                  {currentWord.word}
-                </div>
-                <div className="text-white/70 text-sm italic text-center mt-2">
-                  Click to see definition
-                </div>
-              </div>
-            ) : (
-              <div className="h-full flex flex-col justify-between overflow-auto">
-                <div>
-                  <div className="text-white text-lg mb-2">
-                    <span className="font-bold">Definition:</span> {currentWord.definition}
+            <div className="p-4 h-full">
+              {!showDefinition ? (
+                <div className="flex flex-col h-full justify-center">
+                  <div className="text-center text-white text-3xl font-bold">
+                    {currentWord.word}
                   </div>
-                  <div className="text-white text-lg">
-                    <span className="font-bold">Example:</span> <span className="italic">"{currentWord.context}"</span>
+                  <div className="text-blue-300/80 text-sm italic text-center mt-4">
+                    Click to see definition
                   </div>
                 </div>
-                <div className="text-white/70 text-sm italic text-center mt-2">
-                  Click to see word
+              ) : (
+                <div className="flex flex-col h-full justify-between overflow-y-auto">
+                  <div className="text-white">
+                    <div className="text-lg mb-2">
+                      <span className="font-bold">Definition:</span> {currentWord.definition}
+                    </div>
+                    <div className="text-lg">
+                      <span className="font-bold">Example:</span> <span className="italic">"{currentWord.context}"</span>
+                    </div>
+                  </div>
+                  <div className="text-blue-300/80 text-sm italic text-center">
+                    Click to see word
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
 
-        <div className="flex justify-between items-center p-4 bg-gradient-to-t from-black/20 to-transparent">
+        <div className="flex justify-between items-center p-3 bg-gray-700/30 border-t border-gray-700">
           <Button 
             variant="ghost" 
             className="text-white hover:bg-white/10"
