@@ -42,7 +42,7 @@ export function setupAuth(app: Express) {
   }
 
   const sessionSettings: session.SessionOptions = {
-    secret: process.env.SESSION_SECRET || "learniverse-dev-secret",
+    secret: process.env.SESSION_SECRET || "learnsmart-dev-secret",
     resave: false,
     saveUninitialized: false,
     cookie: {

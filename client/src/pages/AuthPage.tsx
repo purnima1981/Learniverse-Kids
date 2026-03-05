@@ -25,7 +25,7 @@ export default function AuthPage() {
         <div className="w-full max-w-md">
           <div className="flex items-center gap-3 mb-8">
             <GraduationCap className="h-10 w-10 text-primary" />
-            <h1 className="text-3xl font-bold">Learniverse</h1>
+            <h1 className="text-3xl font-bold">Learnsmart</h1>
           </div>
 
           <Tabs defaultValue="login" className="w-full">
