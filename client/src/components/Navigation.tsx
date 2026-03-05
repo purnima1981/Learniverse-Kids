@@ -23,7 +23,7 @@ export function Navigation() {
       <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
         <Link href={isParent ? "/parent-dashboard" : "/kid-dashboard"} className="flex items-center gap-2">
           <GraduationCap className="h-6 w-6 text-primary" />
-          <span className="font-bold text-lg">Learnsmart</span>
+          <span className="font-bold text-lg">LearnSmarter</span>
         </Link>
 
         <div className="flex items-center gap-4">
