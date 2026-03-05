@@ -36,6 +36,11 @@ declare global {
 }
 
 export function setupAuth(app: Express) {
+  // Trust Railway's reverse proxy so secure cookies work
+  if (process.env.NODE_ENV === "production") {
+    app.set("trust proxy", 1);
+  }
+
   const sessionSettings: session.SessionOptions = {
     secret: process.env.SESSION_SECRET || "learniverse-dev-secret",
     resave: false,
@@ -240,7 +245,7 @@ export function setupAuth(app: Express) {
   // Get current session
   app.get("/api/auth/me", async (req: Request, res: Response) => {
     if (!req.isAuthenticated() || !req.user) {
-      return res.status(401).json({ message: "Not authenticated" });
+      return res.json(null);
     }
 
     const result: Record<string, unknown> = {

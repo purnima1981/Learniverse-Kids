@@ -19,7 +19,7 @@ interface AuthSession {
 }
 
 export function useAuth() {
-  const { data: session, isLoading, error } = useQuery<AuthSession>({
+  const { data: session, isLoading } = useQuery<AuthSession | null>({
     queryKey: ["/api/auth/me"],
     retry: false,
   });
