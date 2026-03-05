@@ -1,4 +1,6 @@
 import express from "express";
+import path from "path";
+import fs from "fs";
 import { setupAuth } from "./auth";
 import { registerRoutes } from "./routes";
 import { seed } from "./seed";
@@ -24,9 +26,14 @@ registerRoutes(app);
   }
 
   if (process.env.NODE_ENV === "production") {
-    const { serveStatic } = await import("./vite");
-    serveStatic(app);
+    // Serve static files directly — no vite import needed in production
+    const distPath = path.resolve(process.cwd(), "dist", "public");
+    app.use(express.static(distPath));
+    app.use("*", (_req, res) => {
+      res.sendFile(path.resolve(distPath, "index.html"));
+    });
   } else {
+    // Only import vite in development
     const { setupVite } = await import("./vite");
     await setupVite(app);
   }
