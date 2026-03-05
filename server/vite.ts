@@ -1,4 +1,4 @@
-import type { Express } from "express";
+import express, { type Express } from "express";
 import fs from "fs";
 import path from "path";
 import { createServer as createViteServer, type ViteDevServer } from "vite";
@@ -40,7 +40,6 @@ export function serveStatic(app: Express) {
     );
   }
 
-  const express = require("express");
   app.use(express.static(distPath));
 
   // SPA fallback
