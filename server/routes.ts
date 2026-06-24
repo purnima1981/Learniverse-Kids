@@ -107,9 +107,9 @@ export function registerRoutes(app: Express) {
           grade: profile.grade,
           avatar: profile.avatar,
         });
-      } catch (err) {
+      } catch (err: any) {
         console.error("Create profile error:", err);
-        res.status(500).json({ message: "Failed to create profile" });
+        res.status(500).json({ message: err?.message || "Failed to create profile" });
       }
     }
   );

@@ -50,7 +50,7 @@ export default function ProfileSelect() {
       {profiles.length === 0 ? (
         <Card className="border-dashed">
           <CardContent className="py-12 text-center">
-            <p className="text-muted-foreground">No child profiles yet. Generate an invite code from the dashboard.</p>
+            <p className="text-muted-foreground">No child profiles yet. Add a child from the dashboard first.</p>
             <Button className="mt-4" onClick={() => setLocation("/parent-dashboard")}>
               Go to Dashboard
             </Button>

@@ -54,8 +54,9 @@ export default function ParentDashboard() {
       setChildPin("");
       setChildPinConfirm("");
     },
-    onError: () => {
-      toast({ title: "Failed to create profile", variant: "destructive" });
+    onError: (err: any) => {
+      const msg = err?.message || "Failed to create profile";
+      toast({ title: "Error", description: msg, variant: "destructive" });
     },
   });
 
