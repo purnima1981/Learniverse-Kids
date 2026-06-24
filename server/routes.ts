@@ -4,6 +4,19 @@ import { requireAuth, requireParent } from "./auth";
 import * as storage from "./storage";
 
 export function registerRoutes(app: Express) {
+  // ── Debug ──────────────────────────────────────────────────────────────────
+  app.get("/api/debug/db", async (_req: Request, res: Response) => {
+    try {
+      const topicCount = await storage.getTopics();
+      res.json({
+        topicCount: topicCount.length,
+        topics: topicCount.map(t => ({ id: t.id, title: t.title, grade: t.gradeLevel, questions: t.totalQuestions })),
+      });
+    } catch (err: any) {
+      res.json({ error: err.message });
+    }
+  });
+
   // ── Invite Codes ───────────────────────────────────────────────────────────
 
   app.post(

@@ -677,14 +677,24 @@ const TOPICS: TopicSeed[] = [
 
 export async function seedMathTopics() {
   for (const topicData of TOPICS) {
-    // Check if topic already exists
+    // Check if topic already exists WITH questions
     const existing = await db
       .select()
       .from(topics)
       .where(eq(topics.title, topicData.title));
 
     if (existing.length > 0) {
-      continue;
+      // Check if it has questions
+      const qCount = await db
+        .select()
+        .from(questions)
+        .where(eq(questions.topicId, existing[0].id));
+      if (qCount.length > 0) {
+        continue; // Has both topic and questions, skip
+      }
+      // Topic exists but no questions — delete it and re-seed
+      console.log(`Re-seeding topic (no questions): ${topicData.title}`);
+      await db.delete(topics).where(eq(topics.id, existing[0].id));
     }
 
     console.log(`Seeding topic: ${topicData.title}`);
