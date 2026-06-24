@@ -43,7 +43,7 @@ export function Navigation() {
         <div className="flex items-center gap-2 font-body">
           <span className="text-sm text-muted-foreground">{activeProfile?.name}</span>
           <button
-            onClick={async () => { await logout.mutateAsync(); setLocation("/auth"); }}
+            onClick={async () => { await logout.mutateAsync(); setLocation("/"); }}
             className="p-2 rounded-lg hover:bg-muted transition-colors"
             aria-label="Sign out"
             title="Sign Out"
@@ -114,7 +114,7 @@ export function Navigation() {
         <div className="flex items-center gap-2 font-body">
           <span className="text-sm text-muted-foreground hidden sm:block">{user?.firstName}</span>
           <button
-            onClick={async () => { await logout.mutateAsync(); setLocation("/auth"); }}
+            onClick={async () => { await logout.mutateAsync(); setLocation("/"); }}
             className="flex items-center gap-1.5 p-2 rounded-lg hover:bg-muted transition-colors text-sm text-muted-foreground"
             aria-label="Sign out"
           >
@@ -153,7 +153,7 @@ export function Navigation() {
               })}
               <hr style={{ borderColor: "hsl(var(--border))", margin: "12px 0" }} />
               <button
-                onClick={async () => { await logout.mutateAsync(); setLocation("/auth"); setMobileOpen(false); }}
+                onClick={async () => { await logout.mutateAsync(); setLocation("/"); setMobileOpen(false); }}
                 className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium w-full"
                 style={{ color: "hsl(var(--coral))" }}
               >
