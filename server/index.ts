@@ -1,6 +1,6 @@
 import express from "express";
 import path from "path";
-import fs from "fs";
+import { execSync } from "child_process";
 import { setupAuth } from "./auth";
 import { registerRoutes } from "./routes";
 import { seed } from "./seed";
@@ -18,22 +18,28 @@ registerRoutes(app);
 
 // Vite dev server or static serving
 (async () => {
+  // Push database schema before seeding
+  try {
+    console.log("Pushing database schema...");
+    execSync("npx drizzle-kit push", { stdio: "inherit" });
+  } catch (err) {
+    console.error("Schema push failed:", err);
+  }
+
   // Seed database on startup
   try {
     await seed();
   } catch (err) {
-    console.error("Seed failed (tables may not exist yet — run npm run db:push):", err);
+    console.error("Seed failed:", err);
   }
 
   if (process.env.NODE_ENV === "production") {
-    // Serve static files directly — no vite import needed in production
     const distPath = path.resolve(process.cwd(), "dist", "public");
     app.use(express.static(distPath));
     app.use("*", (_req, res) => {
       res.sendFile(path.resolve(distPath, "index.html"));
     });
   } else {
-    // Only import vite in development
     const { setupVite } = await import("./vite");
     await setupVite(app);
   }

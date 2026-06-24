@@ -11,6 +11,7 @@ interface TopicSeed {
   questions: {
     type: string;
     text: string;
+    diagram?: unknown;
     options: unknown;
     answer: unknown;
     difficulty: string;
@@ -163,36 +164,53 @@ const TOPICS: TopicSeed[] = [
     difficulty: "medium",
     questions: [
       {
-        type: "fill-blank",
-        text: "The sum of all angles in a triangle is ___ degrees.",
-        options: null,
-        answer: "180",
-        difficulty: "easy",
-        bloomLevel: "remember",
-        topic: "triangle angles",
-        hints: ["This is a fundamental property of all triangles"],
-        explanation: "The angle sum property states that the sum of interior angles of any triangle is 180 degrees.",
-      },
-      {
         type: "multiple-choice",
-        text: "A triangle has angles of 60, 60, and 60 degrees. What type of triangle is it?",
-        options: { choices: ["Isosceles", "Scalene", "Right", "Equilateral"] },
-        answer: "d",
-        difficulty: "easy",
-        bloomLevel: "understand",
-        topic: "triangle types",
-        hints: ["All three angles are equal"],
-        explanation: "When all three angles are equal (60 each), the triangle is equilateral — all sides are also equal.",
-      },
-      {
-        type: "multiple-choice",
-        text: "In a right triangle, one angle is 90 and another is 35. What is the third angle?",
-        options: { choices: ["45", "50", "55", "65"] },
+        text: "Look at the triangle below. What is the value of angle x?",
+        diagram: {
+          type: "triangle",
+          vertices: [[0, 0], [6, 0], [3, 4]],
+          labels: { vertices: ["A", "B", "C"], angles: ["50°", "70°", "x"] },
+        },
+        options: { choices: ["50°", "55°", "60°", "70°"] },
         answer: "c",
         difficulty: "medium",
         bloomLevel: "apply",
         topic: "triangle angles",
-        hints: ["Sum of all angles = 180", "Third angle = 180 - 90 - 35"],
+        hints: ["The sum of all angles in a triangle is 180°", "x = 180 - 50 - 70"],
+        explanation: "Sum of angles = 180°. So x = 180 - 50 - 70 = 60°.",
+      },
+      {
+        type: "multiple-choice",
+        text: "What type of triangle is shown below?",
+        diagram: {
+          type: "triangle",
+          vertices: [[0, 0], [4, 0], [4, 3]],
+          labels: { vertices: ["P", "Q", "R"], sides: ["4", "3", "5"] },
+          showRightAngle: 1,
+        },
+        options: { choices: ["Equilateral", "Isosceles", "Right-angled", "Obtuse"] },
+        answer: "c",
+        difficulty: "easy",
+        bloomLevel: "understand",
+        topic: "triangle types",
+        hints: ["Look at the angle marker at vertex Q"],
+        explanation: "The square marker at Q indicates a 90° angle, making this a right-angled triangle (a 3-4-5 Pythagorean triple).",
+      },
+      {
+        type: "fill-blank",
+        text: "In the right triangle below, what is the value of angle x?",
+        diagram: {
+          type: "triangle",
+          vertices: [[0, 0], [5, 0], [5, 3]],
+          labels: { angles: ["x", "90°", "35°"] },
+          showRightAngle: 1,
+        },
+        options: null,
+        answer: "55",
+        difficulty: "medium",
+        bloomLevel: "apply",
+        topic: "triangle angles",
+        hints: ["Sum of all angles = 180°", "x = 180 - 90 - 35"],
         explanation: "180 - 90 - 35 = 55 degrees.",
       },
       {
@@ -582,6 +600,7 @@ export async function seedMathTopics() {
         topicId: topic.id,
         type: q.type,
         text: q.text,
+        diagram: q.diagram ?? null,
         options: q.options,
         answer: q.answer,
         difficulty: q.difficulty,

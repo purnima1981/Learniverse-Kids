@@ -25,6 +25,7 @@ const QUESTION_TYPES = ["multiple-choice", "true-false", "fill-blank"] as const;
 interface GeneratedQuestion {
   type: string;
   text: string;
+  diagram?: unknown;
   options: unknown;
   answer: unknown;
   difficulty: string;

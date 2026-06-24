@@ -103,6 +103,7 @@ export const questions = pgTable("questions", {
   type: varchar("type", { length: 30 }).notNull(),
   text: text("text").notNull(),
   imageUrl: text("image_url"),
+  diagram: jsonb("diagram"),
   options: jsonb("options"),
   answer: jsonb("answer").notNull(),
   difficulty: varchar("difficulty", { length: 20 }).notNull().default("medium"),

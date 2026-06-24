@@ -15,6 +15,7 @@ import {
 import { cn } from "@/lib/utils";
 import { CheckCircle2, XCircle, Lightbulb, ArrowUp, ArrowDown } from "lucide-react";
 import { MathRenderer } from "@/components/MathRenderer";
+import { MathDiagram, type DiagramData } from "@/components/MathDiagram";
 import type { Question } from "@shared/schema";
 
 interface QuizQuestionProps {
@@ -49,6 +50,9 @@ export function QuizQuestion({
         <p className="text-lg font-medium">
           <MathRenderer text={question.text} />
         </p>
+        {question.diagram && (
+          <MathDiagram diagram={question.diagram as DiagramData} />
+        )}
         {question.imageUrl && (
           <img
             src={question.imageUrl}
