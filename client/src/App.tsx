@@ -5,7 +5,7 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { Toaster } from "@/components/ui/toaster";
 import { Loader2 } from "lucide-react";
 
-// Pages
+import LandingPage from "@/pages/LandingPage";
 import AuthPage from "@/pages/AuthPage";
 import ParentDashboard from "@/pages/ParentDashboard";
 import JoinPage from "@/pages/JoinPage";
@@ -27,47 +27,31 @@ function Router() {
 
   return (
     <Switch>
+      {/* Public */}
+      <Route path="/" component={LandingPage} />
       <Route path="/auth" component={AuthPage} />
       <Route path="/join/:code?" component={JoinPage} />
 
+      {/* Parent */}
       <Route path="/parent-dashboard">
-        <ProtectedRoute requireParent>
-          <ParentDashboard />
-        </ProtectedRoute>
+        <ProtectedRoute requireParent><ParentDashboard /></ProtectedRoute>
       </Route>
-
       <Route path="/profiles">
-        <ProtectedRoute requireParent>
-          <ProfileSelect />
-        </ProtectedRoute>
+        <ProtectedRoute requireParent><ProfileSelect /></ProtectedRoute>
       </Route>
-
-      <Route path="/kid-dashboard">
-        <ProtectedRoute requireChild>
-          <KidDashboard />
-        </ProtectedRoute>
-      </Route>
-
-      <Route path="/practice/:topicId">
-        <ProtectedRoute requireChild>
-          <PracticePage />
-        </ProtectedRoute>
-      </Route>
-
       <Route path="/analytics/:profileId">
-        <ProtectedRoute requireParent>
-          <AnalyticsDashboard />
-        </ProtectedRoute>
+        <ProtectedRoute requireParent><AnalyticsDashboard /></ProtectedRoute>
       </Route>
 
-      <Route path="/">
-        {isAuthenticated ? (
-          <Redirect to={isParent ? "/parent-dashboard" : "/kid-dashboard"} />
-        ) : (
-          <Redirect to="/auth" />
-        )}
+      {/* Kid */}
+      <Route path="/kid-dashboard">
+        <ProtectedRoute requireChild><KidDashboard /></ProtectedRoute>
+      </Route>
+      <Route path="/practice/:topicId">
+        <ProtectedRoute requireChild><PracticePage /></ProtectedRoute>
       </Route>
 
+      {/* Fallback */}
       <Route>
         <div className="flex items-center justify-center min-h-[60vh]">
           <div className="text-center">
