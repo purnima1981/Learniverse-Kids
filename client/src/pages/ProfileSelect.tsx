@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Loader2, ArrowLeft, GraduationCap, Users } from "lucide-react";
+import { Loader2, Users } from "lucide-react";
 
 interface ChildProfileSummary {
   id: number;
@@ -36,14 +36,9 @@ export default function ProfileSelect() {
 
   return (
     <div className="max-w-2xl mx-auto p-4 lg:p-6 space-y-6 animate-slide-up">
-      <div className="flex items-center gap-3">
-        <Button variant="ghost" size="icon" onClick={() => setLocation("/parent-dashboard")} aria-label="Back to dashboard">
-          <ArrowLeft className="h-5 w-5" />
-        </Button>
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">Who's learning today?</h1>
-          <p className="text-sm text-muted-foreground">Select a profile to continue as</p>
-        </div>
+      <div>
+        <h1 className="text-2xl font-display font-bold text-foreground">Who's learning today?</h1>
+        <p className="text-sm text-muted-foreground font-body">Select a profile to continue as</p>
       </div>
 
       {profiles.length === 0 ? (

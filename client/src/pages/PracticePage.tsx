@@ -94,9 +94,6 @@ export default function PracticePage() {
   if (practicing) {
     return (
       <div className="max-w-4xl mx-auto p-4 lg:p-6 animate-fade-in">
-        <Button variant="ghost" size="sm" onClick={() => setPracticing(false)} className="mb-4">
-          <ArrowLeft className="h-4 w-4 mr-1.5" /> Back to Topic
-        </Button>
         <div className="mb-6">
           <h1 className="text-xl font-bold text-foreground">{topic.title}</h1>
           <div className="flex items-center gap-2 mt-2">
@@ -118,13 +115,9 @@ export default function PracticePage() {
 
   return (
     <div className="max-w-2xl mx-auto p-4 lg:p-6 space-y-6 animate-slide-up">
-      <Button variant="ghost" size="sm" onClick={() => setLocation("/kid-dashboard")}>
-        <ArrowLeft className="h-4 w-4 mr-1.5" /> Back to Dashboard
-      </Button>
-
       {/* Topic info */}
       <div className="flex items-start gap-4">
-        <div className="p-3 rounded-xl bg-gradient-primary shrink-0">
+        <div className="p-3 rounded-xl shrink-0" style={{ background: "hsl(var(--grape))" }}>
           <Calculator className="h-7 w-7 text-white" />
         </div>
         <div>

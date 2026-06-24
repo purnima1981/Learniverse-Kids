@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import {
-  ArrowLeft,
   Target,
   Clock,
   Lightbulb,
@@ -252,16 +251,11 @@ export default function AnalyticsDashboard() {
   return (
     <div className="max-w-6xl mx-auto p-4 lg:p-6 space-y-6 animate-fade-in">
       {/* Header */}
-      <div className="flex items-center gap-3">
-        <Button variant="ghost" size="icon" onClick={() => setLocation("/parent-dashboard")} aria-label="Back to dashboard">
-          <ArrowLeft className="h-5 w-5" />
-        </Button>
-        <div>
-          <h1 className="text-xl lg:text-2xl font-bold flex items-center gap-2">
-            <BarChart3 className="h-5 w-5 text-primary" /> Performance Analytics
-          </h1>
-          <p className="text-sm text-muted-foreground">Comprehensive view of your child's math preparation</p>
-        </div>
+      <div>
+        <h1 className="text-xl lg:text-2xl font-display font-bold flex items-center gap-2">
+          <BarChart3 className="h-5 w-5" style={{ color: "hsl(var(--grape))" }} /> Performance Analytics
+        </h1>
+        <p className="text-sm text-muted-foreground font-body">Comprehensive view of your child's math preparation</p>
       </div>
 
       {/* ═══ WEEKLY SUMMARY ═══ */}

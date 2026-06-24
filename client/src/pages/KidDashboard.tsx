@@ -77,37 +77,23 @@ export default function KidDashboard() {
 
   return (
     <div className="min-h-screen" style={{ background: "hsl(var(--background))" }}>
-      {/* Header */}
-      <header className="px-5 py-5 animate-slide-down" style={{ background: "hsl(var(--grape))" }}>
-        <div className="max-w-lg mx-auto">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2">
-              <span className="font-display font-bold text-white/90 text-sm">LearnSmarter</span>
-              <span className="text-xs font-body" style={{ color: "rgba(255,255,255,0.5)" }}>pilot</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1.5 rounded-full px-3 py-1.5 font-body" style={{ background: "rgba(255,255,255,0.15)" }}>
-                <Zap size={13} style={{ color: "#FAC775" }} />
-                <span className="text-white text-sm font-semibold">{points.toLocaleString()}</span>
-              </div>
-              <button
-                onClick={async () => { await switchProfile.mutateAsync(null); setLocation("/parent-dashboard"); }}
-                className="p-2 rounded-lg transition-colors"
-                style={{ background: "rgba(255,255,255,0.15)" }}
-                aria-label="Switch to parent mode"
-              >
-                <Users size={14} className="text-white" />
-              </button>
-            </div>
+      {/* Welcome banner */}
+      <div className="px-5 py-5" style={{ background: "hsl(var(--grape))" }}>
+        <div className="max-w-lg mx-auto flex items-center justify-between">
+          <div>
+            <p className="text-xs font-semibold tracking-wider uppercase font-body" style={{ color: "rgba(255,255,255,0.5)" }}>
+              Grade {activeProfile?.grade}
+            </p>
+            <h1 className="text-white font-display font-bold text-2xl mt-0.5">
+              Hey, {activeProfile?.name}!
+            </h1>
           </div>
-          <p className="text-xs font-semibold tracking-wider uppercase font-body" style={{ color: "rgba(255,255,255,0.5)" }}>
-            Grade {activeProfile?.grade}
-          </p>
-          <h1 className="text-white font-display font-bold text-2xl mt-0.5">
-            Hey, {activeProfile?.name}!
-          </h1>
+          <div className="flex items-center gap-1.5 rounded-full px-3 py-1.5 font-body" style={{ background: "rgba(255,255,255,0.15)" }}>
+            <Zap size={13} style={{ color: "#FAC775" }} />
+            <span className="text-white text-sm font-semibold">{points.toLocaleString()}</span>
+          </div>
         </div>
-      </header>
+      </div>
 
       <div className="max-w-lg mx-auto px-5 py-5 space-y-5 animate-slide-up" style={{ animationDelay: "80ms", animationFillMode: "both" }}>
         {/* Stats row (reference style) */}

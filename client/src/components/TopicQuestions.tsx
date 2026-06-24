@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
-import { Loader2, X, ChevronRight, Check, Clock, Zap, ArrowRight, BookOpen, RotateCcw, Eye, Timer } from "lucide-react";
+import { Loader2, X, ChevronLeft, ChevronRight, Check, Clock, Zap, ArrowRight, BookOpen, RotateCcw, Eye, Timer } from "lucide-react";
 import { MathRenderer } from "@/components/MathRenderer";
 import type { Question } from "@shared/schema";
 
@@ -195,10 +195,10 @@ function PracticeTest({ questions, profileId, topicId, onComplete }: {
       <div className="bg-white border-b px-4 py-3 flex items-center gap-3 sticky top-0 z-10" style={{ borderColor: "hsl(var(--border))" }}>
         <button
           onClick={() => onComplete(results.filter(r => r.correct).length, results.length)}
-          className="p-2 hover:bg-muted rounded-lg transition-colors"
-          aria-label="Exit practice"
+          className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg hover:bg-muted transition-colors text-sm font-medium font-body"
+          style={{ color: "hsl(var(--grape))" }}
         >
-          <X size={16} className="text-muted-foreground" />
+          <ChevronLeft size={16} /> Exit
         </button>
         <div className="flex-1">
           <div className="flex items-center justify-between text-xs text-muted-foreground mb-1 font-body">
