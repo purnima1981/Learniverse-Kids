@@ -33,15 +33,14 @@ export default function LandingPage() {
       {/* Hero */}
       <div className="flex-1 flex flex-col items-center justify-center text-center px-6 pt-4 pb-20 gap-8 animate-slide-up">
         <div className="max-w-2xl">
-          <div className="text-6xl mb-4 animate-wiggle">🚀</div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold leading-tight mb-4 text-foreground">
-            Math is an{" "}
+            Learn Smarter,{" "}
             <span className="bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent">
-              adventure
+              Compete Better
             </span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed font-body">
-            Practice for Olympiads & competitive exams with timed challenges, earn badges, level up, and watch your skills grow. For grades 1–8.
+            Timed practice for Olympiads and competitive exams. Track progress, earn badges, and level up — grades 1 to 8.
           </p>
         </div>
 
