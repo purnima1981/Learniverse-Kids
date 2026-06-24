@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import { setupAuth } from "./auth";
 import { registerRoutes } from "./routes";
+import { migrate } from "./migrate";
 import { seed } from "./seed";
 
 const app = express();
@@ -9,19 +10,18 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Auth (sessions + passport + auth routes)
 setupAuth(app);
-
-// API routes
 registerRoutes(app);
 
-// Vite dev server or static serving
 (async () => {
-  // Seed database on startup
+  // Create tables if they don't exist
+  await migrate();
+
+  // Seed sample data
   try {
     await seed();
   } catch (err) {
-    console.error("Seed failed (run 'npm run db:push' first if tables are missing):", err);
+    console.error("Seed failed:", err);
   }
 
   if (process.env.NODE_ENV === "production") {
