@@ -4,26 +4,24 @@ import {
   users,
   childProfiles,
   inviteCodes,
-  stories,
-  chapters,
+  topics,
   questions,
   quizSessions,
   questionResponses,
-  childProgress,
+  topicProgress,
   type User,
   type InsertUser,
   type ChildProfile,
   type InsertChildProfile,
   type InviteCode,
-  type Story,
-  type Chapter,
+  type Topic,
   type Question,
   type QuizSession,
   type InsertQuizSession,
   type QuestionResponse,
   type InsertQuestionResponse,
-  type ChildProgress,
-  type InsertChildProgress,
+  type TopicProgress,
+  type InsertTopicProgress,
 } from "@shared/schema";
 import bcrypt from "bcryptjs";
 
@@ -107,13 +105,13 @@ export async function verifyChildPin(
 export async function createInviteCode(
   parentId: number
 ): Promise<InviteCode> {
-  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // no O/0/I/1
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   let code = "";
   for (let i = 0; i < 6; i++) {
     code += chars[Math.floor(Math.random() * chars.length)];
   }
 
-  const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+  const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
   const [invite] = await db
     .insert(inviteCodes)
@@ -142,61 +140,44 @@ export async function markInviteCodeUsed(
     .where(eq(inviteCodes.id, codeId));
 }
 
-// ─── Stories ─────────────────────────────────────────────────────────────────
+// ─── Topics ──────────────────────────────────────────────────────────────────
 
-export async function getStories(gradeLevel?: number): Promise<Story[]> {
+export async function getTopics(gradeLevel?: number, category?: string): Promise<Topic[]> {
+  const conditions = [];
   if (gradeLevel) {
-    return db
-      .select()
-      .from(stories)
-      .where(eq(stories.gradeLevel, gradeLevel));
+    conditions.push(eq(topics.gradeLevel, gradeLevel));
   }
-  return db.select().from(stories);
+  if (category) {
+    conditions.push(eq(topics.category, category));
+  }
+  if (conditions.length > 0) {
+    return db.select().from(topics).where(and(...conditions));
+  }
+  return db.select().from(topics);
 }
 
-export async function getStoryById(id: number): Promise<Story | undefined> {
-  const [story] = await db
+export async function getTopicById(id: number): Promise<Topic | undefined> {
+  const [topic] = await db
     .select()
-    .from(stories)
-    .where(eq(stories.id, id));
-  return story;
-}
-
-export async function getChapter(
-  storyId: number,
-  chapterNumber: number
-): Promise<Chapter | undefined> {
-  const [chapter] = await db
-    .select()
-    .from(chapters)
-    .where(
-      and(
-        eq(chapters.storyId, storyId),
-        eq(chapters.chapterNumber, chapterNumber)
-      )
-    );
-  return chapter;
-}
-
-export async function getChapterById(
-  id: number
-): Promise<Chapter | undefined> {
-  const [chapter] = await db
-    .select()
-    .from(chapters)
-    .where(eq(chapters.id, id));
-  return chapter;
+    .from(topics)
+    .where(eq(topics.id, id));
+  return topic;
 }
 
 // ─── Questions ───────────────────────────────────────────────────────────────
 
-export async function getQuestionsByChapter(
-  chapterId: number
+export async function getQuestionsByTopic(
+  topicId: number,
+  difficulty?: string
 ): Promise<Question[]> {
+  const conditions = [eq(questions.topicId, topicId)];
+  if (difficulty) {
+    conditions.push(eq(questions.difficulty, difficulty));
+  }
   return db
     .select()
     .from(questions)
-    .where(eq(questions.chapterId, chapterId));
+    .where(and(...conditions));
 }
 
 // ─── Quiz Sessions ───────────────────────────────────────────────────────────
@@ -264,60 +245,104 @@ export async function getResponsesByProfile(
     .where(eq(questionResponses.childProfileId, profileId));
 }
 
-// ─── Child Progress ──────────────────────────────────────────────────────────
+// ─── Topic Progress ─────────────────────────────────────────────────────────
 
-export async function getChildProgressRecord(
+export async function getTopicProgressRecord(
   profileId: number,
-  storyId: number
-): Promise<ChildProgress | undefined> {
+  topicId: number
+): Promise<TopicProgress | undefined> {
   const [progress] = await db
     .select()
-    .from(childProgress)
+    .from(topicProgress)
     .where(
       and(
-        eq(childProgress.childProfileId, profileId),
-        eq(childProgress.storyId, storyId)
+        eq(topicProgress.childProfileId, profileId),
+        eq(topicProgress.topicId, topicId)
       )
     );
   return progress;
 }
 
-export async function upsertChildProgress(
-  data: InsertChildProgress
-): Promise<ChildProgress> {
-  const existing = await getChildProgressRecord(
+export async function upsertTopicProgress(
+  data: InsertTopicProgress
+): Promise<TopicProgress> {
+  const existing = await getTopicProgressRecord(
     data.childProfileId,
-    data.storyId
+    data.topicId
   );
   if (existing) {
     const [updated] = await db
-      .update(childProgress)
+      .update(topicProgress)
       .set({
-        currentChapter: data.currentChapter,
-        completedChapters: data.completedChapters,
-        lastAccessedAt: new Date(),
+        questionsAttempted: data.questionsAttempted,
+        questionsCorrect: data.questionsCorrect,
+        bestScore: data.bestScore,
+        totalSessions: data.totalSessions,
+        lastPracticedAt: new Date(),
       })
-      .where(eq(childProgress.id, existing.id))
+      .where(eq(topicProgress.id, existing.id))
       .returning();
     return updated;
   }
   const [created] = await db
-    .insert(childProgress)
+    .insert(topicProgress)
     .values(data)
     .returning();
   return created;
 }
 
-export async function getAllChildProgress(
+export async function getAllTopicProgress(
   profileId: number
-): Promise<ChildProgress[]> {
+): Promise<TopicProgress[]> {
   return db
     .select()
-    .from(childProgress)
-    .where(eq(childProgress.childProfileId, profileId));
+    .from(topicProgress)
+    .where(eq(topicProgress.childProfileId, profileId));
 }
 
 // ─── Analytics Queries ───────────────────────────────────────────────────────
+
+export async function getWeeklyStats(profileId: number) {
+  const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+  const [stats] = await db
+    .select({
+      totalQuestions: sql<number>`count(*)::int`,
+      totalCorrect: sql<number>`sum(case when ${questionResponses.isCorrect} then 1 else 0 end)::int`,
+      avgTime: sql<number>`round(avg(${questionResponses.timeTaken}))::int`,
+      totalSessions: sql<number>`count(distinct ${questionResponses.sessionId})::int`,
+    })
+    .from(questionResponses)
+    .where(
+      and(
+        eq(questionResponses.childProfileId, profileId),
+        sql`${questionResponses.answeredAt} >= ${oneWeekAgo}`
+      )
+    );
+  return stats;
+}
+
+export async function getWeeklyDailyBreakdown(profileId: number) {
+  const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+  return db
+    .select({
+      day: sql<string>`to_char(${questionResponses.answeredAt}, 'Dy')`,
+      date: sql<string>`to_char(${questionResponses.answeredAt}, 'YYYY-MM-DD')`,
+      total: sql<number>`count(*)::int`,
+      correct: sql<number>`sum(case when ${questionResponses.isCorrect} then 1 else 0 end)::int`,
+    })
+    .from(questionResponses)
+    .where(
+      and(
+        eq(questionResponses.childProfileId, profileId),
+        sql`${questionResponses.answeredAt} >= ${oneWeekAgo}`
+      )
+    )
+    .groupBy(
+      sql`to_char(${questionResponses.answeredAt}, 'Dy')`,
+      sql`to_char(${questionResponses.answeredAt}, 'YYYY-MM-DD')`
+    )
+    .orderBy(sql`to_char(${questionResponses.answeredAt}, 'YYYY-MM-DD')`);
+}
 
 export async function getBloomLevelStats(
   profileId: number
@@ -337,11 +362,30 @@ export async function getBloomLevelStats(
   return rows;
 }
 
+export async function getDifficultyStats(
+  profileId: number
+): Promise<
+  { difficulty: string; total: number; correct: number; avgTime: number }[]
+> {
+  const rows = await db
+    .select({
+      difficulty: questionResponses.difficulty,
+      total: sql<number>`count(*)::int`,
+      correct: sql<number>`sum(case when ${questionResponses.isCorrect} then 1 else 0 end)::int`,
+      avgTime: sql<number>`round(avg(${questionResponses.timeTaken}))::int`,
+    })
+    .from(questionResponses)
+    .where(eq(questionResponses.childProfileId, profileId))
+    .groupBy(questionResponses.difficulty);
+  return rows;
+}
+
 export async function getSessionHistory(profileId: number) {
   return db
     .select({
       id: quizSessions.id,
-      chapterId: quizSessions.chapterId,
+      topicId: quizSessions.topicId,
+      difficulty: quizSessions.difficulty,
       startedAt: quizSessions.startedAt,
       completedAt: quizSessions.completedAt,
       score: quizSessions.score,
@@ -385,10 +429,10 @@ export async function getHintUsageBySession(profileId: number) {
     .groupBy(questionResponses.sessionId);
 }
 
-export async function getThemeStats(profileId: number) {
+export async function getTopicStats(profileId: number) {
   return db
     .select({
-      theme: sql<string>`coalesce(${questions.theme}, 'other')`,
+      topicName: sql<string>`coalesce(${questions.topic}, 'other')`,
       total: sql<number>`count(*)::int`,
       correct: sql<number>`sum(case when ${questionResponses.isCorrect} then 1 else 0 end)::int`,
     })
@@ -398,5 +442,20 @@ export async function getThemeStats(profileId: number) {
       eq(questionResponses.questionId, questions.id)
     )
     .where(eq(questionResponses.childProfileId, profileId))
-    .groupBy(questions.theme);
+    .groupBy(questions.topic);
+}
+
+export async function getCategoryStats(profileId: number) {
+  return db
+    .select({
+      category: topics.category,
+      total: sql<number>`count(*)::int`,
+      correct: sql<number>`sum(case when ${questionResponses.isCorrect} then 1 else 0 end)::int`,
+      avgTime: sql<number>`round(avg(${questionResponses.timeTaken}))::int`,
+    })
+    .from(questionResponses)
+    .innerJoin(quizSessions, eq(questionResponses.sessionId, quizSessions.id))
+    .innerJoin(topics, eq(quizSessions.topicId, topics.id))
+    .where(eq(questionResponses.childProfileId, profileId))
+    .groupBy(topics.category);
 }

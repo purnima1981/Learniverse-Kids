@@ -11,6 +11,7 @@ interface ChildProfileSummary {
   name: string;
   grade: number;
   avatar: string;
+  state: string | null;
 }
 
 export default function ProfileSelect() {

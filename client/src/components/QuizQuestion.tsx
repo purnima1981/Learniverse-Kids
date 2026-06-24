@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { CheckCircle2, XCircle, Lightbulb, ArrowUp, ArrowDown } from "lucide-react";
+import { MathRenderer } from "@/components/MathRenderer";
 import type { Question } from "@shared/schema";
 
 interface QuizQuestionProps {
@@ -41,11 +42,20 @@ export function QuizQuestion({
       {/* Question Header */}
       <div className="space-y-2">
         <div className="flex items-center gap-2 flex-wrap">
-          <Badge variant="outline" className="capitalize">{question.bloomLevel}</Badge>
-          <Badge variant="secondary" className="capitalize">{question.difficulty}</Badge>
-          {question.theme && <Badge variant="secondary">{question.theme}</Badge>}
+          <Badge variant="outline" className="capitalize">{question.difficulty}</Badge>
+          <Badge variant="secondary" className="capitalize">{question.bloomLevel}</Badge>
+          {question.topic && <Badge variant="secondary">{question.topic}</Badge>}
         </div>
-        <p className="text-lg font-medium">{question.text}</p>
+        <p className="text-lg font-medium">
+          <MathRenderer text={question.text} />
+        </p>
+        {question.imageUrl && (
+          <img
+            src={question.imageUrl}
+            alt="Question diagram"
+            className="max-w-md mx-auto rounded-lg border mt-3"
+          />
+        )}
       </div>
 
       {/* Hints */}
@@ -54,7 +64,7 @@ export function QuizQuestion({
           {hints.slice(0, hintsUsed).map((hint, i) => (
             <div key={i} className="flex items-start gap-2 p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
               <Lightbulb className="h-4 w-4 text-yellow-500 mt-0.5 shrink-0" />
-              <p className="text-sm">{hint}</p>
+              <p className="text-sm"><MathRenderer text={hint} /></p>
             </div>
           ))}
           {!answered && hasMoreHints && (
@@ -87,7 +97,7 @@ export function QuizQuestion({
           <div>
             <p className="font-medium">{isCorrect ? "Correct!" : "Not quite right"}</p>
             {question.explanation && (
-              <p className="text-sm mt-1 opacity-80">{question.explanation}</p>
+              <p className="text-sm mt-1 opacity-80"><MathRenderer text={question.explanation} /></p>
             )}
           </div>
         </div>

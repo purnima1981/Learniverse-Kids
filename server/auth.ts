@@ -223,6 +223,7 @@ export function setupAuth(app: Express) {
               name: profile.name,
               grade: profile.grade,
               avatar: profile.avatar,
+              state: profile.state,
             },
             activeProfileType: "child",
           });
@@ -265,6 +266,7 @@ export function setupAuth(app: Express) {
           name: profile.name,
           grade: profile.grade,
           avatar: profile.avatar,
+          state: profile.state,
         };
       }
     }
@@ -302,6 +304,7 @@ export function setupAuth(app: Express) {
         name: profile.name,
         grade: profile.grade,
         avatar: profile.avatar,
+        state: profile.state,
       },
     });
   });

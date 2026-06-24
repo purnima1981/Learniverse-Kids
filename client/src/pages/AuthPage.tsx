@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "@/components/ui/use-toast";
-import { GraduationCap, Loader2, BookOpen, Users } from "lucide-react";
+import { Brain, Loader2, Calculator, Trophy } from "lucide-react";
 
 export default function AuthPage() {
   const { login, register, kidLogin, isAuthenticated, isParent } = useAuth();
@@ -24,7 +24,7 @@ export default function AuthPage() {
       <div className="flex-1 flex items-center justify-center p-8">
         <div className="w-full max-w-md">
           <div className="flex items-center gap-3 mb-8">
-            <GraduationCap className="h-10 w-10 text-primary" />
+            <Brain className="h-10 w-10 text-primary" />
             <h1 className="text-3xl font-bold">LearnSmarter</h1>
           </div>
 
@@ -84,13 +84,13 @@ export default function AuthPage() {
       <div className="hidden lg:flex flex-1 bg-gradient-to-br from-primary/20 via-primary/10 to-background items-center justify-center p-12">
         <div className="text-center max-w-md">
           <div className="flex justify-center gap-4 mb-8">
-            <BookOpen className="h-16 w-16 text-primary" />
-            <Users className="h-16 w-16 text-primary/70" />
+            <Calculator className="h-16 w-16 text-primary" />
+            <Trophy className="h-16 w-16 text-primary/70" />
           </div>
-          <h2 className="text-4xl font-bold mb-4">Learn Through Stories</h2>
+          <h2 className="text-4xl font-bold mb-4">Master Math. Win Olympiads.</h2>
           <p className="text-lg text-muted-foreground">
-            An educational platform where kids explore interactive stories,
-            take quizzes tagged with Bloom's Taxonomy, and parents track their learning journey.
+            A math olympiad preparation platform where kids practice competition-level problems,
+            track their progress across difficulty levels, and parents get detailed Bloom's Taxonomy insights.
           </p>
         </div>
       </div>

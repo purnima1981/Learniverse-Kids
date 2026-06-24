@@ -13,6 +13,13 @@ import { z } from "zod";
 
 // ─── Enums / Constants ────────────────────────────────────────────────────────
 
+export const DIFFICULTY_LEVELS = [
+  "easy",
+  "medium",
+  "hard",
+  "olympiad",
+] as const;
+
 export const BLOOM_LEVELS = [
   "remember",
   "understand",
@@ -24,12 +31,20 @@ export const BLOOM_LEVELS = [
 
 export const QUESTION_TYPES = [
   "multiple-choice",
-  "matching",
-  "fill-blank",
-  "unscramble",
-  "hidden-word",
-  "word-sequence",
   "true-false",
+  "fill-blank",
+  "matching",
+  "word-sequence",
+] as const;
+
+export const MATH_CATEGORIES = [
+  "arithmetic",
+  "algebra",
+  "geometry",
+  "number-theory",
+  "combinatorics",
+  "logical-reasoning",
+  "data-handling",
 ] as const;
 
 // ─── Tables ───────────────────────────────────────────────────────────────────
@@ -53,6 +68,7 @@ export const childProfiles = pgTable("child_profiles", {
   grade: integer("grade").notNull(),
   pin: text("pin").notNull(),
   avatar: varchar("avatar", { length: 50 }).default("default"),
+  state: varchar("state", { length: 2 }),
   inviteCode: varchar("invite_code", { length: 6 }),
   createdAt: timestamp("created_at").defaultNow(),
 });
@@ -68,37 +84,30 @@ export const inviteCodes = pgTable("invite_codes", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
-export const stories = pgTable("stories", {
+export const topics = pgTable("topics", {
   id: serial("id").primaryKey(),
   title: varchar("title", { length: 255 }).notNull(),
   description: text("description"),
+  category: varchar("category", { length: 50 }).notNull(),
   gradeLevel: integer("grade_level").notNull(),
-  totalChapters: integer("total_chapters").notNull().default(1),
-  imageUrl: text("image_url"),
-});
-
-export const chapters = pgTable("chapters", {
-  id: serial("id").primaryKey(),
-  storyId: integer("story_id")
-    .notNull()
-    .references(() => stories.id),
-  chapterNumber: integer("chapter_number").notNull(),
-  title: varchar("title", { length: 255 }).notNull(),
-  content: text("content").notNull(),
+  difficulty: varchar("difficulty", { length: 20 }).notNull().default("medium"),
+  iconName: varchar("icon_name", { length: 50 }).default("Calculator"),
+  totalQuestions: integer("total_questions").notNull().default(0),
 });
 
 export const questions = pgTable("questions", {
   id: serial("id").primaryKey(),
-  chapterId: integer("chapter_id")
+  topicId: integer("topic_id")
     .notNull()
-    .references(() => chapters.id),
+    .references(() => topics.id),
   type: varchar("type", { length: 30 }).notNull(),
   text: text("text").notNull(),
+  imageUrl: text("image_url"),
   options: jsonb("options"),
   answer: jsonb("answer").notNull(),
-  bloomLevel: varchar("bloom_level", { length: 20 }).notNull(),
-  difficulty: varchar("difficulty", { length: 10 }).notNull().default("medium"),
-  theme: varchar("theme", { length: 50 }),
+  difficulty: varchar("difficulty", { length: 20 }).notNull().default("medium"),
+  bloomLevel: varchar("bloom_level", { length: 20 }).notNull().default("understand"),
+  topic: varchar("topic", { length: 100 }),
   tags: jsonb("tags"),
   hints: jsonb("hints"),
   explanation: text("explanation"),
@@ -109,9 +118,10 @@ export const quizSessions = pgTable("quiz_sessions", {
   childProfileId: integer("child_profile_id")
     .notNull()
     .references(() => childProfiles.id),
-  chapterId: integer("chapter_id")
+  topicId: integer("topic_id")
     .notNull()
-    .references(() => chapters.id),
+    .references(() => topics.id),
+  difficulty: varchar("difficulty", { length: 20 }),
   startedAt: timestamp("started_at").defaultNow(),
   completedAt: timestamp("completed_at"),
   score: integer("score"),
@@ -134,21 +144,24 @@ export const questionResponses = pgTable("question_responses", {
   timeTaken: integer("time_taken"),
   attempts: integer("attempts").notNull().default(1),
   hintsUsed: integer("hints_used").notNull().default(0),
-  bloomLevel: varchar("bloom_level", { length: 20 }).notNull(),
+  difficulty: varchar("difficulty", { length: 20 }).notNull(),
+  bloomLevel: varchar("bloom_level", { length: 20 }).notNull().default("understand"),
   answeredAt: timestamp("answered_at").defaultNow(),
 });
 
-export const childProgress = pgTable("child_progress", {
+export const topicProgress = pgTable("topic_progress", {
   id: serial("id").primaryKey(),
   childProfileId: integer("child_profile_id")
     .notNull()
     .references(() => childProfiles.id),
-  storyId: integer("story_id")
+  topicId: integer("topic_id")
     .notNull()
-    .references(() => stories.id),
-  currentChapter: integer("current_chapter").notNull().default(1),
-  completedChapters: jsonb("completed_chapters"),
-  lastAccessedAt: timestamp("last_accessed_at").defaultNow(),
+    .references(() => topics.id),
+  questionsAttempted: integer("questions_attempted").notNull().default(0),
+  questionsCorrect: integer("questions_correct").notNull().default(0),
+  bestScore: integer("best_score"),
+  totalSessions: integer("total_sessions").notNull().default(0),
+  lastPracticedAt: timestamp("last_practiced_at").defaultNow(),
 });
 
 // ─── Zod Insert Schemas ──────────────────────────────────────────────────────
@@ -168,11 +181,7 @@ export const insertInviteCodeSchema = createInsertSchema(inviteCodes).omit({
   createdAt: true,
 });
 
-export const insertStorySchema = createInsertSchema(stories).omit({
-  id: true,
-});
-
-export const insertChapterSchema = createInsertSchema(chapters).omit({
+export const insertTopicSchema = createInsertSchema(topics).omit({
   id: true,
 });
 
@@ -192,7 +201,7 @@ export const insertQuestionResponseSchema = createInsertSchema(
   answeredAt: true,
 });
 
-export const insertChildProgressSchema = createInsertSchema(childProgress).omit(
+export const insertTopicProgressSchema = createInsertSchema(topicProgress).omit(
   { id: true }
 );
 
@@ -207,11 +216,8 @@ export type InsertChildProfile = z.infer<typeof insertChildProfileSchema>;
 export type InviteCode = typeof inviteCodes.$inferSelect;
 export type InsertInviteCode = z.infer<typeof insertInviteCodeSchema>;
 
-export type Story = typeof stories.$inferSelect;
-export type InsertStory = z.infer<typeof insertStorySchema>;
-
-export type Chapter = typeof chapters.$inferSelect;
-export type InsertChapter = z.infer<typeof insertChapterSchema>;
+export type Topic = typeof topics.$inferSelect;
+export type InsertTopic = z.infer<typeof insertTopicSchema>;
 
 export type Question = typeof questions.$inferSelect;
 export type InsertQuestion = z.infer<typeof insertQuestionSchema>;
@@ -224,5 +230,5 @@ export type InsertQuestionResponse = z.infer<
   typeof insertQuestionResponseSchema
 >;
 
-export type ChildProgress = typeof childProgress.$inferSelect;
-export type InsertChildProgress = z.infer<typeof insertChildProgressSchema>;
+export type TopicProgress = typeof topicProgress.$inferSelect;
+export type InsertTopicProgress = z.infer<typeof insertTopicProgressSchema>;

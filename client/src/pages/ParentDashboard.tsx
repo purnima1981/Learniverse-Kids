@@ -14,7 +14,9 @@ import {
   ArrowRight,
   Loader2,
   Users,
-  GraduationCap,
+  Brain,
+  Calculator,
+  Trophy,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -23,6 +25,7 @@ interface ChildProfileSummary {
   name: string;
   grade: number;
   avatar: string;
+  state: string | null;
   createdAt: string;
 }
 
@@ -48,23 +51,29 @@ export default function ParentDashboard() {
 
   return (
     <div className="max-w-5xl mx-auto p-6 space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold">
-          Welcome, {user?.firstName}!
-        </h1>
-        <p className="text-muted-foreground mt-1">
-          Manage your children's learning profiles and track their progress.
-        </p>
+      {/* Hero */}
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/20 via-primary/10 to-background border p-8">
+        <div className="relative z-10">
+          <h1 className="text-3xl font-bold">
+            Welcome, {user?.firstName}!
+          </h1>
+          <p className="text-muted-foreground mt-2 text-lg">
+            Track your children's math olympiad preparation and help them excel.
+          </p>
+        </div>
+        <div className="absolute -right-8 -top-8 opacity-10">
+          <Trophy className="h-48 w-48" />
+        </div>
       </div>
 
       {/* Invite Section */}
       <Card className="border-primary/20 bg-primary/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <UserPlus className="h-5 w-5" /> Invite Your Child
+            <UserPlus className="h-5 w-5" /> Add Your Child
           </CardTitle>
           <CardDescription>
-            Generate an invite code and share it with your child to create their learning profile.
+            Generate an invite code for your child to create their math practice profile.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -124,10 +133,10 @@ export default function ParentDashboard() {
         ) : profiles.length === 0 ? (
           <Card className="border-dashed">
             <CardContent className="flex flex-col items-center justify-center py-12 text-center">
-              <GraduationCap className="h-12 w-12 text-muted-foreground mb-4" />
+              <Calculator className="h-12 w-12 text-muted-foreground mb-4" />
               <p className="text-lg font-medium">No children yet</p>
               <p className="text-muted-foreground mt-1">
-                Generate an invite code above to get your child started!
+                Generate an invite code above to get your child started with math practice!
               </p>
             </CardContent>
           </Card>

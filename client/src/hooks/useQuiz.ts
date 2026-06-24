@@ -14,7 +14,7 @@ interface QuestionState {
 export function useQuiz(
   questions: Question[],
   profileId: number,
-  chapterId: number,
+  topicId: number,
   onComplete: (score: number, total: number) => void
 ) {
   const [sessionId, setSessionId] = useState<number | null>(null);
@@ -22,7 +22,6 @@ export function useQuiz(
   const [questionStates, setQuestionStates] = useState<Map<number, QuestionState>>(new Map());
   const [score, setScore] = useState(0);
   const [quizComplete, setQuizComplete] = useState(false);
-  const timerRef = useRef<number>(0);
   const [elapsed, setElapsed] = useState(0);
 
   // Timer that ticks every second
@@ -38,13 +37,12 @@ export function useQuiz(
     mutationFn: async () => {
       const res = await apiRequest("POST", "/api/quiz/start", {
         childProfileId: profileId,
-        chapterId,
+        topicId,
       });
       return res.json();
     },
     onSuccess: (data) => {
       setSessionId(data.id);
-      // Initialize question states
       const states = new Map<number, QuestionState>();
       questions.forEach((q) => {
         states.set(q.id, {
@@ -67,6 +65,7 @@ export function useQuiz(
       timeTaken: number;
       attempts: number;
       hintsUsed: number;
+      difficulty: string;
       bloomLevel: string;
     }) => {
       await apiRequest("POST", "/api/quiz/respond", {
@@ -139,6 +138,7 @@ export function useQuiz(
       timeTaken,
       attempts: newAttempts,
       hintsUsed: state.hintsUsed,
+      difficulty: question?.difficulty ?? "medium",
       bloomLevel: question?.bloomLevel ?? "understand",
     });
   }
@@ -155,7 +155,6 @@ export function useQuiz(
   function nextQuestion() {
     if (currentIndex < questions.length - 1) {
       setCurrentIndex((prev) => prev + 1);
-      // Reset timer for next question
       const nextQ = questions[currentIndex + 1];
       if (nextQ) {
         updateState(nextQ.id, { startTime: Date.now() });

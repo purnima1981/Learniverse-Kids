@@ -14,6 +14,7 @@ interface AuthSession {
     name: string;
     grade: number;
     avatar: string;
+    state: string | null;
   } | null;
   activeProfileType: "parent" | "child";
 }

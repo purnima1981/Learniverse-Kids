@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { GraduationCap, LogOut, Users, BarChart3, BookOpen, Home } from "lucide-react";
+import { Calculator, LogOut, Users, BarChart3, Home, Brain } from "lucide-react";
 
 export function Navigation() {
   const { user, activeProfile, isAuthenticated, isParent, isChild, logout, switchProfile } = useAuth();
@@ -22,7 +22,9 @@ export function Navigation() {
     <nav className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-40">
       <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
         <Link href={isParent ? "/parent-dashboard" : "/kid-dashboard"} className="flex items-center gap-2">
-          <GraduationCap className="h-6 w-6 text-primary" />
+          <div className="p-1.5 rounded-lg bg-primary/10">
+            <Brain className="h-5 w-5 text-primary" />
+          </div>
           <span className="font-bold text-lg">LearnSmarter</span>
         </Link>
 
@@ -46,7 +48,7 @@ export function Navigation() {
             <>
               <Link href="/kid-dashboard">
                 <Button variant="ghost" size="sm" className="gap-2">
-                  <BookOpen className="h-4 w-4" /> Stories
+                  <Calculator className="h-4 w-4" /> Practice
                 </Button>
               </Link>
             </>

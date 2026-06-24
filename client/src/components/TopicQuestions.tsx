@@ -17,19 +17,28 @@ import {
 } from "lucide-react";
 import type { Question } from "@shared/schema";
 
-interface ChapterQuestionsProps {
-  chapterId: number;
+interface TopicQuestionsProps {
+  topicId: number;
   profileId: number;
+  difficulty?: string;
   onComplete: (score: number, total: number) => void;
 }
 
-export function ChapterQuestions({
-  chapterId,
+export function TopicQuestions({
+  topicId,
   profileId,
+  difficulty,
   onComplete,
-}: ChapterQuestionsProps) {
+}: TopicQuestionsProps) {
   const { data: questions = [], isLoading } = useQuery<Question[]>({
-    queryKey: [`/api/chapters/${chapterId}/questions`],
+    queryKey: [`/api/topics/${topicId}/questions`, difficulty],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+      if (difficulty) params.set("difficulty", difficulty);
+      const res = await fetch(`/api/topics/${topicId}/questions?${params.toString()}`, { credentials: "include" });
+      if (!res.ok) throw new Error("Failed to load questions");
+      return res.json();
+    },
   });
 
   if (isLoading) {
@@ -44,7 +53,7 @@ export function ChapterQuestions({
     return (
       <Card>
         <CardContent className="py-12 text-center">
-          <p className="text-muted-foreground">No questions available for this chapter yet.</p>
+          <p className="text-muted-foreground">No questions available for this topic yet.</p>
         </CardContent>
       </Card>
     );
@@ -54,7 +63,7 @@ export function ChapterQuestions({
     <QuizContent
       questions={questions}
       profileId={profileId}
-      chapterId={chapterId}
+      topicId={topicId}
       onComplete={onComplete}
     />
   );
@@ -63,15 +72,15 @@ export function ChapterQuestions({
 function QuizContent({
   questions,
   profileId,
-  chapterId,
+  topicId,
   onComplete,
 }: {
   questions: Question[];
   profileId: number;
-  chapterId: number;
+  topicId: number;
   onComplete: (score: number, total: number) => void;
 }) {
-  const quiz = useQuiz(questions, profileId, chapterId, onComplete);
+  const quiz = useQuiz(questions, profileId, topicId, onComplete);
 
   // Start quiz on mount
   if (!quiz.sessionId && !quiz.startQuiz.isPending) {
@@ -79,7 +88,7 @@ function QuizContent({
     return (
       <div className="flex items-center justify-center py-12">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        <span className="ml-3">Starting quiz...</span>
+        <span className="ml-3">Loading practice session...</span>
       </div>
     );
   }
@@ -87,24 +96,25 @@ function QuizContent({
   if (quiz.quizComplete) {
     const accuracy = Math.round((quiz.score / quiz.totalQuestions) * 100);
     return (
-      <Card>
-        <CardHeader className="text-center">
-          <Trophy className="h-16 w-16 mx-auto text-yellow-500 mb-4" />
-          <CardTitle className="text-3xl">Quiz Complete!</CardTitle>
+      <Card className="overflow-hidden">
+        <div className={`h-2 ${accuracy >= 80 ? "bg-green-500" : accuracy >= 50 ? "bg-yellow-500" : "bg-orange-500"}`} />
+        <CardHeader className="text-center pt-8">
+          <Trophy className={`h-16 w-16 mx-auto mb-4 ${accuracy >= 80 ? "text-yellow-500" : accuracy >= 50 ? "text-blue-500" : "text-orange-500"}`} />
+          <CardTitle className="text-3xl">Practice Complete!</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-6 pb-8">
           <div className="grid grid-cols-3 gap-4 text-center">
-            <div className="p-4 rounded-lg bg-card border">
+            <div className="p-4 rounded-xl bg-card border">
               <Target className="h-6 w-6 mx-auto mb-2 text-primary" />
               <p className="text-2xl font-bold">{quiz.score}/{quiz.totalQuestions}</p>
               <p className="text-sm text-muted-foreground">Score</p>
             </div>
-            <div className="p-4 rounded-lg bg-card border">
+            <div className="p-4 rounded-xl bg-card border">
               <CheckCircle2 className="h-6 w-6 mx-auto mb-2 text-green-500" />
               <p className="text-2xl font-bold">{accuracy}%</p>
               <p className="text-sm text-muted-foreground">Accuracy</p>
             </div>
-            <div className="p-4 rounded-lg bg-card border">
+            <div className="p-4 rounded-xl bg-card border">
               <Clock className="h-6 w-6 mx-auto mb-2 text-blue-500" />
               <p className="text-2xl font-bold">
                 {Math.floor(quiz.elapsed / 60)}:{String(quiz.elapsed % 60).padStart(2, "0")}
@@ -113,15 +123,17 @@ function QuizContent({
             </div>
           </div>
 
-          <div className="text-center">
+          <div className="text-center p-4 rounded-xl bg-card border">
             {accuracy === 100 ? (
-              <p className="text-lg text-green-400">Perfect score! You've mastered this chapter!</p>
-            ) : accuracy >= 70 ? (
-              <p className="text-lg text-blue-400">Great work! You're understanding the key concepts.</p>
-            ) : accuracy >= 50 ? (
-              <p className="text-lg text-yellow-400">Good effort! Try reviewing the chapter for better results.</p>
+              <p className="text-lg font-medium text-green-500">Perfect score! You've mastered this topic!</p>
+            ) : accuracy >= 80 ? (
+              <p className="text-lg font-medium text-green-500">Excellent! You're well prepared for the olympiad!</p>
+            ) : accuracy >= 60 ? (
+              <p className="text-lg font-medium text-blue-500">Good work! A few more practice sessions will help.</p>
+            ) : accuracy >= 40 ? (
+              <p className="text-lg font-medium text-yellow-500">Keep going! Review the explanations and try again.</p>
             ) : (
-              <p className="text-lg text-orange-400">Keep practicing! Re-read the chapter and try again.</p>
+              <p className="text-lg font-medium text-orange-500">Don't worry! Focus on the explanations and build up from easier levels.</p>
             )}
           </div>
         </CardContent>
@@ -184,7 +196,7 @@ function QuizContent({
 
         {quiz.currentIndex === quiz.totalQuestions - 1 ? (
           <Button onClick={quiz.finishQuiz} disabled={!state.answered}>
-            Finish Quiz <Trophy className="h-4 w-4 ml-2" />
+            Finish Practice <Trophy className="h-4 w-4 ml-2" />
           </Button>
         ) : (
           <Button onClick={quiz.nextQuestion} disabled={!state.answered}>

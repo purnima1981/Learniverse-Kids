@@ -23,7 +23,7 @@ export function registerRoutes(app: Express) {
 
   app.post("/api/invite/join", async (req: Request, res: Response) => {
     try {
-      const { code, name, grade, pin, avatar } = req.body;
+      const { code, name, grade, pin, avatar, state } = req.body;
 
       if (!code || !name || !grade || !pin) {
         return res.status(400).json({ message: "All fields are required" });
@@ -53,6 +53,7 @@ export function registerRoutes(app: Express) {
         grade: Number(grade),
         pin: hashedPin,
         avatar: avatar || "default",
+        state: state || null,
         inviteCode: invite.code,
       });
 
@@ -90,6 +91,7 @@ export function registerRoutes(app: Express) {
             name: p.name,
             grade: p.grade,
             avatar: p.avatar,
+            state: p.state,
             createdAt: p.createdAt,
           }))
         );
@@ -100,48 +102,44 @@ export function registerRoutes(app: Express) {
     }
   );
 
-  // ── Stories ────────────────────────────────────────────────────────────────
+  // ── Topics ─────────────────────────────────────────────────────────────────
 
-  app.get("/api/stories", requireAuth, async (req: Request, res: Response) => {
+  app.get("/api/topics", requireAuth, async (req: Request, res: Response) => {
     try {
       const grade = req.query.grade ? Number(req.query.grade) : undefined;
-      const storyList = await storage.getStories(grade);
-      res.json(storyList);
+      const category = req.query.category ? String(req.query.category) : undefined;
+      const topicList = await storage.getTopics(grade, category);
+      res.json(topicList);
     } catch (err) {
-      console.error("Get stories error:", err);
-      res.status(500).json({ message: "Failed to get stories" });
+      console.error("Get topics error:", err);
+      res.status(500).json({ message: "Failed to get topics" });
     }
   });
 
-  app.get(
-    "/api/stories/:id/chapters/:num",
-    requireAuth,
-    async (req: Request, res: Response) => {
-      try {
-        const chapter = await storage.getChapter(
-          Number(req.params.id),
-          Number(req.params.num)
-        );
-        if (!chapter) {
-          return res.status(404).json({ message: "Chapter not found" });
-        }
-        res.json(chapter);
-      } catch (err) {
-        console.error("Get chapter error:", err);
-        res.status(500).json({ message: "Failed to get chapter" });
+  app.get("/api/topics/:id", requireAuth, async (req: Request, res: Response) => {
+    try {
+      const topic = await storage.getTopicById(Number(req.params.id));
+      if (!topic) {
+        return res.status(404).json({ message: "Topic not found" });
       }
+      res.json(topic);
+    } catch (err) {
+      console.error("Get topic error:", err);
+      res.status(500).json({ message: "Failed to get topic" });
     }
-  );
+  });
 
   // ── Questions ──────────────────────────────────────────────────────────────
 
   app.get(
-    "/api/chapters/:id/questions",
+    "/api/topics/:id/questions",
     requireAuth,
     async (req: Request, res: Response) => {
       try {
-        const questionList = await storage.getQuestionsByChapter(
-          Number(req.params.id)
+        const difficulty = req.query.difficulty ? String(req.query.difficulty) : undefined;
+        const questionList = await storage.getQuestionsByTopic(
+          Number(req.params.id),
+          difficulty
         );
         res.json(questionList);
       } catch (err) {
@@ -158,15 +156,16 @@ export function registerRoutes(app: Express) {
     requireAuth,
     async (req: Request, res: Response) => {
       try {
-        const { childProfileId, chapterId } = req.body;
-        if (!childProfileId || !chapterId) {
+        const { childProfileId, topicId, difficulty } = req.body;
+        if (!childProfileId || !topicId) {
           return res
             .status(400)
-            .json({ message: "childProfileId and chapterId required" });
+            .json({ message: "childProfileId and topicId required" });
         }
         const session = await storage.createQuizSession({
           childProfileId,
-          chapterId,
+          topicId,
+          difficulty: difficulty || null,
         });
         res.json(session);
       } catch (err) {
@@ -190,6 +189,7 @@ export function registerRoutes(app: Express) {
           timeTaken,
           attempts,
           hintsUsed,
+          difficulty,
           bloomLevel,
         } = req.body;
 
@@ -202,7 +202,8 @@ export function registerRoutes(app: Express) {
           timeTaken,
           attempts: attempts || 1,
           hintsUsed: hintsUsed || 0,
-          bloomLevel,
+          difficulty: difficulty || "medium",
+          bloomLevel: bloomLevel || "understand",
         });
         res.json(response);
       } catch (err) {
@@ -274,6 +275,26 @@ export function registerRoutes(app: Express) {
   );
 
   app.get(
+    "/api/analytics/:profileId/difficulty",
+    requireAuth,
+    requireParent,
+    async (req: Request, res: Response) => {
+      try {
+        const profileId = Number(req.params.profileId);
+        const profile = await storage.getChildProfileById(profileId);
+        if (!profile || profile.parentId !== req.user!.id) {
+          return res.status(403).json({ message: "Access denied" });
+        }
+        const stats = await storage.getDifficultyStats(profileId);
+        res.json(stats);
+      } catch (err) {
+        console.error("Difficulty stats error:", err);
+        res.status(500).json({ message: "Failed to get difficulty stats" });
+      }
+    }
+  );
+
+  app.get(
     "/api/analytics/:profileId/sessions",
     requireAuth,
     requireParent,
@@ -314,7 +335,7 @@ export function registerRoutes(app: Express) {
   );
 
   app.get(
-    "/api/analytics/:profileId/themes",
+    "/api/analytics/:profileId/topics",
     requireAuth,
     requireParent,
     async (req: Request, res: Response) => {
@@ -324,11 +345,73 @@ export function registerRoutes(app: Express) {
         if (!profile || profile.parentId !== req.user!.id) {
           return res.status(403).json({ message: "Access denied" });
         }
-        const themes = await storage.getThemeStats(profileId);
-        res.json(themes);
+        const topicStats = await storage.getTopicStats(profileId);
+        res.json(topicStats);
       } catch (err) {
-        console.error("Theme stats error:", err);
-        res.status(500).json({ message: "Failed to get theme stats" });
+        console.error("Topic stats error:", err);
+        res.status(500).json({ message: "Failed to get topic stats" });
+      }
+    }
+  );
+
+  app.get(
+    "/api/analytics/:profileId/categories",
+    requireAuth,
+    requireParent,
+    async (req: Request, res: Response) => {
+      try {
+        const profileId = Number(req.params.profileId);
+        const profile = await storage.getChildProfileById(profileId);
+        if (!profile || profile.parentId !== req.user!.id) {
+          return res.status(403).json({ message: "Access denied" });
+        }
+        const categoryStats = await storage.getCategoryStats(profileId);
+        res.json(categoryStats);
+      } catch (err) {
+        console.error("Category stats error:", err);
+        res.status(500).json({ message: "Failed to get category stats" });
+      }
+    }
+  );
+
+  // ── Weekly Summary ─────────────────────────────────────────────────────────
+
+  app.get(
+    "/api/analytics/:profileId/weekly",
+    requireAuth,
+    requireParent,
+    async (req: Request, res: Response) => {
+      try {
+        const profileId = Number(req.params.profileId);
+        const profile = await storage.getChildProfileById(profileId);
+        if (!profile || profile.parentId !== req.user!.id) {
+          return res.status(403).json({ message: "Access denied" });
+        }
+        const stats = await storage.getWeeklyStats(profileId);
+        res.json(stats);
+      } catch (err) {
+        console.error("Weekly stats error:", err);
+        res.status(500).json({ message: "Failed to get weekly stats" });
+      }
+    }
+  );
+
+  app.get(
+    "/api/analytics/:profileId/weekly-daily",
+    requireAuth,
+    requireParent,
+    async (req: Request, res: Response) => {
+      try {
+        const profileId = Number(req.params.profileId);
+        const profile = await storage.getChildProfileById(profileId);
+        if (!profile || profile.parentId !== req.user!.id) {
+          return res.status(403).json({ message: "Access denied" });
+        }
+        const breakdown = await storage.getWeeklyDailyBreakdown(profileId);
+        res.json(breakdown);
+      } catch (err) {
+        console.error("Weekly daily error:", err);
+        res.status(500).json({ message: "Failed to get weekly breakdown" });
       }
     }
   );
@@ -336,15 +419,31 @@ export function registerRoutes(app: Express) {
   // ── Progress ───────────────────────────────────────────────────────────────
 
   app.get(
-    "/api/progress/:profileId/:storyId",
+    "/api/progress/:profileId",
     requireAuth,
     async (req: Request, res: Response) => {
       try {
-        const progress = await storage.getChildProgressRecord(
-          Number(req.params.profileId),
-          Number(req.params.storyId)
+        const progress = await storage.getAllTopicProgress(
+          Number(req.params.profileId)
         );
-        res.json(progress || { currentChapter: 1, completedChapters: [] });
+        res.json(progress);
+      } catch (err) {
+        console.error("Get progress error:", err);
+        res.status(500).json({ message: "Failed to get progress" });
+      }
+    }
+  );
+
+  app.get(
+    "/api/progress/:profileId/:topicId",
+    requireAuth,
+    async (req: Request, res: Response) => {
+      try {
+        const progress = await storage.getTopicProgressRecord(
+          Number(req.params.profileId),
+          Number(req.params.topicId)
+        );
+        res.json(progress || { questionsAttempted: 0, questionsCorrect: 0, bestScore: null, totalSessions: 0 });
       } catch (err) {
         console.error("Get progress error:", err);
         res.status(500).json({ message: "Failed to get progress" });
@@ -357,13 +456,15 @@ export function registerRoutes(app: Express) {
     requireAuth,
     async (req: Request, res: Response) => {
       try {
-        const { childProfileId, storyId, currentChapter, completedChapters } =
+        const { childProfileId, topicId, questionsAttempted, questionsCorrect, bestScore, totalSessions } =
           req.body;
-        const progress = await storage.upsertChildProgress({
+        const progress = await storage.upsertTopicProgress({
           childProfileId,
-          storyId,
-          currentChapter,
-          completedChapters,
+          topicId,
+          questionsAttempted,
+          questionsCorrect,
+          bestScore,
+          totalSessions,
         });
         res.json(progress);
       } catch (err) {

@@ -30,6 +30,7 @@ export default function JoinPage() {
   const [pin, setPin] = useState("");
   const [pinConfirm, setPinConfirm] = useState("");
   const [avatar, setAvatar] = useState("rocket");
+  const [state, setState] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [createdName, setCreatedName] = useState("");
 
@@ -59,6 +60,7 @@ export default function JoinPage() {
         grade: Number(grade),
         pin,
         avatar,
+        state: state || null,
       });
       const data = await res.json();
       setCreatedName(data.profile.name);
@@ -167,6 +169,27 @@ export default function JoinPage() {
                           Grade {g}
                         </SelectItem>
                       ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="child-state">Your State (optional)</Label>
+                  <Select value={state} onValueChange={setState}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select your state" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="TX">Texas</SelectItem>
+                      <SelectItem value="CA">California</SelectItem>
+                      <SelectItem value="NY">New York</SelectItem>
+                      <SelectItem value="FL">Florida</SelectItem>
+                      <SelectItem value="IL">Illinois</SelectItem>
+                      <SelectItem value="PA">Pennsylvania</SelectItem>
+                      <SelectItem value="OH">Ohio</SelectItem>
+                      <SelectItem value="GA">Georgia</SelectItem>
+                      <SelectItem value="NC">North Carolina</SelectItem>
+                      <SelectItem value="MI">Michigan</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

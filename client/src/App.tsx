@@ -11,7 +11,7 @@ import ParentDashboard from "@/pages/ParentDashboard";
 import JoinPage from "@/pages/JoinPage";
 import ProfileSelect from "@/pages/ProfileSelect";
 import KidDashboard from "@/pages/KidDashboard";
-import StoryReader from "@/pages/StoryReader";
+import PracticePage from "@/pages/PracticePage";
 import AnalyticsDashboard from "@/pages/AnalyticsDashboard";
 
 function Router() {
@@ -48,9 +48,9 @@ function Router() {
         </ProtectedRoute>
       </Route>
 
-      <Route path="/stories/:storyId/chapters/:chapterNum">
+      <Route path="/practice/:topicId">
         <ProtectedRoute requireChild>
-          <StoryReader />
+          <PracticePage />
         </ProtectedRoute>
       </Route>
 
