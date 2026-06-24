@@ -69,35 +69,34 @@ export default function AuthPage() {
     <div className="min-h-screen bg-gradient-hero flex items-center justify-center p-4">
       <div className="w-full max-w-md animate-scale-in">
         {/* Back to landing */}
-        <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6">
+        <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6 font-body">
           <ArrowLeft size={14} /> Back to home
         </Link>
 
-        <div className="bg-white rounded-2xl shadow-elevated border border-border p-6 sm:p-8">
+        <div className="bg-white rounded-2xl shadow-elevated p-6 sm:p-8" style={{ border: "1px solid hsl(var(--border))" }}>
           {/* Logo */}
           <div className="text-center mb-6">
-            <div className="w-12 h-12 rounded-xl bg-gradient-primary flex items-center justify-center mx-auto mb-3">
-              <GraduationCap size={24} className="text-white" />
-            </div>
-            <h1 className="text-xl font-bold text-foreground">
+            <span className="font-display font-bold text-xl" style={{ color: "hsl(var(--grape))" }}>LearnSmarter</span>
+            <h1 className="text-lg font-display font-semibold text-foreground mt-2">
               {mode === "kid" ? "Student Portal" : "Welcome Back"}
             </h1>
-            <p className="text-sm text-muted-foreground mt-1">
+            <p className="text-sm text-muted-foreground mt-1 font-body">
               {mode === "kid" ? "Enter your details to start learning" : "Sign in to manage your children's progress"}
             </p>
           </div>
 
           {/* Tab switcher */}
-          <div className="flex bg-muted rounded-lg p-1 mb-6">
+          <div className="flex rounded-xl p-1 mb-6 font-body" style={{ background: "hsl(var(--grape-soft))" }}>
             {tabs.map(({ key, label }) => (
               <button
                 key={key}
                 onClick={() => setMode(key)}
-                className={`flex-1 py-2 rounded-md text-sm font-medium transition-all ${
-                  mode === key
-                    ? "bg-white shadow-sm text-foreground"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
+                className="flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all"
+                style={{
+                  background: mode === key ? "#fff" : "transparent",
+                  color: mode === key ? "hsl(var(--foreground))" : "hsl(var(--grape))",
+                  boxShadow: mode === key ? "0 2px 8px rgba(40,30,80,0.07)" : "none",
+                }}
               >
                 {label}
               </button>
@@ -155,7 +154,7 @@ export default function AuthPage() {
               </>
             )}
 
-            <Button type="submit" className="w-full h-11 bg-gradient-primary shadow-primary" disabled={isLoading}>
+            <Button type="submit" className="w-full h-11 text-white font-body font-semibold" style={{ background: "hsl(var(--grape))", boxShadow: "0 4px 14px hsl(var(--grape) / 0.25)" }} disabled={isLoading}>
               {isLoading && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
               {mode === "login" ? "Sign In" : mode === "signup" ? "Create Account" : "Start Learning"}
             </Button>

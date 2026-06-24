@@ -22,8 +22,8 @@ interface ChildProfile {
 }
 
 const BLOOM_COLORS: Record<string, string> = {
-  remember: "hsl(var(--info))", understand: "hsl(var(--secondary))", apply: "hsl(var(--primary))",
-  analyze: "hsl(var(--accent))", evaluate: "hsl(var(--warning))", create: "hsl(var(--kid-pink))",
+  remember: "hsl(var(--info))", understand: "hsl(var(--leaf))", apply: "hsl(var(--grape))",
+  analyze: "hsl(var(--grape))", evaluate: "hsl(var(--amber))", create: "hsl(var(--coral))",
 };
 
 export default function ParentDashboard() {
@@ -164,12 +164,16 @@ export default function ParentDashboard() {
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-foreground">Dashboard</h1>
-            <p className="text-sm text-muted-foreground mt-0.5">Welcome back, {user?.firstName}. Here's how your children are doing.</p>
+            <h1 className="text-2xl font-display font-bold text-foreground">Dashboard</h1>
+            <p className="text-sm text-muted-foreground mt-0.5 font-body">Welcome back, {user?.firstName}. Here's how your children are doing.</p>
           </div>
-          <Button onClick={() => setShowAddKid(true)} className="bg-gradient-primary shadow-primary">
-            <UserPlus size={16} className="mr-2" /> Add Child
-          </Button>
+          <button
+            onClick={() => setShowAddKid(true)}
+            className="flex items-center gap-2 text-white px-4 py-2.5 rounded-xl text-sm font-semibold shadow-primary font-body"
+            style={{ background: "hsl(var(--grape))" }}
+          >
+            <UserPlus size={16} /> Add Child
+          </button>
         </div>
 
         {/* Loading */}
@@ -200,15 +204,17 @@ export default function ParentDashboard() {
                 return (
                   <Card
                     key={kid.id}
-                    className={`cursor-pointer transition-all hover-lift animate-slide-up ${
-                      isSelected ? "ring-2 ring-primary shadow-elevated" : "shadow-soft hover:shadow-elevated"
-                    }`}
+                    className={`cursor-pointer transition-all hover-lift animate-slide-up shadow-soft`}
+                    style={{
+                      border: isSelected ? "2px solid hsl(var(--grape))" : "1px solid hsl(var(--border))",
+                      boxShadow: isSelected ? "0 6px 22px rgba(91,75,196,0.12)" : undefined,
+                    }}
                     style={{ animationDelay: `${i * 60}ms`, animationFillMode: "both" }}
                     onClick={() => setSelectedKidId(kid.id)}
                   >
                     <CardContent className="p-5">
                       <div className="flex items-center gap-3 mb-4">
-                        <div className="w-12 h-12 rounded-xl bg-gradient-primary flex items-center justify-center text-white font-bold text-lg">
+                        <div className="w-12 h-12 rounded-xl flex items-center justify-center text-white font-display font-bold text-lg" style={{ background: "hsl(var(--grape))" }}>
                           {kid.name[0]}
                         </div>
                         <div className="flex-1 min-w-0">
@@ -250,10 +256,21 @@ export default function ParentDashboard() {
             {selectedKid && stats?.totalQuestions > 0 && (
               <div className="animate-slide-up" style={{ animationDelay: "200ms", animationFillMode: "both" }}>
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-bold text-foreground">{selectedKid.name}'s Progress</h2>
-                  <Button variant="outline" size="sm" onClick={() => setLocation(`/analytics/${selectedKid.id}`)}>
-                    <BarChart3 size={14} className="mr-1.5" /> Full Analytics
-                  </Button>
+                  <h2 className="text-lg font-display font-bold text-foreground">{selectedKid.name}'s Progress</h2>
+                  <button
+                    onClick={() => setLocation(`/analytics/${selectedKid.id}`)}
+                    className="flex items-center gap-1.5 text-sm font-semibold rounded-lg px-3 py-1.5 font-body"
+                    style={{ color: "hsl(var(--grape))", background: "hsl(var(--grape-soft))" }}
+                  >
+                    <BarChart3 size={14} /> Full Analytics
+                  </button>
+                </div>
+                {/* Insight box */}
+                <div className="insight-box font-body mb-4">
+                  {selectedKid.name} has solved <b style={{ color: "hsl(var(--grape))" }}>{stats.totalQuestions}</b> problems
+                  with <b style={{ color: "hsl(var(--grape))" }}>{accuracy}%</b> accuracy
+                  across <b style={{ color: "hsl(var(--grape))" }}>{stats.totalSessions}</b> sessions.
+                  {accuracy >= 80 ? " Excellent work — consider moving to harder difficulty." : accuracy >= 50 ? " Good progress — consistent practice is building skills." : " Keep encouraging regular sessions — every attempt builds understanding."}
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {sessionData.length > 1 && (

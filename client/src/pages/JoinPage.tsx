@@ -107,7 +107,7 @@ export default function JoinPage() {
           <div className="w-10 h-10 rounded-lg bg-gradient-primary flex items-center justify-center">
             <GraduationCap className="h-5 w-5 text-white" />
           </div>
-          <h1 className="text-2xl font-bold text-foreground">Join LearnVerse</h1>
+          <h1 className="text-2xl font-bold text-foreground">Join LearnSmarter</h1>
         </div>
 
         {step === "code" && (

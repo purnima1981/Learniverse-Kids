@@ -1,17 +1,9 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Loader2, X, ChevronRight, Timer, Check, Clock, Zap, ArrowRight, BookOpen, RotateCcw } from "lucide-react";
+import { Loader2, X, ChevronRight, Check, Clock, Zap, ArrowRight, BookOpen, RotateCcw, Eye, Timer } from "lucide-react";
 import { MathRenderer } from "@/components/MathRenderer";
 import type { Question } from "@shared/schema";
-
-const BLOOM_COLORS: Record<string, string> = {
-  remember: "hsl(var(--info))", understand: "hsl(var(--secondary))", apply: "hsl(var(--primary))",
-  analyze: "hsl(var(--accent))", evaluate: "hsl(var(--warning))", create: "hsl(var(--kid-pink))",
-};
 
 function formatTime(seconds: number) {
   const m = Math.floor(seconds / 60);
@@ -39,7 +31,7 @@ export function TopicQuestions({ topicId, profileId, onComplete }: TopicQuestion
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-16">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <Loader2 className="h-8 w-8 animate-spin" style={{ color: "hsl(var(--grape))" }} />
       </div>
     );
   }
@@ -49,8 +41,8 @@ export function TopicQuestions({ topicId, profileId, onComplete }: TopicQuestion
         <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center mx-auto mb-3">
           <BookOpen size={24} className="text-muted-foreground" />
         </div>
-        <p className="font-semibold text-foreground">No questions available yet</p>
-        <p className="text-sm text-muted-foreground mt-1">Check back soon!</p>
+        <p className="font-display font-semibold text-foreground">No questions available yet</p>
+        <p className="text-sm text-muted-foreground mt-1 font-body">Check back soon!</p>
       </div>
     );
   }
@@ -67,6 +59,7 @@ interface TestResult {
   timeTaken: number;
   topic: string;
   bloomLevel: string;
+  usedReveal: boolean;
 }
 
 function PracticeTest({ questions, profileId, topicId, onComplete }: {
@@ -82,9 +75,24 @@ function PracticeTest({ questions, profileId, topicId, onComplete }: {
   const [sessionId, setSessionId] = useState<number | null>(null);
   const [finished, setFinished] = useState(false);
 
+  // Show Me reveal state
+  const [revealStep, setRevealStep] = useState(-1); // -1 = not started
+  const [revealUsed, setRevealUsed] = useState(false);
+
   const q = questions[current];
   const options = (q.options as { choices?: string[] })?.choices ?? [];
   const correctIndex = ["a","b","c","d"].indexOf(q.answer as string);
+  const hints = (q.hints as string[]) ?? [];
+  const explanation = q.explanation ?? "";
+
+  // Build reveal steps from hints + explanation
+  const revealSteps = useMemo(() => {
+    const steps: string[] = [];
+    hints.forEach(h => steps.push(h));
+    if (explanation) steps.push(explanation);
+    if (steps.length === 0) steps.push("The correct answer is " + ["A","B","C","D"][correctIndex] + ".");
+    return steps;
+  }, [hints, explanation, correctIndex]);
 
   const startSession = useMutation({
     mutationFn: async () => {
@@ -117,7 +125,8 @@ function PracticeTest({ questions, profileId, topicId, onComplete }: {
     submitResponse.mutate({
       questionId: q.id,
       userAnswer: chosenOption !== null ? ["a","b","c","d"][chosenOption] : null,
-      isCorrect, timeTaken, attempts: 1, hintsUsed: 0,
+      isCorrect, timeTaken, attempts: 1,
+      hintsUsed: revealUsed ? revealStep + 1 : 0,
       difficulty: q.difficulty ?? "medium",
       bloomLevel: q.bloomLevel ?? "understand",
     });
@@ -125,6 +134,7 @@ function PracticeTest({ questions, profileId, topicId, onComplete }: {
     const newResults = [...results, {
       questionId: q.id, selected: chosenOption, correct: isCorrect,
       timeTaken, topic: q.topic ?? "", bloomLevel: q.bloomLevel ?? "understand",
+      usedReveal: revealUsed,
     }];
 
     if (current + 1 < questions.length) {
@@ -134,13 +144,15 @@ function PracticeTest({ questions, profileId, topicId, onComplete }: {
       setConfirmed(false);
       setTimeLeft(60);
       setQuestionStartTime(Date.now());
+      setRevealStep(-1);
+      setRevealUsed(false);
     } else {
       const score = newResults.filter(r => r.correct).length;
       setResults(newResults);
       setFinished(true);
       completeSession.mutate({ score, totalQuestions: questions.length });
     }
-  }, [current, q, questionStartTime, questions, results, correctIndex]);
+  }, [current, q, questionStartTime, questions, results, correctIndex, revealUsed, revealStep]);
 
   // Timer
   useEffect(() => {
@@ -150,25 +162,37 @@ function PracticeTest({ questions, profileId, topicId, onComplete }: {
     return () => clearTimeout(t);
   }, [timeLeft, confirmed, finished, selected, handleNext]);
 
-  // ─── Results Screen ─────────────────────────────────────────────────────
+  function startReveal() {
+    setRevealUsed(true);
+    setRevealStep(0);
+  }
+
+  function nextRevealStep() {
+    if (revealStep < revealSteps.length - 1) {
+      setRevealStep(revealStep + 1);
+    }
+  }
+
+  // ─── Results ────────────────────────────────────────────────────────────
 
   if (finished) {
     return <ResultsScreen results={results} questions={questions} onRetry={() => {
       setResults([]); setCurrent(0); setSelected(null); setConfirmed(false);
       setTimeLeft(60); setQuestionStartTime(Date.now()); setFinished(false);
+      setRevealStep(-1); setRevealUsed(false);
       startSession.mutate();
     }} onComplete={onComplete} />;
   }
 
-  // ─── Question UI ────────────────────────────────────────────────────────
+  // ─── Question UI (Learniversal style) ─────────────────────────────────
 
-  const pct = (timeLeft / 60) * 100;
-  const timerUrgency = pct > 50 ? "text-secondary bg-secondary/10" : pct > 25 ? "text-[hsl(var(--warning))] bg-[hsl(var(--warning))]/10" : "text-destructive bg-destructive/10";
+  const timerPct = timeLeft / 60;
+  const isUrgent = timerPct < 0.3;
 
   return (
-    <div className="min-h-screen bg-background flex flex-col animate-fade-in">
+    <div className="min-h-screen flex flex-col animate-fade-in" style={{ background: "hsl(var(--background))" }}>
       {/* Top bar */}
-      <div className="bg-white border-b border-border px-4 py-3 flex items-center gap-3 sticky top-0 z-10">
+      <div className="bg-white border-b px-4 py-3 flex items-center gap-3 sticky top-0 z-10" style={{ borderColor: "hsl(var(--border))" }}>
         <button
           onClick={() => onComplete(results.filter(r => r.correct).length, results.length)}
           className="p-2 hover:bg-muted rounded-lg transition-colors"
@@ -177,41 +201,50 @@ function PracticeTest({ questions, profileId, topicId, onComplete }: {
           <X size={16} className="text-muted-foreground" />
         </button>
         <div className="flex-1">
-          <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
+          <div className="flex items-center justify-between text-xs text-muted-foreground mb-1 font-body">
             <span className="font-medium">Question {current + 1} of {questions.length}</span>
           </div>
-          <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+          <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "hsl(var(--border))" }}>
             <div
-              className="h-full bg-gradient-primary rounded-full transition-all duration-300"
-              style={{ width: `${((current + (confirmed ? 1 : 0)) / questions.length) * 100}%` }}
+              className="h-full rounded-full transition-all duration-300"
+              style={{
+                width: `${((current + (confirmed ? 1 : 0)) / questions.length) * 100}%`,
+                background: `hsl(var(--grape))`,
+              }}
             />
           </div>
-        </div>
-        <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-bold text-sm tabular-nums ${timerUrgency}`}>
-          <Timer size={14} />
-          {timeLeft}s
         </div>
       </div>
 
       <div className="flex-1 flex flex-col max-w-lg mx-auto w-full px-4 py-5 gap-4">
-        {/* Badges */}
-        <div className="flex gap-2 flex-wrap">
-          {q.topic && <Badge variant="outline" className="text-xs">{q.topic}</Badge>}
-          <Badge variant="secondary" className="text-xs capitalize">{q.bloomLevel ?? "understand"}</Badge>
-          <Badge variant="outline" className="text-xs capitalize">{q.difficulty ?? "medium"}</Badge>
+        {/* Tags */}
+        <div className="flex gap-2 flex-wrap font-body">
+          <span className="pill pill-grape text-xs font-semibold capitalize">{q.difficulty ?? "medium"} · {q.bloomLevel ?? "understand"}</span>
+          {q.topic && <span className="pill pill-grape text-xs">{q.topic}</span>}
         </div>
 
-        {/* Question */}
-        <Card className="shadow-soft">
-          <CardContent className="p-5">
-            <p className="text-base font-medium text-foreground leading-relaxed">
-              <MathRenderer text={q.text} />
-            </p>
-          </CardContent>
-        </Card>
+        {/* Timer bar (reference style) */}
+        <div className="flex items-center gap-3">
+          <div className="flex-1 timer-track">
+            <div
+              className={`timer-fill ${isUrgent ? "urgent" : ""}`}
+              style={{ width: `${timerPct * 100}%` }}
+            />
+          </div>
+          <div className="text-xs text-muted-foreground font-body tabular-nums min-w-[70px] text-right">
+            <b className="text-foreground">{timeLeft}s</b> / 60s
+          </div>
+        </div>
 
-        {/* Options */}
-        <div className="space-y-2.5 flex-1">
+        {/* Question text */}
+        <div className="bg-white rounded-2xl p-5 shadow-soft" style={{ border: "1px solid hsl(var(--border))" }}>
+          <p className="font-display text-lg font-semibold text-foreground leading-snug">
+            <MathRenderer text={q.text} />
+          </p>
+        </div>
+
+        {/* Options — 2-column grid (reference style) */}
+        <div className={`grid gap-2.5 flex-1 ${options.length <= 4 ? "grid-cols-2" : "grid-cols-2"}`}>
           {options.map((opt, i) => {
             let optState: "default" | "selected" | "correct" | "wrong" = "default";
             if (confirmed) {
@@ -221,55 +254,156 @@ function PracticeTest({ questions, profileId, topicId, onComplete }: {
               optState = "selected";
             }
 
-            const styles = {
-              default: "bg-white border-border hover:border-primary/40 hover:bg-primary/5",
-              selected: "bg-primary/5 border-primary",
-              correct: "bg-secondary/5 border-secondary",
-              wrong: "bg-destructive/5 border-destructive",
+            const borderColor = {
+              default: "hsl(var(--border))",
+              selected: "hsl(var(--grape))",
+              correct: "hsl(var(--leaf))",
+              wrong: "hsl(var(--coral))",
             }[optState];
 
-            const letterStyles = {
-              default: "bg-muted text-muted-foreground",
-              selected: "bg-primary text-white",
-              correct: "bg-secondary text-white",
-              wrong: "bg-destructive text-white",
+            const bgColor = {
+              default: "#fff",
+              selected: "hsl(var(--grape-soft))",
+              correct: "hsl(var(--leaf-soft))",
+              wrong: "hsl(var(--coral-soft))",
             }[optState];
+
+            const keyBg = {
+              default: "hsl(var(--grape-soft))",
+              selected: "hsl(var(--grape))",
+              correct: "hsl(var(--leaf))",
+              wrong: "hsl(var(--coral))",
+            }[optState];
+
+            const keyColor = optState === "default" ? "hsl(var(--grape))" : "#fff";
+
+            const isLastOdd = options.length % 2 === 1 && i === options.length - 1;
 
             return (
               <button
-                key={i} disabled={confirmed} onClick={() => setSelected(i)}
-                className={`w-full flex items-center gap-3 border-2 rounded-xl px-4 py-3 text-left transition-all ${styles}`}
+                key={i}
+                disabled={confirmed}
+                onClick={() => setSelected(i)}
+                className={`flex items-center gap-3 rounded-xl px-3 py-3 text-left transition-all font-body ${isLastOdd ? "col-span-2" : ""}`}
+                style={{
+                  border: `1.5px solid ${borderColor}`,
+                  background: bgColor,
+                  cursor: confirmed ? "default" : "pointer",
+                }}
+                onMouseEnter={(e) => {
+                  if (!confirmed && optState === "default") {
+                    e.currentTarget.style.borderColor = "hsl(var(--grape))";
+                    e.currentTarget.style.background = "hsl(var(--grape-soft))";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!confirmed && optState === "default") {
+                    e.currentTarget.style.borderColor = "hsl(var(--border))";
+                    e.currentTarget.style.background = "#fff";
+                  }
+                }}
               >
-                <span className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold shrink-0 ${letterStyles}`}>
-                  {["A","B","C","D"][i]}
+                <span
+                  className="w-6 h-6 rounded-lg flex items-center justify-center text-xs font-semibold shrink-0"
+                  style={{ background: keyBg, color: keyColor }}
+                >
+                  {["A","B","C","D","E"][i]}
                 </span>
-                <span className="font-medium text-sm text-foreground flex-1"><MathRenderer text={opt} /></span>
-                {optState === "correct" && <Check size={16} className="text-secondary shrink-0" />}
-                {optState === "wrong" && <X size={16} className="text-destructive shrink-0" />}
+                <span className="text-sm font-medium text-foreground"><MathRenderer text={opt} /></span>
+                {optState === "correct" && <Check size={16} style={{ color: "hsl(var(--leaf))", marginLeft: "auto", flexShrink: 0 }} />}
+                {optState === "wrong" && <X size={16} style={{ color: "hsl(var(--coral))", marginLeft: "auto", flexShrink: 0 }} />}
               </button>
             );
           })}
         </div>
 
-        {/* Action button */}
+        {/* Show Me reveal button + steps */}
+        {!confirmed && revealStep === -1 && (
+          <button
+            onClick={startReveal}
+            className="w-full flex items-center justify-center gap-2 rounded-xl px-4 py-3 font-body text-sm font-semibold transition-colors"
+            style={{
+              border: "1.5px solid hsl(var(--grape))",
+              background: "#fff",
+              color: "hsl(var(--grape))",
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "hsl(var(--grape-soft))"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "#fff"; }}
+          >
+            <Eye size={16} /> Show me how to think about it
+          </button>
+        )}
+
+        {/* Reveal steps (progressive) */}
+        {revealStep >= 0 && (
+          <div className="space-y-2 animate-slide-up">
+            {revealSteps.slice(0, revealStep + 1).map((step, i) => (
+              <div
+                key={i}
+                className="rounded-xl p-3 text-sm font-body leading-relaxed animate-fade-in"
+                style={{
+                  background: "hsl(var(--grape-soft))",
+                  color: "hsl(var(--foreground))",
+                }}
+              >
+                <MathRenderer text={step} />
+              </div>
+            ))}
+            {revealStep < revealSteps.length - 1 && (
+              <button
+                onClick={nextRevealStep}
+                className="text-xs font-semibold font-body px-3 py-1.5 rounded-lg transition-colors"
+                style={{ color: "hsl(var(--grape))", background: "hsl(var(--grape-soft))" }}
+              >
+                Show next step...
+              </button>
+            )}
+          </div>
+        )}
+
+        {/* Caption area */}
+        {confirmed && (
+          <div
+            className="text-center text-sm font-body py-2 animate-fade-in"
+            style={{ color: "hsl(var(--foreground))" }}
+          >
+            {selected === correctIndex ? (
+              <span><b style={{ color: "hsl(var(--leaf))" }}>Correct!</b> {explanation && <MathRenderer text={explanation} />}</span>
+            ) : (
+              <span>The answer is <b>{["A","B","C","D"][correctIndex]}</b>. {explanation && <MathRenderer text={explanation} />}</span>
+            )}
+          </div>
+        )}
+
+        {/* Action buttons */}
         <div>
           {!confirmed ? (
-            <Button
+            <button
               onClick={() => { if (selected !== null) setConfirmed(true); }}
               disabled={selected === null}
-              className="w-full h-12 bg-gradient-primary shadow-primary text-base"
+              className="w-full rounded-xl py-3.5 font-body text-sm font-semibold transition-all"
+              style={{
+                background: selected !== null ? "hsl(var(--grape))" : "hsl(var(--muted))",
+                color: selected !== null ? "#fff" : "hsl(var(--muted-foreground))",
+                cursor: selected !== null ? "pointer" : "not-allowed",
+                boxShadow: selected !== null ? "0 4px 14px hsl(var(--grape) / 0.25)" : "none",
+              }}
             >
               Confirm Answer
-            </Button>
+            </button>
           ) : (
-            <Button
+            <button
               onClick={() => handleNext(selected)}
-              className="w-full h-12 text-base"
-              variant="default"
+              className="w-full rounded-xl py-3.5 font-body text-sm font-semibold flex items-center justify-center gap-2 transition-all"
+              style={{
+                background: "hsl(var(--foreground))",
+                color: "hsl(var(--background))",
+                cursor: "pointer",
+              }}
             >
               {current + 1 < questions.length ? "Next Question" : "See Results"}
-              <ChevronRight size={18} className="ml-1" />
-            </Button>
+              <ChevronRight size={16} />
+            </button>
           )}
         </div>
       </div>
@@ -288,6 +422,7 @@ function ResultsScreen({ results, questions, onRetry, onComplete }: {
   const score = Math.round((correct / results.length) * 100);
   const totalTime = results.reduce((a, r) => a + r.timeTaken, 0);
   const avgTime = Math.round(totalTime / results.length);
+  const revealCount = results.filter(r => r.usedReveal).length;
 
   const topicBreakdown = useMemo(() => {
     const breakdown: Record<string, { correct: number; total: number; time: number }> = {};
@@ -311,108 +446,126 @@ function ResultsScreen({ results, questions, onRetry, onComplete }: {
   }, [results]);
 
   return (
-    <div className="min-h-screen bg-background animate-slide-up">
-      <div className="max-w-lg mx-auto px-4 py-6 space-y-5">
+    <div className="min-h-screen animate-slide-up" style={{ background: "hsl(var(--background))" }}>
+      <div className="max-w-lg mx-auto px-4 py-6 space-y-4">
         {/* Score hero */}
         <div className="rounded-2xl p-6 text-center text-white bg-gradient-primary shadow-primary">
-          <div className="text-5xl font-extrabold mb-1">{score}%</div>
-          <p className="text-white/70 text-sm">{correct} / {results.length} correct</p>
+          <div className="font-display text-5xl font-bold mb-1">{score}%</div>
+          <p className="text-white/70 text-sm font-body">{correct} / {results.length} correct</p>
           <div className="grid grid-cols-3 gap-2 mt-5">
             {[
               { label: "Total Time", value: formatTime(totalTime) },
               { label: "Avg / Q", value: formatTime(avgTime) },
-              { label: "Accuracy", value: `${score}%` },
+              { label: "Reveal used", value: `${revealCount}/${results.length}` },
             ].map(({ label, value }) => (
               <div key={label} className="bg-white/15 rounded-lg py-2 px-1">
-                <p className="text-xs text-white/60">{label}</p>
-                <p className="font-bold text-sm">{value}</p>
+                <p className="text-xs text-white/60 font-body">{label}</p>
+                <p className="font-semibold text-sm font-body">{value}</p>
               </div>
             ))}
           </div>
         </div>
 
+        {/* Insight */}
+        {revealCount > 0 && (
+          <div className="insight-box font-body animate-fade-in">
+            You used the "Show me" reveal on <b style={{ color: "hsl(var(--grape))" }}>{revealCount}</b> of {results.length} questions.
+            {revealCount <= results.length / 2
+              ? " Great independence — you're learning to picture it on your own!"
+              : " Keep practicing — you'll need the reveal less over time."}
+          </div>
+        )}
+
         {/* Topic breakdown */}
         {Object.keys(topicBreakdown).length > 0 && (
-          <Card className="shadow-soft">
-            <CardContent className="p-5">
-              <p className="font-semibold text-sm text-foreground mb-4">Topic Breakdown</p>
-              <div className="space-y-3">
-                {Object.entries(topicBreakdown).map(([topic, data]) => {
-                  const pct = Math.round((data.correct / data.total) * 100);
-                  const barColor = pct >= 80 ? "bg-secondary" : pct >= 60 ? "bg-[hsl(var(--warning))]" : "bg-destructive";
-                  return (
-                    <div key={topic}>
-                      <div className="flex items-center justify-between text-xs mb-1">
-                        <span className="font-medium text-foreground">{topic}</span>
-                        <span className="font-bold text-foreground">{pct}%</span>
-                      </div>
-                      <div className="h-2 bg-muted rounded-full overflow-hidden">
-                        <div className={`h-full rounded-full transition-all ${barColor}`} style={{ width: `${pct}%` }} />
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Bloom performance */}
-        {Object.keys(bloomBreakdown).length > 0 && (
-          <Card className="shadow-soft">
-            <CardContent className="p-5">
-              <p className="font-semibold text-sm text-foreground mb-4">Bloom's Taxonomy</p>
-              <div className="flex gap-2 flex-wrap">
-                {Object.entries(bloomBreakdown).map(([level, data]) => {
-                  const pct = Math.round((data.correct / data.total) * 100);
-                  return (
-                    <div key={level} className="flex-1 min-w-[80px] rounded-lg p-3 text-center bg-muted/50">
-                      <p className="text-xs font-semibold capitalize" style={{ color: BLOOM_COLORS[level] }}>{level}</p>
-                      <p className="text-lg font-bold text-foreground">{pct}%</p>
-                      <p className="text-xs text-muted-foreground">{data.correct}/{data.total}</p>
-                    </div>
-                  );
-                })}
-              </div>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Question review */}
-        <Card className="shadow-soft">
-          <CardContent className="p-5">
-            <p className="font-semibold text-sm text-foreground mb-4">Question Review</p>
-            <div className="space-y-2.5">
-              {results.map((r, i) => {
-                const rq = questions.find((qq) => qq.id === r.questionId)!;
+          <div className="bg-white rounded-2xl p-5 shadow-soft" style={{ border: "1px solid hsl(var(--border))" }}>
+            <p className="font-display font-semibold text-sm text-foreground mb-4">Topic Breakdown</p>
+            <div className="space-y-3 font-body">
+              {Object.entries(topicBreakdown).map(([topic, data]) => {
+                const pct = Math.round((data.correct / data.total) * 100);
+                const barColor = pct >= 80 ? "hsl(var(--leaf))" : pct >= 60 ? "hsl(var(--amber))" : "hsl(var(--coral))";
                 return (
-                  <div key={r.questionId} className="flex items-start gap-2.5">
-                    <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
-                      r.correct ? "bg-secondary" : "bg-destructive"
-                    }`}>
-                      {r.correct ? <Check size={12} className="text-white" /> : <X size={12} className="text-white" />}
+                  <div key={topic}>
+                    <div className="flex items-center justify-between text-xs mb-1">
+                      <span className="font-medium text-foreground">{topic}</span>
+                      <span className="font-semibold text-foreground">{pct}%</span>
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs font-medium text-foreground truncate">Q{i + 1}: {rq.text}</p>
+                    <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "hsl(var(--border))" }}>
+                      <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, background: barColor }} />
                     </div>
-                    <span className="text-xs text-muted-foreground shrink-0 flex items-center gap-1">
-                      <Clock size={10} /> {r.timeTaken}s
-                    </span>
                   </div>
                 );
               })}
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        )}
+
+        {/* Bloom performance */}
+        {Object.keys(bloomBreakdown).length > 0 && (
+          <div className="bg-white rounded-2xl p-5 shadow-soft" style={{ border: "1px solid hsl(var(--border))" }}>
+            <p className="font-display font-semibold text-sm text-foreground mb-4">Bloom's Taxonomy</p>
+            <div className="flex gap-2 flex-wrap font-body">
+              {Object.entries(bloomBreakdown).map(([level, data]) => {
+                const pct = Math.round((data.correct / data.total) * 100);
+                return (
+                  <div key={level} className="flex-1 min-w-[80px] stat-card">
+                    <p className="text-xs font-semibold capitalize" style={{ color: "hsl(var(--grape))" }}>{level}</p>
+                    <p className="stat-num" style={{ color: "hsl(var(--foreground))" }}>{pct}%</p>
+                    <p className="stat-label">{data.correct}/{data.total}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Question review */}
+        <div className="bg-white rounded-2xl p-5 shadow-soft" style={{ border: "1px solid hsl(var(--border))" }}>
+          <p className="font-display font-semibold text-sm text-foreground mb-4">Question Review</p>
+          <div className="space-y-2.5 font-body">
+            {results.map((r, i) => {
+              const rq = questions.find((qq) => qq.id === r.questionId)!;
+              return (
+                <div key={r.questionId} className="flex items-start gap-2.5">
+                  <div
+                    className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"
+                    style={{ background: r.correct ? "hsl(var(--leaf))" : "hsl(var(--coral))" }}
+                  >
+                    {r.correct ? <Check size={12} className="text-white" /> : <X size={12} className="text-white" />}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-medium text-foreground truncate">Q{i + 1}: {rq.text}</p>
+                    {r.usedReveal && (
+                      <span className="text-xs" style={{ color: "hsl(var(--amber))" }}>
+                        <Eye size={10} className="inline mr-1" />used reveal
+                      </span>
+                    )}
+                  </div>
+                  <span className="text-xs text-muted-foreground shrink-0 flex items-center gap-1">
+                    <Clock size={10} /> {r.timeTaken}s
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
 
         {/* Actions */}
-        <div className="grid grid-cols-2 gap-3 pb-4">
-          <Button onClick={onRetry} className="bg-gradient-primary shadow-primary h-11">
-            <RotateCcw size={16} className="mr-1.5" /> Try Again
-          </Button>
-          <Button variant="outline" onClick={() => onComplete(correct, results.length)} className="h-11">
-            <ArrowRight size={16} className="mr-1.5" /> Dashboard
-          </Button>
+        <div className="grid grid-cols-2 gap-3 pb-4 font-body">
+          <button
+            onClick={onRetry}
+            className="flex items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold text-white"
+            style={{ background: "hsl(var(--grape))", boxShadow: "0 4px 14px hsl(var(--grape) / 0.25)" }}
+          >
+            <RotateCcw size={16} /> Try Again
+          </button>
+          <button
+            onClick={() => onComplete(correct, results.length)}
+            className="flex items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold"
+            style={{ background: "#fff", border: "1.5px solid hsl(var(--border))", color: "hsl(var(--foreground))" }}
+          >
+            <ArrowRight size={16} /> Dashboard
+          </button>
         </div>
       </div>
     </div>
