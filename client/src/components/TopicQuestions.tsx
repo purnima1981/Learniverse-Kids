@@ -1,11 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useQuiz } from "@/hooks/useQuiz";
 import { QuizQuestion } from "@/components/QuizQuestion";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { Loader2 } from "lucide-react";
+import { Loader2, Clock, Check, X } from "lucide-react";
 import type { Question } from "@shared/schema";
 
 interface TopicQuestionsProps {
@@ -15,12 +11,7 @@ interface TopicQuestionsProps {
   onComplete: (score: number, total: number) => void;
 }
 
-export function TopicQuestions({
-  topicId,
-  profileId,
-  difficulty,
-  onComplete,
-}: TopicQuestionsProps) {
+export function TopicQuestions({ topicId, profileId, difficulty, onComplete }: TopicQuestionsProps) {
   const { data: questions = [], isLoading } = useQuery<Question[]>({
     queryKey: [`/api/topics/${topicId}/questions`, difficulty],
     queryFn: async () => {
@@ -32,176 +23,121 @@ export function TopicQuestions({
     },
   });
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-12">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    );
-  }
+  if (isLoading) return <div className="flex items-center justify-center py-12"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>;
+  if (questions.length === 0) return <div className="bg-card rounded-2xl border p-12 text-center"><p className="font-bold">No questions available yet</p></div>;
 
-  if (questions.length === 0) {
-    return (
-      <Card className="border-0 shadow-lg">
-        <CardContent className="py-16 text-center">
-          <Loader2 className="h-12 w-12 text-muted-foreground mb-4" />
-          <p className="text-lg font-semibold">No questions available yet</p>
-          <p className="text-muted-foreground mt-1">Check back soon!</p>
-        </CardContent>
-      </Card>
-    );
-  }
-
-  return (
-    <QuizContent
-      questions={questions}
-      profileId={profileId}
-      topicId={topicId}
-      onComplete={onComplete}
-    />
-  );
+  return <QuizContent questions={questions} profileId={profileId} topicId={topicId} onComplete={onComplete} />;
 }
 
-function QuizContent({
-  questions,
-  profileId,
-  topicId,
-  onComplete,
-}: {
-  questions: Question[];
-  profileId: number;
-  topicId: number;
-  onComplete: (score: number, total: number) => void;
+function QuizContent({ questions, profileId, topicId, onComplete }: {
+  questions: Question[]; profileId: number; topicId: number; onComplete: (score: number, total: number) => void;
 }) {
   const quiz = useQuiz(questions, profileId, topicId, onComplete);
 
   if (!quiz.sessionId && !quiz.startQuiz.isPending) {
     quiz.startQuiz.mutate();
-    return (
-      <div className="flex flex-col items-center justify-center py-16 gap-3">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        <span className="text-muted-foreground">Loading practice session...</span>
-      </div>
-    );
+    return <div className="flex items-center justify-center py-16 gap-3"><Loader2 className="h-6 w-6 animate-spin text-primary" /><span className="text-muted-foreground">Loading...</span></div>;
   }
 
-  // Completion screen
+  // Results screen
   if (quiz.quizComplete) {
     const accuracy = Math.round((quiz.score / quiz.totalQuestions) * 100);
-    const isPerfect = accuracy === 100;
-    const isGreat = accuracy >= 80;
-    const isGood = accuracy >= 50;
-
     return (
-      <Card className="border-0 shadow-xl overflow-hidden">
-        <div className={`h-2 ${isPerfect ? "bg-amber-400" : isGreat ? "bg-emerald-500" : isGood ? "bg-blue-500" : "bg-orange-500"}`} />
-        <CardContent className="py-12 text-center">
-          <div className="text-4xl font-extrabold mb-4 animate-bounce-in text-primary">
-            {isPerfect ? "Perfect!" : isGreat ? "Great!" : isGood ? "Nice!" : "Keep going!"}
-          </div>
-          <h2 className="text-2xl font-bold mb-6">Practice Complete</h2>
-
-          <div className="flex justify-center gap-6 mb-8">
-            <div className="text-center">
-              <div className="text-4xl font-extrabold text-primary">{quiz.score}/{quiz.totalQuestions}</div>
-              <div className="text-sm text-muted-foreground mt-1">Score</div>
-            </div>
-            <div className="w-px bg-border" />
-            <div className="text-center">
-              <div className="text-4xl font-extrabold text-emerald-600">{accuracy}%</div>
-              <div className="text-sm text-muted-foreground mt-1">Accuracy</div>
-            </div>
-            <div className="w-px bg-border" />
-            <div className="text-center">
-              <div className="text-4xl font-extrabold text-blue-600">
-                {Math.floor(quiz.elapsed / 60)}:{String(quiz.elapsed % 60).padStart(2, "0")}
-              </div>
-              <div className="text-sm text-muted-foreground mt-1">Time</div>
-            </div>
-          </div>
-
-          <p className="text-muted-foreground max-w-md mx-auto mb-6">
-            {isPerfect
-              ? "You nailed every single question! You're ready for competition!"
-              : isGreat
-              ? "Outstanding performance! A few more sessions and you'll be unstoppable."
-              : isGood
-              ? "You're making progress! Review the explanations and try again."
-              : "Every champion starts somewhere. Focus on the explanations and you'll improve!"}
-          </p>
-
-          <Button
-            onClick={() => onComplete(quiz.score, quiz.totalQuestions)}
-            size="lg"
-            className="h-12 px-8 text-base font-bold"
-          >
-            Back to Dashboard
-          </Button>
-        </CardContent>
-      </Card>
+      <div className="bg-card rounded-2xl border p-8 text-center">
+        <h2 className="text-2xl font-black text-foreground mb-2">Practice Complete</h2>
+        <p className="text-muted-foreground mb-6">
+          {accuracy >= 80 ? "Excellent work!" : accuracy >= 50 ? "Good effort, keep practicing!" : "Review the topics and try again."}
+        </p>
+        <div className="flex justify-center gap-8 mb-8">
+          <div><p className="text-3xl font-black text-primary">{quiz.score}/{quiz.totalQuestions}</p><p className="text-xs text-muted-foreground">Score</p></div>
+          <div><p className="text-3xl font-black text-foreground">{accuracy}%</p><p className="text-xs text-muted-foreground">Accuracy</p></div>
+          <div><p className="text-3xl font-black text-foreground">{Math.floor(quiz.elapsed / 60)}:{String(quiz.elapsed % 60).padStart(2, "0")}</p><p className="text-xs text-muted-foreground">Time</p></div>
+        </div>
+        <button onClick={() => onComplete(quiz.score, quiz.totalQuestions)}
+          className="bg-primary text-primary-foreground px-8 py-3 rounded-xl font-bold hover:opacity-90">
+          Back to Dashboard
+        </button>
+      </div>
     );
   }
 
   if (!quiz.currentQuestion) return null;
-
   const state = quiz.getState(quiz.currentQuestion.id);
-  const progressPct = ((quiz.currentIndex + 1) / quiz.totalQuestions) * 100;
+  const timePercent = (quiz.questionTimeLeft / quiz.questionTimeLimit) * 100;
+  const timeWarning = quiz.questionTimeLeft <= 10;
 
   return (
-    <div className="space-y-6">
-      {/* Progress Header */}
-      <div className="bg-white rounded-2xl border shadow-sm p-4">
-        <div className="flex items-center justify-between text-sm mb-2">
-          <span className="font-semibold">
-            Question {quiz.currentIndex + 1} of {quiz.totalQuestions}
+    <div className="space-y-4">
+      {/* Header bar */}
+      <div className="flex items-center justify-between">
+        <span className="text-sm font-bold text-foreground">
+          Question {quiz.currentIndex + 1} of {quiz.totalQuestions}
+        </span>
+        <div className="flex items-center gap-4">
+          <span className="text-sm text-muted-foreground">
+            {quiz.score} correct
           </span>
-          <div className="flex items-center gap-4">
-            <Badge className="bg-emerald-100 text-emerald-700 border-0 font-semibold">
-              {quiz.score} correct
-            </Badge>
-            <span className="font-mono text-muted-foreground font-medium">
-              {Math.floor(quiz.elapsed / 60)}:{String(quiz.elapsed % 60).padStart(2, "0")}
-            </span>
-          </div>
+          <span className="text-sm text-muted-foreground">
+            {Math.floor(quiz.elapsed / 60)}:{String(quiz.elapsed % 60).padStart(2, "0")}
+          </span>
         </div>
-        <Progress value={progressPct} className="h-2.5" />
       </div>
 
-      {/* Question Card */}
-      <Card className="border-0 shadow-lg">
-        <CardContent className="p-6 sm:p-8">
-          <QuizQuestion
-            question={quiz.currentQuestion}
-            hintsUsed={state.hintsUsed}
-            answered={state.answered}
-            isCorrect={state.isCorrect}
-            onSubmit={(answer, isCorrect) =>
-              quiz.submitAnswer(quiz.currentQuestion!.id, answer, isCorrect)
-            }
-            onRequestHint={() => quiz.requestHint(quiz.currentQuestion!.id)}
+      {/* Progress dots */}
+      <div className="flex gap-1">
+        {questions.map((q, i) => {
+          const s = quiz.getState(q.id);
+          return (
+            <div key={q.id} className={`h-1.5 flex-1 rounded-full transition-colors ${
+              i === quiz.currentIndex ? "bg-primary" :
+              s.answered ? (s.isCorrect ? "bg-green-500" : "bg-red-400") : "bg-muted"
+            }`} />
+          );
+        })}
+      </div>
+
+      {/* Per-question timer */}
+      <div className="relative">
+        <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+          <div
+            className={`h-full rounded-full transition-all duration-1000 ${timeWarning ? "bg-red-500" : "bg-primary"}`}
+            style={{ width: `${timePercent}%` }}
           />
-        </CardContent>
-      </Card>
+        </div>
+        <div className={`absolute right-0 -top-6 flex items-center gap-1 text-sm font-bold ${timeWarning ? "text-red-500" : "text-muted-foreground"}`}>
+          <Clock size={14} />
+          {quiz.questionTimeLeft}s
+        </div>
+      </div>
+
+      {/* Question */}
+      <div className="bg-card rounded-2xl border p-6">
+        <QuizQuestion
+          question={quiz.currentQuestion}
+          hintsUsed={state.hintsUsed}
+          answered={state.answered}
+          isCorrect={state.isCorrect}
+          onSubmit={(answer, isCorrect) => quiz.submitAnswer(quiz.currentQuestion!.id, answer, isCorrect)}
+          onRequestHint={() => quiz.requestHint(quiz.currentQuestion!.id)}
+        />
+      </div>
 
       {/* Navigation */}
       <div className="flex justify-between">
-        <Button
-          variant="outline"
-          onClick={quiz.prevQuestion}
-          disabled={quiz.currentIndex === 0}
-          className="h-11 font-medium"
-        >
-          ← Previous
-        </Button>
-
+        <button onClick={quiz.prevQuestion} disabled={quiz.currentIndex === 0}
+          className="px-4 py-2.5 rounded-xl text-sm font-bold text-muted-foreground hover:bg-muted transition-colors disabled:opacity-30">
+          Previous
+        </button>
         {quiz.currentIndex === quiz.totalQuestions - 1 ? (
-          <Button onClick={quiz.finishQuiz} disabled={!state.answered} className="h-11 font-bold bg-emerald-600 hover:bg-emerald-700">
-            Finish Practice
-          </Button>
+          <button onClick={quiz.finishQuiz} disabled={!state.answered}
+            className="bg-green-600 text-white px-6 py-2.5 rounded-xl text-sm font-bold hover:opacity-90 disabled:opacity-50">
+            Finish
+          </button>
         ) : (
-          <Button onClick={quiz.nextQuestion} disabled={!state.answered} className="h-11 font-medium">
-            Next →
-          </Button>
+          <button onClick={quiz.nextQuestion} disabled={!state.answered}
+            className="bg-primary text-primary-foreground px-6 py-2.5 rounded-xl text-sm font-bold hover:opacity-90 disabled:opacity-50">
+            Next
+          </button>
         )}
       </div>
     </div>

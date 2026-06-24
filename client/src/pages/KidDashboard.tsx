@@ -1,25 +1,13 @@
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { Loader2, Calculator, Hash, Shapes, Brain, Shuffle, Lightbulb, BarChart3, Flame, CheckCircle2, Target, TrendingUp } from "lucide-react";
+import { Loader2, Calculator, ChevronRight } from "lucide-react";
 import { TopicQuestions } from "@/components/TopicQuestions";
 import type { Topic, TopicProgress } from "@shared/schema";
 
-const DIFFICULTY_STYLE: Record<string, { bg: string; text: string; label: string }> = {
-  easy: { bg: "bg-emerald-100", text: "text-emerald-700", label: "Easy" },
-  medium: { bg: "bg-amber-100", text: "text-amber-700", label: "Medium" },
-  hard: { bg: "bg-orange-100", text: "text-orange-700", label: "Hard" },
-  olympiad: { bg: "bg-red-100", text: "text-red-700", label: "Olympiad" },
-};
-
 export default function KidDashboard() {
   const { activeProfile } = useAuth();
-  const [practiceMode, setPracticeMode] = useState(false);
-  const [selectedTopicId, setSelectedTopicId] = useState<number | null>(null);
+  const [practiceTopicId, setPracticeTopicId] = useState<number | null>(null);
 
   const { data: topicList = [], isLoading } = useQuery<Topic[]>({
     queryKey: ["/api/topics", activeProfile?.grade],
@@ -36,166 +24,116 @@ export default function KidDashboard() {
     queryKey: [`/api/progress/${activeProfile?.id}`],
     queryFn: async () => {
       const res = await fetch(`/api/progress/${activeProfile?.id}`, { credentials: "include" });
-      if (!res.ok) throw new Error("Failed to load progress");
+      if (!res.ok) throw new Error("Failed");
       return res.json();
     },
     enabled: !!activeProfile?.id,
   });
 
-  const totalCorrect = progressList.reduce((sum, p) => sum + (p.questionsCorrect ?? 0), 0);
-  const totalAttempted = progressList.reduce((sum, p) => sum + (p.questionsAttempted ?? 0), 0);
-  const totalSessions = progressList.reduce((sum, p) => sum + (p.totalSessions ?? 0), 0);
-  const overallAccuracy = totalAttempted > 0 ? Math.round((totalCorrect / totalAttempted) * 100) : 0;
-
-  function startPractice() {
-    if (topicList.length === 0) return;
-    const randomTopic = topicList[Math.floor(Math.random() * topicList.length)];
-    setSelectedTopicId(randomTopic.id);
-    setPracticeMode(true);
-  }
-
-  function handleComplete() {
-    setPracticeMode(false);
-    setSelectedTopicId(null);
-  }
+  const totalCorrect = progressList.reduce((s, p) => s + (p.questionsCorrect ?? 0), 0);
+  const totalAttempted = progressList.reduce((s, p) => s + (p.questionsAttempted ?? 0), 0);
+  const totalSessions = progressList.reduce((s, p) => s + (p.totalSessions ?? 0), 0);
+  const accuracy = totalAttempted > 0 ? Math.round((totalCorrect / totalAttempted) * 100) : 0;
 
   if (isLoading) {
+    return <div className="flex items-center justify-center min-h-[60vh]"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>;
+  }
+
+  if (practiceTopicId) {
     return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      <div className="max-w-3xl mx-auto px-6 py-8">
+        <button onClick={() => setPracticeTopicId(null)} className="text-sm text-muted-foreground hover:text-foreground mb-4 inline-block">
+          &larr; Back
+        </button>
+        <TopicQuestions topicId={practiceTopicId} profileId={activeProfile?.id ?? 0} onComplete={() => setPracticeTopicId(null)} />
       </div>
     );
   }
 
-  if (practiceMode && selectedTopicId) {
-    return (
-      <div className="max-w-4xl mx-auto p-6">
-        <Button variant="ghost" onClick={() => { setPracticeMode(false); setSelectedTopicId(null); }} className="mb-4">
-          ← Back to Dashboard
-        </Button>
-        <TopicQuestions
-          topicId={selectedTopicId}
-          profileId={activeProfile?.id ?? 0}
-          onComplete={handleComplete}
-        />
-      </div>
-    );
-  }
-
-  // Group by category
   const grouped = topicList.reduce<Record<string, Topic[]>>((acc, t) => {
     if (!acc[t.category]) acc[t.category] = [];
     acc[t.category].push(t);
     return acc;
   }, {});
-
   const progressMap = new Map(progressList.map((p) => [p.topicId, p]));
 
   return (
-    <div className="max-w-5xl mx-auto p-6 space-y-8">
+    <div className="max-w-4xl mx-auto px-6 py-8">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <p className="text-sm text-muted-foreground">Grade {activeProfile?.grade}</p>
-          <h1 className="text-2xl font-bold">Hi {activeProfile?.name}, ready to practice?</h1>
-        </div>
-        <Button
-          size="lg"
-          className="h-11 px-6 font-semibold"
-          onClick={startPractice}
-          disabled={topicList.length === 0}
-        >
-          Start Practice
-        </Button>
+      <div className="mb-8">
+        <p className="text-sm text-muted-foreground">Grade {activeProfile?.grade}</p>
+        <h1 className="text-2xl font-black text-foreground">Hi {activeProfile?.name}, let's practice!</h1>
       </div>
 
-      {/* Quick Stats Bar */}
-      <div className="grid grid-cols-4 gap-3">
-        <QuickStat icon={<Flame className="h-5 w-5 text-orange-500" />} value={totalSessions} label="Sessions" />
-        <QuickStat icon={<CheckCircle2 className="h-5 w-5 text-emerald-500" />} value={totalCorrect} label="Correct" />
-        <QuickStat icon={<Target className="h-5 w-5 text-blue-500" />} value={totalAttempted} label="Attempted" />
-        <QuickStat icon={<TrendingUp className="h-5 w-5 text-purple-500" />} value={`${overallAccuracy}%`} label="Accuracy" />
+      {/* Stats */}
+      <div className="grid grid-cols-4 gap-3 mb-8">
+        {[
+          { label: "Sessions", value: totalSessions },
+          { label: "Attempted", value: totalAttempted },
+          { label: "Correct", value: totalCorrect },
+          { label: "Accuracy", value: `${accuracy}%` },
+        ].map(({ label, value }) => (
+          <div key={label} className="bg-card rounded-xl border p-3 text-center">
+            <p className="text-xs text-muted-foreground">{label}</p>
+            <p className="font-black text-lg text-foreground">{value}</p>
+          </div>
+        ))}
       </div>
 
-      {/* Topics by Category */}
-      {topicList.length === 0 ? (
-        <Card className="border-dashed border-2">
-          <CardContent className="flex flex-col items-center justify-center py-16 text-center">
-            <Calculator className="h-12 w-12 text-muted-foreground mb-4" />
-            <p className="text-xl font-semibold">No topics for Grade {activeProfile?.grade} yet</p>
-            <p className="text-muted-foreground mt-2">Check back soon for new practice problems!</p>
-          </CardContent>
-        </Card>
-      ) : (
-        Object.entries(grouped).map(([category, topics]) => {
-          const label = category.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
-          return (
-            <div key={category} className="space-y-3">
-              <h2 className="text-lg font-bold flex items-center gap-2">
-                {label}
-                <Badge variant="secondary" className="ml-1 font-normal">{topics.length}</Badge>
-              </h2>
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                {topics.map((topic) => {
-                  const prog = progressMap.get(topic.id);
-                  const attempted = prog?.questionsAttempted ?? 0;
-                  const correct = prog?.questionsCorrect ?? 0;
-                  const accuracy = attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
-                  const diff = DIFFICULTY_STYLE[topic.difficulty] ?? DIFFICULTY_STYLE.medium;
+      {/* Quick Start */}
+      <button
+        onClick={() => {
+          if (topicList.length === 0) return;
+          setPracticeTopicId(topicList[Math.floor(Math.random() * topicList.length)].id);
+        }}
+        disabled={topicList.length === 0}
+        className="w-full bg-primary text-primary-foreground py-4 rounded-2xl font-bold text-lg hover:opacity-90 transition-opacity mb-8 disabled:opacity-50"
+      >
+        Start Practice Test
+      </button>
 
-                  return (
-                    <Card
-                      key={topic.id}
-                      className="card-hover cursor-pointer border-0 shadow-md hover:shadow-xl"
-                      onClick={() => { setSelectedTopicId(topic.id); setPracticeMode(true); }}
-                    >
-                      <CardContent className="p-5">
-                        <div className="flex items-start justify-between mb-3">
-                          <Calculator className="h-5 w-5 text-primary" />
-                          <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${diff.bg} ${diff.text}`}>
-                            {diff.label}
-                          </span>
-                        </div>
-                        <h3 className="font-bold text-sm mb-1">{topic.title}</h3>
-                        {topic.description && (
-                          <p className="text-xs text-muted-foreground line-clamp-2 mb-3">{topic.description}</p>
-                        )}
-                        {attempted > 0 ? (
-                          <div className="space-y-1.5">
-                            <div className="flex justify-between text-xs">
-                              <span className="text-muted-foreground">{correct}/{attempted} correct</span>
-                              <span className="font-bold text-primary">{accuracy}%</span>
-                            </div>
-                            <Progress value={accuracy} className="h-2" />
-                          </div>
-                        ) : (
-                          <p className="text-xs text-muted-foreground italic flex items-center gap-1">
-                            Not started yet
-                          </p>
-                        )}
-                      </CardContent>
-                    </Card>
-                  );
-                })}
-              </div>
+      {/* Topics */}
+      {Object.entries(grouped).map(([category, topics]) => {
+        const label = category.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+        return (
+          <div key={category} className="mb-6">
+            <h3 className="font-bold text-foreground mb-3">{label}</h3>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {topics.map((topic) => {
+                const prog = progressMap.get(topic.id);
+                const att = prog?.questionsAttempted ?? 0;
+                const cor = prog?.questionsCorrect ?? 0;
+                const acc = att > 0 ? Math.round((cor / att) * 100) : 0;
+                return (
+                  <div
+                    key={topic.id}
+                    onClick={() => setPracticeTopicId(topic.id)}
+                    className="bg-card rounded-2xl border p-4 cursor-pointer hover:shadow-md transition-shadow flex items-center gap-4"
+                  >
+                    <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
+                      <Calculator size={18} className="text-primary" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-bold text-sm text-foreground truncate">{topic.title}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {att > 0 ? `${cor}/${att} correct · ${acc}%` : topic.difficulty}
+                      </p>
+                    </div>
+                    <ChevronRight size={16} className="text-muted-foreground" />
+                  </div>
+                );
+              })}
             </div>
-          );
-        })
+          </div>
+        );
+      })}
+
+      {topicList.length === 0 && (
+        <div className="bg-card rounded-2xl border p-12 text-center">
+          <p className="font-bold text-foreground">No topics for Grade {activeProfile?.grade} yet</p>
+          <p className="text-sm text-muted-foreground mt-1">Check back soon!</p>
+        </div>
       )}
     </div>
-  );
-}
-
-function QuickStat({ icon, value, label }: { icon: React.ReactNode; value: string | number; label: string }) {
-  return (
-    <Card className="border-0 shadow-sm">
-      <CardContent className="p-3 flex items-center gap-3">
-        {icon}
-        <div>
-          <div className="text-lg font-extrabold leading-tight">{value}</div>
-          <div className="text-[11px] text-muted-foreground">{label}</div>
-        </div>
-      </CardContent>
-    </Card>
   );
 }

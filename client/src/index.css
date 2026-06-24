@@ -4,32 +4,32 @@
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
-    --foreground: 222 47% 11%;
+    --background: 34 44% 96%;
+    --foreground: 30 30% 10%;
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 30 30% 10%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 250 85% 60%;
+    --popover-foreground: 30 30% 10%;
+    --primary: 25 95% 53%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 210 40% 93%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
-    --accent: 172 66% 50%;
+    --secondary: 199 89% 96%;
+    --secondary-foreground: 201 90% 27%;
+    --muted: 34 30% 92%;
+    --muted-foreground: 30 20% 40%;
+    --accent: 263 70% 58%;
     --accent-foreground: 0 0% 100%;
-    --destructive: 0 84% 60%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 250 85% 60%;
-    --radius: 0.75rem;
+    --border: 30 20% 85%;
+    --input: 30 20% 85%;
+    --ring: 25 95% 53%;
+    --radius: 1rem;
 
-    --chart-1: 250 85% 60%;
-    --chart-2: 172 66% 50%;
-    --chart-3: 38 92% 50%;
-    --chart-4: 340 82% 52%;
-    --chart-5: 24 95% 53%;
+    --chart-1: 25 95% 53%;
+    --chart-2: 187 72% 42%;
+    --chart-3: 263 70% 58%;
+    --chart-4: 142 71% 45%;
+    --chart-5: 38 92% 50%;
   }
 }
 
@@ -41,22 +41,4 @@
     @apply bg-background text-foreground antialiased;
     font-family: system-ui, -apple-system, sans-serif;
   }
-}
-
-/* Card hover */
-.card-hover {
-  transition: all 0.2s ease;
-}
-.card-hover:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.1);
-}
-
-/* Bounce in for feedback */
-@keyframes bounce-in {
-  0% { transform: scale(0.9); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
-}
-.animate-bounce-in {
-  animation: bounce-in 0.3s ease-out;
 }
