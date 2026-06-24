@@ -16,7 +16,7 @@ export default function LandingPage() {
       {/* Nav */}
       <nav className="flex items-center justify-between px-6 lg:px-12 py-4 animate-fade-in">
         <span className="font-display font-bold text-xl">
-          <span style={{ color: "hsl(var(--grape))" }}>Learni</span><span style={{ color: "hsl(var(--coral))" }}>verse</span> <span>🚀</span>
+          <span style={{ color: "hsl(var(--grape))" }}>Learn</span><span style={{ color: "hsl(var(--coral))" }}>Smarter</span> <span>🚀</span>
         </span>
         <div className="flex items-center gap-3 font-body">
           <button onClick={() => setLocation("/auth")}

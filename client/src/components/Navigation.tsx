@@ -25,7 +25,7 @@ export function Navigation() {
             </button>
           )}
           <span className="font-display font-bold text-lg">
-            <span style={{ color: "hsl(var(--grape))" }}>Learni</span><span style={{ color: "hsl(var(--coral))" }}>verse</span> <span className="text-base">🚀</span>
+            <span style={{ color: "hsl(var(--grape))" }}>Learn</span><span style={{ color: "hsl(var(--coral))" }}>Smarter</span> <span className="text-base">🚀</span>
           </span>
         </div>
         <div className="flex items-center gap-2 font-body">
@@ -59,7 +59,7 @@ export function Navigation() {
             </button>
           ) : (
             <span className="font-display font-bold text-lg">
-              <span style={{ color: "hsl(var(--grape))" }}>Learni</span><span style={{ color: "hsl(var(--coral))" }}>verse</span> <span className="text-base">🚀</span>
+              <span style={{ color: "hsl(var(--grape))" }}>Learn</span><span style={{ color: "hsl(var(--coral))" }}>Smarter</span> <span className="text-base">🚀</span>
             </span>
           )}
           <nav className="hidden lg:flex items-center gap-1 ml-3 font-body">

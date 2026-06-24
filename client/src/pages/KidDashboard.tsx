@@ -240,7 +240,7 @@ export default function KidDashboard() {
             <div className="flex items-start gap-3">
               <span className="text-2xl">✨</span>
               <div>
-                <p className="font-semibold text-foreground">Welcome to Learniverse!</p>
+                <p className="font-semibold text-foreground">Welcome to LearnSmarter!</p>
                 <p className="text-sm text-muted-foreground mt-0.5">Pick a topic below to start your journey. Earn points, collect badges, and level up!</p>
               </div>
             </div>
