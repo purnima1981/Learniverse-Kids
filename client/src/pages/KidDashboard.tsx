@@ -103,35 +103,20 @@ export default function KidDashboard() {
 
   return (
     <div className="max-w-5xl mx-auto p-6 space-y-8">
-      {/* Hero */}
-      <div className="relative overflow-hidden rounded-3xl bg-hero-pattern animate-gradient p-8 text-white">
-        <div className="relative z-10 flex flex-col md:flex-row items-center gap-6">
-          <div className="flex-1">
-            <p className="text-white/80 text-sm font-medium mb-1">Grade {activeProfile?.grade}</p>
-            <h1 className="text-3xl md:text-4xl font-extrabold mb-2">
-              Hey {activeProfile?.name}! 👋
-            </h1>
-            <p className="text-white/80 text-lg mb-6">
-              Ready to solve some awesome math problems?
-            </p>
-            <Button
-              size="lg"
-              className="h-14 px-8 text-lg font-bold bg-white text-primary hover:bg-white/90 shadow-lg animate-pulse-ring"
-              onClick={startPractice}
-              disabled={topicList.length === 0}
-            >
-              🚀 Start Practice
-            </Button>
-          </div>
-
-          {/* Stats circles */}
-          <div className="flex gap-4 md:gap-6">
-            <StatCircle value={totalSessions} label="Sessions" color="bg-white/20" />
-            <StatCircle value={totalAttempted} label="Solved" color="bg-white/20" />
-            <StatCircle value={`${overallAccuracy}%`} label="Accuracy" color="bg-white/20" />
-          </div>
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <p className="text-sm text-muted-foreground">Grade {activeProfile?.grade}</p>
+          <h1 className="text-2xl font-bold">Hi {activeProfile?.name}, ready to practice?</h1>
         </div>
-        <div className="absolute -right-10 -bottom-10 text-[150px] opacity-10 select-none">🧮</div>
+        <Button
+          size="lg"
+          className="h-11 px-6 font-semibold"
+          onClick={startPractice}
+          disabled={topicList.length === 0}
+        >
+          Start Practice
+        </Button>
       </div>
 
       {/* Quick Stats Bar */}
@@ -209,15 +194,6 @@ export default function KidDashboard() {
           );
         })
       )}
-    </div>
-  );
-}
-
-function StatCircle({ value, label, color }: { value: string | number; label: string; color: string }) {
-  return (
-    <div className={`${color} rounded-2xl p-4 text-center min-w-[80px] backdrop-blur-sm`}>
-      <div className="text-2xl font-extrabold">{value}</div>
-      <div className="text-xs opacity-80">{label}</div>
     </div>
   );
 }
