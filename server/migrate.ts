@@ -3,6 +3,20 @@ import { pool } from "./db";
 export async function migrate() {
   const client = await pool.connect();
   try {
+    // Keep users and child_profiles (auth data), drop and recreate everything else
+    // These tables have wrong columns from the old schema (chapter_id vs topic_id)
+    await client.query(`
+      DROP TABLE IF EXISTS question_responses CASCADE;
+      DROP TABLE IF EXISTS quiz_sessions CASCADE;
+      DROP TABLE IF EXISTS topic_progress CASCADE;
+      DROP TABLE IF EXISTS questions CASCADE;
+      DROP TABLE IF EXISTS topics CASCADE;
+      DROP TABLE IF EXISTS child_progress CASCADE;
+      DROP TABLE IF EXISTS chapters CASCADE;
+      DROP TABLE IF EXISTS stories CASCADE;
+    `);
+
+    // Ensure auth tables exist
     await client.query(`
       CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
@@ -34,8 +48,11 @@ export async function migrate() {
         used_by_profile_id INTEGER,
         created_at TIMESTAMP DEFAULT NOW()
       );
+    `);
 
-      CREATE TABLE IF NOT EXISTS topics (
+    // Create fresh data tables with correct schema
+    await client.query(`
+      CREATE TABLE topics (
         id SERIAL PRIMARY KEY,
         title VARCHAR(255) NOT NULL,
         description TEXT,
@@ -46,7 +63,7 @@ export async function migrate() {
         total_questions INTEGER NOT NULL DEFAULT 0
       );
 
-      CREATE TABLE IF NOT EXISTS questions (
+      CREATE TABLE questions (
         id SERIAL PRIMARY KEY,
         topic_id INTEGER NOT NULL REFERENCES topics(id),
         type VARCHAR(30) NOT NULL,
@@ -63,7 +80,7 @@ export async function migrate() {
         explanation TEXT
       );
 
-      CREATE TABLE IF NOT EXISTS quiz_sessions (
+      CREATE TABLE quiz_sessions (
         id SERIAL PRIMARY KEY,
         child_profile_id INTEGER NOT NULL REFERENCES child_profiles(id),
         topic_id INTEGER NOT NULL REFERENCES topics(id),
@@ -74,7 +91,7 @@ export async function migrate() {
         total_questions INTEGER
       );
 
-      CREATE TABLE IF NOT EXISTS question_responses (
+      CREATE TABLE question_responses (
         id SERIAL PRIMARY KEY,
         session_id INTEGER NOT NULL REFERENCES quiz_sessions(id),
         question_id INTEGER NOT NULL REFERENCES questions(id),
@@ -84,12 +101,12 @@ export async function migrate() {
         time_taken INTEGER,
         attempts INTEGER NOT NULL DEFAULT 1,
         hints_used INTEGER NOT NULL DEFAULT 0,
-        difficulty VARCHAR(20) NOT NULL,
+        difficulty VARCHAR(20) NOT NULL DEFAULT 'medium',
         bloom_level VARCHAR(20) NOT NULL DEFAULT 'understand',
         answered_at TIMESTAMP DEFAULT NOW()
       );
 
-      CREATE TABLE IF NOT EXISTS topic_progress (
+      CREATE TABLE topic_progress (
         id SERIAL PRIMARY KEY,
         child_profile_id INTEGER NOT NULL REFERENCES child_profiles(id),
         topic_id INTEGER NOT NULL REFERENCES topics(id),
@@ -100,23 +117,17 @@ export async function migrate() {
         last_practiced_at TIMESTAMP DEFAULT NOW()
       );
     `);
-    // Add missing columns to existing tables
-    const alterStatements = [
+
+    // Add missing columns to auth tables (in case they were created with old schema)
+    const alters = [
       "ALTER TABLE child_profiles ADD COLUMN IF NOT EXISTS state VARCHAR(2)",
       "ALTER TABLE child_profiles ADD COLUMN IF NOT EXISTS invite_code VARCHAR(6)",
-      "ALTER TABLE questions ADD COLUMN IF NOT EXISTS image_url TEXT",
-      "ALTER TABLE questions ADD COLUMN IF NOT EXISTS diagram JSONB",
-      "ALTER TABLE questions ADD COLUMN IF NOT EXISTS bloom_level VARCHAR(20) NOT NULL DEFAULT 'understand'",
-      "ALTER TABLE questions ADD COLUMN IF NOT EXISTS topic VARCHAR(100)",
-      "ALTER TABLE question_responses ADD COLUMN IF NOT EXISTS difficulty VARCHAR(20) NOT NULL DEFAULT 'medium'",
-      "ALTER TABLE question_responses ADD COLUMN IF NOT EXISTS bloom_level VARCHAR(20) NOT NULL DEFAULT 'understand'",
-      "ALTER TABLE quiz_sessions ADD COLUMN IF NOT EXISTS difficulty VARCHAR(20)",
     ];
-    for (const sql of alterStatements) {
+    for (const sql of alters) {
       try { await client.query(sql); } catch {}
     }
 
-    console.log("Database tables ready.");
+    console.log("Database tables ready (fresh).");
   } catch (err) {
     console.error("Migration error:", err);
   } finally {
