@@ -29,4 +29,4 @@ replit.nix
 .upm
 
 # PostgreSQL
-*.dump
+*.dumppackage-lock.json
