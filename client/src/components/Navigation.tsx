@@ -1,18 +1,17 @@
 import { useAuth } from "@/hooks/useAuth";
 import { useLocation, Link } from "wouter";
 import {
-  LogOut, Users, Home, ChevronLeft,
-  Menu, X, BarChart3,
+  LogOut, Home, ChevronLeft,
+  Menu, X, Users,
 } from "lucide-react";
 import { useState } from "react";
 
 const PARENT_NAV = [
   { href: "/parent-dashboard", label: "Dashboard", icon: Home },
-  { href: "/profiles", label: "Switch Profile", icon: Users },
 ];
 
 export function Navigation() {
-  const { user, activeProfile, isAuthenticated, isParent, isChild, logout, switchProfile } = useAuth();
+  const { user, activeProfile, isAuthenticated, isParent, isChild, logout } = useAuth();
   const [location, setLocation] = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -43,14 +42,6 @@ export function Navigation() {
         </div>
         <div className="flex items-center gap-2 font-body">
           <span className="text-sm text-muted-foreground">{activeProfile?.name}</span>
-          <button
-            onClick={async () => { await switchProfile.mutateAsync(null); setLocation("/parent-dashboard"); }}
-            className="p-2 rounded-lg hover:bg-muted transition-colors"
-            aria-label="Switch to parent mode"
-            title="Parent Mode"
-          >
-            <Users size={14} className="text-muted-foreground" />
-          </button>
           <button
             onClick={async () => { await logout.mutateAsync(); setLocation("/auth"); }}
             className="p-2 rounded-lg hover:bg-muted transition-colors"

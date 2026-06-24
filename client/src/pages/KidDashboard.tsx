@@ -2,11 +2,9 @@ import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import {
-  ChevronRight, Loader2, Zap, Users,
+  ChevronRight, Loader2, Zap,
   Calculator, Shapes, Hash, Lightbulb, PieChart, Puzzle, BookOpen,
-  TrendingUp, Target, Clock,
 } from "lucide-react";
-import { useLocation } from "wouter";
 import { TopicQuestions } from "@/components/TopicQuestions";
 import type { Topic, TopicProgress } from "@shared/schema";
 
@@ -21,8 +19,7 @@ const CATEGORY_CONFIG: Record<string, { label: string; icon: typeof Calculator; 
 };
 
 export default function KidDashboard() {
-  const { activeProfile, switchProfile } = useAuth();
-  const [, setLocation] = useLocation();
+  const { activeProfile } = useAuth();
   const [practiceTopicId, setPracticeTopicId] = useState<number | null>(null);
 
   const { data: topicList = [], isLoading } = useQuery<Topic[]>({

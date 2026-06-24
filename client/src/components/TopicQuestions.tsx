@@ -80,8 +80,13 @@ function PracticeTest({ questions, profileId, topicId, onComplete }: {
   const [revealUsed, setRevealUsed] = useState(false);
 
   const q = questions[current];
-  const options = (q.options as { choices?: string[] })?.choices ?? [];
-  const correctIndex = ["a","b","c","d"].indexOf(q.answer as string);
+  const isTrueFalse = q.type === "true-false" || (!(q.options as any)?.choices && ["true","false"].includes(String(q.answer).toLowerCase()));
+  const options: string[] = isTrueFalse
+    ? ["True", "False"]
+    : ((q.options as { choices?: string[] })?.choices ?? []);
+  const correctIndex = isTrueFalse
+    ? (String(q.answer).toLowerCase() === "true" ? 0 : 1)
+    : ["a","b","c","d"].indexOf(q.answer as string);
   const hints = (q.hints as string[]) ?? [];
   const explanation = q.explanation ?? "";
 
