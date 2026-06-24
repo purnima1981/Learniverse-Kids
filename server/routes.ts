@@ -74,6 +74,47 @@ export function registerRoutes(app: Express) {
     }
   });
 
+  // ── Create Child Profile (parent directly) ────────────────────────────────
+
+  app.post(
+    "/api/profiles",
+    requireAuth,
+    requireParent,
+    async (req: Request, res: Response) => {
+      try {
+        const { name, grade, pin, avatar } = req.body;
+
+        if (!name || !grade || !pin) {
+          return res.status(400).json({ message: "Name, grade, and PIN are required" });
+        }
+        if (pin.length !== 4 || !/^\d{4}$/.test(pin)) {
+          return res.status(400).json({ message: "PIN must be 4 digits" });
+        }
+
+        const hashedPin = await bcrypt.hash(pin, 10);
+        const profile = await storage.createChildProfile({
+          parentId: req.user!.id,
+          name,
+          grade: Number(grade),
+          pin: hashedPin,
+          avatar: avatar || "default",
+          state: null,
+          inviteCode: null,
+        });
+
+        res.json({
+          id: profile.id,
+          name: profile.name,
+          grade: profile.grade,
+          avatar: profile.avatar,
+        });
+      } catch (err) {
+        console.error("Create profile error:", err);
+        res.status(500).json({ message: "Failed to create profile" });
+      }
+    }
+  );
+
   // ── Profiles ───────────────────────────────────────────────────────────────
 
   app.get(
