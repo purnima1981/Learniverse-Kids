@@ -1,12 +1,24 @@
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
-import { Loader2, Calculator, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Calculator, Loader2, Zap, Check } from "lucide-react";
+import { useLocation } from "wouter";
 import { TopicQuestions } from "@/components/TopicQuestions";
 import type { Topic, TopicProgress } from "@shared/schema";
 
+const CATEGORY_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
+  arithmetic: { label: "Arithmetic", color: "#f97316", bg: "bg-orange-50" },
+  algebra: { label: "Algebra", color: "#8b5cf6", bg: "bg-purple-50" },
+  geometry: { label: "Geometry", color: "#06b6d4", bg: "bg-cyan-50" },
+  "number-theory": { label: "Number Theory", color: "#22c55e", bg: "bg-green-50" },
+  combinatorics: { label: "Combinatorics", color: "#ec4899", bg: "bg-pink-50" },
+  "logical-reasoning": { label: "Logical Reasoning", color: "#f59e0b", bg: "bg-yellow-50" },
+  "data-handling": { label: "Data Handling", color: "#06b6d4", bg: "bg-cyan-50" },
+};
+
 export default function KidDashboard() {
   const { activeProfile } = useAuth();
+  const [, setLocation] = useLocation();
   const [practiceTopicId, setPracticeTopicId] = useState<number | null>(null);
 
   const { data: topicList = [], isLoading } = useQuery<Topic[]>({
@@ -15,7 +27,7 @@ export default function KidDashboard() {
       const params = new URLSearchParams();
       if (activeProfile?.grade) params.set("grade", String(activeProfile.grade));
       const res = await fetch(`/api/topics?${params.toString()}`, { credentials: "include" });
-      if (!res.ok) throw new Error("Failed to load topics");
+      if (!res.ok) throw new Error("Failed");
       return res.json();
     },
   });
@@ -30,110 +42,101 @@ export default function KidDashboard() {
     enabled: !!activeProfile?.id,
   });
 
+  const totalSessions = progressList.reduce((s, p) => s + (p.totalSessions ?? 0), 0);
   const totalCorrect = progressList.reduce((s, p) => s + (p.questionsCorrect ?? 0), 0);
   const totalAttempted = progressList.reduce((s, p) => s + (p.questionsAttempted ?? 0), 0);
-  const totalSessions = progressList.reduce((s, p) => s + (p.totalSessions ?? 0), 0);
   const accuracy = totalAttempted > 0 ? Math.round((totalCorrect / totalAttempted) * 100) : 0;
 
   if (isLoading) {
-    return <div className="flex items-center justify-center min-h-[60vh]"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>;
+    return <div className="flex items-center justify-center min-h-[60vh]"><Loader2 className="h-8 w-8 animate-spin text-[#f97316]" /></div>;
   }
 
   if (practiceTopicId) {
     return (
-      <div className="max-w-3xl mx-auto px-6 py-8">
-        <button onClick={() => setPracticeTopicId(null)} className="text-sm text-muted-foreground hover:text-foreground mb-4 inline-block">
-          &larr; Back
-        </button>
-        <TopicQuestions topicId={practiceTopicId} profileId={activeProfile?.id ?? 0} onComplete={() => setPracticeTopicId(null)} />
+      <div className="min-h-screen bg-[#fdf6ee]">
+        <TopicQuestions topicId={practiceTopicId} profileId={activeProfile?.id ?? 0}
+          onComplete={() => setPracticeTopicId(null)} />
       </div>
     );
   }
 
+  // Group topics by category
   const grouped = topicList.reduce<Record<string, Topic[]>>((acc, t) => {
     if (!acc[t.category]) acc[t.category] = [];
     acc[t.category].push(t);
     return acc;
   }, {});
-  const progressMap = new Map(progressList.map((p) => [p.topicId, p]));
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-8">
+    <div className="min-h-screen bg-gradient-to-b from-[#fff7ed] to-[#fdf6ee]">
       {/* Header */}
-      <div className="mb-8">
-        <p className="text-sm text-muted-foreground">Grade {activeProfile?.grade}</p>
-        <h1 className="text-2xl font-black text-foreground">Hi {activeProfile?.name}, let's practice!</h1>
-      </div>
-
-      {/* Stats */}
-      <div className="grid grid-cols-4 gap-3 mb-8">
-        {[
-          { label: "Sessions", value: totalSessions },
-          { label: "Attempted", value: totalAttempted },
-          { label: "Correct", value: totalCorrect },
-          { label: "Accuracy", value: `${accuracy}%` },
-        ].map(({ label, value }) => (
-          <div key={label} className="bg-card rounded-xl border p-3 text-center">
-            <p className="text-xs text-muted-foreground">{label}</p>
-            <p className="font-black text-lg text-foreground">{value}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* Quick Start */}
-      <button
-        onClick={() => {
-          if (topicList.length === 0) return;
-          setPracticeTopicId(topicList[Math.floor(Math.random() * topicList.length)].id);
-        }}
-        disabled={topicList.length === 0}
-        className="w-full bg-primary text-primary-foreground py-4 rounded-2xl font-bold text-lg hover:opacity-90 transition-opacity mb-8 disabled:opacity-50"
-      >
-        Start Practice Test
-      </button>
-
-      {/* Topics */}
-      {Object.entries(grouped).map(([category, topics]) => {
-        const label = category.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
-        return (
-          <div key={category} className="mb-6">
-            <h3 className="font-bold text-foreground mb-3">{label}</h3>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {topics.map((topic) => {
-                const prog = progressMap.get(topic.id);
-                const att = prog?.questionsAttempted ?? 0;
-                const cor = prog?.questionsCorrect ?? 0;
-                const acc = att > 0 ? Math.round((cor / att) * 100) : 0;
-                return (
-                  <div
-                    key={topic.id}
-                    onClick={() => setPracticeTopicId(topic.id)}
-                    className="bg-card rounded-2xl border p-4 cursor-pointer hover:shadow-md transition-shadow flex items-center gap-4"
-                  >
-                    <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
-                      <Calculator size={18} className="text-primary" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-bold text-sm text-foreground truncate">{topic.title}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {att > 0 ? `${cor}/${att} correct · ${acc}%` : topic.difficulty}
-                      </p>
-                    </div>
-                    <ChevronRight size={16} className="text-muted-foreground" />
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        );
-      })}
-
-      {topicList.length === 0 && (
-        <div className="bg-card rounded-2xl border p-12 text-center">
-          <p className="font-bold text-foreground">No topics for Grade {activeProfile?.grade} yet</p>
-          <p className="text-sm text-muted-foreground mt-1">Check back soon!</p>
+      <div className="px-6 py-5 flex items-center justify-between" style={{ background: "linear-gradient(135deg, #f97316 0%, #fb923c 100%)" }}>
+        <button onClick={() => setLocation("/profiles")} className="p-2 bg-white/20 rounded-xl hover:bg-white/30 transition-colors">
+          <ChevronLeft size={18} className="text-white" />
+        </button>
+        <div className="text-center">
+          <p className="text-white/80 text-xs font-bold tracking-widest uppercase">Grade {activeProfile?.grade}</p>
+          <p className="text-white font-black text-xl">Hey, {activeProfile?.name}!</p>
         </div>
-      )}
+        <div className="flex items-center gap-1 bg-white/20 rounded-xl px-3 py-1.5">
+          <Zap size={14} className="text-yellow-200" />
+          <span className="text-white text-sm font-black">{totalSessions * 50 + totalCorrect * 10}</span>
+        </div>
+      </div>
+
+      <div className="max-w-lg mx-auto px-5 py-6 space-y-6">
+        {/* Stats */}
+        <div className="bg-white rounded-2xl p-4 border border-[rgba(120,90,50,0.1)]">
+          <div className="grid grid-cols-3 gap-3">
+            {[
+              { label: "Tests", value: totalSessions },
+              { label: "Accuracy", value: `${accuracy}%` },
+              { label: "Correct", value: totalCorrect },
+            ].map(({ label, value }) => (
+              <div key={label} className="text-center">
+                <p className="text-xs text-[#7c6a55] mb-0.5">{label}</p>
+                <p className="font-black text-lg text-[#1e1a14]">{value}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Pick a challenge */}
+        <div>
+          <h3 className="font-black text-lg text-[#1e1a14] mb-3">Pick a Challenge</h3>
+          <div className="grid grid-cols-2 gap-3">
+            {Object.entries(grouped).map(([category, topics]) => {
+              const cfg = CATEGORY_CONFIG[category] ?? { label: category, color: "#f97316", bg: "bg-orange-50" };
+              return (
+                <button
+                  key={category}
+                  onClick={() => {
+                    const randomTopic = topics[Math.floor(Math.random() * topics.length)];
+                    setPracticeTopicId(randomTopic.id);
+                  }}
+                  className={`${cfg.bg} rounded-2xl p-5 text-left border border-[rgba(120,90,50,0.08)] hover:shadow-md transition-shadow`}
+                >
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style={{ backgroundColor: `${cfg.color}20` }}>
+                    <Calculator size={22} style={{ color: cfg.color }} />
+                  </div>
+                  <p className="font-black text-sm text-[#1e1a14]">{cfg.label}</p>
+                  <p className="text-xs text-[#7c6a55] mt-0.5">{topics.length} topics</p>
+                  <div className="mt-3 flex items-center gap-1 text-xs font-bold" style={{ color: cfg.color }}>
+                    Start <ChevronRight size={12} />
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {topicList.length === 0 && (
+          <div className="bg-white rounded-2xl border border-[rgba(120,90,50,0.1)] p-12 text-center">
+            <p className="font-bold text-[#1e1a14]">No topics for Grade {activeProfile?.grade} yet</p>
+            <p className="text-sm text-[#7c6a55] mt-1">Check back soon!</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
