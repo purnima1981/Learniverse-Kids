@@ -76,12 +76,15 @@ export default function AuthPage() {
         <div className="bg-white rounded-2xl shadow-elevated p-6 sm:p-8" style={{ border: "1px solid hsl(var(--border))" }}>
           {/* Logo */}
           <div className="text-center mb-6">
-            <span className="font-display font-bold text-xl" style={{ color: "hsl(var(--grape))" }}>LearnSmarter</span>
+            <div className="text-3xl mb-2">🚀</div>
+            <span className="font-display font-bold text-xl">
+              <span style={{ color: "hsl(var(--grape))" }}>Learni</span><span style={{ color: "hsl(var(--coral))" }}>verse</span>
+            </span>
             <h1 className="text-lg font-display font-semibold text-foreground mt-2">
-              {mode === "kid" ? "Student Portal" : "Welcome Back"}
+              {mode === "kid" ? "Hey there! 👋" : "Welcome Back"}
             </h1>
             <p className="text-sm text-muted-foreground mt-1 font-body">
-              {mode === "kid" ? "Enter your details to start learning" : "Sign in to manage your children's progress"}
+              {mode === "kid" ? "Enter your details to start playing" : "Sign in to see your children's progress"}
             </p>
           </div>
 
