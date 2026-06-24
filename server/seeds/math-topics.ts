@@ -567,6 +567,112 @@ const TOPICS: TopicSeed[] = [
       },
     ],
   },
+
+  // ── Grade 1 ──
+  {
+    title: "Counting & Addition",
+    description: "Count objects, add single-digit numbers, and solve simple word problems.",
+    category: "arithmetic",
+    gradeLevel: 1,
+    difficulty: "easy",
+    questions: [
+      { type: "multiple-choice", text: "What is 3 + 4?", options: { choices: ["5", "6", "7", "8"] }, answer: "c", difficulty: "easy", bloomLevel: "remember", topic: "addition", hints: ["Count on from 3"], explanation: "3 + 4 = 7" },
+      { type: "multiple-choice", text: "Which number comes after 9?", options: { choices: ["8", "10", "11", "7"] }, answer: "b", difficulty: "easy", bloomLevel: "remember", topic: "counting", hints: ["Count: 8, 9, ..."], explanation: "10 comes after 9." },
+      { type: "fill-blank", text: "5 + ___ = 8", options: null, answer: "3", difficulty: "easy", bloomLevel: "apply", topic: "addition", hints: ["What do you add to 5 to get 8?"], explanation: "5 + 3 = 8" },
+      { type: "true-false", text: "6 is greater than 9.", options: null, answer: "false", difficulty: "easy", bloomLevel: "understand", topic: "comparison", hints: ["Compare the two numbers"], explanation: "6 is less than 9." },
+      { type: "multiple-choice", text: "Sam has 2 apples and gets 3 more. How many does he have?", options: { choices: ["3", "4", "5", "6"] }, answer: "c", difficulty: "easy", bloomLevel: "apply", topic: "word problems", hints: ["Add 2 + 3"], explanation: "2 + 3 = 5 apples." },
+    ],
+  },
+
+  // ── Grade 2 ──
+  {
+    title: "Addition & Subtraction within 100",
+    description: "Two-digit addition and subtraction with and without regrouping.",
+    category: "arithmetic",
+    gradeLevel: 2,
+    difficulty: "easy",
+    questions: [
+      { type: "multiple-choice", text: "What is 24 + 15?", options: { choices: ["37", "38", "39", "40"] }, answer: "c", difficulty: "easy", bloomLevel: "apply", topic: "addition", hints: ["Add the ones: 4+5=9, then add the tens: 2+1=3"], explanation: "24 + 15 = 39" },
+      { type: "fill-blank", text: "50 - 23 = ___", options: null, answer: "27", difficulty: "easy", bloomLevel: "apply", topic: "subtraction", hints: ["50 - 20 = 30, then 30 - 3 = 27"], explanation: "50 - 23 = 27" },
+      { type: "multiple-choice", text: "Which is the largest: 45, 54, 34, 43?", options: { choices: ["45", "54", "34", "43"] }, answer: "b", difficulty: "easy", bloomLevel: "analyze", topic: "comparison", hints: ["Look at the tens digit first"], explanation: "54 has the largest tens digit (5), so it is the largest." },
+      { type: "true-false", text: "35 + 10 = 55", options: null, answer: "false", difficulty: "easy", bloomLevel: "remember", topic: "addition", hints: ["Add carefully"], explanation: "35 + 10 = 45, not 55." },
+      { type: "multiple-choice", text: "A book has 48 pages. You read 20. How many are left?", options: { choices: ["18", "28", "38", "68"] }, answer: "b", difficulty: "easy", bloomLevel: "apply", topic: "word problems", hints: ["Subtract: 48 - 20"], explanation: "48 - 20 = 28 pages left." },
+    ],
+  },
+
+  // ── Grade 7 ──
+  {
+    title: "Integers & Rational Numbers",
+    description: "Operations with negative numbers, absolute value, and rational number properties.",
+    category: "arithmetic",
+    gradeLevel: 7,
+    difficulty: "medium",
+    questions: [
+      { type: "multiple-choice", text: "What is (-8) + 5?", options: { choices: ["-13", "-3", "3", "13"] }, answer: "b", difficulty: "easy", bloomLevel: "apply", topic: "integer operations", hints: ["Start at -8 and move 5 to the right"], explanation: "(-8) + 5 = -3" },
+      { type: "fill-blank", text: "What is the absolute value of -15?", options: null, answer: "15", difficulty: "easy", bloomLevel: "remember", topic: "absolute value", hints: ["Distance from zero on number line"], explanation: "|-15| = 15" },
+      { type: "multiple-choice", text: "(-6) × (-4) = ?", options: { choices: ["-24", "-10", "10", "24"] }, answer: "d", difficulty: "medium", bloomLevel: "apply", topic: "integer multiplication", hints: ["Negative × Negative = Positive"], explanation: "(-6) × (-4) = 24. Multiplying two negatives gives a positive." },
+      { type: "true-false", text: "-3 > -1", options: null, answer: "false", difficulty: "easy", bloomLevel: "understand", topic: "number line", hints: ["-3 is further left on the number line"], explanation: "-3 is less than -1 because it is further from zero in the negative direction." },
+      { type: "multiple-choice", text: "What is (-12) ÷ 3?", options: { choices: ["-9", "-4", "4", "9"] }, answer: "b", difficulty: "medium", bloomLevel: "apply", topic: "integer division", hints: ["Negative ÷ Positive = Negative"], explanation: "(-12) ÷ 3 = -4" },
+    ],
+  },
+  {
+    title: "Linear Equations",
+    description: "Solve and graph linear equations, understand slope-intercept form.",
+    category: "algebra",
+    gradeLevel: 7,
+    difficulty: "medium",
+    questions: [
+      { type: "fill-blank", text: "Solve for x: 2x + 6 = 14", options: null, answer: "4", difficulty: "medium", bloomLevel: "apply", topic: "linear equations", hints: ["Subtract 6 from both sides, then divide by 2"], explanation: "2x + 6 = 14 → 2x = 8 → x = 4" },
+      { type: "multiple-choice", text: "What is the slope of y = 3x - 5?", options: { choices: ["-5", "-3", "3", "5"] }, answer: "c", difficulty: "medium", bloomLevel: "understand", topic: "slope", hints: ["In y = mx + b, the slope is m"], explanation: "In y = 3x - 5, the slope m = 3." },
+      { type: "multiple-choice", text: "If 5x - 3 = 2x + 9, what is x?", options: { choices: ["2", "3", "4", "6"] }, answer: "c", difficulty: "medium", bloomLevel: "apply", topic: "linear equations", hints: ["Move x terms to one side: 5x - 2x = 9 + 3"], explanation: "3x = 12, so x = 4." },
+      { type: "true-false", text: "The equation y = 2x + 1 passes through the origin (0,0).", options: null, answer: "false", difficulty: "easy", bloomLevel: "understand", topic: "graphing", hints: ["Plug in x=0: y = 2(0) + 1 = 1"], explanation: "When x=0, y=1, not 0. The line passes through (0,1)." },
+      { type: "multiple-choice", text: "Which pair satisfies y = x + 3?", options: { choices: ["(1, 3)", "(2, 5)", "(3, 5)", "(0, 0)"] }, answer: "b", difficulty: "easy", bloomLevel: "apply", topic: "equations", hints: ["Substitute each x value and check if y matches"], explanation: "When x=2, y = 2+3 = 5. So (2,5) satisfies the equation." },
+    ],
+  },
+  {
+    title: "Pythagorean Theorem",
+    description: "Apply the Pythagorean theorem to find missing sides of right triangles.",
+    category: "geometry",
+    gradeLevel: 7,
+    difficulty: "medium",
+    questions: [
+      { type: "multiple-choice", text: "A right triangle has legs 3 and 4. What is the hypotenuse?", options: { choices: ["5", "6", "7", "12"] }, answer: "a", difficulty: "easy", bloomLevel: "apply", topic: "pythagorean theorem", hints: ["c² = a² + b² = 9 + 16 = 25"], explanation: "c = √(9+16) = √25 = 5" },
+      { type: "fill-blank", text: "A right triangle has hypotenuse 13 and one leg 5. What is the other leg?", options: null, answer: "12", difficulty: "medium", bloomLevel: "apply", topic: "pythagorean theorem", hints: ["b² = 13² - 5² = 169 - 25 = 144"], explanation: "b = √(169-25) = √144 = 12" },
+      { type: "true-false", text: "A triangle with sides 6, 8, 10 is a right triangle.", options: null, answer: "true", difficulty: "easy", bloomLevel: "analyze", topic: "pythagorean triples", hints: ["Check: 6² + 8² = 36 + 64 = 100 = 10²"], explanation: "6² + 8² = 100 = 10², so yes, it's a right triangle." },
+      { type: "multiple-choice", text: "Which set of numbers is NOT a Pythagorean triple?", options: { choices: ["3, 4, 5", "5, 12, 13", "8, 15, 17", "4, 6, 8"] }, answer: "d", difficulty: "medium", bloomLevel: "analyze", topic: "pythagorean triples", hints: ["Check: does a² + b² = c²?"], explanation: "4² + 6² = 16 + 36 = 52 ≠ 64 = 8². So 4,6,8 is NOT a Pythagorean triple." },
+      { type: "multiple-choice", text: "The distance between (0,0) and (3,4) is:", options: { choices: ["5", "6", "7", "25"] }, answer: "a", difficulty: "medium", bloomLevel: "apply", topic: "distance formula", hints: ["d = √(3² + 4²)"], explanation: "d = √(9+16) = √25 = 5" },
+    ],
+  },
+
+  // ── Grade 8 ──
+  {
+    title: "Exponents & Powers",
+    description: "Laws of exponents, negative exponents, and scientific notation.",
+    category: "arithmetic",
+    gradeLevel: 8,
+    difficulty: "medium",
+    questions: [
+      { type: "multiple-choice", text: "What is 2⁵?", options: { choices: ["16", "32", "64", "10"] }, answer: "b", difficulty: "easy", bloomLevel: "remember", topic: "exponents", hints: ["2×2×2×2×2"], explanation: "2⁵ = 32" },
+      { type: "fill-blank", text: "Simplify: 3² × 3³", options: null, answer: "243", difficulty: "medium", bloomLevel: "apply", topic: "exponent rules", hints: ["When multiplying same base, add exponents: 3^(2+3) = 3⁵"], explanation: "3² × 3³ = 3⁵ = 243" },
+      { type: "multiple-choice", text: "What is 10⁰?", options: { choices: ["0", "1", "10", "100"] }, answer: "b", difficulty: "easy", bloomLevel: "remember", topic: "exponents", hints: ["Any number to the power of 0 equals..."], explanation: "Any non-zero number raised to the power 0 equals 1." },
+      { type: "true-false", text: "(2³)² = 2⁶", options: null, answer: "true", difficulty: "medium", bloomLevel: "apply", topic: "exponent rules", hints: ["Power of a power: multiply exponents"], explanation: "(2³)² = 2^(3×2) = 2⁶ = 64" },
+      { type: "multiple-choice", text: "Express 0.00045 in scientific notation.", options: { choices: ["4.5 × 10⁻⁴", "4.5 × 10⁻³", "45 × 10⁻⁵", "0.45 × 10⁻³"] }, answer: "a", difficulty: "hard", bloomLevel: "apply", topic: "scientific notation", hints: ["Move decimal 4 places right to get 4.5"], explanation: "0.00045 = 4.5 × 10⁻⁴" },
+    ],
+  },
+  {
+    title: "Quadratic Equations",
+    description: "Solve quadratic equations by factoring and using the quadratic formula.",
+    category: "algebra",
+    gradeLevel: 8,
+    difficulty: "hard",
+    questions: [
+      { type: "multiple-choice", text: "Solve: x² - 5x + 6 = 0", options: { choices: ["x = 1, 6", "x = 2, 3", "x = -2, -3", "x = -1, 6"] }, answer: "b", difficulty: "medium", bloomLevel: "apply", topic: "factoring quadratics", hints: ["Find two numbers that multiply to 6 and add to -5"], explanation: "x² - 5x + 6 = (x-2)(x-3) = 0, so x = 2 or x = 3." },
+      { type: "fill-blank", text: "What is the discriminant of x² + 4x + 4 = 0?", options: null, answer: "0", difficulty: "medium", bloomLevel: "apply", topic: "discriminant", hints: ["Discriminant = b² - 4ac, where a=1, b=4, c=4"], explanation: "D = 4² - 4(1)(4) = 16 - 16 = 0" },
+      { type: "multiple-choice", text: "The graph of y = x² opens:", options: { choices: ["Upward", "Downward", "Left", "Right"] }, answer: "a", difficulty: "easy", bloomLevel: "understand", topic: "parabolas", hints: ["The coefficient of x² is positive"], explanation: "When the coefficient of x² is positive, the parabola opens upward." },
+      { type: "true-false", text: "x² = -4 has real solutions.", options: null, answer: "false", difficulty: "medium", bloomLevel: "analyze", topic: "quadratic equations", hints: ["Can a square of a real number be negative?"], explanation: "No real number squared gives a negative result. x² = -4 has no real solutions." },
+      { type: "multiple-choice", text: "If x² - 9 = 0, then x = ?", options: { choices: ["±3", "±9", "3", "9"] }, answer: "a", difficulty: "easy", bloomLevel: "apply", topic: "difference of squares", hints: ["x² = 9, so x = ±√9"], explanation: "x² = 9, so x = 3 or x = -3." },
+    ],
+  },
 ];
 
 export async function seedMathTopics() {
