@@ -1,6 +1,20 @@
 import { useLocation } from "wouter";
 import { useAuth } from "@/hooks/useAuth";
-import { Timer, Brain, BarChart2, Trophy, ArrowRight, Sparkles } from "lucide-react";
+import { Timer, Brain, BarChart2, Trophy, ArrowRight, Sparkles, GraduationCap, Shield, Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+const FEATURES = [
+  { icon: Timer, label: "Timed Tests", desc: "Per-question countdown builds exam readiness", color: "bg-primary/10 text-primary" },
+  { icon: Brain, label: "Bloom's Taxonomy", desc: "6 cognitive levels from recall to creation", color: "bg-accent/10 text-accent" },
+  { icon: BarChart2, label: "Parent Analytics", desc: "Granular insights into every session", color: "bg-secondary/10 text-secondary" },
+  { icon: Trophy, label: "Progress Tracking", desc: "Watch skills grow over time", color: "bg-[hsl(38,92%,50%)]/10 text-[hsl(38,92%,50%)]" },
+];
+
+const TRUST_POINTS = [
+  { icon: Shield, text: "Safe & private - no ads, no data selling" },
+  { icon: Users, text: "Built for families with multiple children" },
+  { icon: GraduationCap, text: "Aligned to Olympiad & competitive exam prep" },
+];
 
 export default function LandingPage() {
   const [, setLocation] = useLocation();
@@ -12,54 +26,76 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#fdf6ee] via-[#fff7ed] to-[#eff6ff] flex flex-col">
-      <nav className="flex items-center justify-between px-8 py-5">
-        <span className="font-black text-xl tracking-tight text-[#1e1a14]">LearnSmarter</span>
-        <button
-          onClick={() => setLocation("/auth")}
-          className="bg-[#f97316] text-white px-5 py-2 rounded-full text-sm font-bold hover:bg-orange-600 transition-colors"
-        >
-          Sign In
-        </button>
+    <div className="min-h-screen bg-gradient-hero flex flex-col">
+      {/* Nav */}
+      <nav className="flex items-center justify-between px-6 lg:px-12 py-4 animate-fade-in">
+        <div className="flex items-center gap-2.5">
+          <div className="w-9 h-9 rounded-lg bg-gradient-primary flex items-center justify-center">
+            <GraduationCap size={18} className="text-white" />
+          </div>
+          <span className="font-extrabold text-xl text-foreground tracking-tight">LearnVerse</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <Button variant="ghost" size="sm" onClick={() => setLocation("/auth")}>
+            Sign In
+          </Button>
+          <Button size="sm" onClick={() => setLocation("/auth")} className="bg-gradient-primary shadow-primary">
+            Get Started
+          </Button>
+        </div>
       </nav>
 
-      <div className="flex-1 flex flex-col items-center justify-center text-center px-6 pt-8 pb-16 gap-8">
+      {/* Hero */}
+      <div className="flex-1 flex flex-col items-center justify-center text-center px-6 pt-8 pb-20 gap-10 animate-slide-up">
         <div className="max-w-2xl">
-          <div className="inline-flex items-center gap-2 bg-orange-100 text-orange-700 px-4 py-1.5 rounded-full text-sm font-bold mb-6">
-            <Sparkles size={14} /> For Grades 1–8 · Olympiad & Competitive Exams
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-semibold mb-6">
+            <Sparkles size={14} /> Grades 1-8 &middot; Olympiad & Competitive Exams
           </div>
-          <h1 className="text-5xl md:text-6xl font-black leading-tight mb-4 text-[#1e1a14]">
-            Learn Smarter,<br />
-            <span className="text-[#f97316]">Compete Better</span>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-5 text-foreground">
+            Where Learning Meets{" "}
+            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              Adventure
+            </span>
           </h1>
-          <p className="text-lg text-[#7c6a55] max-w-xl mx-auto leading-relaxed">
-            Timed practice tests aligned to Olympiad & competitive exam preparation.
+          <p className="text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
+            Timed practice tests designed for competitive exam preparation.
             Parents track every detail. Kids level up with every attempt.
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-4">
-          <button
+        <div className="flex flex-col sm:flex-row gap-3">
+          <Button
+            size="lg"
             onClick={() => setLocation("/auth")}
-            className="flex items-center gap-2 bg-[#f97316] text-white px-8 py-4 rounded-2xl text-lg font-bold hover:bg-orange-600 transition-all shadow-lg shadow-orange-200"
+            className="bg-gradient-primary shadow-primary text-base px-8 h-12"
           >
-            Start for Free <ArrowRight size={20} />
-          </button>
+            Start for Free <ArrowRight size={18} className="ml-2" />
+          </Button>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 max-w-3xl w-full">
-          {[
-            { icon: Timer, label: "Timed Tests", desc: "Per-question countdown", color: "bg-orange-100 text-orange-600" },
-            { icon: Brain, label: "Bloom's Taxonomy", desc: "6 thinking levels", color: "bg-purple-100 text-purple-600" },
-            { icon: BarChart2, label: "Parent Dashboard", desc: "Granular analytics", color: "bg-cyan-100 text-cyan-600" },
-            { icon: Trophy, label: "Achievements", desc: "Track improvement", color: "bg-yellow-100 text-yellow-600" },
-          ].map(({ icon: Icon, label, desc, color }) => (
-            <div key={label} className="bg-white rounded-2xl p-4 border border-[rgba(120,90,50,0.1)] text-left">
-              <div className={`w-9 h-9 rounded-xl flex items-center justify-center mb-3 ${color}`}>
-                <Icon size={18} />
+        {/* Feature cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-4 max-w-3xl w-full">
+          {FEATURES.map(({ icon: Icon, label, desc, color }, i) => (
+            <div
+              key={label}
+              className={`bg-white rounded-xl p-4 border border-border text-left shadow-soft hover-lift animate-slide-up animate-stagger-${i + 1}`}
+              style={{ animationFillMode: "both" }}
+            >
+              <div className={`w-10 h-10 rounded-lg flex items-center justify-center mb-3 ${color}`}>
+                <Icon size={20} />
               </div>
-              <p className="font-bold text-sm text-[#1e1a14]">{label}</p>
-              <p className="text-xs text-[#7c6a55] mt-0.5">{desc}</p>
+              <p className="font-semibold text-sm text-foreground">{label}</p>
+              <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{desc}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Trust bar */}
+        <div className="flex flex-wrap items-center justify-center gap-6 mt-4 text-sm text-muted-foreground">
+          {TRUST_POINTS.map(({ icon: Icon, text }) => (
+            <div key={text} className="flex items-center gap-2">
+              <Icon size={14} className="text-secondary" />
+              <span>{text}</span>
             </div>
           ))}
         </div>

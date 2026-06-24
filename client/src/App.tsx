@@ -1,9 +1,11 @@
-import { Switch, Route, Redirect } from "wouter";
+import { Switch, Route, Redirect, Link } from "wouter";
 import { useAuth } from "@/hooks/useAuth";
 import { Navigation } from "@/components/Navigation";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { Toaster } from "@/components/ui/toaster";
-import { Loader2 } from "lucide-react";
+import { Loader2, Home, ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 import LandingPage from "@/pages/LandingPage";
 import AuthPage from "@/pages/AuthPage";
@@ -14,13 +16,45 @@ import KidDashboard from "@/pages/KidDashboard";
 import PracticePage from "@/pages/PracticePage";
 import AnalyticsDashboard from "@/pages/AnalyticsDashboard";
 
+function NotFoundPage() {
+  const { isAuthenticated, isParent } = useAuth();
+  const homeLink = !isAuthenticated ? "/" : isParent ? "/parent-dashboard" : "/kid-dashboard";
+
+  return (
+    <div className="flex items-center justify-center min-h-[70vh] animate-fade-in">
+      <div className="text-center max-w-sm">
+        <div className="text-6xl font-extrabold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-2">
+          404
+        </div>
+        <h1 className="text-lg font-semibold text-foreground mb-1">Page not found</h1>
+        <p className="text-sm text-muted-foreground mb-6">
+          The page you're looking for doesn't exist or has been moved.
+        </p>
+        <div className="flex gap-3 justify-center">
+          <Button variant="outline" size="sm" onClick={() => window.history.back()}>
+            <ArrowLeft size={14} className="mr-1.5" /> Go Back
+          </Button>
+          <Link href={homeLink}>
+            <Button size="sm" className="bg-gradient-primary">
+              <Home size={14} className="mr-1.5" /> Home
+            </Button>
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Router() {
   const { isAuthenticated, isLoading, isParent } = useAuth();
 
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <div className="text-center animate-fade-in">
+          <Loader2 className="h-8 w-8 animate-spin text-primary mx-auto mb-3" />
+          <p className="text-sm text-muted-foreground">Loading...</p>
+        </div>
       </div>
     );
   }
@@ -51,25 +85,20 @@ function Router() {
         <ProtectedRoute requireChild><PracticePage /></ProtectedRoute>
       </Route>
 
-      {/* Fallback */}
-      <Route>
-        <div className="flex items-center justify-center min-h-[60vh]">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold">404</h1>
-            <p className="text-muted-foreground mt-2">Page not found</p>
-          </div>
-        </div>
-      </Route>
+      {/* 404 */}
+      <Route component={NotFoundPage} />
     </Switch>
   );
 }
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      <Router />
-      <Toaster />
-    </div>
+    <ErrorBoundary>
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <Router />
+        <Toaster />
+      </div>
+    </ErrorBoundary>
   );
 }

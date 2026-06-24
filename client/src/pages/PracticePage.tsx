@@ -9,29 +9,24 @@ import { Badge } from "@/components/ui/badge";
 import { toast } from "@/components/ui/use-toast";
 import { TopicQuestions } from "@/components/TopicQuestions";
 import {
-  ArrowLeft,
-  Loader2,
-  Calculator,
-  Zap,
-  Target,
-  Brain,
+  ArrowLeft, Loader2, Calculator, Zap, Target, Brain, CheckCircle2,
 } from "lucide-react";
 import type { Topic } from "@shared/schema";
 
 const DIFFICULTY_OPTIONS = [
-  { value: "all", label: "All Levels", icon: <Target className="h-4 w-4" />, desc: "Mix of all difficulty levels" },
-  { value: "easy", label: "Easy", icon: <Zap className="h-4 w-4" />, desc: "Build your foundation" },
-  { value: "medium", label: "Medium", icon: <Calculator className="h-4 w-4" />, desc: "Strengthen core skills" },
-  { value: "hard", label: "Hard", icon: <Brain className="h-4 w-4" />, desc: "Challenge yourself" },
-  { value: "olympiad", label: "Olympiad", icon: <Brain className="h-4 w-4" />, desc: "Competition-level problems" },
+  { value: "all", label: "All Levels", icon: Target, desc: "Mix of all difficulty levels", color: "primary" },
+  { value: "easy", label: "Easy", icon: Zap, desc: "Build your foundation", color: "secondary" },
+  { value: "medium", label: "Medium", icon: Calculator, desc: "Strengthen core skills", color: "warning" },
+  { value: "hard", label: "Hard", icon: Brain, desc: "Challenge yourself", color: "accent" },
+  { value: "olympiad", label: "Olympiad", icon: Brain, desc: "Competition-level problems", color: "destructive" },
 ];
 
-const DIFFICULTY_COLORS: Record<string, string> = {
-  easy: "border-green-500/50 bg-green-500/5 hover:bg-green-500/10",
-  medium: "border-yellow-500/50 bg-yellow-500/5 hover:bg-yellow-500/10",
-  hard: "border-orange-500/50 bg-orange-500/5 hover:bg-orange-500/10",
-  olympiad: "border-red-500/50 bg-red-500/5 hover:bg-red-500/10",
-  all: "border-primary/50 bg-primary/5 hover:bg-primary/10",
+const COLOR_MAP: Record<string, string> = {
+  primary: "border-primary/30 bg-primary/5 hover:bg-primary/10",
+  secondary: "border-secondary/30 bg-secondary/5 hover:bg-secondary/10",
+  warning: "border-[hsl(var(--warning))]/30 bg-[hsl(var(--warning))]/5 hover:bg-[hsl(var(--warning))]/10",
+  accent: "border-accent/30 bg-accent/5 hover:bg-accent/10",
+  destructive: "border-destructive/30 bg-destructive/5 hover:bg-destructive/10",
 };
 
 export default function PracticePage() {
@@ -53,42 +48,28 @@ export default function PracticePage() {
 
   const updateProgress = useMutation({
     mutationFn: async (data: {
-      childProfileId: number;
-      topicId: number;
-      questionsAttempted: number;
-      questionsCorrect: number;
-      bestScore: number;
-      totalSessions: number;
+      childProfileId: number; topicId: number;
+      questionsAttempted: number; questionsCorrect: number;
+      bestScore: number; totalSessions: number;
     }) => {
       await apiRequest("POST", "/api/progress/update", data);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [`/api/progress/${activeProfile?.id}`],
-      });
+      queryClient.invalidateQueries({ queryKey: [`/api/progress/${activeProfile?.id}`] });
     },
   });
 
   function handleQuizComplete(score: number, total: number) {
-    const accuracy = total > 0 ? Math.round((score / total) * 100) : 0;
-
+    const pct = total > 0 ? Math.round((score / total) * 100) : 0;
     toast({
       title: `Practice Complete! ${score}/${total}`,
-      description: accuracy >= 80
-        ? "Excellent work! You're mastering this topic!"
-        : accuracy >= 50
-        ? "Good effort! Keep practicing to improve."
-        : "Don't give up! Review the explanations and try again.",
+      description: pct >= 80 ? "Excellent work!" : pct >= 50 ? "Good effort! Keep practicing." : "Don't give up! Review and try again.",
     });
-
     if (activeProfile) {
       updateProgress.mutate({
-        childProfileId: activeProfile.id,
-        topicId,
-        questionsAttempted: total,
-        questionsCorrect: score,
-        bestScore: score,
-        totalSessions: 1,
+        childProfileId: activeProfile.id, topicId,
+        questionsAttempted: total, questionsCorrect: score,
+        bestScore: score, totalSessions: 1,
       });
     }
   }
@@ -103,28 +84,25 @@ export default function PracticePage() {
 
   if (!topic) {
     return (
-      <div className="max-w-3xl mx-auto p-6 text-center">
-        <p className="text-muted-foreground">Topic not found</p>
-        <Button className="mt-4" onClick={() => setLocation("/kid-dashboard")}>
-          Back to Topics
-        </Button>
+      <div className="max-w-3xl mx-auto p-6 text-center animate-fade-in">
+        <p className="text-muted-foreground mb-4">Topic not found</p>
+        <Button onClick={() => setLocation("/kid-dashboard")}>Back to Dashboard</Button>
       </div>
     );
   }
 
-  // Practice mode — show questions
   if (practicing) {
     return (
-      <div className="max-w-4xl mx-auto p-6">
-        <Button variant="ghost" onClick={() => setPracticing(false)} className="mb-4">
-          <ArrowLeft className="h-4 w-4 mr-2" /> Back to Topic
+      <div className="max-w-4xl mx-auto p-4 lg:p-6 animate-fade-in">
+        <Button variant="ghost" size="sm" onClick={() => setPracticing(false)} className="mb-4">
+          <ArrowLeft className="h-4 w-4 mr-1.5" /> Back to Topic
         </Button>
         <div className="mb-6">
-          <h1 className="text-2xl font-bold">{topic.title}</h1>
+          <h1 className="text-xl font-bold text-foreground">{topic.title}</h1>
           <div className="flex items-center gap-2 mt-2">
             <Badge variant="outline">{topic.category}</Badge>
             {selectedDifficulty && selectedDifficulty !== "all" && (
-              <Badge variant="secondary">{selectedDifficulty}</Badge>
+              <Badge variant="secondary" className="capitalize">{selectedDifficulty}</Badge>
             )}
           </div>
         </div>
@@ -138,61 +116,64 @@ export default function PracticePage() {
     );
   }
 
-  // Topic overview — select difficulty
   return (
-    <div className="max-w-3xl mx-auto p-6 space-y-6">
-      <Button variant="ghost" onClick={() => setLocation("/kid-dashboard")}>
-        <ArrowLeft className="h-4 w-4 mr-2" /> Back to Topics
+    <div className="max-w-2xl mx-auto p-4 lg:p-6 space-y-6 animate-slide-up">
+      <Button variant="ghost" size="sm" onClick={() => setLocation("/kid-dashboard")}>
+        <ArrowLeft className="h-4 w-4 mr-1.5" /> Back to Dashboard
       </Button>
 
-      <div className="space-y-2">
-        <div className="flex items-center gap-3">
-          <div className="p-3 rounded-xl bg-primary/10">
-            <Calculator className="h-8 w-8 text-primary" />
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold">{topic.title}</h1>
-            <p className="text-muted-foreground">{topic.description}</p>
-          </div>
+      {/* Topic info */}
+      <div className="flex items-start gap-4">
+        <div className="p-3 rounded-xl bg-gradient-primary shrink-0">
+          <Calculator className="h-7 w-7 text-white" />
         </div>
-        <div className="flex gap-2 mt-3">
-          <Badge variant="outline" className="capitalize">{topic.category}</Badge>
-          <Badge variant="secondary">Grade {topic.gradeLevel}</Badge>
-          <Badge variant="secondary">{topic.totalQuestions} questions</Badge>
+        <div>
+          <h1 className="text-xl font-bold text-foreground">{topic.title}</h1>
+          <p className="text-sm text-muted-foreground mt-0.5">{topic.description}</p>
+          <div className="flex gap-2 mt-2">
+            <Badge variant="outline" className="capitalize">{topic.category}</Badge>
+            <Badge variant="secondary">Grade {topic.gradeLevel}</Badge>
+            <Badge variant="secondary">{topic.totalQuestions} questions</Badge>
+          </div>
         </div>
       </div>
 
-      <Card>
+      {/* Difficulty selector */}
+      <Card className="shadow-soft">
         <CardHeader>
-          <CardTitle className="text-lg">Choose Difficulty Level</CardTitle>
+          <CardTitle className="text-base">Choose Difficulty</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3">
-          {DIFFICULTY_OPTIONS.map((opt) => (
-            <button
-              key={opt.value}
-              onClick={() => setSelectedDifficulty(opt.value)}
-              className={`w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left ${
-                selectedDifficulty === opt.value
-                  ? "border-primary bg-primary/10 ring-2 ring-primary/20"
-                  : DIFFICULTY_COLORS[opt.value] ?? "border-border"
-              }`}
-            >
-              <div className="p-2 rounded-lg bg-background border">{opt.icon}</div>
-              <div className="flex-1">
-                <p className="font-semibold">{opt.label}</p>
-                <p className="text-sm text-muted-foreground">{opt.desc}</p>
-              </div>
-              {selectedDifficulty === opt.value && (
-                <div className="h-3 w-3 rounded-full bg-primary" />
-              )}
-            </button>
-          ))}
+        <CardContent className="space-y-2">
+          {DIFFICULTY_OPTIONS.map((opt, i) => {
+            const isActive = selectedDifficulty === opt.value;
+            const Icon = opt.icon;
+            return (
+              <button
+                key={opt.value}
+                onClick={() => setSelectedDifficulty(opt.value)}
+                className={`w-full flex items-center gap-3 p-3.5 rounded-lg border-2 transition-all text-left ${
+                  isActive
+                    ? "border-primary bg-primary/5 ring-1 ring-primary/20"
+                    : COLOR_MAP[opt.color] ?? "border-border"
+                }`}
+              >
+                <div className={`p-2 rounded-lg ${isActive ? "bg-primary/10" : "bg-muted"}`}>
+                  <Icon size={18} className={isActive ? "text-primary" : "text-muted-foreground"} />
+                </div>
+                <div className="flex-1">
+                  <p className={`font-medium text-sm ${isActive ? "text-primary" : "text-foreground"}`}>{opt.label}</p>
+                  <p className="text-xs text-muted-foreground">{opt.desc}</p>
+                </div>
+                {isActive && <CheckCircle2 size={18} className="text-primary" />}
+              </button>
+            );
+          })}
         </CardContent>
       </Card>
 
       <Button
         size="lg"
-        className="w-full text-lg h-14"
+        className="w-full h-12 bg-gradient-primary shadow-primary text-base"
         disabled={!selectedDifficulty}
         onClick={() => setPracticing(true)}
       >

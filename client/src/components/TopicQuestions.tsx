@@ -1,22 +1,17 @@
-import { useState, useEffect, useCallback } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { useMutation } from "@tanstack/react-query";
+import { useState, useEffect, useCallback, useMemo } from "react";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
-import { Loader2, X, ChevronRight, Timer, Check, Clock, Zap, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Loader2, X, ChevronRight, Timer, Check, Clock, Zap, ArrowRight, BookOpen, RotateCcw } from "lucide-react";
 import { MathRenderer } from "@/components/MathRenderer";
 import type { Question } from "@shared/schema";
 
 const BLOOM_COLORS: Record<string, string> = {
-  remember: "#06b6d4", understand: "#22c55e", apply: "#f97316", analyze: "#8b5cf6", evaluate: "#f59e0b", create: "#ec4899",
+  remember: "hsl(var(--info))", understand: "hsl(var(--secondary))", apply: "hsl(var(--primary))",
+  analyze: "hsl(var(--accent))", evaluate: "hsl(var(--warning))", create: "hsl(var(--kid-pink))",
 };
-
-function Badge({ label, color }: { label: string; color: string }) {
-  return (
-    <span className="inline-block px-2 py-0.5 rounded-full text-xs font-bold text-white" style={{ backgroundColor: color }}>
-      {label}
-    </span>
-  );
-}
 
 function formatTime(seconds: number) {
   const m = Math.floor(seconds / 60);
@@ -41,13 +36,29 @@ export function TopicQuestions({ topicId, profileId, onComplete }: TopicQuestion
     },
   });
 
-  if (isLoading) return <div className="flex items-center justify-center py-16"><Loader2 className="h-8 w-8 animate-spin text-[#f97316]" /></div>;
-  if (questions.length === 0) return <div className="max-w-lg mx-auto px-5 py-12 text-center"><p className="font-bold text-[#1e1a14]">No questions available yet</p></div>;
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-16">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+  if (questions.length === 0) {
+    return (
+      <div className="max-w-lg mx-auto px-5 py-12 text-center animate-fade-in">
+        <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center mx-auto mb-3">
+          <BookOpen size={24} className="text-muted-foreground" />
+        </div>
+        <p className="font-semibold text-foreground">No questions available yet</p>
+        <p className="text-sm text-muted-foreground mt-1">Check back soon!</p>
+      </div>
+    );
+  }
 
   return <PracticeTest questions={questions} profileId={profileId} topicId={topicId} onComplete={onComplete} />;
 }
 
-// ─── Practice Test (reference design) ────────────────────────────────────────
+// ─── Practice Test ──────────────────────────────────────────────────────────
 
 interface TestResult {
   questionId: number;
@@ -59,7 +70,8 @@ interface TestResult {
 }
 
 function PracticeTest({ questions, profileId, topicId, onComplete }: {
-  questions: Question[]; profileId: number; topicId: number; onComplete: (score: number, total: number) => void;
+  questions: Question[]; profileId: number; topicId: number;
+  onComplete: (score: number, total: number) => void;
 }) {
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
@@ -74,7 +86,6 @@ function PracticeTest({ questions, profileId, topicId, onComplete }: {
   const options = (q.options as { choices?: string[] })?.choices ?? [];
   const correctIndex = ["a","b","c","d"].indexOf(q.answer as string);
 
-  // Start session
   const startSession = useMutation({
     mutationFn: async () => {
       const res = await apiRequest("POST", "/api/quiz/start", { childProfileId: profileId, topicId });
@@ -85,7 +96,6 @@ function PracticeTest({ questions, profileId, topicId, onComplete }: {
 
   useEffect(() => { startSession.mutate(); }, []);
 
-  // Submit response to backend
   const submitResponse = useMutation({
     mutationFn: async (data: any) => {
       if (!sessionId) return;
@@ -104,25 +114,17 @@ function PracticeTest({ questions, profileId, topicId, onComplete }: {
     const timeTaken = Math.round((Date.now() - questionStartTime) / 1000);
     const isCorrect = chosenOption === correctIndex;
 
-    // Submit to backend
     submitResponse.mutate({
       questionId: q.id,
       userAnswer: chosenOption !== null ? ["a","b","c","d"][chosenOption] : null,
-      isCorrect,
-      timeTaken,
-      attempts: 1,
-      hintsUsed: 0,
+      isCorrect, timeTaken, attempts: 1, hintsUsed: 0,
       difficulty: q.difficulty ?? "medium",
       bloomLevel: q.bloomLevel ?? "understand",
     });
 
     const newResults = [...results, {
-      questionId: q.id,
-      selected: chosenOption,
-      correct: isCorrect,
-      timeTaken,
-      topic: q.topic ?? "",
-      bloomLevel: q.bloomLevel ?? "understand",
+      questionId: q.id, selected: chosenOption, correct: isCorrect,
+      timeTaken, topic: q.topic ?? "", bloomLevel: q.bloomLevel ?? "understand",
     }];
 
     if (current + 1 < questions.length) {
@@ -140,7 +142,7 @@ function PracticeTest({ questions, profileId, topicId, onComplete }: {
     }
   }, [current, q, questionStartTime, questions, results, correctIndex]);
 
-  // Timer countdown
+  // Timer
   useEffect(() => {
     if (confirmed || finished) return;
     if (timeLeft <= 0) { handleNext(selected); return; }
@@ -148,222 +150,269 @@ function PracticeTest({ questions, profileId, topicId, onComplete }: {
     return () => clearTimeout(t);
   }, [timeLeft, confirmed, finished, selected, handleNext]);
 
-  // Results screen
+  // ─── Results Screen ─────────────────────────────────────────────────────
+
   if (finished) {
-    const correct = results.filter(r => r.correct).length;
-    const score = Math.round((correct / results.length) * 100);
-    const totalTime = results.reduce((a, r) => a + r.timeTaken, 0);
-    const avgTime = Math.round(totalTime / results.length);
+    return <ResultsScreen results={results} questions={questions} onRetry={() => {
+      setResults([]); setCurrent(0); setSelected(null); setConfirmed(false);
+      setTimeLeft(60); setQuestionStartTime(Date.now()); setFinished(false);
+      startSession.mutate();
+    }} onComplete={onComplete} />;
+  }
 
-    const topicBreakdown: Record<string, { correct: number; total: number; time: number }> = {};
-    results.forEach((r) => {
-      if (!topicBreakdown[r.topic]) topicBreakdown[r.topic] = { correct: 0, total: 0, time: 0 };
-      topicBreakdown[r.topic].total++;
-      topicBreakdown[r.topic].time += r.timeTaken;
-      if (r.correct) topicBreakdown[r.topic].correct++;
-    });
+  // ─── Question UI ────────────────────────────────────────────────────────
 
-    const bloomBreakdown: Record<string, { correct: number; total: number }> = {};
-    results.forEach((r) => {
-      if (!bloomBreakdown[r.bloomLevel]) bloomBreakdown[r.bloomLevel] = { correct: 0, total: 0 };
-      bloomBreakdown[r.bloomLevel].total++;
-      if (r.correct) bloomBreakdown[r.bloomLevel].correct++;
-    });
+  const pct = (timeLeft / 60) * 100;
+  const timerUrgency = pct > 50 ? "text-secondary bg-secondary/10" : pct > 25 ? "text-[hsl(var(--warning))] bg-[hsl(var(--warning))]/10" : "text-destructive bg-destructive/10";
 
-    return (
-      <div className="min-h-screen bg-[#fdf6ee]">
-        <div className="max-w-lg mx-auto px-5 py-6 space-y-5">
-          {/* Score hero */}
-          <div className="rounded-3xl p-7 text-center text-white" style={{ background: "linear-gradient(135deg, #f97316, #fb923c)" }}>
-            <div className="text-6xl font-black mb-1">{score}%</div>
-            <p className="text-white/80 text-sm">{correct} / {results.length} correct</p>
-            <div className="grid grid-cols-3 gap-3 mt-6">
-              {[
-                { label: "Total Time", value: formatTime(totalTime) },
-                { label: "Avg / Q", value: formatTime(avgTime) },
-                { label: "Accuracy", value: `${score}%` },
-              ].map(({ label, value }) => (
-                <div key={label} className="bg-white/20 rounded-xl py-2 px-1">
-                  <p className="text-xs text-white/70">{label}</p>
-                  <p className="font-black text-base">{value}</p>
-                </div>
-              ))}
-            </div>
+  return (
+    <div className="min-h-screen bg-background flex flex-col animate-fade-in">
+      {/* Top bar */}
+      <div className="bg-white border-b border-border px-4 py-3 flex items-center gap-3 sticky top-0 z-10">
+        <button
+          onClick={() => onComplete(results.filter(r => r.correct).length, results.length)}
+          className="p-2 hover:bg-muted rounded-lg transition-colors"
+          aria-label="Exit practice"
+        >
+          <X size={16} className="text-muted-foreground" />
+        </button>
+        <div className="flex-1">
+          <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
+            <span className="font-medium">Question {current + 1} of {questions.length}</span>
           </div>
+          <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+            <div
+              className="h-full bg-gradient-primary rounded-full transition-all duration-300"
+              style={{ width: `${((current + (confirmed ? 1 : 0)) / questions.length) * 100}%` }}
+            />
+          </div>
+        </div>
+        <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-bold text-sm tabular-nums ${timerUrgency}`}>
+          <Timer size={14} />
+          {timeLeft}s
+        </div>
+      </div>
 
-          {/* Topic breakdown */}
-          {Object.keys(topicBreakdown).length > 0 && (
-            <div className="bg-white rounded-2xl border border-[rgba(120,90,50,0.1)] p-5">
-              <p className="font-black text-sm text-[#1e1a14] mb-4">Topic Breakdown</p>
+      <div className="flex-1 flex flex-col max-w-lg mx-auto w-full px-4 py-5 gap-4">
+        {/* Badges */}
+        <div className="flex gap-2 flex-wrap">
+          {q.topic && <Badge variant="outline" className="text-xs">{q.topic}</Badge>}
+          <Badge variant="secondary" className="text-xs capitalize">{q.bloomLevel ?? "understand"}</Badge>
+          <Badge variant="outline" className="text-xs capitalize">{q.difficulty ?? "medium"}</Badge>
+        </div>
+
+        {/* Question */}
+        <Card className="shadow-soft">
+          <CardContent className="p-5">
+            <p className="text-base font-medium text-foreground leading-relaxed">
+              <MathRenderer text={q.text} />
+            </p>
+          </CardContent>
+        </Card>
+
+        {/* Options */}
+        <div className="space-y-2.5 flex-1">
+          {options.map((opt, i) => {
+            let optState: "default" | "selected" | "correct" | "wrong" = "default";
+            if (confirmed) {
+              if (i === correctIndex) optState = "correct";
+              else if (i === selected && selected !== correctIndex) optState = "wrong";
+            } else if (i === selected) {
+              optState = "selected";
+            }
+
+            const styles = {
+              default: "bg-white border-border hover:border-primary/40 hover:bg-primary/5",
+              selected: "bg-primary/5 border-primary",
+              correct: "bg-secondary/5 border-secondary",
+              wrong: "bg-destructive/5 border-destructive",
+            }[optState];
+
+            const letterStyles = {
+              default: "bg-muted text-muted-foreground",
+              selected: "bg-primary text-white",
+              correct: "bg-secondary text-white",
+              wrong: "bg-destructive text-white",
+            }[optState];
+
+            return (
+              <button
+                key={i} disabled={confirmed} onClick={() => setSelected(i)}
+                className={`w-full flex items-center gap-3 border-2 rounded-xl px-4 py-3 text-left transition-all ${styles}`}
+              >
+                <span className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold shrink-0 ${letterStyles}`}>
+                  {["A","B","C","D"][i]}
+                </span>
+                <span className="font-medium text-sm text-foreground flex-1"><MathRenderer text={opt} /></span>
+                {optState === "correct" && <Check size={16} className="text-secondary shrink-0" />}
+                {optState === "wrong" && <X size={16} className="text-destructive shrink-0" />}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Action button */}
+        <div>
+          {!confirmed ? (
+            <Button
+              onClick={() => { if (selected !== null) setConfirmed(true); }}
+              disabled={selected === null}
+              className="w-full h-12 bg-gradient-primary shadow-primary text-base"
+            >
+              Confirm Answer
+            </Button>
+          ) : (
+            <Button
+              onClick={() => handleNext(selected)}
+              className="w-full h-12 text-base"
+              variant="default"
+            >
+              {current + 1 < questions.length ? "Next Question" : "See Results"}
+              <ChevronRight size={18} className="ml-1" />
+            </Button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Results Screen ─────────────────────────────────────────────────────────
+
+function ResultsScreen({ results, questions, onRetry, onComplete }: {
+  results: TestResult[]; questions: Question[];
+  onRetry: () => void;
+  onComplete: (score: number, total: number) => void;
+}) {
+  const correct = results.filter(r => r.correct).length;
+  const score = Math.round((correct / results.length) * 100);
+  const totalTime = results.reduce((a, r) => a + r.timeTaken, 0);
+  const avgTime = Math.round(totalTime / results.length);
+
+  const topicBreakdown = useMemo(() => {
+    const breakdown: Record<string, { correct: number; total: number; time: number }> = {};
+    results.forEach((r) => {
+      if (!breakdown[r.topic]) breakdown[r.topic] = { correct: 0, total: 0, time: 0 };
+      breakdown[r.topic].total++;
+      breakdown[r.topic].time += r.timeTaken;
+      if (r.correct) breakdown[r.topic].correct++;
+    });
+    return breakdown;
+  }, [results]);
+
+  const bloomBreakdown = useMemo(() => {
+    const breakdown: Record<string, { correct: number; total: number }> = {};
+    results.forEach((r) => {
+      if (!breakdown[r.bloomLevel]) breakdown[r.bloomLevel] = { correct: 0, total: 0 };
+      breakdown[r.bloomLevel].total++;
+      if (r.correct) breakdown[r.bloomLevel].correct++;
+    });
+    return breakdown;
+  }, [results]);
+
+  return (
+    <div className="min-h-screen bg-background animate-slide-up">
+      <div className="max-w-lg mx-auto px-4 py-6 space-y-5">
+        {/* Score hero */}
+        <div className="rounded-2xl p-6 text-center text-white bg-gradient-primary shadow-primary">
+          <div className="text-5xl font-extrabold mb-1">{score}%</div>
+          <p className="text-white/70 text-sm">{correct} / {results.length} correct</p>
+          <div className="grid grid-cols-3 gap-2 mt-5">
+            {[
+              { label: "Total Time", value: formatTime(totalTime) },
+              { label: "Avg / Q", value: formatTime(avgTime) },
+              { label: "Accuracy", value: `${score}%` },
+            ].map(({ label, value }) => (
+              <div key={label} className="bg-white/15 rounded-lg py-2 px-1">
+                <p className="text-xs text-white/60">{label}</p>
+                <p className="font-bold text-sm">{value}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Topic breakdown */}
+        {Object.keys(topicBreakdown).length > 0 && (
+          <Card className="shadow-soft">
+            <CardContent className="p-5">
+              <p className="font-semibold text-sm text-foreground mb-4">Topic Breakdown</p>
               <div className="space-y-3">
                 {Object.entries(topicBreakdown).map(([topic, data]) => {
                   const pct = Math.round((data.correct / data.total) * 100);
+                  const barColor = pct >= 80 ? "bg-secondary" : pct >= 60 ? "bg-[hsl(var(--warning))]" : "bg-destructive";
                   return (
                     <div key={topic}>
                       <div className="flex items-center justify-between text-xs mb-1">
-                        <span className="font-bold text-[#1e1a14]">{topic}</span>
-                        <span className="font-bold text-[#1e1a14]">{pct}%</span>
+                        <span className="font-medium text-foreground">{topic}</span>
+                        <span className="font-bold text-foreground">{pct}%</span>
                       </div>
-                      <div className="h-2 bg-[#f5ede0] rounded-full overflow-hidden">
-                        <div className="h-full rounded-full" style={{ width: `${pct}%`, backgroundColor: pct >= 80 ? "#22c55e" : pct >= 60 ? "#f59e0b" : "#dc2626" }} />
+                      <div className="h-2 bg-muted rounded-full overflow-hidden">
+                        <div className={`h-full rounded-full transition-all ${barColor}`} style={{ width: `${pct}%` }} />
                       </div>
                     </div>
                   );
                 })}
               </div>
-            </div>
-          )}
+            </CardContent>
+          </Card>
+        )}
 
-          {/* Bloom performance */}
-          {Object.keys(bloomBreakdown).length > 0 && (
-            <div className="bg-white rounded-2xl border border-[rgba(120,90,50,0.1)] p-5">
-              <p className="font-black text-sm text-[#1e1a14] mb-4">Bloom's Taxonomy Performance</p>
+        {/* Bloom performance */}
+        {Object.keys(bloomBreakdown).length > 0 && (
+          <Card className="shadow-soft">
+            <CardContent className="p-5">
+              <p className="font-semibold text-sm text-foreground mb-4">Bloom's Taxonomy</p>
               <div className="flex gap-2 flex-wrap">
                 {Object.entries(bloomBreakdown).map(([level, data]) => {
                   const pct = Math.round((data.correct / data.total) * 100);
                   return (
-                    <div key={level} className="flex-1 min-w-[80px] rounded-xl p-3 text-center" style={{ backgroundColor: `${BLOOM_COLORS[level] ?? "#f97316"}15` }}>
-                      <p className="text-xs font-bold capitalize" style={{ color: BLOOM_COLORS[level] }}>{level}</p>
-                      <p className="text-xl font-black text-[#1e1a14]">{pct}%</p>
-                      <p className="text-xs text-[#7c6a55]">{data.correct}/{data.total}</p>
+                    <div key={level} className="flex-1 min-w-[80px] rounded-lg p-3 text-center bg-muted/50">
+                      <p className="text-xs font-semibold capitalize" style={{ color: BLOOM_COLORS[level] }}>{level}</p>
+                      <p className="text-lg font-bold text-foreground">{pct}%</p>
+                      <p className="text-xs text-muted-foreground">{data.correct}/{data.total}</p>
                     </div>
                   );
                 })}
               </div>
-            </div>
-          )}
+            </CardContent>
+          </Card>
+        )}
 
-          {/* Question review */}
-          <div className="bg-white rounded-2xl border border-[rgba(120,90,50,0.1)] p-5">
-            <p className="font-black text-sm text-[#1e1a14] mb-4">Question Review</p>
-            <div className="space-y-3">
+        {/* Question review */}
+        <Card className="shadow-soft">
+          <CardContent className="p-5">
+            <p className="font-semibold text-sm text-foreground mb-4">Question Review</p>
+            <div className="space-y-2.5">
               {results.map((r, i) => {
                 const rq = questions.find((qq) => qq.id === r.questionId)!;
                 return (
-                  <div key={r.questionId} className="flex items-start gap-3">
-                    <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 mt-0.5"
-                      style={{ backgroundColor: r.correct ? "#22c55e" : "#dc2626" }}>
-                      {r.correct ? <Check size={13} className="text-white" /> : <X size={13} className="text-white" />}
+                  <div key={r.questionId} className="flex items-start gap-2.5">
+                    <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
+                      r.correct ? "bg-secondary" : "bg-destructive"
+                    }`}>
+                      {r.correct ? <Check size={12} className="text-white" /> : <X size={12} className="text-white" />}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs font-bold text-[#1e1a14] truncate">Q{i + 1}: {rq.text}</p>
+                      <p className="text-xs font-medium text-foreground truncate">Q{i + 1}: {rq.text}</p>
                     </div>
-                    <span className="text-xs text-[#7c6a55] shrink-0 flex items-center gap-1">
+                    <span className="text-xs text-muted-foreground shrink-0 flex items-center gap-1">
                       <Clock size={10} /> {r.timeTaken}s
                     </span>
                   </div>
                 );
               })}
             </div>
-          </div>
+          </CardContent>
+        </Card>
 
-          {/* Actions */}
-          <div className="grid grid-cols-2 gap-3 pb-4">
-            <button onClick={() => { setResults([]); setCurrent(0); setSelected(null); setConfirmed(false); setTimeLeft(60); setQuestionStartTime(Date.now()); setFinished(false); startSession.mutate(); }}
-              className="flex items-center justify-center gap-2 bg-[#f97316] text-white py-3.5 rounded-xl font-bold hover:bg-orange-600 transition-colors">
-              <Zap size={16} /> Try Again
-            </button>
-            <button onClick={() => onComplete(results.filter(r => r.correct).length, results.length)}
-              className="flex items-center justify-center gap-2 bg-white text-[#1e1a14] py-3.5 rounded-xl font-bold border border-[rgba(120,90,50,0.15)] hover:bg-orange-50 transition-colors">
-              <ArrowRight size={16} /> Dashboard
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Test UI
-  const pct = (timeLeft / 60) * 100;
-  const timerColor = pct > 50 ? "#22c55e" : pct > 25 ? "#f59e0b" : "#dc2626";
-
-  return (
-    <div className="min-h-screen bg-[#fdf6ee] flex flex-col">
-      {/* Top bar */}
-      <div className="bg-white border-b border-[rgba(120,90,50,0.1)] px-5 py-3 flex items-center gap-4">
-        <button onClick={() => onComplete(results.filter(r => r.correct).length, results.length)} className="p-1.5 hover:bg-[#f5ede0] rounded-lg transition-colors">
-          <X size={16} className="text-[#7c6a55]" />
-        </button>
-        <div className="flex-1">
-          <div className="flex items-center justify-between text-xs text-[#7c6a55] mb-1">
-            <span className="font-bold">Practice</span>
-            <span>{current + 1} / {questions.length}</span>
-          </div>
-          <div className="h-1.5 bg-[#f5ede0] rounded-full overflow-hidden">
-            <div className="h-full bg-[#f97316] rounded-full transition-all" style={{ width: `${(current / questions.length) * 100}%` }} />
-          </div>
-        </div>
-        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-black text-sm tabular-nums" style={{ backgroundColor: `${timerColor}18`, color: timerColor }}>
-          <Timer size={14} />
-          {timeLeft}s
-        </div>
-      </div>
-
-      <div className="flex-1 flex flex-col max-w-lg mx-auto w-full px-5 py-6 gap-5">
-        {/* Badges */}
-        <div className="flex gap-2 flex-wrap">
-          {q.topic && <Badge label={q.topic} color="#7c6a55" />}
-          <Badge label={q.bloomLevel ?? "understand"} color={BLOOM_COLORS[q.bloomLevel ?? "understand"] ?? "#f97316"} />
-          <Badge label={q.difficulty ?? "medium"} color={q.difficulty === "easy" ? "#22c55e" : q.difficulty === "hard" ? "#dc2626" : "#f59e0b"} />
-        </div>
-
-        {/* Question */}
-        <div className="bg-white rounded-2xl border border-[rgba(120,90,50,0.1)] p-6">
-          <p className="text-base font-bold text-[#1e1a14] leading-relaxed">
-            <MathRenderer text={q.text} />
-          </p>
-        </div>
-
-        {/* Options */}
-        <div className="space-y-3 flex-1">
-          {options.map((opt, i) => {
-            let state: "default" | "selected" | "correct" | "wrong" = "default";
-            if (confirmed) {
-              if (i === correctIndex) state = "correct";
-              else if (i === selected && selected !== correctIndex) state = "wrong";
-            } else if (i === selected) {
-              state = "selected";
-            }
-
-            const cls = {
-              default: "bg-white border-[rgba(120,90,50,0.12)] hover:border-[#f97316] hover:bg-orange-50",
-              selected: "bg-orange-50 border-[#f97316]",
-              correct: "bg-green-50 border-green-500",
-              wrong: "bg-red-50 border-red-400",
-            }[state];
-
-            return (
-              <button key={i} disabled={confirmed} onClick={() => setSelected(i)}
-                className={`w-full flex items-center gap-3 border-2 rounded-xl px-4 py-3.5 text-left transition-all ${cls}`}>
-                <span className="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black shrink-0"
-                  style={{
-                    backgroundColor: state === "correct" ? "#22c55e" : state === "wrong" ? "#dc2626" : state === "selected" ? "#f97316" : "#f5ede0",
-                    color: state !== "default" ? "white" : "#7c6a55",
-                  }}>
-                  {["A","B","C","D"][i]}
-                </span>
-                <span className="font-medium text-sm text-[#1e1a14]">{opt}</span>
-                {state === "correct" && <Check size={16} className="ml-auto text-green-500 shrink-0" />}
-                {state === "wrong" && <X size={16} className="ml-auto text-red-400 shrink-0" />}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Action */}
-        <div>
-          {!confirmed ? (
-            <button onClick={() => { if (selected !== null) setConfirmed(true); }} disabled={selected === null}
-              className="w-full bg-[#f97316] text-white py-4 rounded-xl font-black hover:bg-orange-600 transition-colors disabled:opacity-40">
-              Confirm Answer
-            </button>
-          ) : (
-            <button onClick={() => handleNext(selected)}
-              className="w-full bg-[#1e1a14] text-white py-4 rounded-xl font-black hover:bg-[#2d2820] transition-colors flex items-center justify-center gap-2">
-              {current + 1 < questions.length ? "Next Question" : "See Results"}
-              <ChevronRight size={18} />
-            </button>
-          )}
+        {/* Actions */}
+        <div className="grid grid-cols-2 gap-3 pb-4">
+          <Button onClick={onRetry} className="bg-gradient-primary shadow-primary h-11">
+            <RotateCcw size={16} className="mr-1.5" /> Try Again
+          </Button>
+          <Button variant="outline" onClick={() => onComplete(correct, results.length)} className="h-11">
+            <ArrowRight size={16} className="mr-1.5" /> Dashboard
+          </Button>
         </div>
       </div>
     </div>

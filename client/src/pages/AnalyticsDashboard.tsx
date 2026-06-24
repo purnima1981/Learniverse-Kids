@@ -118,20 +118,20 @@ const BLOOM_DESCRIPTIONS: Record<string, string> = {
 };
 
 const DIFFICULTY_COLORS: Record<string, string> = {
-  easy: "#34d399",
-  medium: "#fbbf24",
-  hard: "#f97316",
-  olympiad: "#ef4444",
+  easy: "hsl(162 72% 45%)",
+  medium: "hsl(38 92% 50%)",
+  hard: "hsl(262 83% 58%)",
+  olympiad: "hsl(0 72% 51%)",
 };
 
 const CATEGORY_COLORS: Record<string, string> = {
-  arithmetic: "#60a5fa",
-  algebra: "#a855f7",
-  geometry: "#34d399",
-  "number-theory": "#f97316",
-  combinatorics: "#ec4899",
-  "logical-reasoning": "#fbbf24",
-  "data-handling": "#06b6d4",
+  arithmetic: "hsl(243 75% 59%)",
+  algebra: "hsl(262 83% 58%)",
+  geometry: "hsl(162 72% 45%)",
+  "number-theory": "hsl(199 89% 48%)",
+  combinatorics: "hsl(330 81% 60%)",
+  "logical-reasoning": "hsl(38 92% 50%)",
+  "data-handling": "hsl(187 72% 50%)",
 };
 
 export default function AnalyticsDashboard() {
@@ -250,17 +250,17 @@ export default function AnalyticsDashboard() {
   const weakCategory = categoryBarData.filter(d => d.total > 0).sort((a, b) => a.accuracy - b.accuracy)[0];
 
   return (
-    <div className="max-w-6xl mx-auto p-6 space-y-8">
+    <div className="max-w-6xl mx-auto p-4 lg:p-6 space-y-6 animate-fade-in">
       {/* Header */}
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" onClick={() => setLocation("/parent-dashboard")}>
+      <div className="flex items-center gap-3">
+        <Button variant="ghost" size="icon" onClick={() => setLocation("/parent-dashboard")} aria-label="Back to dashboard">
           <ArrowLeft className="h-5 w-5" />
         </Button>
         <div>
-          <h1 className="text-2xl font-bold flex items-center gap-2">
-            <BarChart3 className="h-6 w-6 text-primary" /> Performance Analytics
+          <h1 className="text-xl lg:text-2xl font-bold flex items-center gap-2">
+            <BarChart3 className="h-5 w-5 text-primary" /> Performance Analytics
           </h1>
-          <p className="text-muted-foreground">Comprehensive view of your child's math preparation</p>
+          <p className="text-sm text-muted-foreground">Comprehensive view of your child's math preparation</p>
         </div>
       </div>
 
@@ -301,7 +301,7 @@ export default function AnalyticsDashboard() {
                 <Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "8px" }} />
                 <Legend />
                 <Bar dataKey="solved" name="Solved" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="correct" name="Correct" fill="#34d399" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="correct" name="Correct" fill="hsl(var(--secondary))" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           )}
@@ -309,12 +309,12 @@ export default function AnalyticsDashboard() {
       </Card>
 
       {/* ═══ OVERALL STATS ═══ */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-        <SummaryCard icon={<Target className="h-5 w-5 text-blue-500" />} label="Total Problems" value={stats?.totalQuestions ?? 0} />
-        <SummaryCard icon={<TrendingUp className="h-5 w-5 text-green-500" />} label="Accuracy" value={`${accuracy}%`} />
-        <SummaryCard icon={<Clock className="h-5 w-5 text-yellow-500" />} label="Avg Time" value={`${stats?.avgTime ?? 0}s`} />
-        <SummaryCard icon={<Lightbulb className="h-5 w-5 text-orange-500" />} label="Avg Hints" value={stats?.avgHints ?? 0} />
-        <SummaryCard icon={<Flame className="h-5 w-5 text-red-500" />} label="Total Sessions" value={stats?.totalSessions ?? 0} />
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        <SummaryCard icon={<Target className="h-5 w-5 text-primary" />} label="Total Problems" value={stats?.totalQuestions ?? 0} />
+        <SummaryCard icon={<TrendingUp className="h-5 w-5 text-secondary" />} label="Accuracy" value={`${accuracy}%`} />
+        <SummaryCard icon={<Clock className="h-5 w-5 text-[hsl(var(--warning))]" />} label="Avg Time" value={`${stats?.avgTime ?? 0}s`} />
+        <SummaryCard icon={<Lightbulb className="h-5 w-5 text-accent" />} label="Avg Hints" value={stats?.avgHints ?? 0} />
+        <SummaryCard icon={<Flame className="h-5 w-5 text-destructive" />} label="Total Sessions" value={stats?.totalSessions ?? 0} />
       </div>
 
       {/* No data state */}
@@ -343,7 +343,7 @@ export default function AnalyticsDashboard() {
               <div className="grid gap-4 sm:grid-cols-2">
                 {strongBloom && (
                   <InsightCard
-                    icon={<CheckCircle2 className="h-5 w-5 text-green-500" />}
+                    icon={<CheckCircle2 className="h-5 w-5 text-secondary" />}
                     title="Strongest Thinking Skill"
                     value={strongBloom.level}
                     detail={`${strongBloom.accuracy}% accuracy (${strongBloom.correct}/${strongBloom.total})`}
@@ -352,7 +352,7 @@ export default function AnalyticsDashboard() {
                 )}
                 {weakBloom && weakBloom.level !== strongBloom?.level && (
                   <InsightCard
-                    icon={<AlertTriangle className="h-5 w-5 text-orange-500" />}
+                    icon={<AlertTriangle className="h-5 w-5 text-[hsl(var(--warning))]" />}
                     title="Needs More Practice"
                     value={weakBloom.level}
                     detail={`${weakBloom.accuracy}% accuracy (${weakBloom.correct}/${weakBloom.total})`}
@@ -361,7 +361,7 @@ export default function AnalyticsDashboard() {
                 )}
                 {strongCategory && (
                   <InsightCard
-                    icon={<CheckCircle2 className="h-5 w-5 text-green-500" />}
+                    icon={<CheckCircle2 className="h-5 w-5 text-secondary" />}
                     title="Strongest Category"
                     value={strongCategory.category}
                     detail={`${strongCategory.accuracy}% accuracy across ${strongCategory.total} problems`}
@@ -370,7 +370,7 @@ export default function AnalyticsDashboard() {
                 )}
                 {weakCategory && weakCategory.category !== strongCategory?.category && (
                   <InsightCard
-                    icon={<AlertTriangle className="h-5 w-5 text-orange-500" />}
+                    icon={<AlertTriangle className="h-5 w-5 text-[hsl(var(--warning))]" />}
                     title="Weakest Category"
                     value={weakCategory.category}
                     detail={`${weakCategory.accuracy}% accuracy across ${weakCategory.total} problems`}
@@ -378,7 +378,7 @@ export default function AnalyticsDashboard() {
                   />
                 )}
                 <InsightCard
-                  icon={<Clock className="h-5 w-5 text-blue-500" />}
+                  icon={<Clock className="h-5 w-5 text-[hsl(var(--info))]" />}
                   title="Response Speed"
                   value={`${stats.avgTime}s average`}
                   detail={stats.avgTime < 20 ? "Very fast" : stats.avgTime < 40 ? "Good pace" : stats.avgTime < 60 ? "Moderate" : "Needs speed work"}
@@ -391,7 +391,7 @@ export default function AnalyticsDashboard() {
                   }
                 />
                 <InsightCard
-                  icon={<Lightbulb className="h-5 w-5 text-yellow-500" />}
+                  icon={<Lightbulb className="h-5 w-5 text-[hsl(var(--warning))]" />}
                   title="Hint Dependency"
                   value={`${stats.avgHints} hints/question`}
                   detail={Number(stats.avgHints) < 0.5 ? "Very independent" : Number(stats.avgHints) < 1 ? "Occasionally uses hints" : "Relies on hints frequently"}
@@ -545,10 +545,10 @@ export default function AnalyticsDashboard() {
                       <YAxis tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 12 }} />
                       <Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "8px" }} />
                       <Legend />
-                      <Bar dataKey="No hints" stackId="a" fill="#34d399" />
-                      <Bar dataKey="1 hint" stackId="a" fill="#fbbf24" />
-                      <Bar dataKey="2 hints" stackId="a" fill="#f97316" />
-                      <Bar dataKey="3+ hints" stackId="a" fill="#ef4444" />
+                      <Bar dataKey="No hints" stackId="a" fill="hsl(var(--secondary))" />
+                      <Bar dataKey="1 hint" stackId="a" fill="hsl(var(--warning))" />
+                      <Bar dataKey="2 hints" stackId="a" fill="hsl(var(--accent))" />
+                      <Bar dataKey="3+ hints" stackId="a" fill="hsl(var(--destructive))" />
                     </BarChart>
                   </ResponsiveContainer>
                 ) : (
@@ -565,12 +565,12 @@ export default function AnalyticsDashboard() {
 
 function SummaryCard({ icon, label, value }: { icon: React.ReactNode; label: string; value: string | number }) {
   return (
-    <Card>
-      <CardContent className="flex items-center gap-4 p-5">
-        <div className="p-3 rounded-lg bg-card border">{icon}</div>
+    <Card className="shadow-soft">
+      <CardContent className="flex items-center gap-3 p-4">
+        <div className="p-2.5 rounded-lg bg-muted">{icon}</div>
         <div>
-          <p className="text-2xl font-bold">{value}</p>
-          <p className="text-sm text-muted-foreground">{label}</p>
+          <p className="text-xl font-bold text-foreground">{value}</p>
+          <p className="text-xs text-muted-foreground">{label}</p>
         </div>
       </CardContent>
     </Card>

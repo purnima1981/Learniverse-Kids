@@ -44,11 +44,11 @@ export function QuizQuestion({
       <div className="space-y-3">
         <div className="flex items-center gap-2 flex-wrap">
           <span className={cn(
-            "text-xs font-semibold px-2.5 py-1 rounded-full",
-            question.difficulty === "easy" ? "bg-emerald-100 text-emerald-700" :
-            question.difficulty === "hard" ? "bg-orange-100 text-orange-700" :
-            question.difficulty === "olympiad" ? "bg-red-100 text-red-700" :
-            "bg-amber-100 text-amber-700"
+            "text-xs font-semibold px-2.5 py-1 rounded-full capitalize",
+            question.difficulty === "easy" ? "bg-secondary/10 text-secondary" :
+            question.difficulty === "hard" ? "bg-accent/10 text-accent" :
+            question.difficulty === "olympiad" ? "bg-destructive/10 text-destructive" :
+            "bg-[hsl(var(--warning))]/10 text-[hsl(var(--warning))]"
           )}>{question.difficulty}</span>
           <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-primary/10 text-primary capitalize">{question.bloomLevel}</span>
           {question.topic && <span className="text-xs text-muted-foreground">{question.topic}</span>}
@@ -72,13 +72,13 @@ export function QuizQuestion({
       {hints.length > 0 && (
         <div className="space-y-2">
           {hints.slice(0, hintsUsed).map((hint, i) => (
-            <div key={i} className="flex items-start gap-2 p-3 rounded-xl bg-amber-50 border border-amber-200">
-              <Lightbulb className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" />
+            <div key={i} className="flex items-start gap-2 p-3 rounded-xl bg-[hsl(var(--warning))]/5 border border-[hsl(var(--warning))]/20">
+              <Lightbulb className="h-4 w-4 text-[hsl(var(--warning))] mt-0.5 shrink-0" />
               <p className="text-sm"><MathRenderer text={hint} /></p>
             </div>
           ))}
           {!answered && hasMoreHints && (
-            <Button variant="ghost" size="sm" onClick={onRequestHint} className="text-yellow-500">
+            <Button variant="ghost" size="sm" onClick={onRequestHint} className="text-[hsl(var(--warning))]">
               <Lightbulb className="h-4 w-4 mr-1" />
               Need a hint? ({hintsUsed}/{hints.length})
             </Button>
@@ -93,10 +93,10 @@ export function QuizQuestion({
       {answered && (
         <div
           className={cn(
-            "flex items-center gap-3 p-4 rounded-2xl border-2 animate-bounce-in",
+            "flex items-center gap-3 p-4 rounded-2xl border-2 animate-scale-in",
             isCorrect
-              ? "bg-emerald-50 border-emerald-200 text-emerald-700"
-              : "bg-red-50 border-red-200 text-red-700"
+              ? "bg-secondary/5 border-secondary/30 text-secondary"
+              : "bg-destructive/5 border-destructive/30 text-destructive"
           )}
         >
           {isCorrect ? (

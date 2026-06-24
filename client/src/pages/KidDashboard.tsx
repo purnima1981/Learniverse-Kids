@@ -1,23 +1,27 @@
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
-import { ChevronLeft, ChevronRight, Calculator, Loader2, Zap, Check } from "lucide-react";
+import {
+  ChevronRight, Loader2, Zap, Check, Users,
+  Calculator, Shapes, Hash, Lightbulb, PieChart, Puzzle, BookOpen,
+  GraduationCap,
+} from "lucide-react";
 import { useLocation } from "wouter";
 import { TopicQuestions } from "@/components/TopicQuestions";
 import type { Topic, TopicProgress } from "@shared/schema";
 
-const CATEGORY_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
-  arithmetic: { label: "Arithmetic", color: "#f97316", bg: "bg-orange-50" },
-  algebra: { label: "Algebra", color: "#8b5cf6", bg: "bg-purple-50" },
-  geometry: { label: "Geometry", color: "#06b6d4", bg: "bg-cyan-50" },
-  "number-theory": { label: "Number Theory", color: "#22c55e", bg: "bg-green-50" },
-  combinatorics: { label: "Combinatorics", color: "#ec4899", bg: "bg-pink-50" },
-  "logical-reasoning": { label: "Logical Reasoning", color: "#f59e0b", bg: "bg-yellow-50" },
-  "data-handling": { label: "Data Handling", color: "#06b6d4", bg: "bg-cyan-50" },
+const CATEGORY_CONFIG: Record<string, { label: string; icon: typeof Calculator; gradient: string; bg: string }> = {
+  arithmetic:         { label: "Arithmetic",        icon: Calculator,  gradient: "from-primary to-primary/80",       bg: "bg-primary/5 border-primary/15 hover:bg-primary/10" },
+  algebra:            { label: "Algebra",            icon: Hash,        gradient: "from-accent to-accent/80",         bg: "bg-accent/5 border-accent/15 hover:bg-accent/10" },
+  geometry:           { label: "Geometry",           icon: Shapes,      gradient: "from-secondary to-secondary/80",   bg: "bg-secondary/5 border-secondary/15 hover:bg-secondary/10" },
+  "number-theory":    { label: "Number Theory",      icon: BookOpen,    gradient: "from-[hsl(var(--info))] to-[hsl(var(--info))]/80", bg: "bg-[hsl(var(--info))]/5 border-[hsl(var(--info))]/15 hover:bg-[hsl(var(--info))]/10" },
+  combinatorics:      { label: "Combinatorics",      icon: Puzzle,      gradient: "from-[hsl(var(--kid-pink))] to-[hsl(var(--kid-pink))]/80", bg: "bg-[hsl(var(--kid-pink))]/5 border-[hsl(var(--kid-pink))]/15 hover:bg-[hsl(var(--kid-pink))]/10" },
+  "logical-reasoning":{ label: "Logical Reasoning",  icon: Lightbulb,   gradient: "from-[hsl(var(--warning))] to-[hsl(var(--warning))]/80", bg: "bg-[hsl(var(--warning))]/5 border-[hsl(var(--warning))]/15 hover:bg-[hsl(var(--warning))]/10" },
+  "data-handling":    { label: "Data Handling",       icon: PieChart,    gradient: "from-secondary to-[hsl(var(--info))]", bg: "bg-secondary/5 border-secondary/15 hover:bg-secondary/10" },
 };
 
 export default function KidDashboard() {
-  const { activeProfile } = useAuth();
+  const { activeProfile, switchProfile } = useAuth();
   const [, setLocation] = useLocation();
   const [practiceTopicId, setPracticeTopicId] = useState<number | null>(null);
 
@@ -46,16 +50,24 @@ export default function KidDashboard() {
   const totalCorrect = progressList.reduce((s, p) => s + (p.questionsCorrect ?? 0), 0);
   const totalAttempted = progressList.reduce((s, p) => s + (p.questionsAttempted ?? 0), 0);
   const accuracy = totalAttempted > 0 ? Math.round((totalCorrect / totalAttempted) * 100) : 0;
+  const points = totalSessions * 50 + totalCorrect * 10;
 
   if (isLoading) {
-    return <div className="flex items-center justify-center min-h-[60vh]"><Loader2 className="h-8 w-8 animate-spin text-[#f97316]" /></div>;
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
   }
 
   if (practiceTopicId) {
     return (
-      <div className="min-h-screen bg-[#fdf6ee]">
-        <TopicQuestions topicId={practiceTopicId} profileId={activeProfile?.id ?? 0}
-          onComplete={() => setPracticeTopicId(null)} />
+      <div className="min-h-screen bg-background">
+        <TopicQuestions
+          topicId={practiceTopicId}
+          profileId={activeProfile?.id ?? 0}
+          onComplete={() => setPracticeTopicId(null)}
+        />
       </div>
     );
   }
@@ -68,45 +80,67 @@ export default function KidDashboard() {
   }, {});
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#fff7ed] to-[#fdf6ee]">
-      {/* Header */}
-      <div className="px-6 py-5 flex items-center justify-between" style={{ background: "linear-gradient(135deg, #f97316 0%, #fb923c 100%)" }}>
-        <button onClick={() => setLocation("/profiles")} className="p-2 bg-white/20 rounded-xl hover:bg-white/30 transition-colors">
-          <ChevronLeft size={18} className="text-white" />
-        </button>
-        <div className="text-center">
-          <p className="text-white/80 text-xs font-bold tracking-widest uppercase">Grade {activeProfile?.grade}</p>
-          <p className="text-white font-black text-xl">Hey, {activeProfile?.name}!</p>
+    <div className="min-h-screen bg-gradient-surface">
+      {/* Kid Header */}
+      <header className="bg-gradient-primary px-5 py-5 animate-slide-down">
+        <div className="max-w-2xl mx-auto">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-lg bg-white/20 flex items-center justify-center">
+                <GraduationCap size={18} className="text-white" />
+              </div>
+              <span className="font-bold text-white/90 text-sm">LearnVerse</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5 bg-white/15 rounded-full px-3 py-1.5">
+                <Zap size={14} className="text-yellow-300" />
+                <span className="text-white text-sm font-bold">{points.toLocaleString()}</span>
+              </div>
+              <button
+                onClick={async () => { await switchProfile.mutateAsync(null); setLocation("/parent-dashboard"); }}
+                className="p-2 bg-white/15 rounded-lg hover:bg-white/25 transition-colors"
+                aria-label="Switch to parent mode"
+                title="Parent Mode"
+              >
+                <Users size={16} className="text-white" />
+              </button>
+            </div>
+          </div>
+          <div>
+            <p className="text-white/60 text-xs font-semibold tracking-wider uppercase">Grade {activeProfile?.grade}</p>
+            <h1 className="text-white font-extrabold text-2xl mt-0.5">Hey, {activeProfile?.name}!</h1>
+          </div>
         </div>
-        <div className="flex items-center gap-1 bg-white/20 rounded-xl px-3 py-1.5">
-          <Zap size={14} className="text-yellow-200" />
-          <span className="text-white text-sm font-black">{totalSessions * 50 + totalCorrect * 10}</span>
-        </div>
-      </div>
+      </header>
 
-      <div className="max-w-lg mx-auto px-5 py-6 space-y-6">
-        {/* Stats */}
-        <div className="bg-white rounded-2xl p-4 border border-[rgba(120,90,50,0.1)]">
+      <div className="max-w-2xl mx-auto px-5 py-6 space-y-6 animate-slide-up" style={{ animationDelay: "100ms", animationFillMode: "both" }}>
+        {/* Stats Bar */}
+        <div className="bg-white rounded-xl p-4 border border-border shadow-soft">
           <div className="grid grid-cols-3 gap-3">
             {[
-              { label: "Tests", value: totalSessions },
-              { label: "Accuracy", value: `${accuracy}%` },
-              { label: "Correct", value: totalCorrect },
-            ].map(({ label, value }) => (
+              { label: "Tests Taken", value: totalSessions, color: "text-primary" },
+              { label: "Accuracy", value: `${accuracy}%`, color: "text-secondary" },
+              { label: "Correct", value: totalCorrect, color: "text-accent" },
+            ].map(({ label, value, color }) => (
               <div key={label} className="text-center">
-                <p className="text-xs text-[#7c6a55] mb-0.5">{label}</p>
-                <p className="font-black text-lg text-[#1e1a14]">{value}</p>
+                <p className="text-xs text-muted-foreground mb-0.5">{label}</p>
+                <p className={`font-extrabold text-lg ${color}`}>{value}</p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Pick a challenge */}
+        {/* Category Grid */}
         <div>
-          <h3 className="font-black text-lg text-[#1e1a14] mb-3">Pick a Challenge</h3>
+          <h2 className="font-bold text-lg text-foreground mb-3">Pick a Challenge</h2>
           <div className="grid grid-cols-2 gap-3">
-            {Object.entries(grouped).map(([category, topics]) => {
-              const cfg = CATEGORY_CONFIG[category] ?? { label: category, color: "#f97316", bg: "bg-orange-50" };
+            {Object.entries(grouped).map(([category, topics], i) => {
+              const cfg = CATEGORY_CONFIG[category] ?? {
+                label: category, icon: Calculator,
+                gradient: "from-primary to-primary/80",
+                bg: "bg-primary/5 border-primary/15",
+              };
+              const Icon = cfg.icon;
               return (
                 <button
                   key={category}
@@ -114,14 +148,15 @@ export default function KidDashboard() {
                     const randomTopic = topics[Math.floor(Math.random() * topics.length)];
                     setPracticeTopicId(randomTopic.id);
                   }}
-                  className={`${cfg.bg} rounded-2xl p-5 text-left border border-[rgba(120,90,50,0.08)] hover:shadow-md transition-shadow`}
+                  className={`rounded-xl p-4 text-left border transition-all hover-lift ${cfg.bg} animate-slide-up`}
+                  style={{ animationDelay: `${i * 60}ms`, animationFillMode: "both" }}
                 >
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style={{ backgroundColor: `${cfg.color}20` }}>
-                    <Calculator size={22} style={{ color: cfg.color }} />
+                  <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${cfg.gradient} flex items-center justify-center mb-3`}>
+                    <Icon size={20} className="text-white" />
                   </div>
-                  <p className="font-black text-sm text-[#1e1a14]">{cfg.label}</p>
-                  <p className="text-xs text-[#7c6a55] mt-0.5">{topics.length} topics</p>
-                  <div className="mt-3 flex items-center gap-1 text-xs font-bold" style={{ color: cfg.color }}>
+                  <p className="font-semibold text-sm text-foreground">{cfg.label}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">{topics.length} topics</p>
+                  <div className="mt-3 flex items-center gap-1 text-xs font-semibold text-primary">
                     Start <ChevronRight size={12} />
                   </div>
                 </button>
@@ -131,9 +166,12 @@ export default function KidDashboard() {
         </div>
 
         {topicList.length === 0 && (
-          <div className="bg-white rounded-2xl border border-[rgba(120,90,50,0.1)] p-12 text-center">
-            <p className="font-bold text-[#1e1a14]">No topics for Grade {activeProfile?.grade} yet</p>
-            <p className="text-sm text-[#7c6a55] mt-1">Check back soon!</p>
+          <div className="bg-white rounded-xl border border-border p-12 text-center shadow-soft">
+            <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center mx-auto mb-3">
+              <BookOpen size={24} className="text-muted-foreground" />
+            </div>
+            <p className="font-semibold text-foreground">No topics for Grade {activeProfile?.grade} yet</p>
+            <p className="text-sm text-muted-foreground mt-1">Check back soon — new content is on the way!</p>
           </div>
         )}
       </div>
