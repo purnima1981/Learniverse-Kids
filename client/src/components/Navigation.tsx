@@ -84,7 +84,7 @@ export function Navigation() {
           <aside className="fixed top-0 left-0 bottom-0 w-64 bg-white z-50 lg:hidden p-4 pt-16 animate-fade-in font-body"
             style={{ borderRight: "1px solid hsl(var(--border))" }}>
             <div className="mb-4 font-display font-bold text-lg">
-              <span style={{ color: "hsl(var(--grape))" }}>Learni</span><span style={{ color: "hsl(var(--coral))" }}>verse</span> 🚀
+              <span style={{ color: "hsl(var(--grape))" }}>Learn</span><span style={{ color: "hsl(var(--coral))" }}>Smarter</span> 🚀
             </div>
             <Link href="/parent-dashboard" onClick={() => setMobileOpen(false)}
               className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" style={{ color: "hsl(var(--grape))", background: "hsl(var(--grape-soft))" }}>
