@@ -7,8 +7,7 @@ import { toast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-  ChevronRight, ChevronLeft, Loader2, BookOpen, Target, Clock,
-  BarChart3, Users, UserPlus, TrendingUp, Zap, ArrowRight, Play,
+  ChevronLeft, ChevronRight, Loader2, UserPlus, TrendingUp, Zap, BarChart3,
 } from "lucide-react";
 import {
   LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid,
@@ -76,11 +75,9 @@ export default function ParentDashboard() {
     return (
       <div className="min-h-[80vh] flex items-center justify-center p-4 animate-fade-in">
         <div className="w-full max-w-md bg-white rounded-2xl shadow-elevated p-6 sm:p-8" style={{ border: "1px solid hsl(var(--border))" }}>
-          <button
-            onClick={() => setShowAddKid(false)}
+          <button onClick={() => setShowAddKid(false)}
             className="flex items-center gap-1 text-sm font-medium mb-4 font-body"
-            style={{ color: "hsl(var(--grape))" }}
-          >
+            style={{ color: "hsl(var(--grape))" }}>
             <ChevronLeft size={16} /> Back
           </button>
           <h2 className="font-display font-bold text-xl text-foreground mb-1">Add a Child</h2>
@@ -88,8 +85,7 @@ export default function ParentDashboard() {
           <form onSubmit={handleAddKid} className="space-y-5 font-body">
             <div className="space-y-1.5">
               <Label htmlFor="kidName">Child's Name</Label>
-              <Input id="kidName" value={kidName} onChange={(e) => setKidName(e.target.value)}
-                placeholder="e.g. Riya" required />
+              <Input id="kidName" value={kidName} onChange={(e) => setKidName(e.target.value)} placeholder="e.g. Riya" required />
             </div>
             <div className="space-y-2">
               <Label>Grade</Label>
@@ -100,9 +96,7 @@ export default function ParentDashboard() {
                     style={{
                       background: kidGrade === g ? "hsl(var(--grape))" : "hsl(var(--muted))",
                       color: kidGrade === g ? "#fff" : "hsl(var(--muted-foreground))",
-                      boxShadow: kidGrade === g ? "0 4px 14px hsl(var(--grape) / 0.25)" : "none",
-                    }}
-                  >{g}</button>
+                    }}>{g}</button>
                 ))}
               </div>
             </div>
@@ -122,8 +116,7 @@ export default function ParentDashboard() {
             </div>
             <button type="submit" disabled={!kidName.trim() || createChild.isPending}
               className="w-full py-3 rounded-xl font-semibold text-sm text-white transition-all disabled:opacity-40"
-              style={{ background: "hsl(var(--grape))", boxShadow: "0 4px 14px hsl(var(--grape) / 0.25)" }}
-            >
+              style={{ background: "hsl(var(--grape))" }}>
               {createChild.isPending && <Loader2 className="h-4 w-4 animate-spin inline mr-2" />}
               Add Child
             </button>
@@ -133,224 +126,142 @@ export default function ParentDashboard() {
     );
   }
 
-  // ── Data prep ─────────────────────────────────────────────────────────
+  // ── Data ───────────────────────────────────────────────────────────────
   const accuracy = stats?.totalQuestions > 0 ? Math.round((stats.totalCorrect / stats.totalQuestions) * 100) : 0;
+  const hasData = stats && stats.totalQuestions > 0;
 
-  const sessionData = sessions.slice(0, 8).reverse().map((s: any, i: number) => ({
-    session: `#${i + 1}`,
+  const sessionData = sessions.slice(0, 10).reverse().map((s: any, i: number) => ({
+    session: `${i + 1}`,
     score: s.totalQuestions > 0 ? Math.round((s.score / s.totalQuestions) * 100) : 0,
   }));
 
   const bloomData = ["remember","understand","apply","analyze","evaluate","create"].map((level) => {
     const s = bloomStats.find((b: any) => b.bloomLevel === level);
-    return {
-      level: level.charAt(0).toUpperCase() + level.slice(1),
-      score: s && s.total > 0 ? Math.round((s.correct / s.total) * 100) : 0,
-    };
+    return { level: level.charAt(0).toUpperCase() + level.slice(1), score: s && s.total > 0 ? Math.round((s.correct / s.total) * 100) : 0 };
   }).filter(d => d.score > 0);
 
-  const hasData = stats && stats.totalQuestions > 0;
+  // ── Loading ────────────────────────────────────────────────────────────
+  if (isLoading) {
+    return <div className="flex justify-center py-16"><Loader2 className="h-8 w-8 animate-spin" style={{ color: "hsl(var(--grape))" }} /></div>;
+  }
 
-  // ── Main dashboard ────────────────────────────────────────────────────
+  // ── No children ────────────────────────────────────────────────────────
+  if (profiles.length === 0) {
+    return (
+      <div className="max-w-lg mx-auto px-4 py-16 text-center animate-fade-in">
+        <h2 className="font-display font-bold text-xl text-foreground mb-2">Welcome to LearnSmarter</h2>
+        <p className="text-sm text-muted-foreground mb-6 font-body">Add your child to get started with practice tests and progress tracking.</p>
+        <button onClick={() => setShowAddKid(true)}
+          className="inline-flex items-center gap-2 text-white px-6 py-3 rounded-xl text-sm font-semibold font-body"
+          style={{ background: "hsl(var(--grape))" }}>
+          <UserPlus size={16} /> Add Your First Child
+        </button>
+      </div>
+    );
+  }
+
+  // ── Main page ──────────────────────────────────────────────────────────
   return (
-    <div className="animate-fade-in">
-      <div className="max-w-4xl mx-auto px-4 lg:px-6 py-6 space-y-6">
-
-        {/* Loading */}
-        {isLoading ? (
-          <div className="flex justify-center py-16">
-            <Loader2 className="h-8 w-8 animate-spin" style={{ color: "hsl(var(--grape))" }} />
-          </div>
-        ) : profiles.length === 0 ? (
-          /* ── Empty state ──────────────────────────────────────────────── */
-          <div className="bg-white rounded-2xl shadow-soft p-8 sm:p-12 text-center" style={{ border: "1px solid hsl(var(--border))" }}>
-            <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4" style={{ background: "hsl(var(--grape-soft))" }}>
-              <Users size={28} style={{ color: "hsl(var(--grape))" }} />
-            </div>
-            <h2 className="font-display font-bold text-xl text-foreground mb-2">Welcome to LearnSmarter</h2>
-            <p className="text-sm text-muted-foreground mb-6 max-w-sm mx-auto font-body">
-              Add your child's profile to get started with practice tests, progress tracking, and detailed analytics.
-            </p>
-            <button
-              onClick={() => setShowAddKid(true)}
-              className="inline-flex items-center gap-2 text-white px-6 py-3 rounded-xl text-sm font-semibold shadow-primary font-body"
-              style={{ background: "hsl(var(--grape))" }}
-            >
-              <UserPlus size={16} /> Add Your First Child
+    <div className="max-w-4xl mx-auto px-4 lg:px-6 py-6 animate-fade-in">
+      {/* Kid tabs + add button — inline */}
+      <div className="flex items-center gap-3 mb-6">
+        {profiles.map((kid) => {
+          const isActive = selectedKid?.id === kid.id;
+          return (
+            <button key={kid.id} onClick={() => setSelectedKidId(kid.id)}
+              className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl transition-all shrink-0 font-body text-sm font-semibold"
+              style={{
+                background: isActive ? "hsl(var(--grape))" : "#fff",
+                color: isActive ? "#fff" : "hsl(var(--foreground))",
+                border: isActive ? "none" : "1px solid hsl(var(--border))",
+              }}>
+              <span className="w-7 h-7 rounded-md flex items-center justify-center font-display font-bold text-xs"
+                style={{ background: isActive ? "rgba(255,255,255,0.2)" : "hsl(var(--grape-soft))", color: isActive ? "#fff" : "hsl(var(--grape))" }}>
+                {kid.name[0]}
+              </span>
+              {kid.name}
             </button>
-          </div>
-        ) : (
-          <>
-            {/* ── Kids selector (horizontal pills) ─────────────────────── */}
-            <div className="bg-white rounded-2xl shadow-soft p-5" style={{ border: "1px solid hsl(var(--border))" }}>
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="font-display font-semibold text-foreground">My Children</h2>
-                <button
-                  onClick={() => setShowAddKid(true)}
-                  className="flex items-center gap-1.5 text-sm font-semibold rounded-lg px-3 py-1.5 font-body transition-colors"
-                  style={{ color: "hsl(var(--grape))", background: "hsl(var(--grape-soft))" }}
-                >
-                  <UserPlus size={14} /> Add
-                </button>
+          );
+        })}
+        <button onClick={() => setShowAddKid(true)}
+          className="p-2.5 rounded-xl transition-colors font-body"
+          style={{ border: "1px dashed hsl(var(--border))", color: "hsl(var(--muted-foreground))" }}
+          title="Add child">
+          <UserPlus size={16} />
+        </button>
+      </div>
+
+      {/* Selected kid content */}
+      {selectedKid && !hasData && (
+        <div className="bg-white rounded-2xl p-8 text-center shadow-soft font-body" style={{ border: "1px solid hsl(var(--border))" }}>
+          <h3 className="font-display font-semibold text-lg text-foreground mb-2">{selectedKid.name}'s Progress</h3>
+          <p className="text-sm text-muted-foreground max-w-sm mx-auto">
+            No practice data yet. Once {selectedKid.name} starts solving problems, you'll see accuracy, speed, thinking skills, and more right here.
+          </p>
+        </div>
+      )}
+
+      {selectedKid && hasData && (
+        <div className="space-y-5">
+          {/* Stats + insight in one card */}
+          <div className="bg-white rounded-2xl p-5 shadow-soft" style={{ border: "1px solid hsl(var(--border))" }}>
+            <h3 className="font-display font-semibold text-lg text-foreground mb-4">{selectedKid.name}'s Progress</h3>
+            <div className="grid grid-cols-3 gap-3 mb-4">
+              <div className="stat-card">
+                <div className="stat-num" style={{ color: "hsl(var(--grape))" }}>{stats.totalSessions}</div>
+                <div className="stat-label">sessions</div>
               </div>
-              <div className="flex gap-3 overflow-x-auto pb-1">
-                {profiles.map((kid) => {
-                  const isActive = selectedKid?.id === kid.id;
-                  return (
-                    <button
-                      key={kid.id}
-                      onClick={() => setSelectedKidId(kid.id)}
-                      className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all shrink-0 font-body"
-                      style={{
-                        background: isActive ? "hsl(var(--grape))" : "hsl(var(--background))",
-                        color: isActive ? "#fff" : "hsl(var(--foreground))",
-                        border: isActive ? "none" : "1px solid hsl(var(--border))",
-                        boxShadow: isActive ? "0 4px 14px hsl(var(--grape) / 0.25)" : "none",
-                      }}
-                    >
-                      <div
-                        className="w-9 h-9 rounded-lg flex items-center justify-center font-display font-bold text-sm"
-                        style={{
-                          background: isActive ? "rgba(255,255,255,0.2)" : "hsl(var(--grape-soft))",
-                          color: isActive ? "#fff" : "hsl(var(--grape))",
-                        }}
-                      >
-                        {kid.name[0]}
-                      </div>
-                      <div className="text-left">
-                        <p className="font-semibold text-sm">{kid.name}</p>
-                        <p className="text-xs" style={{ opacity: 0.7 }}>Grade {kid.grade}</p>
-                      </div>
-                    </button>
-                  );
-                })}
+              <div className="stat-card">
+                <div className="stat-num" style={{ color: "hsl(var(--leaf))" }}>{accuracy}%</div>
+                <div className="stat-label">accuracy</div>
+              </div>
+              <div className="stat-card">
+                <div className="stat-num" style={{ color: "hsl(var(--leaf))" }}>{stats.avgTime ?? 0}s</div>
+                <div className="stat-label">avg time</div>
               </div>
             </div>
+            <div className="insight-box font-body">
+              {accuracy >= 80
+                ? <span>{selectedKid.name} is doing excellent — <b style={{ color: "hsl(var(--grape))" }}>{accuracy}%</b> accuracy across {stats.totalSessions} sessions. Consider harder difficulty.</span>
+                : accuracy >= 50
+                ? <span>{selectedKid.name} is making good progress — <b style={{ color: "hsl(var(--grape))" }}>{accuracy}%</b> accuracy. Consistent practice is building real skills.</span>
+                : <span>{selectedKid.name} has completed <b style={{ color: "hsl(var(--grape))" }}>{stats.totalSessions}</b> sessions. Every attempt builds understanding.</span>
+              }
+            </div>
+          </div>
 
-            {/* ── Selected kid's overview ───────────────────────────────── */}
-            {selectedKid && (
-              <div className="space-y-5">
-                {/* Narrative card */}
-                <div className="bg-white rounded-2xl shadow-soft p-5" style={{ border: "1px solid hsl(var(--border))" }}>
-                  <h3 className="font-display font-semibold text-lg text-foreground mb-2">
-                    {selectedKid.name}'s Progress
-                  </h3>
-
-                  {hasData ? (
-                    <>
-                      {/* Stat row */}
-                      <div className="grid grid-cols-3 gap-3 mb-4">
-                        <div className="stat-card">
-                          <div className="stat-num" style={{ color: "hsl(var(--grape))" }}>{stats.totalSessions}</div>
-                          <div className="stat-label">sessions</div>
-                        </div>
-                        <div className="stat-card">
-                          <div className="stat-num" style={{ color: "hsl(var(--leaf))" }}>{accuracy}%</div>
-                          <div className="stat-label">accuracy</div>
-                        </div>
-                        <div className="stat-card">
-                          <div className="stat-num" style={{ color: "hsl(var(--leaf))" }}>{stats.avgTime ?? 0}s</div>
-                          <div className="stat-label">avg time</div>
-                        </div>
-                      </div>
-
-                      {/* Pill badges */}
-                      <div className="flex gap-2 flex-wrap mb-4">
-                        <span className="pill pill-leaf font-body">
-                          <TrendingUp size={12} /> {stats.totalCorrect} correct answers
-                        </span>
-                        <span className="pill pill-leaf font-body">
-                          <Zap size={12} /> {stats.totalQuestions} problems solved
-                        </span>
-                      </div>
-
-                      {/* Insight */}
-                      <div className="insight-box font-body">
-                        {accuracy >= 80 ? (
-                          <span><b style={{ color: "hsl(var(--grape))" }}>{selectedKid.name}</b> is doing excellent work with <b style={{ color: "hsl(var(--grape))" }}>{accuracy}%</b> accuracy. Consider moving to harder difficulty levels to keep the challenge going.</span>
-                        ) : accuracy >= 50 ? (
-                          <span><b style={{ color: "hsl(var(--grape))" }}>{selectedKid.name}</b> is making good progress — <b style={{ color: "hsl(var(--grape))" }}>{accuracy}%</b> accuracy across {stats.totalSessions} sessions. Consistent practice is building real skills.</span>
-                        ) : (
-                          <span><b style={{ color: "hsl(var(--grape))" }}>{selectedKid.name}</b> has completed <b style={{ color: "hsl(var(--grape))" }}>{stats.totalSessions}</b> sessions. Every attempt builds understanding — keep encouraging regular practice!</span>
-                        )}
-                      </div>
-                    </>
-                  ) : (
-                    /* No data yet — engaging CTA */
-                    <div className="py-6 text-center">
-                      <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4" style={{ background: "hsl(var(--grape-soft))" }}>
-                        <Play size={24} style={{ color: "hsl(var(--grape))" }} />
-                      </div>
-                      <p className="font-display font-semibold text-foreground mb-1">No practice data yet</p>
-                      <p className="text-sm text-muted-foreground font-body mb-4 max-w-xs mx-auto">
-                        Once {selectedKid.name} starts solving problems, you'll see detailed analytics here — accuracy, speed, thinking skills, and more.
-                      </p>
-                      <button
-                        onClick={() => setLocation("/profiles")}
-                        className="inline-flex items-center gap-2 text-sm font-semibold rounded-xl px-5 py-2.5 font-body transition-colors"
-                        style={{ color: "hsl(var(--grape))", background: "hsl(var(--grape-soft))" }}
-                      >
-                        <ArrowRight size={14} /> Switch to {selectedKid.name}'s profile to start
-                      </button>
-                    </div>
-                  )}
-                </div>
-
-                {/* Charts row (only if data) */}
-                {hasData && (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {sessionData.length > 1 && (
-                      <div className="bg-white rounded-2xl shadow-soft p-5" style={{ border: "1px solid hsl(var(--border))" }}>
-                        <p className="font-display font-semibold text-sm text-foreground mb-4">Score Trend</p>
-                        <ResponsiveContainer width="100%" height={160}>
-                          <LineChart data={sessionData}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                            <XAxis dataKey="session" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} />
-                            <YAxis tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} domain={[0, 100]} />
-                            <Tooltip contentStyle={{ borderRadius: "8px", border: "1px solid hsl(var(--border))", fontSize: "12px" }} />
-                            <Line type="monotone" dataKey="score" stroke="hsl(var(--grape))" strokeWidth={2} dot={{ r: 3, fill: "hsl(var(--grape))" }} />
-                          </LineChart>
-                        </ResponsiveContainer>
-                      </div>
-                    )}
-                    {bloomData.length > 0 && (
-                      <div className="bg-white rounded-2xl shadow-soft p-5" style={{ border: "1px solid hsl(var(--border))" }}>
-                        <p className="font-display font-semibold text-sm text-foreground mb-4">Bloom's Taxonomy</p>
-                        <ResponsiveContainer width="100%" height={160}>
-                          <BarChart data={bloomData} layout="vertical">
-                            <XAxis type="number" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} domain={[0, 100]} />
-                            <YAxis dataKey="level" type="category" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} width={80} />
-                            <Tooltip contentStyle={{ borderRadius: "8px", border: "1px solid hsl(var(--border))", fontSize: "12px" }} />
-                            <Bar dataKey="score" radius={[0, 6, 6, 0]} fill="hsl(var(--grape))" />
-                          </BarChart>
-                        </ResponsiveContainer>
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {/* Full analytics link */}
-                <button
-                  onClick={() => setLocation(`/analytics/${selectedKid.id}`)}
-                  className="w-full flex items-center justify-between bg-white rounded-2xl shadow-soft p-5 transition-all hover-lift font-body"
-                  style={{ border: "1px solid hsl(var(--border))" }}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: "hsl(var(--grape-soft))" }}>
-                      <BarChart3 size={20} style={{ color: "hsl(var(--grape))" }} />
-                    </div>
-                    <div className="text-left">
-                      <p className="font-semibold text-sm text-foreground">Full Analytics</p>
-                      <p className="text-xs text-muted-foreground">Bloom's taxonomy, difficulty breakdown, session history & more</p>
-                    </div>
-                  </div>
-                  <ChevronRight size={16} className="text-muted-foreground" />
-                </button>
+          {/* Charts */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {sessionData.length > 1 && (
+              <div className="bg-white rounded-2xl p-5 shadow-soft" style={{ border: "1px solid hsl(var(--border))" }}>
+                <p className="font-display font-semibold text-sm text-foreground mb-4">Score Trend</p>
+                <ResponsiveContainer width="100%" height={180}>
+                  <LineChart data={sessionData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis dataKey="session" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} />
+                    <YAxis tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} domain={[0, 100]} />
+                    <Tooltip contentStyle={{ borderRadius: "8px", border: "1px solid hsl(var(--border))", fontSize: "12px" }} />
+                    <Line type="monotone" dataKey="score" stroke="hsl(var(--grape))" strokeWidth={2} dot={{ r: 3, fill: "hsl(var(--grape))" }} />
+                  </LineChart>
+                </ResponsiveContainer>
               </div>
             )}
-          </>
-        )}
-      </div>
+            {bloomData.length > 0 && (
+              <div className="bg-white rounded-2xl p-5 shadow-soft" style={{ border: "1px solid hsl(var(--border))" }}>
+                <p className="font-display font-semibold text-sm text-foreground mb-4">Thinking Skills</p>
+                <ResponsiveContainer width="100%" height={180}>
+                  <BarChart data={bloomData} layout="vertical">
+                    <XAxis type="number" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} domain={[0, 100]} />
+                    <YAxis dataKey="level" type="category" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} width={80} />
+                    <Tooltip contentStyle={{ borderRadius: "8px", border: "1px solid hsl(var(--border))", fontSize: "12px" }} />
+                    <Bar dataKey="score" radius={[0, 6, 6, 0]} fill="hsl(var(--grape))" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
