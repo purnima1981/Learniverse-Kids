@@ -92,15 +92,14 @@ export function registerRoutes(app: Express) {
         }
 
         const hashedPin = await bcrypt.hash(pin, 10);
-        const profile = await storage.createChildProfile({
+        const profileData: Record<string, unknown> = {
           parentId: req.user!.id,
           name,
           grade: Number(grade),
           pin: hashedPin,
           avatar: avatar || "default",
-          state: null,
-          inviteCode: null,
-        });
+        };
+        const profile = await storage.createChildProfile(profileData as any);
 
         res.json({
           id: profile.id,

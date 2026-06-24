@@ -73,7 +73,7 @@ export function QuizQuestion({
         <div className="space-y-2">
           {hints.slice(0, hintsUsed).map((hint, i) => (
             <div key={i} className="flex items-start gap-2 p-3 rounded-xl bg-amber-50 border border-amber-200">
-              <span className="text-lg shrink-0">💡</span>
+              <Lightbulb className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" />
               <p className="text-sm"><MathRenderer text={hint} /></p>
             </div>
           ))}
@@ -99,7 +99,11 @@ export function QuizQuestion({
               : "bg-red-50 border-red-200 text-red-700"
           )}
         >
-          <span className="text-2xl shrink-0">{isCorrect ? "🎉" : "💡"}</span>
+          {isCorrect ? (
+            <CheckCircle2 className="h-5 w-5 shrink-0" />
+          ) : (
+            <XCircle className="h-5 w-5 shrink-0" />
+          )}
           <div>
             <p className="font-medium">{isCorrect ? "Correct!" : "Not quite right"}</p>
             {question.explanation && (

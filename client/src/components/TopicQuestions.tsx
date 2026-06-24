@@ -44,7 +44,7 @@ export function TopicQuestions({
     return (
       <Card className="border-0 shadow-lg">
         <CardContent className="py-16 text-center">
-          <div className="text-5xl mb-4">📝</div>
+          <Loader2 className="h-12 w-12 text-muted-foreground mb-4" />
           <p className="text-lg font-semibold">No questions available yet</p>
           <p className="text-muted-foreground mt-1">Check back soon!</p>
         </CardContent>
@@ -96,12 +96,10 @@ function QuizContent({
       <Card className="border-0 shadow-xl overflow-hidden">
         <div className={`h-2 ${isPerfect ? "bg-amber-400" : isGreat ? "bg-emerald-500" : isGood ? "bg-blue-500" : "bg-orange-500"}`} />
         <CardContent className="py-12 text-center">
-          <div className="text-7xl mb-4 animate-bounce-in">
-            {isPerfect ? "🏆" : isGreat ? "🌟" : isGood ? "💪" : "📚"}
+          <div className="text-4xl font-extrabold mb-4 animate-bounce-in text-primary">
+            {isPerfect ? "Perfect!" : isGreat ? "Great!" : isGood ? "Nice!" : "Keep going!"}
           </div>
-          <h2 className="text-3xl font-extrabold mb-6">
-            {isPerfect ? "PERFECT SCORE!" : isGreat ? "Excellent Work!" : isGood ? "Good Effort!" : "Keep Practicing!"}
-          </h2>
+          <h2 className="text-2xl font-bold mb-6">Practice Complete</h2>
 
           <div className="flex justify-center gap-6 mb-8">
             <div className="text-center">
@@ -159,10 +157,10 @@ function QuizContent({
           </span>
           <div className="flex items-center gap-4">
             <Badge className="bg-emerald-100 text-emerald-700 border-0 font-semibold">
-              ✅ {quiz.score} correct
+              {quiz.score} correct
             </Badge>
             <span className="font-mono text-muted-foreground font-medium">
-              ⏱ {Math.floor(quiz.elapsed / 60)}:{String(quiz.elapsed % 60).padStart(2, "0")}
+              {Math.floor(quiz.elapsed / 60)}:{String(quiz.elapsed % 60).padStart(2, "0")}
             </span>
           </div>
         </div>
@@ -198,7 +196,7 @@ function QuizContent({
 
         {quiz.currentIndex === quiz.totalQuestions - 1 ? (
           <Button onClick={quiz.finishQuiz} disabled={!state.answered} className="h-11 font-bold bg-emerald-600 hover:bg-emerald-700">
-            🏆 Finish Practice
+            Finish Practice
           </Button>
         ) : (
           <Button onClick={quiz.nextQuestion} disabled={!state.answered} className="h-11 font-medium">

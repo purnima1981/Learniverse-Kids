@@ -22,7 +22,6 @@ export function Navigation() {
     <nav className="bg-white/80 backdrop-blur-md border-b border-border/50 sticky top-0 z-40">
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
         <Link href={isParent ? "/parent-dashboard" : "/kid-dashboard"} className="flex items-center gap-2.5">
-          <span className="text-2xl">🎯</span>
           <span className="font-extrabold text-xl text-foreground">LearnSmarter</span>
         </Link>
 
@@ -45,7 +44,7 @@ export function Navigation() {
           {isChild && activeProfile && (
             <Link href="/kid-dashboard">
               <Button variant="ghost" size="sm" className="gap-2 font-medium">
-                🧮 Practice
+                Practice
               </Button>
             </Link>
           )}

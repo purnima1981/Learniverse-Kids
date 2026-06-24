@@ -5,19 +5,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Loader2 } from "lucide-react";
+import { Loader2, Calculator, Hash, Shapes, Brain, Shuffle, Lightbulb, BarChart3, Flame, CheckCircle2, Target, TrendingUp } from "lucide-react";
 import { TopicQuestions } from "@/components/TopicQuestions";
 import type { Topic, TopicProgress } from "@shared/schema";
-
-const CATEGORY_EMOJI: Record<string, string> = {
-  arithmetic: "🔢",
-  algebra: "📐",
-  geometry: "📏",
-  "number-theory": "🧮",
-  combinatorics: "🎲",
-  "logical-reasoning": "🧠",
-  "data-handling": "📊",
-};
 
 const DIFFICULTY_STYLE: Record<string, { bg: string; text: string; label: string }> = {
   easy: { bg: "bg-emerald-100", text: "text-emerald-700", label: "Easy" },
@@ -121,29 +111,27 @@ export default function KidDashboard() {
 
       {/* Quick Stats Bar */}
       <div className="grid grid-cols-4 gap-3">
-        <QuickStat emoji="🔥" value={totalSessions} label="Sessions" />
-        <QuickStat emoji="✅" value={totalCorrect} label="Correct" />
-        <QuickStat emoji="📝" value={totalAttempted} label="Attempted" />
-        <QuickStat emoji="🎯" value={`${overallAccuracy}%`} label="Accuracy" />
+        <QuickStat icon={<Flame className="h-5 w-5 text-orange-500" />} value={totalSessions} label="Sessions" />
+        <QuickStat icon={<CheckCircle2 className="h-5 w-5 text-emerald-500" />} value={totalCorrect} label="Correct" />
+        <QuickStat icon={<Target className="h-5 w-5 text-blue-500" />} value={totalAttempted} label="Attempted" />
+        <QuickStat icon={<TrendingUp className="h-5 w-5 text-purple-500" />} value={`${overallAccuracy}%`} label="Accuracy" />
       </div>
 
       {/* Topics by Category */}
       {topicList.length === 0 ? (
         <Card className="border-dashed border-2">
           <CardContent className="flex flex-col items-center justify-center py-16 text-center">
-            <div className="text-6xl mb-4">📚</div>
+            <Calculator className="h-12 w-12 text-muted-foreground mb-4" />
             <p className="text-xl font-semibold">No topics for Grade {activeProfile?.grade} yet</p>
             <p className="text-muted-foreground mt-2">Check back soon for new practice problems!</p>
           </CardContent>
         </Card>
       ) : (
         Object.entries(grouped).map(([category, topics]) => {
-          const emoji = CATEGORY_EMOJI[category] || "📐";
           const label = category.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
           return (
             <div key={category} className="space-y-3">
               <h2 className="text-lg font-bold flex items-center gap-2">
-                <span className="text-2xl">{emoji}</span>
                 {label}
                 <Badge variant="secondary" className="ml-1 font-normal">{topics.length}</Badge>
               </h2>
@@ -163,7 +151,7 @@ export default function KidDashboard() {
                     >
                       <CardContent className="p-5">
                         <div className="flex items-start justify-between mb-3">
-                          <span className="text-2xl">{emoji}</span>
+                          <Calculator className="h-5 w-5 text-primary" />
                           <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${diff.bg} ${diff.text}`}>
                             {diff.label}
                           </span>
@@ -182,7 +170,7 @@ export default function KidDashboard() {
                           </div>
                         ) : (
                           <p className="text-xs text-muted-foreground italic flex items-center gap-1">
-                            <span>✨</span> Not started yet — give it a try!
+                            Not started yet
                           </p>
                         )}
                       </CardContent>
@@ -198,11 +186,11 @@ export default function KidDashboard() {
   );
 }
 
-function QuickStat({ emoji, value, label }: { emoji: string; value: string | number; label: string }) {
+function QuickStat({ icon, value, label }: { icon: React.ReactNode; value: string | number; label: string }) {
   return (
     <Card className="border-0 shadow-sm">
       <CardContent className="p-3 flex items-center gap-3">
-        <span className="text-2xl">{emoji}</span>
+        {icon}
         <div>
           <div className="text-lg font-extrabold leading-tight">{value}</div>
           <div className="text-[11px] text-muted-foreground">{label}</div>

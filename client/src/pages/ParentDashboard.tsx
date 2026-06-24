@@ -81,10 +81,10 @@ export default function ParentDashboard() {
       <div className="rounded-3xl bg-gradient-to-r from-primary/10 via-accent/5 to-primary/5 border border-primary/10 p-8">
         <p className="text-sm text-muted-foreground mb-1">Parent Dashboard</p>
         <h1 className="text-3xl font-extrabold text-foreground">
-          Welcome, {user?.firstName}! 👋
+          Welcome, {user?.firstName}
         </h1>
         <p className="text-muted-foreground mt-2 text-lg">
-          Manage your children's profiles and track their math olympiad preparation.
+          Manage your children's profiles and track their learning progress.
         </p>
       </div>
 
@@ -92,7 +92,7 @@ export default function ParentDashboard() {
       <div>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-bold flex items-center gap-2">
-            👨‍👧‍👦 Your Children
+            Your Children
           </h2>
           <div className="flex items-center gap-2">
             {profiles.length > 0 && (
@@ -193,7 +193,7 @@ export default function ParentDashboard() {
         ) : profiles.length === 0 && !showForm ? (
           <Card className="border-dashed border-2">
             <CardContent className="flex flex-col items-center justify-center py-16 text-center">
-              <div className="text-6xl mb-4">🎓</div>
+              <UserPlus className="h-12 w-12 text-muted-foreground mb-4" />
               <p className="text-xl font-semibold">No children yet</p>
               <p className="text-muted-foreground mt-2 mb-4">
                 Add your child's profile to get started with math practice.
