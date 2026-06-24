@@ -1,6 +1,5 @@
 import express from "express";
 import path from "path";
-import { execSync } from "child_process";
 import { setupAuth } from "./auth";
 import { registerRoutes } from "./routes";
 import { seed } from "./seed";
@@ -18,19 +17,11 @@ registerRoutes(app);
 
 // Vite dev server or static serving
 (async () => {
-  // Push database schema before seeding
-  try {
-    console.log("Pushing database schema...");
-    execSync("npx drizzle-kit push", { stdio: "inherit" });
-  } catch (err) {
-    console.error("Schema push failed:", err);
-  }
-
   // Seed database on startup
   try {
     await seed();
   } catch (err) {
-    console.error("Seed failed:", err);
+    console.error("Seed failed (run 'npm run db:push' first if tables are missing):", err);
   }
 
   if (process.env.NODE_ENV === "production") {
