@@ -100,6 +100,22 @@ export async function migrate() {
         last_practiced_at TIMESTAMP DEFAULT NOW()
       );
     `);
+    // Add missing columns to existing tables
+    const alterStatements = [
+      "ALTER TABLE child_profiles ADD COLUMN IF NOT EXISTS state VARCHAR(2)",
+      "ALTER TABLE child_profiles ADD COLUMN IF NOT EXISTS invite_code VARCHAR(6)",
+      "ALTER TABLE questions ADD COLUMN IF NOT EXISTS image_url TEXT",
+      "ALTER TABLE questions ADD COLUMN IF NOT EXISTS diagram JSONB",
+      "ALTER TABLE questions ADD COLUMN IF NOT EXISTS bloom_level VARCHAR(20) NOT NULL DEFAULT 'understand'",
+      "ALTER TABLE questions ADD COLUMN IF NOT EXISTS topic VARCHAR(100)",
+      "ALTER TABLE question_responses ADD COLUMN IF NOT EXISTS difficulty VARCHAR(20) NOT NULL DEFAULT 'medium'",
+      "ALTER TABLE question_responses ADD COLUMN IF NOT EXISTS bloom_level VARCHAR(20) NOT NULL DEFAULT 'understand'",
+      "ALTER TABLE quiz_sessions ADD COLUMN IF NOT EXISTS difficulty VARCHAR(20)",
+    ];
+    for (const sql of alterStatements) {
+      try { await client.query(sql); } catch {}
+    }
+
     console.log("Database tables ready.");
   } catch (err) {
     console.error("Migration error:", err);
