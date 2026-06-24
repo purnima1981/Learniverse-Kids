@@ -2,19 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import { useQuiz } from "@/hooks/useQuiz";
 import { QuizQuestion } from "@/components/QuizQuestion";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import {
-  ArrowLeft,
-  ArrowRight,
-  CheckCircle2,
-  Clock,
-  Loader2,
-  Trophy,
-  Target,
-  Lightbulb,
-} from "lucide-react";
+import { Loader2 } from "lucide-react";
 import type { Question } from "@shared/schema";
 
 interface TopicQuestionsProps {
@@ -51,9 +42,11 @@ export function TopicQuestions({
 
   if (questions.length === 0) {
     return (
-      <Card>
-        <CardContent className="py-12 text-center">
-          <p className="text-muted-foreground">No questions available for this topic yet.</p>
+      <Card className="border-0 shadow-lg">
+        <CardContent className="py-16 text-center">
+          <div className="text-5xl mb-4">📝</div>
+          <p className="text-lg font-semibold">No questions available yet</p>
+          <p className="text-muted-foreground mt-1">Check back soon!</p>
         </CardContent>
       </Card>
     );
@@ -82,60 +75,70 @@ function QuizContent({
 }) {
   const quiz = useQuiz(questions, profileId, topicId, onComplete);
 
-  // Start quiz on mount
   if (!quiz.sessionId && !quiz.startQuiz.isPending) {
     quiz.startQuiz.mutate();
     return (
-      <div className="flex items-center justify-center py-12">
+      <div className="flex flex-col items-center justify-center py-16 gap-3">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        <span className="ml-3">Loading practice session...</span>
+        <span className="text-muted-foreground">Loading practice session...</span>
       </div>
     );
   }
 
+  // Completion screen
   if (quiz.quizComplete) {
     const accuracy = Math.round((quiz.score / quiz.totalQuestions) * 100);
+    const isPerfect = accuracy === 100;
+    const isGreat = accuracy >= 80;
+    const isGood = accuracy >= 50;
+
     return (
-      <Card className="overflow-hidden">
-        <div className={`h-2 ${accuracy >= 80 ? "bg-green-500" : accuracy >= 50 ? "bg-yellow-500" : "bg-orange-500"}`} />
-        <CardHeader className="text-center pt-8">
-          <Trophy className={`h-16 w-16 mx-auto mb-4 ${accuracy >= 80 ? "text-yellow-500" : accuracy >= 50 ? "text-blue-500" : "text-orange-500"}`} />
-          <CardTitle className="text-3xl">Practice Complete!</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6 pb-8">
-          <div className="grid grid-cols-3 gap-4 text-center">
-            <div className="p-4 rounded-xl bg-card border">
-              <Target className="h-6 w-6 mx-auto mb-2 text-primary" />
-              <p className="text-2xl font-bold">{quiz.score}/{quiz.totalQuestions}</p>
-              <p className="text-sm text-muted-foreground">Score</p>
+      <Card className="border-0 shadow-xl overflow-hidden">
+        <div className={`h-2 ${isPerfect ? "bg-amber-400" : isGreat ? "bg-emerald-500" : isGood ? "bg-blue-500" : "bg-orange-500"}`} />
+        <CardContent className="py-12 text-center">
+          <div className="text-7xl mb-4 animate-bounce-in">
+            {isPerfect ? "🏆" : isGreat ? "🌟" : isGood ? "💪" : "📚"}
+          </div>
+          <h2 className="text-3xl font-extrabold mb-6">
+            {isPerfect ? "PERFECT SCORE!" : isGreat ? "Excellent Work!" : isGood ? "Good Effort!" : "Keep Practicing!"}
+          </h2>
+
+          <div className="flex justify-center gap-6 mb-8">
+            <div className="text-center">
+              <div className="text-4xl font-extrabold text-primary">{quiz.score}/{quiz.totalQuestions}</div>
+              <div className="text-sm text-muted-foreground mt-1">Score</div>
             </div>
-            <div className="p-4 rounded-xl bg-card border">
-              <CheckCircle2 className="h-6 w-6 mx-auto mb-2 text-green-500" />
-              <p className="text-2xl font-bold">{accuracy}%</p>
-              <p className="text-sm text-muted-foreground">Accuracy</p>
+            <div className="w-px bg-border" />
+            <div className="text-center">
+              <div className="text-4xl font-extrabold text-emerald-600">{accuracy}%</div>
+              <div className="text-sm text-muted-foreground mt-1">Accuracy</div>
             </div>
-            <div className="p-4 rounded-xl bg-card border">
-              <Clock className="h-6 w-6 mx-auto mb-2 text-blue-500" />
-              <p className="text-2xl font-bold">
+            <div className="w-px bg-border" />
+            <div className="text-center">
+              <div className="text-4xl font-extrabold text-blue-600">
                 {Math.floor(quiz.elapsed / 60)}:{String(quiz.elapsed % 60).padStart(2, "0")}
-              </p>
-              <p className="text-sm text-muted-foreground">Time</p>
+              </div>
+              <div className="text-sm text-muted-foreground mt-1">Time</div>
             </div>
           </div>
 
-          <div className="text-center p-4 rounded-xl bg-card border">
-            {accuracy === 100 ? (
-              <p className="text-lg font-medium text-green-500">Perfect score! You've mastered this topic!</p>
-            ) : accuracy >= 80 ? (
-              <p className="text-lg font-medium text-green-500">Excellent! You're well prepared for the olympiad!</p>
-            ) : accuracy >= 60 ? (
-              <p className="text-lg font-medium text-blue-500">Good work! A few more practice sessions will help.</p>
-            ) : accuracy >= 40 ? (
-              <p className="text-lg font-medium text-yellow-500">Keep going! Review the explanations and try again.</p>
-            ) : (
-              <p className="text-lg font-medium text-orange-500">Don't worry! Focus on the explanations and build up from easier levels.</p>
-            )}
-          </div>
+          <p className="text-muted-foreground max-w-md mx-auto mb-6">
+            {isPerfect
+              ? "You nailed every single question! You're ready for competition!"
+              : isGreat
+              ? "Outstanding performance! A few more sessions and you'll be unstoppable."
+              : isGood
+              ? "You're making progress! Review the explanations and try again."
+              : "Every champion starts somewhere. Focus on the explanations and you'll improve!"}
+          </p>
+
+          <Button
+            onClick={() => onComplete(quiz.score, quiz.totalQuestions)}
+            size="lg"
+            className="h-12 px-8 text-base font-bold"
+          >
+            Back to Dashboard
+          </Button>
         </CardContent>
       </Card>
     );
@@ -148,29 +151,27 @@ function QuizContent({
 
   return (
     <div className="space-y-6">
-      {/* Progress Bar */}
-      <div className="space-y-2">
-        <div className="flex items-center justify-between text-sm">
-          <span>
+      {/* Progress Header */}
+      <div className="bg-white rounded-2xl border shadow-sm p-4">
+        <div className="flex items-center justify-between text-sm mb-2">
+          <span className="font-semibold">
             Question {quiz.currentIndex + 1} of {quiz.totalQuestions}
           </span>
           <div className="flex items-center gap-4">
-            <Badge variant="outline">
-              <Target className="h-3 w-3 mr-1" />
-              {quiz.score} correct
+            <Badge className="bg-emerald-100 text-emerald-700 border-0 font-semibold">
+              ✅ {quiz.score} correct
             </Badge>
-            <span className="flex items-center gap-1 text-muted-foreground">
-              <Clock className="h-3 w-3" />
-              {Math.floor(quiz.elapsed / 60)}:{String(quiz.elapsed % 60).padStart(2, "0")}
+            <span className="font-mono text-muted-foreground font-medium">
+              ⏱ {Math.floor(quiz.elapsed / 60)}:{String(quiz.elapsed % 60).padStart(2, "0")}
             </span>
           </div>
         </div>
-        <Progress value={progressPct} className="h-2" />
+        <Progress value={progressPct} className="h-2.5" />
       </div>
 
-      {/* Question */}
-      <Card>
-        <CardContent className="p-6">
+      {/* Question Card */}
+      <Card className="border-0 shadow-lg">
+        <CardContent className="p-6 sm:p-8">
           <QuizQuestion
             question={quiz.currentQuestion}
             hintsUsed={state.hintsUsed}
@@ -190,17 +191,18 @@ function QuizContent({
           variant="outline"
           onClick={quiz.prevQuestion}
           disabled={quiz.currentIndex === 0}
+          className="h-11 font-medium"
         >
-          <ArrowLeft className="h-4 w-4 mr-2" /> Previous
+          ← Previous
         </Button>
 
         {quiz.currentIndex === quiz.totalQuestions - 1 ? (
-          <Button onClick={quiz.finishQuiz} disabled={!state.answered}>
-            Finish Practice <Trophy className="h-4 w-4 ml-2" />
+          <Button onClick={quiz.finishQuiz} disabled={!state.answered} className="h-11 font-bold bg-emerald-600 hover:bg-emerald-700">
+            🏆 Finish Practice
           </Button>
         ) : (
-          <Button onClick={quiz.nextQuestion} disabled={!state.answered}>
-            Next <ArrowRight className="h-4 w-4 ml-2" />
+          <Button onClick={quiz.nextQuestion} disabled={!state.answered} className="h-11 font-medium">
+            Next →
           </Button>
         )}
       </div>

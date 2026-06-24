@@ -1,23 +1,30 @@
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
-import {
-  Calculator,
-  Brain,
-  Loader2,
-  Trophy,
-  Target,
-  Flame,
-  Clock,
-  Play,
-  ChevronRight,
-} from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { Loader2 } from "lucide-react";
 import { TopicQuestions } from "@/components/TopicQuestions";
 import type { Topic, TopicProgress } from "@shared/schema";
+
+const CATEGORY_EMOJI: Record<string, string> = {
+  arithmetic: "🔢",
+  algebra: "📐",
+  geometry: "📏",
+  "number-theory": "🧮",
+  combinatorics: "🎲",
+  "logical-reasoning": "🧠",
+  "data-handling": "📊",
+};
+
+const DIFFICULTY_STYLE: Record<string, { bg: string; text: string; label: string }> = {
+  easy: { bg: "bg-emerald-100", text: "text-emerald-700", label: "Easy" },
+  medium: { bg: "bg-amber-100", text: "text-amber-700", label: "Medium" },
+  hard: { bg: "bg-orange-100", text: "text-orange-700", label: "Hard" },
+  olympiad: { bg: "bg-red-100", text: "text-red-700", label: "Olympiad" },
+};
 
 export default function KidDashboard() {
   const { activeProfile } = useAuth();
@@ -45,13 +52,11 @@ export default function KidDashboard() {
     enabled: !!activeProfile?.id,
   });
 
-  // Stats
   const totalCorrect = progressList.reduce((sum, p) => sum + (p.questionsCorrect ?? 0), 0);
   const totalAttempted = progressList.reduce((sum, p) => sum + (p.questionsAttempted ?? 0), 0);
   const totalSessions = progressList.reduce((sum, p) => sum + (p.totalSessions ?? 0), 0);
   const overallAccuracy = totalAttempted > 0 ? Math.round((totalCorrect / totalAttempted) * 100) : 0;
 
-  // Pick a random topic for practice
   function startPractice() {
     if (topicList.length === 0) return;
     const randomTopic = topicList[Math.floor(Math.random() * topicList.length)];
@@ -59,7 +64,7 @@ export default function KidDashboard() {
     setPracticeMode(true);
   }
 
-  function handleComplete(score: number, total: number) {
+  function handleComplete() {
     setPracticeMode(false);
     setSelectedTopicId(null);
   }
@@ -72,12 +77,11 @@ export default function KidDashboard() {
     );
   }
 
-  // Practice mode — show questions with timer
   if (practiceMode && selectedTopicId) {
     return (
       <div className="max-w-4xl mx-auto p-6">
         <Button variant="ghost" onClick={() => { setPracticeMode(false); setSelectedTopicId(null); }} className="mb-4">
-          Back to Dashboard
+          ← Back to Dashboard
         </Button>
         <TopicQuestions
           topicId={selectedTopicId}
@@ -88,100 +92,144 @@ export default function KidDashboard() {
     );
   }
 
+  // Group by category
+  const grouped = topicList.reduce<Record<string, Topic[]>>((acc, t) => {
+    if (!acc[t.category]) acc[t.category] = [];
+    acc[t.category].push(t);
+    return acc;
+  }, {});
+
+  const progressMap = new Map(progressList.map((p) => [p.topicId, p]));
+
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-8">
+    <div className="max-w-5xl mx-auto p-6 space-y-8">
       {/* Hero */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/20 via-primary/10 to-background border p-8">
-        <div className="relative z-10">
-          <p className="text-sm text-muted-foreground mb-1">Grade {activeProfile?.grade}</p>
-          <h1 className="text-3xl font-bold">
-            Hey {activeProfile?.name}, ready to practice?
-          </h1>
-          <p className="text-muted-foreground mt-2 mb-6">
-            Each session gives you 10-15 questions with a timer. Let's go!
-          </p>
-          <Button size="lg" className="text-lg h-14 px-8" onClick={startPractice} disabled={topicList.length === 0}>
-            <Play className="h-5 w-5 mr-2" /> Start Practice
-          </Button>
-        </div>
-        <div className="absolute -right-4 -bottom-4 opacity-10">
-          <Calculator className="h-40 w-40" />
-        </div>
-      </div>
+      <div className="relative overflow-hidden rounded-3xl bg-hero-pattern animate-gradient p-8 text-white">
+        <div className="relative z-10 flex flex-col md:flex-row items-center gap-6">
+          <div className="flex-1">
+            <p className="text-white/80 text-sm font-medium mb-1">Grade {activeProfile?.grade}</p>
+            <h1 className="text-3xl md:text-4xl font-extrabold mb-2">
+              Hey {activeProfile?.name}! 👋
+            </h1>
+            <p className="text-white/80 text-lg mb-6">
+              Ready to solve some awesome math problems?
+            </p>
+            <Button
+              size="lg"
+              className="h-14 px-8 text-lg font-bold bg-white text-primary hover:bg-white/90 shadow-lg animate-pulse-ring"
+              onClick={startPractice}
+              disabled={topicList.length === 0}
+            >
+              🚀 Start Practice
+            </Button>
+          </div>
 
-      {/* Quick Stats */}
-      <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
-        <StatCard icon={<Flame className="h-5 w-5 text-orange-500" />} label="Sessions" value={totalSessions} />
-        <StatCard icon={<Target className="h-5 w-5 text-blue-500" />} label="Questions Solved" value={totalAttempted} />
-        <StatCard icon={<Trophy className="h-5 w-5 text-yellow-500" />} label="Correct" value={totalCorrect} />
-        <StatCard icon={<Brain className="h-5 w-5 text-purple-500" />} label="Accuracy" value={`${overallAccuracy}%`} />
-      </div>
-
-      {/* Recent Topics */}
-      {topicList.length > 0 && (
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold">Available Topics</h2>
-          <div className="grid gap-3 sm:grid-cols-2">
-            {topicList.slice(0, 8).map((topic) => {
-              const progress = progressList.find((p) => p.topicId === topic.id);
-              const attempted = progress?.questionsAttempted ?? 0;
-              const correct = progress?.questionsCorrect ?? 0;
-              const accuracy = attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
-
-              return (
-                <Card
-                  key={topic.id}
-                  className="cursor-pointer hover:border-primary/50 transition-all"
-                  onClick={() => { setSelectedTopicId(topic.id); setPracticeMode(true); }}
-                >
-                  <CardContent className="p-4 flex items-center gap-4">
-                    <div className="p-2 rounded-lg bg-primary/10">
-                      <Calculator className="h-5 w-5 text-primary" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-sm truncate">{topic.title}</p>
-                      <div className="flex items-center gap-2 mt-1">
-                        <Badge variant="outline" className="text-xs capitalize">{topic.difficulty}</Badge>
-                        <Badge variant="secondary" className="text-xs capitalize">{topic.category}</Badge>
-                      </div>
-                    </div>
-                    {attempted > 0 ? (
-                      <div className="text-right">
-                        <p className="text-sm font-bold">{accuracy}%</p>
-                        <p className="text-xs text-muted-foreground">{correct}/{attempted}</p>
-                      </div>
-                    ) : (
-                      <ChevronRight className="h-4 w-4 text-muted-foreground" />
-                    )}
-                  </CardContent>
-                </Card>
-              );
-            })}
+          {/* Stats circles */}
+          <div className="flex gap-4 md:gap-6">
+            <StatCircle value={totalSessions} label="Sessions" color="bg-white/20" />
+            <StatCircle value={totalAttempted} label="Solved" color="bg-white/20" />
+            <StatCircle value={`${overallAccuracy}%`} label="Accuracy" color="bg-white/20" />
           </div>
         </div>
-      )}
+        <div className="absolute -right-10 -bottom-10 text-[150px] opacity-10 select-none">🧮</div>
+      </div>
 
-      {topicList.length === 0 && (
-        <Card className="border-dashed">
-          <CardContent className="flex flex-col items-center justify-center py-12 text-center">
-            <Calculator className="h-12 w-12 text-muted-foreground mb-4" />
-            <p className="text-lg font-medium">No topics available for Grade {activeProfile?.grade} yet</p>
-            <p className="text-muted-foreground">Check back soon!</p>
+      {/* Quick Stats Bar */}
+      <div className="grid grid-cols-4 gap-3">
+        <QuickStat emoji="🔥" value={totalSessions} label="Sessions" />
+        <QuickStat emoji="✅" value={totalCorrect} label="Correct" />
+        <QuickStat emoji="📝" value={totalAttempted} label="Attempted" />
+        <QuickStat emoji="🎯" value={`${overallAccuracy}%`} label="Accuracy" />
+      </div>
+
+      {/* Topics by Category */}
+      {topicList.length === 0 ? (
+        <Card className="border-dashed border-2">
+          <CardContent className="flex flex-col items-center justify-center py-16 text-center">
+            <div className="text-6xl mb-4">📚</div>
+            <p className="text-xl font-semibold">No topics for Grade {activeProfile?.grade} yet</p>
+            <p className="text-muted-foreground mt-2">Check back soon for new practice problems!</p>
           </CardContent>
         </Card>
+      ) : (
+        Object.entries(grouped).map(([category, topics]) => {
+          const emoji = CATEGORY_EMOJI[category] || "📐";
+          const label = category.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+          return (
+            <div key={category} className="space-y-3">
+              <h2 className="text-lg font-bold flex items-center gap-2">
+                <span className="text-2xl">{emoji}</span>
+                {label}
+                <Badge variant="secondary" className="ml-1 font-normal">{topics.length}</Badge>
+              </h2>
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {topics.map((topic) => {
+                  const prog = progressMap.get(topic.id);
+                  const attempted = prog?.questionsAttempted ?? 0;
+                  const correct = prog?.questionsCorrect ?? 0;
+                  const accuracy = attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
+                  const diff = DIFFICULTY_STYLE[topic.difficulty] ?? DIFFICULTY_STYLE.medium;
+
+                  return (
+                    <Card
+                      key={topic.id}
+                      className="card-hover cursor-pointer border-0 shadow-md hover:shadow-xl"
+                      onClick={() => { setSelectedTopicId(topic.id); setPracticeMode(true); }}
+                    >
+                      <CardContent className="p-5">
+                        <div className="flex items-start justify-between mb-3">
+                          <span className="text-2xl">{emoji}</span>
+                          <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${diff.bg} ${diff.text}`}>
+                            {diff.label}
+                          </span>
+                        </div>
+                        <h3 className="font-bold text-sm mb-1">{topic.title}</h3>
+                        {topic.description && (
+                          <p className="text-xs text-muted-foreground line-clamp-2 mb-3">{topic.description}</p>
+                        )}
+                        {attempted > 0 ? (
+                          <div className="space-y-1.5">
+                            <div className="flex justify-between text-xs">
+                              <span className="text-muted-foreground">{correct}/{attempted} correct</span>
+                              <span className="font-bold text-primary">{accuracy}%</span>
+                            </div>
+                            <Progress value={accuracy} className="h-2" />
+                          </div>
+                        ) : (
+                          <p className="text-xs text-muted-foreground italic flex items-center gap-1">
+                            <span>✨</span> Not started yet — give it a try!
+                          </p>
+                        )}
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })
       )}
     </div>
   );
 }
 
-function StatCard({ icon, label, value }: { icon: React.ReactNode; label: string; value: string | number }) {
+function StatCircle({ value, label, color }: { value: string | number; label: string; color: string }) {
   return (
-    <Card>
-      <CardContent className="flex items-center gap-3 p-4">
-        <div className="p-2.5 rounded-lg bg-card border">{icon}</div>
+    <div className={`${color} rounded-2xl p-4 text-center min-w-[80px] backdrop-blur-sm`}>
+      <div className="text-2xl font-extrabold">{value}</div>
+      <div className="text-xs opacity-80">{label}</div>
+    </div>
+  );
+}
+
+function QuickStat({ emoji, value, label }: { emoji: string; value: string | number; label: string }) {
+  return (
+    <Card className="border-0 shadow-sm">
+      <CardContent className="p-3 flex items-center gap-3">
+        <span className="text-2xl">{emoji}</span>
         <div>
-          <p className="text-xl font-bold">{value}</p>
-          <p className="text-xs text-muted-foreground">{label}</p>
+          <div className="text-lg font-extrabold leading-tight">{value}</div>
+          <div className="text-[11px] text-muted-foreground">{label}</div>
         </div>
       </CardContent>
     </Card>

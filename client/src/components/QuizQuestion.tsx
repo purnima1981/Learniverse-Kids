@@ -41,13 +41,19 @@ export function QuizQuestion({
   return (
     <div className="space-y-6">
       {/* Question Header */}
-      <div className="space-y-2">
+      <div className="space-y-3">
         <div className="flex items-center gap-2 flex-wrap">
-          <Badge variant="outline" className="capitalize">{question.difficulty}</Badge>
-          <Badge variant="secondary" className="capitalize">{question.bloomLevel}</Badge>
-          {question.topic && <Badge variant="secondary">{question.topic}</Badge>}
+          <span className={cn(
+            "text-xs font-semibold px-2.5 py-1 rounded-full",
+            question.difficulty === "easy" ? "bg-emerald-100 text-emerald-700" :
+            question.difficulty === "hard" ? "bg-orange-100 text-orange-700" :
+            question.difficulty === "olympiad" ? "bg-red-100 text-red-700" :
+            "bg-amber-100 text-amber-700"
+          )}>{question.difficulty}</span>
+          <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-primary/10 text-primary capitalize">{question.bloomLevel}</span>
+          {question.topic && <span className="text-xs text-muted-foreground">{question.topic}</span>}
         </div>
-        <p className="text-lg font-medium">
+        <p className="text-xl font-semibold leading-relaxed">
           <MathRenderer text={question.text} />
         </p>
         {question.diagram && (
@@ -66,8 +72,8 @@ export function QuizQuestion({
       {hints.length > 0 && (
         <div className="space-y-2">
           {hints.slice(0, hintsUsed).map((hint, i) => (
-            <div key={i} className="flex items-start gap-2 p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
-              <Lightbulb className="h-4 w-4 text-yellow-500 mt-0.5 shrink-0" />
+            <div key={i} className="flex items-start gap-2 p-3 rounded-xl bg-amber-50 border border-amber-200">
+              <span className="text-lg shrink-0">💡</span>
               <p className="text-sm"><MathRenderer text={hint} /></p>
             </div>
           ))}
@@ -87,17 +93,13 @@ export function QuizQuestion({
       {answered && (
         <div
           className={cn(
-            "flex items-center gap-3 p-4 rounded-lg border",
+            "flex items-center gap-3 p-4 rounded-2xl border-2 animate-bounce-in",
             isCorrect
-              ? "bg-green-500/10 border-green-500/30 text-green-400"
-              : "bg-red-500/10 border-red-500/30 text-red-400"
+              ? "bg-emerald-50 border-emerald-200 text-emerald-700"
+              : "bg-red-50 border-red-200 text-red-700"
           )}
         >
-          {isCorrect ? (
-            <CheckCircle2 className="h-5 w-5 shrink-0" />
-          ) : (
-            <XCircle className="h-5 w-5 shrink-0" />
-          )}
+          <span className="text-2xl shrink-0">{isCorrect ? "🎉" : "💡"}</span>
           <div>
             <p className="font-medium">{isCorrect ? "Correct!" : "Not quite right"}</p>
             {question.explanation && (
