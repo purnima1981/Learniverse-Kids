@@ -66,10 +66,25 @@ function PracticeTest({ questions, profileId, topicId, onComplete }: {
   questions: Question[]; profileId: number; topicId: number;
   onComplete: (score: number, total: number) => void;
 }) {
+  // Adaptive timer based on grade and difficulty
+  const getTimeLimit = (q: Question) => {
+    const grade = questions[0]?.difficulty; // use first question as proxy
+    const diff = q.difficulty ?? "medium";
+    // Base time by difficulty
+    const base = diff === "easy" ? 45 : diff === "medium" ? 60 : diff === "hard" ? 90 : 120;
+    // Grade adjustment: younger kids get more time
+    const gradeNum = (q as any).gradeLevel ?? 5;
+    if (gradeNum <= 2) return base + 30;
+    if (gradeNum <= 4) return base + 15;
+    return base;
+  };
+
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [confirmed, setConfirmed] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(60);
+  const initialTime = getTimeLimit(questions[0]);
+  const [timeLeft, setTimeLeft] = useState(initialTime);
+  const [timeLimit, setTimeLimit] = useState(initialTime);
   const [questionStartTime, setQuestionStartTime] = useState(Date.now());
   const [results, setResults] = useState<TestResult[]>([]);
   const [sessionId, setSessionId] = useState<number | null>(null);
@@ -142,7 +157,7 @@ function PracticeTest({ questions, profileId, topicId, onComplete }: {
       setCurrent(current + 1);
       setSelected(null);
       setConfirmed(false);
-      setTimeLeft(60);
+      const newTime = getTimeLimit(questions[current + 1] ?? questions[current]); setTimeLeft(newTime); setTimeLimit(newTime);
       setQuestionStartTime(Date.now());
       setRevealStep(-1);
       setRevealUsed(false);
@@ -178,7 +193,7 @@ function PracticeTest({ questions, profileId, topicId, onComplete }: {
   if (finished) {
     return <ResultsScreen results={results} questions={questions} onRetry={() => {
       setResults([]); setCurrent(0); setSelected(null); setConfirmed(false);
-      setTimeLeft(60); setQuestionStartTime(Date.now()); setFinished(false);
+      const newTime = getTimeLimit(questions[current + 1] ?? questions[current]); setTimeLeft(newTime); setTimeLimit(newTime); setQuestionStartTime(Date.now()); setFinished(false);
       setRevealStep(-1); setRevealUsed(false);
       startSession.mutate();
     }} onComplete={onComplete} />;
@@ -186,7 +201,7 @@ function PracticeTest({ questions, profileId, topicId, onComplete }: {
 
   // ─── Question UI (Learniversal style) ─────────────────────────────────
 
-  const timerPct = timeLeft / 60;
+  const timerPct = timeLeft / timeLimit;
   const isUrgent = timerPct < 0.3;
 
   return (
@@ -232,7 +247,7 @@ function PracticeTest({ questions, profileId, topicId, onComplete }: {
             />
           </div>
           <div className="text-xs text-muted-foreground font-body tabular-nums min-w-[70px] text-right">
-            <b className="text-foreground">{timeLeft}s</b> / 60s
+            <b className="text-foreground">{timeLeft}s</b> / {timeLimit}s
           </div>
         </div>
 
