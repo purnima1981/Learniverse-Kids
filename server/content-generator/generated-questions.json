@@ -426,10 +426,17 @@
         "explanation": "10 - 4 = 6. The difference between 10 and 6 is 4."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "5 + 5 = 10. True or false?",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "remember",
         "topic": "single-digit addition",
@@ -440,10 +447,17 @@
         "explanation": "True! 5 + 5 = 10. This is a doubles fact. Five plus five equals ten."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "9 - 5 = 3. True or false?",
-        "options": null,
-        "answer": "false",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "b",
         "difficulty": "medium",
         "bloomLevel": "understand",
         "topic": "subtraction within 20",
@@ -454,10 +468,17 @@
         "explanation": "False! 9 - 5 = 4, not 3. Count back from 9 five times: 8, 7, 6, 5, 4."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "Adding zero to a number gives you the same number. True or false?",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "understand",
         "topic": "single-digit addition",
@@ -468,10 +489,17 @@
         "explanation": "True! Adding zero to any number gives you that same number. For example, 7 + 0 = 7."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "6 + 7 = 12. True or false?",
-        "options": null,
-        "answer": "false",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "b",
         "difficulty": "hard",
         "bloomLevel": "understand",
         "topic": "single-digit addition",
@@ -482,10 +510,17 @@
         "explanation": "False! 6 + 7 = 13, not 12. Since 6 + 6 = 12, adding one more gives 13."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "If you subtract a number from itself, you always get zero. True or false?",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "hard",
         "bloomLevel": "analyze",
         "topic": "subtraction within 20",
@@ -1008,10 +1043,17 @@
         "explanation": "Most clocks have a circular face. The circle shape lets the hands go around smoothly."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "A square has 4 sides. True or false?",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "remember",
         "topic": "squares",
@@ -1022,10 +1064,17 @@
         "explanation": "True! A square has exactly 4 sides, and all 4 sides are equal in length."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "A circle has 4 corners. True or false?",
-        "options": null,
-        "answer": "false",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "b",
         "difficulty": "medium",
         "bloomLevel": "understand",
         "topic": "circles",
@@ -1036,10 +1085,17 @@
         "explanation": "False! A circle has 0 corners. It is round and smooth with no pointy parts."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "A triangle has more sides than a rectangle. True or false?",
-        "options": null,
-        "answer": "false",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "b",
         "difficulty": "medium",
         "bloomLevel": "analyze",
         "topic": "sides and corners",
@@ -1050,10 +1106,17 @@
         "explanation": "False! A triangle has 3 sides and a rectangle has 4 sides. 3 is less than 4."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "All squares are also rectangles. True or false?",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "hard",
         "bloomLevel": "analyze",
         "topic": "squares",
@@ -1064,10 +1127,17 @@
         "explanation": "True! A square is a special rectangle where all 4 sides are the same length."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "A shape with 3 straight sides is always called a triangle. True or false?",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "hard",
         "bloomLevel": "understand",
         "topic": "triangles",
@@ -1569,10 +1639,17 @@
         "explanation": "90 = 90 + 0. There are 9 tens (90) and 0 ones, so the expanded form is 90 + 0."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "The number 52 has more tens than the number 25. True or false?",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "analyze",
         "topic": "comparing numbers",
@@ -1583,10 +1660,17 @@
         "explanation": "True! 52 has 5 tens and 25 has 2 tens. 5 is more than 2."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "The number 99 is the largest two-digit number. True or false?",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "understand",
         "topic": "comparing numbers",
@@ -1597,10 +1681,17 @@
         "explanation": "True! 99 is the largest two-digit number. It has the biggest digit (9) in both the tens and ones places."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "46 is greater than 64. True or false?",
-        "options": null,
-        "answer": "false",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "b",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "comparing numbers",
@@ -1611,10 +1702,17 @@
         "explanation": "False! 46 has 4 tens and 64 has 6 tens. Since 4 < 6, 46 is less than 64."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "20 + 8 = 28 is an example of expanded form. True or false?",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "hard",
         "bloomLevel": "understand",
         "topic": "expanded form",
@@ -1625,10 +1723,17 @@
         "explanation": "True! 20 + 8 = 28 shows the number broken into its tens value (20) and ones value (8)."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "A number with 6 tens is always greater than a number with 5 tens. True or false?",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "hard",
         "bloomLevel": "analyze",
         "topic": "tens and ones",
@@ -2130,10 +2235,17 @@
         "explanation": "A vertical line down the middle of the nose divides a smiley face into two matching halves. The left eye matches the right eye, and the smile is split evenly."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "A square has more lines of symmetry than a rectangle. True or false?",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "analyze",
         "topic": "line symmetry",
@@ -2144,10 +2256,17 @@
         "explanation": "True! A square has 4 lines of symmetry (vertical, horizontal, and two diagonals) while a rectangle has only 2 (vertical and horizontal)."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "A mirror image is always the same size as the original. True or false?",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "remember",
         "topic": "mirror images",
@@ -2158,10 +2277,17 @@
         "explanation": "True! A mirror image in a flat mirror is always the same size as the original. It is just flipped left to right."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "The letter Z has a line of symmetry. True or false?",
-        "options": null,
-        "answer": "false",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "b",
         "difficulty": "hard",
         "bloomLevel": "analyze",
         "topic": "line symmetry",
@@ -2172,10 +2298,17 @@
         "explanation": "False! The letter Z does not have a line of symmetry. No matter how you try to fold it, the two halves do not match."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "If a shape has a line of symmetry, folding it along that line makes both halves match. True or false?",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "hard",
         "bloomLevel": "understand",
         "topic": "line symmetry",
@@ -2186,10 +2319,17 @@
         "explanation": "True! That is exactly what a line of symmetry does. When you fold along the line, both halves overlap perfectly."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "A shape can have more than one line of symmetry. True or false?",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "hard",
         "bloomLevel": "understand",
         "topic": "line symmetry",
@@ -2292,10 +2432,17 @@
         "explanation": "7 x 2 = 14. Multiplying by 2 is the same as doubling: 7 + 7 = 14."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "4 x 5 equals 20.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "remember",
         "topic": "times tables",
@@ -2348,10 +2495,17 @@
         "explanation": "8 x 4 = 32. You can think of it as doubling twice: 8 x 2 = 16, then 16 x 2 = 32."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "2 x 10 equals 20.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "remember",
         "topic": "times tables",
@@ -2425,10 +2579,17 @@
         "explanation": "7 x 6 = 42, the same as 6 x 7. The commutative property says that changing the order of the numbers does not change the product."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "5 x 8 gives the same answer as 8 x 5.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "understand",
         "topic": "commutative property",
@@ -2565,10 +2726,17 @@
         "explanation": "4 rows x 9 desks = 36 desks in the classroom."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "You can use the distributive property to break 7 x 12 into 7 x 10 + 7 x 2.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "understand",
         "topic": "distributive property",
@@ -2776,10 +2944,17 @@
         "explanation": "Area = length x width = 6 x 2 = 12 square centimeters."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "The perimeter of a shape is the distance around it.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "remember",
         "topic": "perimeter of rectangles",
@@ -2811,10 +2986,17 @@
         "explanation": "Area = 5 x 5 = 25 square centimeters."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "Area is measured in square units.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "remember",
         "topic": "area of rectangles",
@@ -2993,10 +3175,17 @@
         "explanation": "20 = 2 x (7 + width), so 7 + width = 10, and width = 3 cm."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "Two rectangles can have the same perimeter but different areas.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "understand",
         "topic": "area of rectangles",
@@ -3070,10 +3259,17 @@
         "explanation": "24 = 8 x width, so width = 24 / 8 = 3 cm."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "A rectangle with sides 6 cm and 4 cm has a greater area than a square with sides 5 cm.",
-        "options": null,
-        "answer": "false",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "b",
         "difficulty": "medium",
         "bloomLevel": "analyze",
         "topic": "area of rectangles",
@@ -3239,10 +3435,17 @@
         "explanation": "3 shaded slices out of 8 total slices = 3/8."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "The fraction 1/2 means one part out of two equal parts.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "remember",
         "topic": "fraction concepts",
@@ -3337,10 +3540,17 @@
         "explanation": "1/4 + 1/4 = 2/4 = 1/2. When denominators match, add the numerators: 1 + 1 = 2, giving 2/4 which simplifies to 1/2."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "3/4 is greater than 2/4.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "comparing fractions",
@@ -3498,10 +3708,17 @@
         "explanation": "6/8 simplified: divide numerator and denominator by 2. 6 / 2 = 3, 8 / 2 = 4. So 6/8 = 3/4."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "2/6 is equivalent to 1/3.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "understand",
         "topic": "equivalent fractions",
@@ -3575,10 +3792,17 @@
         "explanation": "Convert 1/3 to sixths: 1/3 = 2/6. Then 2/6 + 1/6 = 3/6 = 1/2."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "5/5 is equal to 1 whole.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "understand",
         "topic": "fraction concepts",
@@ -3765,10 +3989,17 @@
         "explanation": "The factor pairs of 10 are (1, 10) and (2, 5). These are all the pairs of whole numbers that multiply to 10."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "15 is a multiple of 5.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "remember",
         "topic": "multiples",
@@ -3821,10 +4052,17 @@
         "explanation": "The factors of 8 are 1, 2, 4, and 8. These are all the numbers that divide 8 with no remainder."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "Every number is a factor of itself.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "factor pairs",
@@ -3898,10 +4136,17 @@
         "explanation": "The first five multiples of 4 are: 4 x 1 = 4, 4 x 2 = 8, 4 x 3 = 12, 4 x 4 = 16, 4 x 5 = 20."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "1 is a factor of every number.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "remember",
         "topic": "factor pairs",
@@ -3996,10 +4241,17 @@
         "explanation": "15 is a common multiple of 3 and 5 because 15 / 3 = 5 and 15 / 5 = 3."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "The GCF of 9 and 15 is 3.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "apply",
         "topic": "LCM and GCD",
@@ -4073,10 +4325,17 @@
         "explanation": "Factors of 18: 1, 2, 3, 6, 9, 18. That is 6 factors."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "The LCM of 6 and 8 is 48.",
-        "options": null,
-        "answer": "false",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "b",
         "difficulty": "medium",
         "bloomLevel": "apply",
         "topic": "LCM and GCD",
@@ -4263,10 +4522,17 @@
         "explanation": "3/5 - 1/5 = 2/5. Subtract the numerators when the denominators match."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "1/3 + 1/3 = 2/6.",
-        "options": null,
-        "answer": "false",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "b",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "adding fractions with like denominators",
@@ -4319,10 +4585,17 @@
         "explanation": "4/8 simplified is 1/2. Divide both numerator and denominator by their GCF, which is 4."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "When multiplying two fractions, you multiply the numerators together and the denominators together.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "remember",
         "topic": "multiplying fractions",
@@ -4375,10 +4648,17 @@
         "explanation": "5/6 - 1/3 = 5/6 - 2/6 = 3/6 = 1/2."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "3/4 is greater than 2/3.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "comparing fractions",
@@ -4473,10 +4753,17 @@
         "explanation": "3/4 ÷ 1/2 = 3/4 x 2/1 = 6/4 = 3/2 = 1 1/2."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "5/8 + 3/8 = 1.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "understand",
         "topic": "adding fractions with like denominators",
@@ -4529,10 +4816,17 @@
         "explanation": "2 1/2 - 1 3/4 = 5/2 - 7/4 = 10/4 - 7/4 = 3/4."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "To divide by a fraction, you multiply by its reciprocal.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "remember",
         "topic": "dividing fractions",
@@ -4585,10 +4879,17 @@
         "explanation": "7/8 - 1/4 = 7/8 - 2/8 = 5/8 of a meter."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "2/5 divided by 4 equals 2/20.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "apply",
         "topic": "dividing fractions by whole numbers",
@@ -4662,10 +4963,17 @@
         "explanation": "Water used = 1/3 x 3/5 = 3/15 = 1/5. Remaining = 3/5 - 1/5 = 2/5."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "If you divide any fraction by itself, the result is always 1.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "hard",
         "bloomLevel": "evaluate",
         "topic": "dividing fractions",
@@ -4726,10 +5034,17 @@
         "explanation": "7 is prime because its only factors are 1 and 7. The others are composite: 9=3x3, 15=3x5, 21=3x7."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "The number 1 is a prime number.",
-        "options": null,
-        "answer": "false",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "b",
         "difficulty": "easy",
         "bloomLevel": "remember",
         "topic": "definition of primes",
@@ -4782,10 +5097,17 @@
         "explanation": "12 is composite because it has factors other than 1 and itself (2, 3, 4, 6). The rest are prime."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "All even numbers are composite.",
-        "options": null,
-        "answer": "false",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "b",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "primes and even numbers",
@@ -4838,10 +5160,17 @@
         "explanation": "The factors of 18 are 1, 2, 3, 6, 9, and 18. Each divides into 18 evenly."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "15 is a prime number.",
-        "options": null,
-        "answer": "false",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "b",
         "difficulty": "easy",
         "bloomLevel": "remember",
         "topic": "identifying primes",
@@ -4936,10 +5265,17 @@
         "explanation": "24 = 2^3 x 3, 36 = 2^2 x 3^2. GCF = 2^2 x 3 = 4 x 3 = 12."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "The prime factorization of 30 is 2 x 3 x 5.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "apply",
         "topic": "prime factorization",
@@ -5013,10 +5349,17 @@
         "explanation": "45 is divisible by 3 (45÷3=15) and by 5 (45÷5=9). 35 is not divisible by 3, 25 is not divisible by 3, and 33 is not divisible by 5."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "Every prime number greater than 2 is odd.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "understand",
         "topic": "properties of primes",
@@ -5069,10 +5412,17 @@
         "explanation": "11 and 13 are both prime (each has only 1 and itself as factors)."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "The number 51 is prime.",
-        "options": null,
-        "answer": "false",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "b",
         "difficulty": "medium",
         "bloomLevel": "apply",
         "topic": "identifying primes",
@@ -5146,10 +5496,17 @@
         "explanation": "48 = 2^4 x 3^1. Number of factors = (4+1)(1+1) = 10. They are 1,2,3,4,6,8,12,16,24,48."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "If a number ends in 0 or 5, it is always composite.",
-        "options": null,
-        "answer": "false",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "b",
         "difficulty": "hard",
         "bloomLevel": "evaluate",
         "topic": "divisibility and primes",
@@ -5231,10 +5588,17 @@
         "explanation": "1/2 = 0.5 = 50%."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "50% is the same as 0.5.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "remember",
         "topic": "percent to decimal conversion",
@@ -5287,10 +5651,17 @@
         "explanation": "0.75 x 100 = 75%. To convert a decimal to percent, multiply by 100."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "100% of any number is the number itself.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "understanding percentages",
@@ -5343,10 +5714,17 @@
         "explanation": "3/4 = 0.75 = 75%."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "20% of 50 is the same as 50% of 20.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "percent relationships",
@@ -5420,10 +5798,17 @@
         "explanation": "18/24 = 0.75 = 75%."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "If a price increases by 50% and then decreases by 50%, it returns to the original price.",
-        "options": null,
-        "answer": "false",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "b",
         "difficulty": "medium",
         "bloomLevel": "analyze",
         "topic": "percent increase and decrease",
@@ -5497,10 +5882,17 @@
         "explanation": "15% of $35 = 0.15 x 35 = $5.25."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "75% is equivalent to the fraction 3/4.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "understand",
         "topic": "percent to fraction conversion",
@@ -5553,10 +5945,17 @@
         "explanation": "8% of $60 = $4.80. Total = $60 + $4.80 = $64.80."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "A 10% increase followed by a 10% decrease on a $200 item brings it back to $200.",
-        "options": null,
-        "answer": "false",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "b",
         "difficulty": "medium",
         "bloomLevel": "analyze",
         "topic": "percent increase and decrease",
@@ -5630,10 +6029,17 @@
         "explanation": "120% of original = $90, so original = 90 ÷ 1.20 = $75."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "If you save 30% on a $50 item and 20% on a $80 item, your total savings are $31.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "hard",
         "bloomLevel": "evaluate",
         "topic": "combined discount problems",
@@ -5715,10 +6121,17 @@
         "explanation": "y - 3 = 10 => y = 10 + 3 = 13."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "If x + 5 = 5, then x = 0.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "one-step equations",
@@ -5771,10 +6184,17 @@
         "explanation": "n/4 = 5 => n = 5 x 4 = 20."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "In the equation 2x = 10, x equals 20.",
-        "options": null,
-        "answer": "false",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "b",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "one-step multiplication equations",
@@ -5827,10 +6247,17 @@
         "explanation": "5x = 35 => x = 35/5 = 7."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "If x/3 = 9, then x = 27.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "apply",
         "topic": "one-step division equations",
@@ -5904,10 +6331,17 @@
         "explanation": "3y - 7 = 14 => 3y = 21 => y = 7."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "The solution to 4x - 8 = 0 is x = 2.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "apply",
         "topic": "two-step equations",
@@ -5981,10 +6415,17 @@
         "explanation": "She starts with x, gives away 8, and has 15 left: x - 8 = 15, so x = 23."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "The equation 5x + 10 = 35 has the solution x = 5.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "apply",
         "topic": "two-step equations",
@@ -6037,10 +6478,17 @@
         "explanation": "3n - 4 = 17 => 3n = 21 => n = 7."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "If 2(x + 3) = 16, then x = 5.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "apply",
         "topic": "equations with parentheses",
@@ -6114,10 +6562,17 @@
         "explanation": "3(2x - 1) + 4 = 25 => 6x - 3 + 4 = 25 => 6x + 1 = 25 => 6x = 24 => x = 4."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "The equation 4(x - 2) = 2(x + 3) has the solution x = 7.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "hard",
         "bloomLevel": "evaluate",
         "topic": "equations with parentheses on both sides",
@@ -6199,10 +6654,17 @@
         "explanation": "The absolute value of -12 is 12 because -12 is 12 units away from zero on the number line."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "The absolute value of any number is always positive or zero.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "absolute value",
@@ -6255,10 +6717,17 @@
         "explanation": "7 + (-10) = 7 - 10 = -3. Since 10 has a larger absolute value, the result is negative."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "The product of a positive integer and a negative integer is always negative.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "integer multiplication",
@@ -6311,10 +6780,17 @@
         "explanation": "A negative divided by a negative equals a positive: (-18) / (-3) = 6."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "Every integer is a rational number.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "rational numbers",
@@ -6409,10 +6885,17 @@
         "explanation": "(-3) x (-2) = 6, then 6 x (-4) = -24. With three negative factors (odd count), the product is negative."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "The number -7/4 is located between -2 and -1 on the number line.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "apply",
         "topic": "rational numbers",
@@ -6465,10 +6948,17 @@
         "explanation": "(-3/5) x (10/9) = -30/45 = -2/3 after dividing numerator and denominator by 15."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "If a and b are both negative integers, then a - b is always negative.",
-        "options": null,
-        "answer": "false",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "b",
         "difficulty": "medium",
         "bloomLevel": "analyze",
         "topic": "integer subtraction",
@@ -6521,10 +7011,17 @@
         "explanation": "sqrt(2) is irrational because it cannot be expressed as a fraction of two integers. The others are all rational."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "|a - b| is always equal to |b - a|.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "analyze",
         "topic": "absolute value",
@@ -6598,10 +7095,17 @@
         "explanation": "a/c = (a/b) x (b/c) = (-3/4) x (2/5) = -6/20 = -3/10."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "For all integers a and b, |a + b| <= |a| + |b|.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "hard",
         "bloomLevel": "evaluate",
         "topic": "absolute value",
@@ -6662,10 +7166,17 @@
         "explanation": "3^2 + 4^2 = 9 + 16 = 25 = 5^2, so c = 5."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "The Pythagorean theorem only works for right triangles.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "Pythagorean theorem",
@@ -6739,10 +7250,17 @@
         "explanation": "6^2 + 8^2 = 36 + 64 = 100 = 10^2, so the hypotenuse is 10. This is 2 x (3, 4, 5)."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "(6, 8, 10) is a Pythagorean triple.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "Pythagorean triples",
@@ -6774,10 +7292,17 @@
         "explanation": "d = sqrt((3-0)^2 + (4-0)^2) = sqrt(9 + 16) = sqrt(25) = 5."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "A triangle with sides 7, 24, and 25 is a right triangle.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "Pythagorean triples",
@@ -6872,10 +7397,17 @@
         "explanation": "d = sqrt((4-1)^2 + (6-2)^2) = sqrt(9 + 16) = sqrt(25) = 5."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "If a triangle has sides 9, 12, and 15, then it is a right triangle.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "apply",
         "topic": "Pythagorean triples",
@@ -6949,10 +7481,17 @@
         "explanation": "c = sqrt(1^2 + 1^2) = sqrt(2) ≈ 1.414."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "If a^2 + b^2 > c^2 (where c is the longest side), the triangle is acute.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "analyze",
         "topic": "Pythagorean theorem",
@@ -7005,10 +7544,17 @@
         "explanation": "d = sqrt((4+2)^2 + (-5-3)^2) = sqrt(36 + 64) = sqrt(100) = 10."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "Every multiple of a Pythagorean triple is also a Pythagorean triple.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "analyze",
         "topic": "Pythagorean triples",
@@ -7082,10 +7628,17 @@
         "explanation": "s^2 + s^2 = 100, so 2s^2 = 100, s^2 = 50, s = sqrt(50) = 5*sqrt(2) ≈ 7.07 cm."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "The 3D distance formula sqrt(a^2 + b^2 + c^2) can be derived by applying the Pythagorean theorem twice.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "hard",
         "bloomLevel": "evaluate",
         "topic": "3D distance",
@@ -7167,10 +7720,17 @@
         "explanation": "x = 7, so 7 + y = 10, giving y = 3."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "A system of equations can have exactly one solution, no solution, or infinitely many solutions.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "graphical interpretation",
@@ -7223,10 +7783,17 @@
         "explanation": "Parallel lines never meet, so there are no solutions (the system is inconsistent)."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "The solution to a system of two equations is the point where the two lines intersect on a graph.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "graphical interpretation",
@@ -7279,10 +7846,17 @@
         "explanation": "The elimination method involves adding or subtracting equations to eliminate one variable."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "The system y = 2x + 1 and y = 2x + 5 has no solution.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "graphical interpretation",
@@ -7377,10 +7951,17 @@
         "explanation": "x = y + 2. Substituting: 3(y + 2) + 2y = 16 → 3y + 6 + 2y = 16 → 5y = 10 → y = 2."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "The system x + y = 5 and 2x + 2y = 10 has infinitely many solutions.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "analyze",
         "topic": "graphical interpretation",
@@ -7433,10 +8014,17 @@
         "explanation": "x + y = 20, x - y = 6. Adding: 2x = 26, x = 13. Then y = 7."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "If two equations have different slopes when written in slope-intercept form, the system has exactly one solution.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "analyze",
         "topic": "graphical interpretation",
@@ -7489,10 +8077,17 @@
         "explanation": "m + c = 10, 2m + 4c = 28. Substituting m = 10 - c: 2(10-c) + 4c = 28 → 20 - 2c + 4c = 28 → 2c = 8 → c = 4."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "You can always use substitution to solve a system of two linear equations.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "analyze",
         "topic": "substitution",
@@ -7566,10 +8161,17 @@
         "explanation": "Multiplying eq1 by 2: 2x + 4y = 10. For the equations to be identical, k must equal 10."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "The system 2x + 3y = 7 and 4x + 6y = 15 has no solution.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "hard",
         "bloomLevel": "evaluate",
         "topic": "graphical interpretation",
@@ -7651,10 +8253,17 @@
         "explanation": "When raising a power to a power, multiply exponents: (3^2)^3 = 3^(2x3) = 3^6."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "Any non-zero number raised to the power of 0 equals 1.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "exponent rules",
@@ -7707,10 +8316,17 @@
         "explanation": "45,000 = 4.5 x 10^4. Move the decimal 4 places left."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "10^(-3) equals 0.001.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "negative exponents",
@@ -7763,10 +8379,17 @@
         "explanation": "Scientific notation requires a coefficient between 1 and 10. Only 3.7 x 10^5 meets this requirement."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "2^5 = 32.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "exponent rules",
@@ -7861,10 +8484,17 @@
         "explanation": "x^5 / x^(-2) = x^(5-(-2)) = x^(5+2) = x^7."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "(ab)^n = a^n x b^n for all values of n.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "understand",
         "topic": "exponent rules",
@@ -7917,10 +8547,17 @@
         "explanation": "(2/3)^(-2) = (3/2)^2 = 9/4."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "5.0 x 10^0 equals 5.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "understand",
         "topic": "scientific notation",
@@ -7973,10 +8610,17 @@
         "explanation": "6.02 x 10^23 is approximately 602 sextillion (602,000,000,000,000,000,000,000). This is Avogadro's number."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "x^(-1) is always equal to 1/x for x ≠ 0.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "understand",
         "topic": "negative exponents",
@@ -8050,10 +8694,17 @@
         "explanation": "8^3 = (2^3)^3 = 2^9. So 2^x = 2^9, meaning x = 9."
       },
       {
-        "type": "true-false",
+        "type": "multiple-choice",
         "text": "The expression 2^10 is greater than 10^3.",
-        "options": null,
-        "answer": "true",
+        "options": {
+          "choices": [
+            "True",
+            "False",
+            "Cannot be determined",
+            "None of the above"
+          ]
+        },
+        "answer": "a",
         "difficulty": "hard",
         "bloomLevel": "evaluate",
         "topic": "exponent rules",

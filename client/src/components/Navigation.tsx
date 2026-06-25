@@ -25,8 +25,7 @@ export function Navigation() {
             </button>
           )}
           <span className="font-display font-bold text-lg">
-            <span style={{ color: "hsl(var(--grape))" }}>Learn</span><span style={{ color: "hsl(var(--coral))" }}>Smarter</span> <span className="text-base">🚀</span>
-          </span>
+            <span style={{ color: "hsl(var(--grape))" }}>Learn</span><span style={{ color: "hsl(var(--coral))" }}>Smarter</span>          </span>
         </div>
         <div className="flex items-center gap-2 font-body">
           <span className="text-sm font-semibold text-foreground">{activeProfile?.name}</span>
@@ -59,8 +58,7 @@ export function Navigation() {
             </button>
           ) : (
             <span className="font-display font-bold text-lg">
-              <span style={{ color: "hsl(var(--grape))" }}>Learn</span><span style={{ color: "hsl(var(--coral))" }}>Smarter</span> <span className="text-base">🚀</span>
-            </span>
+              <span style={{ color: "hsl(var(--grape))" }}>Learn</span><span style={{ color: "hsl(var(--coral))" }}>Smarter</span>            </span>
           )}
           <nav className="hidden lg:flex items-center gap-1 ml-3 font-body">
             <Link href="/parent-dashboard"

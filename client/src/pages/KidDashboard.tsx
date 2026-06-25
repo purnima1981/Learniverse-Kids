@@ -9,7 +9,7 @@ import {
 import { TopicQuestions } from "@/components/TopicQuestions";
 import type { Topic, TopicProgress } from "@shared/schema";
 
-const AVATARS = ["🚀", "🦊", "🐱", "🦄", "🐉", "⚡", "🌟", "🎮", "🏆", "🦁", "🐼", "🦋", "🎨", "🔥", "💎", "🐸"];
+const AVATARS = ["🦊", "🐱", "🦄", "🐉", "⚡", "🌟", "🎮", "🏆", "🦁", "🐼", "🦋", "🎨", "🔥", "💎", "🐸", "🐧"];
 
 const THEMES = [
   { name: "Violet", bg: "#6c5ce7", light: "#ede9fc" },
@@ -44,7 +44,7 @@ export default function KidDashboard() {
   const [showCustomize, setShowCustomize] = useState(false);
 
   const key = `ls-kid-${activeProfile?.id}`;
-  const [avatar, setAvatar] = useState(() => localStorage.getItem(`${key}-av`) || "🚀");
+  const [avatar, setAvatar] = useState(() => localStorage.getItem(`${key}-av`) || "🦊");
   const [themeIdx, setThemeIdx] = useState(() => Number(localStorage.getItem(`${key}-th`) || "0"));
   useEffect(() => { localStorage.setItem(`${key}-av`, avatar); }, [avatar, key]);
   useEffect(() => { localStorage.setItem(`${key}-th`, String(themeIdx)); }, [themeIdx, key]);

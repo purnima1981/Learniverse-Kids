@@ -8,221 +8,421 @@
       {
         "type": "multiple-choice",
         "text": "🏰 ROOM 1: You wake up in a dark stone room. A glowing sign on the locked door reads: 'To open this door, solve my riddle! What is 8 × 3?' Quick — the torches are going out!",
-        "options": {"choices": ["21", "24", "27", "32"]},
+        "options": {
+          "choices": [
+            "21",
+            "24",
+            "27",
+            "32"
+          ]
+        },
         "answer": "b",
         "difficulty": "easy",
         "bloomLevel": "remember",
         "topic": "multiplication",
-        "hints": ["Think of 8 groups of 3", "Count by 3s eight times: 3, 6, 9..."],
+        "hints": [
+          "Think of 8 groups of 3",
+          "Count by 3s eight times: 3, 6, 9..."
+        ],
         "explanation": "8 × 3 = 24. The door creaks open! You step into a hallway lit by floating candles."
       },
       {
         "type": "multiple-choice",
         "text": "🕯️ ROOM 2: The hallway leads to a room with four treasure chests. A parrot squawks: 'Only the chest with the correct answer will open! What is 45 ÷ 5?'",
-        "options": {"choices": ["7", "8", "9", "10"]},
+        "options": {
+          "choices": [
+            "7",
+            "8",
+            "9",
+            "10"
+          ]
+        },
         "answer": "c",
         "difficulty": "easy",
         "bloomLevel": "remember",
         "topic": "division",
-        "hints": ["How many groups of 5 fit into 45?", "Count by 5s until you reach 45"],
+        "hints": [
+          "How many groups of 5 fit into 45?",
+          "Count by 5s until you reach 45"
+        ],
         "explanation": "45 ÷ 5 = 9. The correct chest pops open, revealing a silver key and a map of the castle!"
       },
       {
         "type": "multiple-choice",
         "text": "🗝️ ROOM 3: You reach a magic mirror blocking the passage. It whispers: 'I will let you pass if you tell me — what is 7 × 6?'",
-        "options": {"choices": ["36", "42", "48", "54"]},
+        "options": {
+          "choices": [
+            "36",
+            "42",
+            "48",
+            "54"
+          ]
+        },
         "answer": "b",
         "difficulty": "easy",
         "bloomLevel": "remember",
         "topic": "multiplication",
-        "hints": ["Think of 7 groups of 6", "6, 12, 18, 24, 30, 36, ..."],
+        "hints": [
+          "Think of 7 groups of 6",
+          "6, 12, 18, 24, 30, 36, ..."
+        ],
         "explanation": "7 × 6 = 42. The mirror shimmers and melts away, revealing a spiral staircase going up!"
       },
       {
         "type": "multiple-choice",
         "text": "🌀 ROOM 4: At the top of the stairs, you find a room full of bubbling potions. A recipe book says: 'To make the shrinking potion, divide 56 equally into 8 bottles. How many drops go in each bottle?'",
-        "options": {"choices": ["6", "7", "8", "9"]},
+        "options": {
+          "choices": [
+            "6",
+            "7",
+            "8",
+            "9"
+          ]
+        },
         "answer": "b",
         "difficulty": "easy",
         "bloomLevel": "apply",
         "topic": "division",
-        "hints": ["56 ÷ 8 = ?", "What number times 8 equals 56?"],
+        "hints": [
+          "56 ÷ 8 = ?",
+          "What number times 8 equals 56?"
+        ],
         "explanation": "56 ÷ 8 = 7 drops per bottle. You drink the potion and shrink small enough to fit through a tiny door in the wall!"
       },
       {
         "type": "multiple-choice",
         "text": "🚪 ROOM 5: The tiny door leads to a garden room with a magical fence. A gnome says: 'My square garden has sides of 6 feet each. What is the perimeter?' Answer correctly and I'll show you the secret exit!",
-        "options": {"choices": ["12 feet", "18 feet", "24 feet", "36 feet"]},
+        "options": {
+          "choices": [
+            "12 feet",
+            "18 feet",
+            "24 feet",
+            "36 feet"
+          ]
+        },
         "answer": "c",
         "difficulty": "easy",
         "bloomLevel": "apply",
         "topic": "perimeter",
-        "hints": ["A square has 4 equal sides", "Perimeter = side + side + side + side"],
+        "hints": [
+          "A square has 4 equal sides",
+          "Perimeter = side + side + side + side"
+        ],
         "explanation": "6 + 6 + 6 + 6 = 24 feet. The gnome grins and pushes aside a bush, revealing a hidden tunnel!"
       },
       {
         "type": "multiple-choice",
         "text": "🌿 ROOM 6: The tunnel opens into a library. A spell book is locked with a number pad. The clue says: 'I am a number. When you multiply me by 9, you get 63. What am I?'",
-        "options": {"choices": ["6", "7", "8", "9"]},
+        "options": {
+          "choices": [
+            "6",
+            "7",
+            "8",
+            "9"
+          ]
+        },
         "answer": "b",
         "difficulty": "easy",
         "bloomLevel": "apply",
         "topic": "division",
-        "hints": ["63 ÷ 9 = ?", "Try multiplying each answer choice by 9"],
+        "hints": [
+          "63 ÷ 9 = ?",
+          "Try multiplying each answer choice by 9"
+        ],
         "explanation": "63 ÷ 9 = 7. The spell book opens and a friendly ghost flies out to guide you!"
       },
       {
         "type": "multiple-choice",
         "text": "👻 ROOM 7: The ghost leads you to a room with stepping stones over a bubbling swamp. Each stone has a number. The ghost says: 'Step only on multiples of 4! Which of these is a multiple of 4?'",
-        "options": {"choices": ["14", "18", "22", "28"]},
+        "options": {
+          "choices": [
+            "14",
+            "18",
+            "22",
+            "28"
+          ]
+        },
         "answer": "d",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "factors",
-        "hints": ["A multiple of 4 can be divided by 4 with no remainder", "Count by 4s: 4, 8, 12, 16, 20, 24, 28..."],
+        "hints": [
+          "A multiple of 4 can be divided by 4 with no remainder",
+          "Count by 4s: 4, 8, 12, 16, 20, 24, 28..."
+        ],
         "explanation": "28 ÷ 4 = 7, so 28 is a multiple of 4! You hop across the stones safely and reach the other side."
       },
       {
         "type": "multiple-choice",
         "text": "🧱 ROOM 8: You enter a room where the floor is a giant grid. A sign reads: 'This rectangular room is 5 tiles long and 4 tiles wide. How many tiles cover the whole floor?' Step on the right tile to continue!",
-        "options": {"choices": ["9", "18", "20", "25"]},
+        "options": {
+          "choices": [
+            "9",
+            "18",
+            "20",
+            "25"
+          ]
+        },
         "answer": "c",
         "difficulty": "easy",
         "bloomLevel": "apply",
         "topic": "area",
-        "hints": ["Area = length × width", "5 × 4 = ?"],
+        "hints": [
+          "Area = length × width",
+          "5 × 4 = ?"
+        ],
         "explanation": "5 × 4 = 20 tiles. The correct tile glows and sinks down, revealing a ladder to the next level!"
       },
       {
         "type": "multiple-choice",
         "text": "🪜 ROOM 9: You climb up and find a room with a giant clock. The wizard's voice booms: 'The clock chimes every 3 hours. It chimed at noon. After 4 chimes, how many hours have passed?'",
-        "options": {"choices": ["7", "9", "12", "15"]},
+        "options": {
+          "choices": [
+            "7",
+            "9",
+            "12",
+            "15"
+          ]
+        },
         "answer": "c",
         "difficulty": "medium",
         "bloomLevel": "apply",
         "topic": "multiplication",
-        "hints": ["Each chime = 3 hours later", "4 chimes × 3 hours each = ?"],
+        "hints": [
+          "Each chime = 3 hours later",
+          "4 chimes × 3 hours each = ?"
+        ],
         "explanation": "4 × 3 = 12 hours. The clock hands spin and a secret compartment opens behind it, containing a golden compass!"
       },
       {
         "type": "multiple-choice",
         "text": "🧭 ROOM 10: The compass points to a door with a fraction puzzle. A carved stone reads: 'A pizza was cut into 8 slices. The wizard ate 3 slices. What fraction of the pizza is LEFT?'",
-        "options": {"choices": ["3/8", "5/8", "3/5", "8/3"]},
+        "options": {
+          "choices": [
+            "3/8",
+            "5/8",
+            "3/5",
+            "8/3"
+          ]
+        },
         "answer": "b",
         "difficulty": "medium",
         "bloomLevel": "understand",
         "topic": "fractions",
-        "hints": ["Start with 8 slices, remove 3", "8 - 3 = 5 slices remaining out of 8"],
+        "hints": [
+          "Start with 8 slices, remove 3",
+          "8 - 3 = 5 slices remaining out of 8"
+        ],
         "explanation": "8 - 3 = 5 slices left, so 5/8 of the pizza remains. The door swings open to reveal a room full of floating books!"
       },
       {
         "type": "multiple-choice",
         "text": "📚 ROOM 11: A floating book opens and shows a pattern: 2, 6, 18, 54, ___. 'Complete the pattern to calm the books!' What comes next?",
-        "options": {"choices": ["108", "128", "162", "216"]},
+        "options": {
+          "choices": [
+            "108",
+            "128",
+            "162",
+            "216"
+          ]
+        },
         "answer": "c",
         "difficulty": "medium",
         "bloomLevel": "analyze",
         "topic": "patterns",
-        "hints": ["Look at how each number relates to the one before it", "Each number is multiplied by 3"],
+        "hints": [
+          "Look at how each number relates to the one before it",
+          "Each number is multiplied by 3"
+        ],
         "explanation": "Each number is multiplied by 3: 54 × 3 = 162. The books settle down and form a staircase to the next floor!"
       },
       {
         "type": "multiple-choice",
         "text": "⚔️ ROOM 12: A suit of armor blocks your path. It says: 'I guard a rectangular shield that is 9 inches long and 4 inches wide. What is its perimeter?' Answer to pass!",
-        "options": {"choices": ["13 inches", "22 inches", "26 inches", "36 inches"]},
+        "options": {
+          "choices": [
+            "13 inches",
+            "22 inches",
+            "26 inches",
+            "36 inches"
+          ]
+        },
         "answer": "c",
         "difficulty": "medium",
         "bloomLevel": "apply",
         "topic": "perimeter",
-        "hints": ["Perimeter of a rectangle = 2 × length + 2 × width", "Add all four sides: 9 + 4 + 9 + 4"],
+        "hints": [
+          "Perimeter of a rectangle = 2 × length + 2 × width",
+          "Add all four sides: 9 + 4 + 9 + 4"
+        ],
         "explanation": "9 + 4 + 9 + 4 = 26 inches. The armor steps aside and salutes you as you march through!"
       },
       {
         "type": "multiple-choice",
         "text": "🔮 ROOM 13: A crystal ball shows a riddle: 'The wizard has 72 magic gems. He wants to put them equally into 9 treasure bags. How many gems go in each bag?'",
-        "options": {"choices": ["7", "8", "9", "12"]},
+        "options": {
+          "choices": [
+            "7",
+            "8",
+            "9",
+            "12"
+          ]
+        },
         "answer": "b",
         "difficulty": "medium",
         "bloomLevel": "apply",
         "topic": "division",
-        "hints": ["72 ÷ 9 = ?", "What number times 9 equals 72?"],
+        "hints": [
+          "72 ÷ 9 = ?",
+          "What number times 9 equals 72?"
+        ],
         "explanation": "72 ÷ 9 = 8 gems per bag. The crystal ball glows brightly and reveals a hidden map on the wall!"
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ ROOM 14: The map shows a trap! The floor has tiles and only the ones showing a FACTOR of 24 are safe. Which number is a factor of 24?",
-        "options": {"choices": ["5", "6", "7", "9"]},
+        "options": {
+          "choices": [
+            "5",
+            "6",
+            "7",
+            "9"
+          ]
+        },
         "answer": "b",
         "difficulty": "medium",
         "bloomLevel": "understand",
         "topic": "factors",
-        "hints": ["A factor divides evenly into 24", "Does 24 ÷ 6 have a remainder?"],
+        "hints": [
+          "A factor divides evenly into 24",
+          "Does 24 ÷ 6 have a remainder?"
+        ],
         "explanation": "24 ÷ 6 = 4 with no remainder, so 6 is a factor of 24! You carefully step on the safe tiles and cross the room."
       },
       {
         "type": "multiple-choice",
         "text": "🧊 ROOM 15: You enter an icy room. A frozen scroll reads: 'Which fraction is GREATER: 2/5 or 3/5?' Melt the ice by choosing correctly!",
-        "options": {"choices": ["2/5", "3/5", "They are equal", "Cannot compare"]},
+        "options": {
+          "choices": [
+            "2/5",
+            "3/5",
+            "They are equal",
+            "Cannot compare"
+          ]
+        },
         "answer": "b",
         "difficulty": "medium",
         "bloomLevel": "understand",
         "topic": "fractions",
-        "hints": ["Both fractions have the same denominator", "Compare the numerators: which is bigger, 2 or 3?"],
+        "hints": [
+          "Both fractions have the same denominator",
+          "Compare the numerators: which is bigger, 2 or 3?"
+        ],
         "explanation": "3/5 > 2/5 because when denominators are the same, the bigger numerator means a bigger fraction. The ice melts and warm air fills the room!"
       },
       {
         "type": "multiple-choice",
         "text": "🌡️ ROOM 16: Warm air pushes you into a room with a giant chessboard floor. It's 8 squares long and 8 squares wide. 'How many squares cover the ENTIRE board?' says a chess piece.",
-        "options": {"choices": ["16", "32", "48", "64"]},
+        "options": {
+          "choices": [
+            "16",
+            "32",
+            "48",
+            "64"
+          ]
+        },
         "answer": "d",
         "difficulty": "medium",
         "bloomLevel": "apply",
         "topic": "area",
-        "hints": ["Area = length × width", "8 × 8 = ?"],
+        "hints": [
+          "Area = length × width",
+          "8 × 8 = ?"
+        ],
         "explanation": "8 × 8 = 64 squares. A chess piece slides aside, revealing a trapdoor beneath it. You're getting close to the exit!"
       },
       {
         "type": "multiple-choice",
         "text": "🪤 LOCK 17: The trapdoor leads to a vault with a combination lock. The wizard's note says: 'Find the number! It is greater than 50, less than 60, and is a multiple of 7. What is it?'",
-        "options": {"choices": ["49", "54", "56", "57"]},
+        "options": {
+          "choices": [
+            "49",
+            "54",
+            "56",
+            "57"
+          ]
+        },
         "answer": "c",
         "difficulty": "hard",
         "bloomLevel": "analyze",
         "topic": "factors",
-        "hints": ["List the multiples of 7: 7, 14, 21, 28, 35, 42, 49, 56, 63...", "Which of those is between 50 and 60?"],
+        "hints": [
+          "List the multiples of 7: 7, 14, 21, 28, 35, 42, 49, 56, 63...",
+          "Which of those is between 50 and 60?"
+        ],
         "explanation": "56 = 7 × 8, and 56 is between 50 and 60. Click! The vault opens and you grab a glowing escape key!"
       },
       {
         "type": "multiple-choice",
         "text": "✨ PUZZLE 18: You reach a bridge guarded by a troll. He snarls: 'A rectangle has an area of 36 square feet and one side is 9 feet. What is the OTHER side?' Answer or be tossed into the moat!",
-        "options": {"choices": ["3 feet", "4 feet", "5 feet", "6 feet"]},
+        "options": {
+          "choices": [
+            "3 feet",
+            "4 feet",
+            "5 feet",
+            "6 feet"
+          ]
+        },
         "answer": "b",
         "difficulty": "hard",
         "bloomLevel": "analyze",
         "topic": "area",
-        "hints": ["Area = length × width, so 36 = 9 × ?", "36 ÷ 9 = ?"],
+        "hints": [
+          "Area = length × width, so 36 = 9 × ?",
+          "36 ÷ 9 = ?"
+        ],
         "explanation": "36 ÷ 9 = 4 feet. The troll scratches his head in amazement and lets you cross the bridge!"
       },
       {
         "type": "multiple-choice",
         "text": "🌉 PUZZLE 19: Across the bridge, you find the castle gate almost open! But one final lock remains. 'I am a number with exactly 4 factors: 1, the number itself, and two others. I am between 10 and 20, and I am odd. What am I?'",
-        "options": {"choices": ["11", "15", "17", "19"]},
+        "options": {
+          "choices": [
+            "11",
+            "15",
+            "17",
+            "19"
+          ]
+        },
         "answer": "b",
         "difficulty": "hard",
         "bloomLevel": "evaluate",
         "topic": "factors",
-        "hints": ["List the factors of each choice", "15 has factors: 1, 3, 5, 15 — that's exactly 4!"],
+        "hints": [
+          "List the factors of each choice",
+          "15 has factors: 1, 3, 5, 15 — that's exactly 4!"
+        ],
         "explanation": "15 has exactly 4 factors: 1, 3, 5, and 15. The final lock snaps open with a burst of sparks!"
       },
       {
         "type": "multiple-choice",
         "text": "🏆 ROOM 20 — THE FINAL ESCAPE: The castle gate swings open! But the wizard appears and says: 'One last challenge! A magical garden outside is shaped like a rectangle, 12 feet long and 8 feet wide. What is its perimeter? Get it right and you are FREE!'",
-        "options": {"choices": ["20 feet", "32 feet", "40 feet", "96 feet"]},
+        "options": {
+          "choices": [
+            "20 feet",
+            "32 feet",
+            "40 feet",
+            "96 feet"
+          ]
+        },
         "answer": "c",
         "difficulty": "hard",
         "bloomLevel": "apply",
         "topic": "perimeter",
-        "hints": ["Perimeter = 2 × (length + width)", "2 × (12 + 8) = 2 × 20 = ?"],
+        "hints": [
+          "Perimeter = 2 × (length + width)",
+          "2 × (12 + 8) = 2 × 20 = ?"
+        ],
         "explanation": "2 × (12 + 8) = 2 × 20 = 40 feet. The wizard smiles and bows. 'You have proven your wisdom!' You run through the gate into the sunlight — YOU ESCAPED THE WIZARD'S CASTLE!"
       }
     ]
@@ -236,221 +436,421 @@
       {
         "type": "multiple-choice",
         "text": "🐉 ROOM 1: You descend a stone staircase into the Dragon's Dungeon. A fiery inscription on the first gate reads: 'What is 12 × 7?' Speak the answer to open the gate!",
-        "options": {"choices": ["74", "84", "91", "96"]},
+        "options": {
+          "choices": [
+            "74",
+            "84",
+            "91",
+            "96"
+          ]
+        },
         "answer": "b",
         "difficulty": "easy",
         "bloomLevel": "remember",
         "topic": "multiplication",
-        "hints": ["Think of 12 groups of 7", "12 × 7 = (10 × 7) + (2 × 7)"],
+        "hints": [
+          "Think of 12 groups of 7",
+          "12 × 7 = (10 × 7) + (2 × 7)"
+        ],
         "explanation": "12 × 7 = 84. The gate erupts in flames and swings open. You feel the heat of the dungeon ahead!"
       },
       {
         "type": "multiple-choice",
         "text": "🔥 ROOM 2: Lava pools bubble around narrow stone paths. A fire sprite blocks your way: 'There are 132 fire crystals divided equally among 12 shelves. How many crystals on each shelf?'",
-        "options": {"choices": ["9", "10", "11", "12"]},
+        "options": {
+          "choices": [
+            "9",
+            "10",
+            "11",
+            "12"
+          ]
+        },
         "answer": "c",
         "difficulty": "easy",
         "bloomLevel": "apply",
         "topic": "division",
-        "hints": ["132 ÷ 12 = ?", "12 × 11 = ?"],
+        "hints": [
+          "132 ÷ 12 = ?",
+          "12 × 11 = ?"
+        ],
         "explanation": "132 ÷ 12 = 11 crystals per shelf. The fire sprite nods and floats aside, lighting your path forward."
       },
       {
         "type": "multiple-choice",
         "text": "💎 ROOM 3: You find a chamber of gemstones. A riddle is carved into the wall: 'A dragon's scale is shaped like a rectangle, 7 cm long and 5 cm wide. What is its area?'",
-        "options": {"choices": ["12 sq cm", "24 sq cm", "35 sq cm", "40 sq cm"]},
+        "options": {
+          "choices": [
+            "12 sq cm",
+            "24 sq cm",
+            "35 sq cm",
+            "40 sq cm"
+          ]
+        },
         "answer": "c",
         "difficulty": "easy",
         "bloomLevel": "apply",
         "topic": "area",
-        "hints": ["Area of a rectangle = length × width", "7 × 5 = ?"],
+        "hints": [
+          "Area of a rectangle = length × width",
+          "7 × 5 = ?"
+        ],
         "explanation": "7 × 5 = 35 square centimeters. A gemstone on the wall lights up, and a hidden door slides open!"
       },
       {
         "type": "multiple-choice",
         "text": "🚪 ROOM 4: Behind the hidden door is a tunnel with glowing mushrooms. One mushroom whispers: 'What fraction of 1 hour is 15 minutes?'",
-        "options": {"choices": ["1/2", "1/3", "1/4", "1/5"]},
+        "options": {
+          "choices": [
+            "1/2",
+            "1/3",
+            "1/4",
+            "1/5"
+          ]
+        },
         "answer": "c",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "fractions",
-        "hints": ["There are 60 minutes in 1 hour", "15/60 — can you simplify?"],
+        "hints": [
+          "There are 60 minutes in 1 hour",
+          "15/60 — can you simplify?"
+        ],
         "explanation": "15 out of 60 minutes = 15/60 = 1/4. The mushrooms glow brighter, lighting a path deeper into the dungeon!"
       },
       {
         "type": "multiple-choice",
         "text": "🍄 ROOM 5: The path leads to a room with a stone pedestal. Numbers are carved in a pattern: 5, 10, 20, 40, ___. 'Complete the pattern to reveal the next passage!'",
-        "options": {"choices": ["50", "60", "70", "80"]},
+        "options": {
+          "choices": [
+            "50",
+            "60",
+            "70",
+            "80"
+          ]
+        },
         "answer": "d",
         "difficulty": "easy",
         "bloomLevel": "analyze",
         "topic": "patterns",
-        "hints": ["How does each number change to become the next?", "Each number is doubled (multiplied by 2)"],
+        "hints": [
+          "How does each number change to become the next?",
+          "Each number is doubled (multiplied by 2)"
+        ],
         "explanation": "Each number is doubled: 40 × 2 = 80. The pedestal sinks into the floor, and a new tunnel appears!"
       },
       {
         "type": "multiple-choice",
         "text": "🪨 ROOM 6: You enter a room shaped like a triangle. Three torches mark the walls. A sign reads: 'A triangular cave entrance has sides of 8 m, 6 m, and 10 m. What is its perimeter?'",
-        "options": {"choices": ["18 m", "20 m", "24 m", "28 m"]},
+        "options": {
+          "choices": [
+            "18 m",
+            "20 m",
+            "24 m",
+            "28 m"
+          ]
+        },
         "answer": "c",
         "difficulty": "easy",
         "bloomLevel": "apply",
         "topic": "perimeter",
-        "hints": ["Perimeter = sum of all sides", "8 + 6 + 10 = ?"],
+        "hints": [
+          "Perimeter = sum of all sides",
+          "8 + 6 + 10 = ?"
+        ],
         "explanation": "8 + 6 + 10 = 24 meters. The torches flare up, and a section of wall slides open!"
       },
       {
         "type": "multiple-choice",
         "text": "🦇 ROOM 7: Bats flutter around a locked chest. The lock says: 'Which of these numbers is a factor of BOTH 18 and 24?'",
-        "options": {"choices": ["4", "5", "6", "8"]},
+        "options": {
+          "choices": [
+            "4",
+            "5",
+            "6",
+            "8"
+          ]
+        },
         "answer": "c",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "factors",
-        "hints": ["A common factor divides evenly into both numbers", "18 ÷ 6 = 3 and 24 ÷ 6 = 4 — both work!"],
+        "hints": [
+          "A common factor divides evenly into both numbers",
+          "18 ÷ 6 = 3 and 24 ÷ 6 = 4 — both work!"
+        ],
         "explanation": "6 is a factor of both 18 (18 ÷ 6 = 3) and 24 (24 ÷ 6 = 4). The chest opens, revealing a dragon-scale shield!"
       },
       {
         "type": "multiple-choice",
         "text": "🛡️ ROOM 8: Holding the shield, you enter a forge room. The blacksmith dragon says: 'I made 9 rows of swords with 8 swords in each row. Then I gave away 12 swords. How many do I have left?'",
-        "options": {"choices": ["48", "56", "60", "72"]},
+        "options": {
+          "choices": [
+            "48",
+            "56",
+            "60",
+            "72"
+          ]
+        },
         "answer": "c",
         "difficulty": "easy",
         "bloomLevel": "apply",
         "topic": "multiplication",
-        "hints": ["First find 9 × 8, then subtract 12", "72 - 12 = ?"],
+        "hints": [
+          "First find 9 × 8, then subtract 12",
+          "72 - 12 = ?"
+        ],
         "explanation": "9 × 8 = 72 swords, then 72 - 12 = 60 swords remaining. The blacksmith dragon nods and opens the next gate!"
       },
       {
         "type": "multiple-choice",
         "text": "⚒️ ROOM 9: Beyond the forge, a river of lava blocks your path. Stepping stones appear with fractions on them. 'Step on the stone that shows a fraction EQUIVALENT to 2/3!'",
-        "options": {"choices": ["3/4", "4/6", "4/9", "6/8"]},
+        "options": {
+          "choices": [
+            "3/4",
+            "4/6",
+            "4/9",
+            "6/8"
+          ]
+        },
         "answer": "b",
         "difficulty": "medium",
         "bloomLevel": "understand",
         "topic": "fractions",
-        "hints": ["Multiply both the numerator and denominator of 2/3 by the same number", "2 × 2 = 4 and 3 × 2 = 6, so 2/3 = 4/6"],
+        "hints": [
+          "Multiply both the numerator and denominator of 2/3 by the same number",
+          "2 × 2 = 4 and 3 × 2 = 6, so 2/3 = 4/6"
+        ],
         "explanation": "2/3 = 4/6 (multiply top and bottom by 2). You leap onto the correct stone and cross the lava safely!"
       },
       {
         "type": "multiple-choice",
         "text": "🌋 ROOM 10: Across the lava, you find a room with a giant abacus. A puzzle reads: 'The dungeon has 6 levels. Each level has 4 corridors, and each corridor has 5 locked cells. How many cells are there in total?'",
-        "options": {"choices": ["80", "100", "110", "120"]},
+        "options": {
+          "choices": [
+            "80",
+            "100",
+            "110",
+            "120"
+          ]
+        },
         "answer": "d",
         "difficulty": "medium",
         "bloomLevel": "apply",
         "topic": "multiplication",
-        "hints": ["Multiply all three numbers together", "6 × 4 × 5 = ?"],
+        "hints": [
+          "Multiply all three numbers together",
+          "6 × 4 × 5 = ?"
+        ],
         "explanation": "6 × 4 × 5 = 120 cells. The abacus clicks into place and a secret panel opens in the wall!"
       },
       {
         "type": "multiple-choice",
         "text": "🔓 LOCK 11: Behind the panel is a vault door. The combination requires: 'A square room has a perimeter of 48 feet. What is the length of ONE side?'",
-        "options": {"choices": ["8 feet", "10 feet", "12 feet", "16 feet"]},
+        "options": {
+          "choices": [
+            "8 feet",
+            "10 feet",
+            "12 feet",
+            "16 feet"
+          ]
+        },
         "answer": "c",
         "difficulty": "medium",
         "bloomLevel": "analyze",
         "topic": "perimeter",
-        "hints": ["A square has 4 equal sides", "Perimeter ÷ 4 = one side"],
+        "hints": [
+          "A square has 4 equal sides",
+          "Perimeter ÷ 4 = one side"
+        ],
         "explanation": "48 ÷ 4 = 12 feet per side. The vault door clicks and swings open, revealing a winding staircase going deeper!"
       },
       {
         "type": "multiple-choice",
         "text": "🌀 ROOM 12: The staircase leads to an underground lake. A water serpent rises and hisses: 'What is the area of a rectangle that has a perimeter of 22 cm and a length of 7 cm?'",
-        "options": {"choices": ["21 sq cm", "24 sq cm", "28 sq cm", "32 sq cm"]},
+        "options": {
+          "choices": [
+            "21 sq cm",
+            "24 sq cm",
+            "28 sq cm",
+            "32 sq cm"
+          ]
+        },
         "answer": "c",
         "difficulty": "medium",
         "bloomLevel": "analyze",
         "topic": "area",
-        "hints": ["First find the width: perimeter = 2 × (length + width)", "22 = 2 × (7 + w), so 11 = 7 + w, w = 4. Then area = 7 × 4"],
+        "hints": [
+          "First find the width: perimeter = 2 × (length + width)",
+          "22 = 2 × (7 + w), so 11 = 7 + w, w = 4. Then area = 7 × 4"
+        ],
         "explanation": "Perimeter = 2 × (7 + w) = 22, so 7 + w = 11, w = 4 cm. Area = 7 × 4 = 28 sq cm. The serpent dives below the water, clearing your path across the lake!"
       },
       {
         "type": "multiple-choice",
         "text": "🌊 ROOM 13: You paddle across the lake on a wooden raft. A water spirit asks: 'Which of these shows the fractions in order from LEAST to GREATEST? 1/2, 1/4, 3/4'",
-        "options": {"choices": ["1/2, 1/4, 3/4", "1/4, 1/2, 3/4", "3/4, 1/2, 1/4", "1/4, 3/4, 1/2"]},
+        "options": {
+          "choices": [
+            "1/2, 1/4, 3/4",
+            "1/4, 1/2, 3/4",
+            "3/4, 1/2, 1/4",
+            "1/4, 3/4, 1/2"
+          ]
+        },
         "answer": "b",
         "difficulty": "medium",
         "bloomLevel": "analyze",
         "topic": "fractions",
-        "hints": ["Think about pieces of a pie: which piece is smallest?", "1/4 is one quarter, 1/2 is two quarters, 3/4 is three quarters"],
+        "hints": [
+          "Think about pieces of a pie: which piece is smallest?",
+          "1/4 is one quarter, 1/2 is two quarters, 3/4 is three quarters"
+        ],
         "explanation": "1/4 < 1/2 < 3/4 (think of them as 1, 2, and 3 quarters). The spirit smiles and the raft glides to shore!"
       },
       {
         "type": "multiple-choice",
         "text": "⚓ ROOM 14: On shore, you find ancient number stones. They read: 3, 7, 15, 31, ___. A dragon statue asks: 'What comes next in this pattern?'",
-        "options": {"choices": ["47", "55", "62", "63"]},
+        "options": {
+          "choices": [
+            "47",
+            "55",
+            "62",
+            "63"
+          ]
+        },
         "answer": "d",
         "difficulty": "medium",
         "bloomLevel": "analyze",
         "topic": "patterns",
-        "hints": ["Look at the pattern: 3 → 7 (×2+1), 7 → 15 (×2+1)", "Each number is doubled and then 1 is added"],
+        "hints": [
+          "Look at the pattern: 3 → 7 (×2+1), 7 → 15 (×2+1)",
+          "Each number is doubled and then 1 is added"
+        ],
         "explanation": "The pattern is: multiply by 2, then add 1. So 31 × 2 + 1 = 63. The dragon statue's eyes glow and a doorway appears!"
       },
       {
         "type": "multiple-choice",
         "text": "🐲 ROOM 15: You enter a massive cavern. Baby dragons are playing with number blocks. Mama Dragon says: 'What is the LEAST common multiple (LCM) of 4 and 6?'",
-        "options": {"choices": ["8", "10", "12", "24"]},
+        "options": {
+          "choices": [
+            "8",
+            "10",
+            "12",
+            "24"
+          ]
+        },
         "answer": "c",
         "difficulty": "medium",
         "bloomLevel": "apply",
         "topic": "factors",
-        "hints": ["List multiples of 4: 4, 8, 12, 16... List multiples of 6: 6, 12, 18...", "Find the smallest number that appears in BOTH lists"],
+        "hints": [
+          "List multiples of 4: 4, 8, 12, 16... List multiples of 6: 6, 12, 18...",
+          "Find the smallest number that appears in BOTH lists"
+        ],
         "explanation": "Multiples of 4: 4, 8, 12... Multiples of 6: 6, 12... The smallest shared multiple is 12! Mama Dragon lets you pass through her cavern."
       },
       {
         "type": "multiple-choice",
         "text": "🥚 ROOM 16: You spot the dragon egg in the distance! But a pit of spikes blocks the way. A sign reads: 'The pit is shaped like a rectangle. Its length is 11 m and its area is 88 sq m. What is its width?'",
-        "options": {"choices": ["6 m", "7 m", "8 m", "9 m"]},
+        "options": {
+          "choices": [
+            "6 m",
+            "7 m",
+            "8 m",
+            "9 m"
+          ]
+        },
         "answer": "c",
         "difficulty": "medium",
         "bloomLevel": "analyze",
         "topic": "area",
-        "hints": ["Area = length × width", "88 = 11 × width, so width = 88 ÷ 11"],
+        "hints": [
+          "Area = length × width",
+          "88 = 11 × width, so width = 88 ÷ 11"
+        ],
         "explanation": "88 ÷ 11 = 8 meters wide. A bridge extends across the pit. You're almost there!"
       },
       {
         "type": "multiple-choice",
         "text": "🌟 LOCK 17: A magical cage surrounds the dragon egg. Three combination locks must be solved. Lock 1: 'There are 156 dragon scales. The scales are shared equally among 12 baby dragons. How many scales does each dragon get?'",
-        "options": {"choices": ["11", "12", "13", "14"]},
+        "options": {
+          "choices": [
+            "11",
+            "12",
+            "13",
+            "14"
+          ]
+        },
         "answer": "c",
         "difficulty": "hard",
         "bloomLevel": "apply",
         "topic": "division",
-        "hints": ["156 ÷ 12 = ?", "12 × 13 = 156"],
+        "hints": [
+          "156 ÷ 12 = ?",
+          "12 × 13 = 156"
+        ],
         "explanation": "156 ÷ 12 = 13 scales each. The first lock clicks open! Two more to go!"
       },
       {
         "type": "multiple-choice",
         "text": "🔐 LOCK 18: Lock 2 on the cage glows red. 'A dragon flew around a rectangular field 3 times. The field is 15 m long and 9 m wide. What TOTAL distance did the dragon fly?'",
-        "options": {"choices": ["48 m", "96 m", "135 m", "144 m"]},
+        "options": {
+          "choices": [
+            "48 m",
+            "96 m",
+            "135 m",
+            "144 m"
+          ]
+        },
         "answer": "d",
         "difficulty": "hard",
         "bloomLevel": "evaluate",
         "topic": "perimeter",
-        "hints": ["First find the perimeter: 2 × (15 + 9)", "Then multiply the perimeter by 3 laps"],
+        "hints": [
+          "First find the perimeter: 2 × (15 + 9)",
+          "Then multiply the perimeter by 3 laps"
+        ],
         "explanation": "Perimeter = 2 × (15 + 9) = 2 × 24 = 48 m. Three laps = 48 × 3 = 144 m. The second lock springs open!"
       },
       {
         "type": "multiple-choice",
         "text": "🔑 LOCK 19: The final lock! It reads: 'A wizard had 5/6 of a potion bottle. He used 1/6 to cast a spell and then 2/6 to heal a dragon. What fraction of the potion is LEFT?'",
-        "options": {"choices": ["1/6", "2/6", "3/6", "4/6"]},
+        "options": {
+          "choices": [
+            "1/6",
+            "2/6",
+            "3/6",
+            "4/6"
+          ]
+        },
         "answer": "b",
         "difficulty": "hard",
         "bloomLevel": "apply",
         "topic": "fractions",
-        "hints": ["Start with 5/6, subtract 1/6, then subtract 2/6", "5/6 - 1/6 - 2/6 = ?"],
+        "hints": [
+          "Start with 5/6, subtract 1/6, then subtract 2/6",
+          "5/6 - 1/6 - 2/6 = ?"
+        ],
         "explanation": "5/6 - 1/6 = 4/6, then 4/6 - 2/6 = 2/6 of the potion remains. The final lock bursts open with a shower of golden sparks!"
       },
       {
         "type": "multiple-choice",
         "text": "🏆 ROOM 20 — THE DRAGON EGG: The cage dissolves! The dragon egg begins to glow and crack. Before it hatches, one final inscription appears: 'The egg weighs as much as 8 gold bars. Each gold bar weighs 15 ounces. I will hatch only if you tell me my total weight!' What does the egg weigh?",
-        "options": {"choices": ["80 ounces", "100 ounces", "112 ounces", "120 ounces"]},
+        "options": {
+          "choices": [
+            "80 ounces",
+            "100 ounces",
+            "112 ounces",
+            "120 ounces"
+          ]
+        },
         "answer": "d",
         "difficulty": "hard",
         "bloomLevel": "apply",
         "topic": "multiplication",
-        "hints": ["8 gold bars × 15 ounces each", "8 × 15 = ?"],
+        "hints": [
+          "8 gold bars × 15 ounces each",
+          "8 × 15 = ?"
+        ],
         "explanation": "8 × 15 = 120 ounces. The egg cracks open and a beautiful baby dragon emerges, spreading its tiny wings! It nuzzles you gratefully. You climb onto its back and the dragon flies you up through the dungeon, out of the castle, and into the bright sky. YOU FREED THE DRAGON AND ESCAPED THE DUNGEON!"
       }
     ]

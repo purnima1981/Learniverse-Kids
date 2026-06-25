@@ -8,221 +8,421 @@
       {
         "type": "multiple-choice",
         "text": "🗺️ CLUE 1: Welcome to the Magical Park! A playful fairy has hidden all your toys around the park. She left you a note at the gate: 'Your first toy is hiding near some flowers. I planted 2 red flowers and 1 yellow flower. How many flowers did I plant in all?'",
-        "options": {"choices": ["2", "3", "4", "5"]},
+        "options": {
+          "choices": [
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
         "answer": "b",
         "difficulty": "easy",
         "bloomLevel": "remember",
         "topic": "addition",
-        "hints": ["Count the red flowers first, then add the yellow one", "2 + 1 = ?"],
+        "hints": [
+          "Count the red flowers first, then add the yellow one",
+          "2 + 1 = ?"
+        ],
         "explanation": "2 red flowers + 1 yellow flower = 3 flowers! You run to the flower patch and find your toy car hiding behind the 3 flowers! The fairy giggled and left another clue nearby."
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ CLUE 2: You found the toy car! Taped to it is a new note from the fairy: 'Great job! Your next toy is by the pond. I saw some ducks there — 3 big ducks and 2 little ducks. How many ducks are at the pond?'",
-        "options": {"choices": ["4", "5", "6", "7"]},
+        "options": {
+          "choices": [
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
         "answer": "b",
         "difficulty": "easy",
         "bloomLevel": "remember",
         "topic": "addition",
-        "hints": ["Count the big ducks, then add the little ducks", "3 + 2 = ?"],
+        "hints": [
+          "Count the big ducks, then add the little ducks",
+          "3 + 2 = ?"
+        ],
         "explanation": "3 big ducks + 2 little ducks = 5 ducks! You run to the pond and count 5 ducks. Behind them, you spot your stuffed bunny! Another clue is tied to its ear."
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ CLUE 3: You found the stuffed bunny! The fairy's note says: 'Look at the stepping stones by the fountain. There are 6 stones, but 2 are covered in leaves. How many stones can you still see?'",
-        "options": {"choices": ["3", "4", "5", "6"]},
+        "options": {
+          "choices": [
+            "3",
+            "4",
+            "5",
+            "6"
+          ]
+        },
         "answer": "b",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "subtraction",
-        "hints": ["Start with 6 stones, then take away the hidden ones", "6 - 2 = ?"],
+        "hints": [
+          "Start with 6 stones, then take away the hidden ones",
+          "6 - 2 = ?"
+        ],
         "explanation": "6 stones - 2 hidden stones = 4 stones you can see! You hop across 4 visible stepping stones and find your toy dinosaur by the fountain! The fairy left sparkly footprints leading to the next clue."
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ CLUE 4: You found the toy dinosaur! The fairy's sparkly trail leads to a sandbox. Her note says: 'I buried your toy under a shape with 3 sides. Which shape has 3 sides?'",
-        "options": {"choices": ["Circle", "Square", "Triangle", "Rectangle"]},
+        "options": {
+          "choices": [
+            "Circle",
+            "Square",
+            "Triangle",
+            "Rectangle"
+          ]
+        },
         "answer": "c",
         "difficulty": "easy",
         "bloomLevel": "remember",
         "topic": "shapes",
-        "hints": ["Think about which shape looks like a mountain peak", "Tri means three!"],
+        "hints": [
+          "Think about which shape looks like a mountain peak",
+          "Tri means three!"
+        ],
         "explanation": "A triangle has 3 sides! You dig under the triangle-shaped sand mold and find your toy robot! A little flag is sticking out with the next clue."
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ CLUE 5: You found the toy robot! The flag reads: 'Your next toy is on a park bench. The fairy painted dots on the benches: 🔴🔵🔴🔵🔴 — What color comes next?'",
-        "options": {"choices": ["Red", "Blue", "Green", "Yellow"]},
+        "options": {
+          "choices": [
+            "Red",
+            "Blue",
+            "Green",
+            "Yellow"
+          ]
+        },
         "answer": "b",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "patterns",
-        "hints": ["Look at the pattern — it goes back and forth between two colors", "Red, Blue, Red, Blue, Red, ...?"],
+        "hints": [
+          "Look at the pattern — it goes back and forth between two colors",
+          "Red, Blue, Red, Blue, Red, ...?"
+        ],
         "explanation": "The pattern is Red, Blue, Red, Blue, Red — so Blue comes next! You find the bench with the blue dot and there is your toy airplane sitting on it! A paper butterfly is attached to the next clue."
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ CLUE 6: You found the toy airplane! The paper butterfly says: 'Go to the big oak tree. Count the squirrels! There are 4 squirrels on the tree. Then 2 more squirrels climb up. How many squirrels are on the tree now?'",
-        "options": {"choices": ["5", "6", "7", "8"]},
+        "options": {
+          "choices": [
+            "5",
+            "6",
+            "7",
+            "8"
+          ]
+        },
         "answer": "b",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "addition",
-        "hints": ["Start with 4 squirrels and add the new ones", "4 + 2 = ?"],
+        "hints": [
+          "Start with 4 squirrels and add the new ones",
+          "4 + 2 = ?"
+        ],
         "explanation": "4 squirrels + 2 more squirrels = 6 squirrels! You look up at the oak tree and count 6 squirrels. One of them drops your toy ball down to you! Wrapped around the ball is another clue."
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ CLUE 7: You found the toy ball! The fairy wrote: 'I have 2 groups of butterflies near the garden gate. One group has 3 butterflies and the other group has 3 butterflies. How many butterflies are there altogether?'",
-        "options": {"choices": ["5", "6", "7", "8"]},
+        "options": {
+          "choices": [
+            "5",
+            "6",
+            "7",
+            "8"
+          ]
+        },
         "answer": "b",
         "difficulty": "easy",
         "bloomLevel": "apply",
         "topic": "addition",
-        "hints": ["Add the two groups together", "3 + 3 = ?"],
+        "hints": [
+          "Add the two groups together",
+          "3 + 3 = ?"
+        ],
         "explanation": "3 butterflies + 3 butterflies = 6 butterflies! You follow the 6 butterflies to the garden gate, and they land right on your toy puzzle box! Inside the box is the next clue."
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ CLUE 8: You found the toy puzzle box! Inside it says: 'Which group has MORE? Group A has 5 acorns. Group B has 3 acorns. Which group has more?'",
-        "options": {"choices": ["Group A", "Group B", "They are equal", "Neither"]},
+        "options": {
+          "choices": [
+            "Group A",
+            "Group B",
+            "They are equal",
+            "Neither"
+          ]
+        },
         "answer": "a",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "comparison",
-        "hints": ["Compare the two numbers — which is bigger?", "5 is more than 3"],
+        "hints": [
+          "Compare the two numbers — which is bigger?",
+          "5 is more than 3"
+        ],
         "explanation": "Group A has more because 5 is greater than 3! You follow the trail of 5 acorns and find your toy truck under a bush. The fairy is getting trickier now — the next clue has a harder puzzle!"
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ CLUE 9: You found the toy truck! Now the fairy says: 'You're doing great! I hid your next toy near the swings. There were 7 birds on the fence, but 3 flew away. How many birds are still on the fence?'",
-        "options": {"choices": ["3", "4", "5", "6"]},
+        "options": {
+          "choices": [
+            "3",
+            "4",
+            "5",
+            "6"
+          ]
+        },
         "answer": "b",
         "difficulty": "medium",
         "bloomLevel": "apply",
         "topic": "subtraction",
-        "hints": ["Start with 7 and take away the ones that flew away", "7 - 3 = ?"],
+        "hints": [
+          "Start with 7 and take away the ones that flew away",
+          "7 - 3 = ?"
+        ],
         "explanation": "7 birds - 3 birds that flew away = 4 birds left! You go to the fence near the swings, count 4 birds, and find your toy drum hanging from the swing set! The next clue is taped to the drum."
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ CLUE 10: You found the toy drum! The clue says: 'Look at the fairy's stone path: ⭐🌙⭐🌙⭐🌙 — What are the next TWO shapes in the pattern?'",
-        "options": {"choices": ["🌙⭐", "⭐🌙", "⭐⭐", "🌙🌙"]},
+        "options": {
+          "choices": [
+            "🌙⭐",
+            "⭐🌙",
+            "⭐⭐",
+            "🌙🌙"
+          ]
+        },
         "answer": "b",
         "difficulty": "medium",
         "bloomLevel": "apply",
         "topic": "patterns",
-        "hints": ["The pattern keeps repeating star then moon", "Star, Moon, Star, Moon, Star, Moon, ...?"],
+        "hints": [
+          "The pattern keeps repeating star then moon",
+          "Star, Moon, Star, Moon, Star, Moon, ...?"
+        ],
         "explanation": "The pattern is Star, Moon repeating — so the next two are Star, Moon! You follow the stone path and find your toy bear sitting on a star-shaped stone. A tiny scroll is in its paw!"
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ CLUE 11: You found the toy bear! The scroll reads: 'The slide has a special shape — it has 4 equal sides. What shape is it?'",
-        "options": {"choices": ["Triangle", "Circle", "Square", "Oval"]},
+        "options": {
+          "choices": [
+            "Triangle",
+            "Circle",
+            "Square",
+            "Oval"
+          ]
+        },
         "answer": "c",
         "difficulty": "medium",
         "bloomLevel": "understand",
         "topic": "shapes",
-        "hints": ["Which shape has exactly 4 sides that are all the same length?", "Think of a box shape"],
+        "hints": [
+          "Which shape has exactly 4 sides that are all the same length?",
+          "Think of a box shape"
+        ],
         "explanation": "A square has 4 equal sides! You run to the square-shaped platform on the slide and find your toy whistle! The fairy carved the next clue right into the slide."
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ CLUE 12: You found the toy whistle! The slide carving says: 'I left 4 toys on the merry-go-round and 5 toys on the seesaw. How many toys did I leave in all?'",
-        "options": {"choices": ["7", "8", "9", "10"]},
+        "options": {
+          "choices": [
+            "7",
+            "8",
+            "9",
+            "10"
+          ]
+        },
         "answer": "c",
         "difficulty": "medium",
         "bloomLevel": "apply",
         "topic": "addition",
-        "hints": ["Add the toys from both places together", "4 + 5 = ?"],
+        "hints": [
+          "Add the toys from both places together",
+          "4 + 5 = ?"
+        ],
         "explanation": "4 toys + 5 toys = 9 toys total! But wait — these are extra toys the fairy brought as gifts! You collect all 9 bonus toys and find a golden clue card among them."
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ CLUE 13: You found the golden clue card! It says: 'The fairy had 8 magic wands. She gave 5 wands to the squirrels to guard your toys. How many wands does she have left?'",
-        "options": {"choices": ["2", "3", "4", "5"]},
+        "options": {
+          "choices": [
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
         "answer": "b",
         "difficulty": "medium",
         "bloomLevel": "apply",
         "topic": "subtraction",
-        "hints": ["She started with 8 and gave some away", "8 - 5 = ?"],
+        "hints": [
+          "She started with 8 and gave some away",
+          "8 - 5 = ?"
+        ],
         "explanation": "8 wands - 5 wands = 3 wands left! The fairy waves her 3 remaining wands and a glowing path appears. You follow it and find your toy crown sitting on a rock!"
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ CLUE 14: You found the toy crown! You put it on and feel like royalty! The fairy says: 'Count the ladybugs on this leaf. 🐞🐞🐞🐞🐞🐞🐞 How many ladybugs are there?'",
-        "options": {"choices": ["5", "6", "7", "8"]},
+        "options": {
+          "choices": [
+            "5",
+            "6",
+            "7",
+            "8"
+          ]
+        },
         "answer": "c",
         "difficulty": "medium",
         "bloomLevel": "remember",
         "topic": "counting",
-        "hints": ["Point to each ladybug and count carefully", "Count one by one from left to right"],
+        "hints": [
+          "Point to each ladybug and count carefully",
+          "Count one by one from left to right"
+        ],
         "explanation": "There are 7 ladybugs! The 7th ladybug flies to a tree stump and lands on your toy magnifying glass. You pick it up and use it to read a tiny clue!"
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ CLUE 15: You found the toy magnifying glass! The tiny clue says: 'Your toy is near a shape with NO corners and NO straight sides. Which shape is that?'",
-        "options": {"choices": ["Square", "Triangle", "Rectangle", "Circle"]},
+        "options": {
+          "choices": [
+            "Square",
+            "Triangle",
+            "Rectangle",
+            "Circle"
+          ]
+        },
         "answer": "d",
         "difficulty": "medium",
         "bloomLevel": "analyze",
         "topic": "shapes",
-        "hints": ["Think about which shape is perfectly round", "It rolls easily because it has no corners"],
+        "hints": [
+          "Think about which shape is perfectly round",
+          "It rolls easily because it has no corners"
+        ],
         "explanation": "A circle has no corners and no straight sides! You find the round garden pond and your toy boat is floating right in the middle! A frog hops over with the next clue."
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ CLUE 16: You found the toy boat! The frog has a note: 'You had 10 toy coins. You used 4 coins to cross the fairy bridge. How many coins do you have now?'",
-        "options": {"choices": ["4", "5", "6", "7"]},
+        "options": {
+          "choices": [
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
         "answer": "c",
         "difficulty": "medium",
         "bloomLevel": "apply",
         "topic": "subtraction",
-        "hints": ["You started with 10 and spent 4", "10 - 4 = ?"],
+        "hints": [
+          "You started with 10 and spent 4",
+          "10 - 4 = ?"
+        ],
         "explanation": "10 coins - 4 coins = 6 coins left! You cross the fairy bridge with your 6 coins jingling in your pocket. On the other side, your toy telescope is waiting!"
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ CLUE 17: You found the toy telescope! The fairy's voice echoes: 'Almost there! I put out some fruit for you. There are 3 apples, 2 bananas, and 4 grapes on the blanket. How many pieces of fruit are there altogether?'",
-        "options": {"choices": ["7", "8", "9", "10"]},
+        "options": {
+          "choices": [
+            "7",
+            "8",
+            "9",
+            "10"
+          ]
+        },
         "answer": "c",
         "difficulty": "hard",
         "bloomLevel": "apply",
         "topic": "addition",
-        "hints": ["Add all three groups together", "3 + 2 + 4 = ?"],
+        "hints": [
+          "Add all three groups together",
+          "3 + 2 + 4 = ?"
+        ],
         "explanation": "3 + 2 + 4 = 9 pieces of fruit! You eat a snack and find your toy compass under the picnic blanket. It's pointing toward the final hiding spots!"
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ CLUE 18: You found the toy compass! It spins and the fairy says: 'Tricky one! I am thinking of a number. It is more than 6 but less than 8. What is my number?'",
-        "options": {"choices": ["5", "6", "7", "8"]},
+        "options": {
+          "choices": [
+            "5",
+            "6",
+            "7",
+            "8"
+          ]
+        },
         "answer": "c",
         "difficulty": "hard",
         "bloomLevel": "analyze",
         "topic": "comparison",
-        "hints": ["What number comes between 6 and 8?", "It's bigger than 6 and smaller than 8"],
+        "hints": [
+          "What number comes between 6 and 8?",
+          "It's bigger than 6 and smaller than 8"
+        ],
         "explanation": "The number is 7 — it is more than 6 and less than 8! You take 7 steps forward and find your toy storybook leaning against a mushroom. Only 2 more clues to go!"
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ CLUE 19: You found the toy storybook! Inside is a riddle: 'The fairy made a necklace with beads: 🔴🔴🔵🔴🔴🔵🔴🔴 — What bead comes next?'",
-        "options": {"choices": ["🔴", "🔵", "🟢", "🟡"]},
+        "options": {
+          "choices": [
+            "🔴",
+            "🔵",
+            "🟢",
+            "🟡"
+          ]
+        },
         "answer": "b",
         "difficulty": "hard",
         "bloomLevel": "analyze",
         "topic": "patterns",
-        "hints": ["Look carefully — how many red beads come before each blue bead?", "The pattern is: 2 red, 1 blue, 2 red, 1 blue..."],
+        "hints": [
+          "Look carefully — how many red beads come before each blue bead?",
+          "The pattern is: 2 red, 1 blue, 2 red, 1 blue..."
+        ],
         "explanation": "The pattern is Red, Red, Blue — repeating! After 2 reds, a blue bead comes next. The necklace glows and points you to the very last hiding spot in the park!"
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ FINAL CLUE 20: This is it — the LAST clue! The fairy appears and says: 'You found 10 toys today! If you put 5 toys in your red bag and the rest in your blue bag, how many go in the blue bag?' Solve this and the fairy will give you a special golden toy!",
-        "options": {"choices": ["3", "4", "5", "6"]},
+        "options": {
+          "choices": [
+            "3",
+            "4",
+            "5",
+            "6"
+          ]
+        },
         "answer": "c",
         "difficulty": "hard",
         "bloomLevel": "apply",
         "topic": "subtraction",
-        "hints": ["You have 10 toys total and 5 go in the red bag", "10 - 5 = ?"],
+        "hints": [
+          "You have 10 toys total and 5 go in the red bag",
+          "10 - 5 = ?"
+        ],
         "explanation": "10 toys - 5 toys in the red bag = 5 toys in the blue bag! YOU DID IT! The fairy claps her hands and gives you a beautiful golden toy star! All your toys are found, and the fairy says you are the BEST treasure hunter in the whole magical park! 🎉"
       }
     ]
@@ -236,221 +436,421 @@
       {
         "type": "multiple-choice",
         "text": "🗺️ CLUE 1: Welcome to the Enchanted Garden! Three little gnomes — Pip, Dot, and Fern — have lost their treasures. Pip says: 'A sneaky crow stole our gems and hid them all over the garden! I had 8 gems and Dot had 6. How many gems did we have together?'",
-        "options": {"choices": ["12", "13", "14", "15"]},
+        "options": {
+          "choices": [
+            "12",
+            "13",
+            "14",
+            "15"
+          ]
+        },
         "answer": "c",
         "difficulty": "easy",
         "bloomLevel": "remember",
         "topic": "addition",
-        "hints": ["Add Pip's gems and Dot's gems", "8 + 6 = ?"],
+        "hints": [
+          "Add Pip's gems and Dot's gems",
+          "8 + 6 = ?"
+        ],
         "explanation": "8 gems + 6 gems = 14 gems were stolen! Pip looks worried, but you promise to help. Dot points to a trail of glitter leading toward the mushroom patch."
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ CLUE 2: You follow the glitter trail to the mushroom patch! Dot says: 'I see 15 mushrooms here, but only 9 of them are magical. How many are NOT magical?'",
-        "options": {"choices": ["4", "5", "6", "7"]},
+        "options": {
+          "choices": [
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
         "answer": "c",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "subtraction",
-        "hints": ["Take away the magical ones from the total", "15 - 9 = ?"],
+        "hints": [
+          "Take away the magical ones from the total",
+          "15 - 9 = ?"
+        ],
         "explanation": "15 mushrooms - 9 magical mushrooms = 6 regular mushrooms! You look under the 6 regular mushrooms and find 3 gems hidden underneath! Fern cheers and spots another clue carved into a tree."
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ CLUE 3: You found 3 gems! The tree carving says: 'The crow hid gems in groups of 2. If there are 5 groups, how many gems is that?'",
-        "options": {"choices": ["7", "8", "9", "10"]},
+        "options": {
+          "choices": [
+            "7",
+            "8",
+            "9",
+            "10"
+          ]
+        },
         "answer": "d",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "addition",
-        "hints": ["Count by 2s five times: 2, 4, 6, 8, ...", "2 + 2 + 2 + 2 + 2 = ?"],
+        "hints": [
+          "Count by 2s five times: 2, 4, 6, 8, ...",
+          "2 + 2 + 2 + 2 + 2 = ?"
+        ],
         "explanation": "5 groups of 2 = 10 gems! You find 10 gems tucked into the roots of the tree. That's 13 gems found so far! Pip jumps up and down with joy. A butterfly lands on your shoulder with the next clue."
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ CLUE 4: The butterfly leads you to a stone wall! Fern reads the clue: 'The crow's nest is on top of a shape with 4 sides, and 2 sides are long and 2 sides are short. What shape is it?'",
-        "options": {"choices": ["Square", "Triangle", "Rectangle", "Circle"]},
+        "options": {
+          "choices": [
+            "Square",
+            "Triangle",
+            "Rectangle",
+            "Circle"
+          ]
+        },
         "answer": "c",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "shapes",
-        "hints": ["Which shape has 4 sides with 2 long and 2 short?", "Think of a door shape"],
+        "hints": [
+          "Which shape has 4 sides with 2 long and 2 short?",
+          "Think of a door shape"
+        ],
         "explanation": "A rectangle has 4 sides — 2 long and 2 short! You find the rectangle-shaped garden gate, and on top of it is a little nest with 2 more gems. Only 1 gem left to find from what you know about!"
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ CLUE 5: You've found 15 gems! Pip says: 'Wait — Fern, how many gems did YOU have?' Fern says: 'I had some too! Altogether the three of us had 20 gems. You two had 14. How many were mine?'",
-        "options": {"choices": ["4", "5", "6", "7"]},
+        "options": {
+          "choices": [
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
         "answer": "c",
         "difficulty": "easy",
         "bloomLevel": "apply",
         "topic": "subtraction",
-        "hints": ["Take away what Pip and Dot had from the total", "20 - 14 = ?"],
+        "hints": [
+          "Take away what Pip and Dot had from the total",
+          "20 - 14 = ?"
+        ],
         "explanation": "20 total gems - 14 gems (Pip + Dot) = 6 gems belonged to Fern! Now you know there are 20 gems to find in total. The quest continues deeper into the enchanted garden!"
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ CLUE 6: Dot spots something! 'Look at the stepping stones across the stream! They have a pattern: 2, 4, 6, 8, ___. What number comes next?'",
-        "options": {"choices": ["9", "10", "11", "12"]},
+        "options": {
+          "choices": [
+            "9",
+            "10",
+            "11",
+            "12"
+          ]
+        },
         "answer": "b",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "patterns",
-        "hints": ["The numbers go up by 2 each time", "8 + 2 = ?"],
+        "hints": [
+          "The numbers go up by 2 each time",
+          "8 + 2 = ?"
+        ],
         "explanation": "The pattern counts by 2s — so the next number is 10! You hop to stone number 10 and underneath it, a gem sparkles in the water. The gnomes fish it out — 16 gems found! A frog croaks the next clue."
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ CLUE 7: The frog croaks: 'Ribbit! I saw the crow hide gems in the garden beds. The first bed has 7 gems, the second has 9 gems. Which bed has MORE gems?'",
-        "options": {"choices": ["The first bed", "The second bed", "They have the same", "Neither"]},
+        "options": {
+          "choices": [
+            "The first bed",
+            "The second bed",
+            "They have the same",
+            "Neither"
+          ]
+        },
         "answer": "b",
         "difficulty": "easy",
         "bloomLevel": "understand",
         "topic": "comparison",
-        "hints": ["Compare 7 and 9 — which number is bigger?", "9 is greater than 7"],
+        "hints": [
+          "Compare 7 and 9 — which number is bigger?",
+          "9 is greater than 7"
+        ],
         "explanation": "The second bed has more because 9 is greater than 7! You dig in the second bed first and find a gem. Then you check the first bed too — there's another gem there! That's 18 gems found now!"
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ CLUE 8: 18 gems found — only 2 more to go! Pip says: 'The crow left muddy footprints. I count 12 footprints going INTO the rose bush, and 12 footprints coming OUT. How many footprints are there in all?'",
-        "options": {"choices": ["20", "22", "24", "26"]},
+        "options": {
+          "choices": [
+            "20",
+            "22",
+            "24",
+            "26"
+          ]
+        },
         "answer": "c",
         "difficulty": "easy",
         "bloomLevel": "apply",
         "topic": "addition",
-        "hints": ["Add the footprints going in and coming out", "12 + 12 = ?"],
+        "hints": [
+          "Add the footprints going in and coming out",
+          "12 + 12 = ?"
+        ],
         "explanation": "12 going in + 12 coming out = 24 footprints! You follow them to the rose bush. The gnomes peek inside and find 1 more gem tangled in the branches. Only 1 gem left — but where could it be?"
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ PUZZLE 9: 19 gems found! Fern finds a locked treasure box in the rose bush. It has a number lock! The clue reads: 'To open me, solve this: There are 25 apples on a tree. 11 fall to the ground. How many are still on the tree?'",
-        "options": {"choices": ["13", "14", "15", "16"]},
+        "options": {
+          "choices": [
+            "13",
+            "14",
+            "15",
+            "16"
+          ]
+        },
         "answer": "b",
         "difficulty": "medium",
         "bloomLevel": "apply",
         "topic": "subtraction",
-        "hints": ["Start with 25 and take away the ones that fell", "25 - 11 = ?"],
+        "hints": [
+          "Start with 25 and take away the ones that fell",
+          "25 - 11 = ?"
+        ],
         "explanation": "25 apples - 11 apples = 14 apples still on the tree! You turn the lock to 14 and CLICK — it opens! But inside there's not a gem — just another clue! The crow is being very tricky!"
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ PUZZLE 10: The note from the treasure box says: 'Ha ha! I'm a clever crow! Your last gem is in the tallest place in the garden. The sunflowers are these heights: 34 inches, 47 inches, 28 inches, 41 inches. Which is the TALLEST?'",
-        "options": {"choices": ["34 inches", "47 inches", "28 inches", "41 inches"]},
+        "options": {
+          "choices": [
+            "34 inches",
+            "47 inches",
+            "28 inches",
+            "41 inches"
+          ]
+        },
         "answer": "b",
         "difficulty": "medium",
         "bloomLevel": "analyze",
         "topic": "comparison",
-        "hints": ["Compare all four numbers — which is the biggest?", "47 is the largest number"],
+        "hints": [
+          "Compare all four numbers — which is the biggest?",
+          "47 is the largest number"
+        ],
         "explanation": "47 inches is the tallest! You run to the tallest sunflower and — wait, no gem here? But there IS another clue! The crow wrote: 'Getting warmer!' Pip says the crow must be watching you!"
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ PUZZLE 11: The sunflower clue says: 'I flew past the garden clock at half past 2. What does the clock look like at 2:30?' The gnomes need to figure out which garden clock the crow means!",
-        "options": {"choices": ["Hour hand on 2, minute hand on 6", "Hour hand on 3, minute hand on 6", "Hour hand on 2, minute hand on 12", "Hour hand on 6, minute hand on 2"]},
+        "options": {
+          "choices": [
+            "Hour hand on 2, minute hand on 6",
+            "Hour hand on 3, minute hand on 6",
+            "Hour hand on 2, minute hand on 12",
+            "Hour hand on 6, minute hand on 2"
+          ]
+        },
         "answer": "a",
         "difficulty": "medium",
         "bloomLevel": "apply",
         "topic": "telling time",
-        "hints": ["Half past means 30 minutes — the minute hand points at 6", "The hour hand stays near the 2"],
+        "hints": [
+          "Half past means 30 minutes — the minute hand points at 6",
+          "The hour hand stays near the 2"
+        ],
         "explanation": "At 2:30, the hour hand is on 2 and the minute hand is on 6! You find the garden sundial set to 2:30 and there's a feather underneath it with another clue written on it."
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ PUZZLE 12: The feather clue says: 'I counted my treasures! I had 36 shiny things. 18 were coins and the rest were gems. How many were gems?' Dot says, 'If we find those gems, ours must be among them!'",
-        "options": {"choices": ["16", "17", "18", "19"]},
+        "options": {
+          "choices": [
+            "16",
+            "17",
+            "18",
+            "19"
+          ]
+        },
         "answer": "c",
         "difficulty": "medium",
         "bloomLevel": "apply",
         "topic": "subtraction",
-        "hints": ["Take away the coins from the total", "36 - 18 = ?"],
+        "hints": [
+          "Take away the coins from the total",
+          "36 - 18 = ?"
+        ],
         "explanation": "36 shiny things - 18 coins = 18 gems! The crow has been collecting gems from ALL over the garden. The gnomes realize the crow has a secret stash somewhere. A robin flies down to help!"
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ PUZZLE 13: The robin chirps: 'I know where the crow hides things! Follow me, but first tell me — if the path is 45 steps long and you've already walked 20 steps, how many steps are left?'",
-        "options": {"choices": ["20", "25", "30", "35"]},
+        "options": {
+          "choices": [
+            "20",
+            "25",
+            "30",
+            "35"
+          ]
+        },
         "answer": "b",
         "difficulty": "medium",
         "bloomLevel": "apply",
         "topic": "subtraction",
-        "hints": ["Subtract the steps you already walked from the total", "45 - 20 = ?"],
+        "hints": [
+          "Subtract the steps you already walked from the total",
+          "45 - 20 = ?"
+        ],
         "explanation": "45 steps - 20 steps = 25 steps left! You march 25 more steps behind the robin. She leads you to a hedge maze! Pip gulps nervously but you lead the way in."
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ PUZZLE 14: Inside the hedge maze! Fern says: 'The maze walls are made of different shapes! I see shapes with exactly 6 sides. What are they called?'",
-        "options": {"choices": ["Pentagon", "Hexagon", "Octagon", "Heptagon"]},
+        "options": {
+          "choices": [
+            "Pentagon",
+            "Hexagon",
+            "Octagon",
+            "Heptagon"
+          ]
+        },
         "answer": "b",
         "difficulty": "medium",
         "bloomLevel": "remember",
         "topic": "shapes",
-        "hints": ["Hex means six", "A hexagon has 6 sides — like a honeycomb!"],
+        "hints": [
+          "Hex means six",
+          "A hexagon has 6 sides — like a honeycomb!"
+        ],
         "explanation": "A hexagon has 6 sides! The hedge is trimmed into hexagon shapes, just like a beehive. Through one of the hexagon openings, you spot something shiny deeper in the maze!"
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ PUZZLE 15: You squeeze through the hexagon opening! Dot finds a note: 'Left, Right, Left, Right, Left, ___. Which way do you turn next to reach my nest?'",
-        "options": {"choices": ["Left", "Right", "Straight", "Back"]},
+        "options": {
+          "choices": [
+            "Left",
+            "Right",
+            "Straight",
+            "Back"
+          ]
+        },
         "answer": "b",
         "difficulty": "medium",
         "bloomLevel": "apply",
         "topic": "patterns",
-        "hints": ["The pattern alternates between Left and Right", "Left, Right, Left, Right, Left — what comes after Left?"],
+        "hints": [
+          "The pattern alternates between Left and Right",
+          "Left, Right, Left, Right, Left — what comes after Left?"
+        ],
         "explanation": "The pattern alternates: Left, Right, Left, Right, Left — so next is Right! You turn right and find yourself in a clearing. In the center is a tall oak tree with something shiny at the top!"
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ PUZZLE 16: The crow's nest is at the top of the oak tree! The robin says: 'The tree has 14 branches on the left side and 13 branches on the right side. How many branches does the tree have altogether?'",
-        "options": {"choices": ["25", "26", "27", "28"]},
+        "options": {
+          "choices": [
+            "25",
+            "26",
+            "27",
+            "28"
+          ]
+        },
         "answer": "c",
         "difficulty": "medium",
         "bloomLevel": "apply",
         "topic": "addition",
-        "hints": ["Add both sides together", "14 + 13 = ?"],
+        "hints": [
+          "Add both sides together",
+          "14 + 13 = ?"
+        ],
         "explanation": "14 branches + 13 branches = 27 branches! You start climbing up 27 branches toward the crow's nest. The gnomes cheer you on from below. You're getting close!"
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ ROOM 17: You reach the crow's nest! The crow is sitting there looking guilty. He says: 'Fine, you can have your gems back — IF you solve my hardest puzzle! I have 3 bags with 5 gems each. How many gems is that in all?'",
-        "options": {"choices": ["12", "13", "14", "15"]},
+        "options": {
+          "choices": [
+            "12",
+            "13",
+            "14",
+            "15"
+          ]
+        },
         "answer": "d",
         "difficulty": "hard",
         "bloomLevel": "apply",
         "topic": "addition",
-        "hints": ["Count by 5s three times: 5, 10, ...", "5 + 5 + 5 = ?"],
+        "hints": [
+          "Count by 5s three times: 5, 10, ...",
+          "5 + 5 + 5 = ?"
+        ],
         "explanation": "3 bags of 5 gems = 15 gems! The crow nods, impressed. 'Not bad! But I have two more puzzles for you!' He pulls out a tiny chalkboard and writes the next problem."
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ ROOM 18: The crow scratches his puzzle on the chalkboard: 'I visited 4 gardens this week. In each garden I found 7 worms. I ate 12 worms so far. How many worms do I have left?' The gnomes whisper: 'You can do it!'",
-        "options": {"choices": ["14", "15", "16", "17"]},
+        "options": {
+          "choices": [
+            "14",
+            "15",
+            "16",
+            "17"
+          ]
+        },
         "answer": "c",
         "difficulty": "hard",
         "bloomLevel": "analyze",
         "topic": "mixed operations",
-        "hints": ["First find the total: 4 groups of 7 worms. Then subtract the 12 he ate.", "7 + 7 + 7 + 7 = 28, then 28 - 12 = ?"],
+        "hints": [
+          "First find the total: 4 groups of 7 worms. Then subtract the 12 he ate.",
+          "7 + 7 + 7 + 7 = 28, then 28 - 12 = ?"
+        ],
         "explanation": "4 gardens x 7 worms = 28 worms total. 28 - 12 eaten = 16 worms left! The crow claps his wings. 'One more puzzle and I'll give everything back!' He looks nervous — he didn't expect you to be this smart!"
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ ROOM 19: The crow's final puzzle: 'I collected things all week! On Monday I found 8 things, on Tuesday I found 6 things, and on Wednesday I found 9 things. I gave away 3 things on Thursday. How many things do I have now?'",
-        "options": {"choices": ["17", "18", "19", "20"]},
+        "options": {
+          "choices": [
+            "17",
+            "18",
+            "19",
+            "20"
+          ]
+        },
         "answer": "d",
         "difficulty": "hard",
         "bloomLevel": "analyze",
         "topic": "mixed operations",
-        "hints": ["First add up Monday + Tuesday + Wednesday, then subtract Thursday", "8 + 6 + 9 = 23, then 23 - 3 = ?"],
+        "hints": [
+          "First add up Monday + Tuesday + Wednesday, then subtract Thursday",
+          "8 + 6 + 9 = 23, then 23 - 3 = ?"
+        ],
         "explanation": "8 + 6 + 9 = 23 things collected. 23 - 3 given away = 20 things! The crow's beak drops open. 'You solved them ALL!' He hangs his head and pushes a big velvet bag toward you."
       },
       {
         "type": "multiple-choice",
         "text": "🗺️ FINAL PUZZLE 20: The crow gives you the velvet bag! Inside are ALL the missing gems! Pip asks: 'Let's make sure they're all here. We had 20 gems total. We already found 19 gems on our adventure. Plus this bag has 1 last gem. 19 + 1 equals what?'",
-        "options": {"choices": ["18", "19", "20", "21"]},
+        "options": {
+          "choices": [
+            "18",
+            "19",
+            "20",
+            "21"
+          ]
+        },
         "answer": "c",
         "difficulty": "hard",
         "bloomLevel": "evaluate",
         "topic": "addition",
-        "hints": ["Add the gems you found to the gem in the bag", "19 + 1 = ?"],
+        "hints": [
+          "Add the gems you found to the gem in the bag",
+          "19 + 1 = ?"
+        ],
         "explanation": "19 + 1 = 20 gems — they're ALL here! YOU SAVED ALL THE GNOMES' TREASURES! Pip, Dot, and Fern dance around you with joy. The crow apologizes and promises to never steal again. The gnomes give you a special golden key to the Enchanted Garden — you can come back and visit anytime! You are a TRUE treasure-hunting hero! 🎉"
       }
     ]

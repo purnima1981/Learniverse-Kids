@@ -76,7 +76,6 @@ export default function AuthPage() {
         <div className="bg-white rounded-2xl shadow-elevated p-6 sm:p-8" style={{ border: "1px solid hsl(var(--border))" }}>
           {/* Logo */}
           <div className="text-center mb-6">
-            <div className="text-3xl mb-2">🚀</div>
             <span className="font-display font-bold text-xl">
               <span style={{ color: "hsl(var(--grape))" }}>Learn</span><span style={{ color: "hsl(var(--coral))" }}>Smarter</span>
             </span>
