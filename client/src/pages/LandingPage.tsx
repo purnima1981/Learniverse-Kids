@@ -18,56 +18,56 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen" style={{ background: "hsl(var(--background))" }}>
 
-      {/* ── NAV ────────────────────────────────────────────────────────── */}
-      <nav className="flex items-center justify-between px-6 lg:px-12 py-4 max-w-6xl mx-auto animate-fade-in">
-        <span className="font-display font-bold text-xl">
-          <span style={{ color: "hsl(var(--grape))" }}>Learn</span><span style={{ color: "hsl(var(--coral))" }}>Smarter</span>
-        </span>
-        <div className="flex items-center gap-3 font-body">
-          <button onClick={() => setLocation("/auth")}
-            className="text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors px-3 py-2">
-            Sign In
-          </button>
-          <button onClick={() => setLocation("/auth")}
-            className="text-sm font-bold text-white px-5 py-2.5 rounded-xl transition-all hover:opacity-90 bg-gradient-fun shadow-fun">
-            Get Started
-          </button>
-        </div>
-      </nav>
-
-      {/* ── HERO ───────────────────────────────────────────────────────── */}
-      <section className="max-w-6xl mx-auto px-6 lg:px-12 py-16 lg:py-24 animate-slide-up">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-semibold mb-6 font-body"
-              style={{ background: "hsl(var(--grape-soft))", color: "hsl(var(--grape))" }}>
-              <Sparkles size={14} /> For grades 1 to 8
-            </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold leading-tight mb-5 text-foreground">
-              Learn Smarter,{" "}
-              <span className="bg-gradient-to-r from-[#667eea] via-[#764ba2] to-[#f093fb] bg-clip-text text-transparent">
-                Compete Better
-              </span>
-            </h1>
-            <p className="text-lg text-muted-foreground leading-relaxed font-body mb-8 max-w-lg">
-              Timed challenges designed for Olympiads and competitive exams. Kids play, parents track — everyone wins.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 font-body">
-              <button onClick={() => setLocation("/auth")}
-                className="flex items-center justify-center gap-2 text-white px-8 py-4 rounded-2xl text-lg font-bold bg-gradient-fun shadow-fun transition-all hover:shadow-lg hover:scale-[1.02]">
-                Get Started Free <ArrowRight size={20} />
-              </button>
-              <button onClick={() => setLocation("/auth")}
-                className="flex items-center justify-center gap-2 px-6 py-4 rounded-2xl text-sm font-semibold transition-all"
-                style={{ border: "1.5px solid hsl(var(--border))", color: "hsl(var(--foreground))" }}>
-                I'm a Student <ChevronRight size={16} />
-              </button>
-            </div>
+      {/* ── HERO with gradient bg ─────────────────────────────────────── */}
+      <div style={{ background: "linear-gradient(135deg, #1a1040 0%, #2d1b69 40%, #4a2c8a 70%, #6c3fa0 100%)" }}>
+        <nav className="flex items-center justify-between px-6 lg:px-12 py-4 max-w-6xl mx-auto animate-fade-in">
+          <span className="font-display font-bold text-xl text-white">
+            Learn<span style={{ color: "#f093fb" }}>Smarter</span>
+          </span>
+          <div className="flex items-center gap-3 font-body">
+            <button onClick={() => setLocation("/auth")}
+              className="text-sm font-semibold text-white/70 hover:text-white transition-colors px-3 py-2">
+              Sign In
+            </button>
+            <button onClick={() => setLocation("/auth")}
+              className="text-sm font-bold text-white px-5 py-2.5 rounded-xl transition-all hover:opacity-90"
+              style={{ background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.2)" }}>
+              Get Started
+            </button>
           </div>
+        </nav>
+
+        <section className="max-w-6xl mx-auto px-6 lg:px-12 pt-12 pb-20 lg:pt-16 lg:pb-28 animate-slide-up">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-semibold mb-6 font-body"
+                style={{ background: "rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.8)", border: "1px solid rgba(255,255,255,0.15)" }}>
+                <Sparkles size={14} /> For grades 1 to 8
+              </div>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold leading-tight mb-5 text-white">
+                Learn Smarter,<br />
+                <span style={{ color: "#f093fb" }}>Compete Better</span>
+              </h1>
+              <p className="text-lg leading-relaxed font-body mb-8 max-w-lg" style={{ color: "rgba(255,255,255,0.65)" }}>
+                Timed challenges designed for Olympiads and competitive exams. Kids play, parents track — everyone wins.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 font-body">
+                <button onClick={() => setLocation("/auth")}
+                  className="flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-lg font-bold transition-all hover:shadow-lg hover:scale-[1.02]"
+                  style={{ background: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)", color: "#fff", boxShadow: "0 4px 20px rgba(240,147,251,0.3)" }}>
+                  Get Started Free <ArrowRight size={20} />
+                </button>
+                <button onClick={() => setLocation("/auth")}
+                  className="flex items-center justify-center gap-2 px-6 py-4 rounded-2xl text-sm font-semibold transition-all text-white"
+                  style={{ border: "1.5px solid rgba(255,255,255,0.25)", background: "rgba(255,255,255,0.05)" }}>
+                  I'm a Student <ChevronRight size={16} />
+                </button>
+              </div>
+            </div>
 
           {/* Product preview mockup */}
           <div className="relative hidden lg:block">
-            <div className="bg-white rounded-2xl shadow-elevated p-5" style={{ border: "1px solid hsl(var(--border))" }}>
+            <div className="bg-white rounded-2xl p-5" style={{ boxShadow: "0 8px 40px rgba(0,0,0,0.3), 0 0 80px rgba(240,147,251,0.15)" }}>
               {/* Mock question card */}
               <div className="flex items-center gap-2 mb-3 font-body">
                 <span className="pill pill-grape text-xs font-semibold">Medium</span>
@@ -106,6 +106,7 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+      </div>
 
       {/* ── HOW IT WORKS ──────────────────────────────────────────────── */}
       <section className="py-16 lg:py-20" style={{ background: "hsl(var(--card))" }}>
