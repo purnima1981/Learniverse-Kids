@@ -108,6 +108,19 @@ export async function migrate() {
       );
     `);
 
+    // Streaks table
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS streaks (
+        id SERIAL PRIMARY KEY,
+        child_profile_id INTEGER NOT NULL REFERENCES child_profiles(id) ON DELETE CASCADE,
+        current_streak INTEGER NOT NULL DEFAULT 0,
+        longest_streak INTEGER NOT NULL DEFAULT 0,
+        last_practice_date VARCHAR(10),
+        freezes_available INTEGER NOT NULL DEFAULT 1,
+        freeze_used_date VARCHAR(10)
+      );
+    `);
+
     // Add new columns if they don't exist (safe for existing deployments)
     const safeAlters = [
       "ALTER TABLE child_profiles ADD COLUMN IF NOT EXISTS state VARCHAR(2)",
@@ -137,6 +150,7 @@ export async function migrate() {
       "CREATE INDEX IF NOT EXISTS idx_responses_date ON question_responses(answered_at)",
       "CREATE INDEX IF NOT EXISTS idx_progress_child ON topic_progress(child_profile_id)",
       "CREATE UNIQUE INDEX IF NOT EXISTS idx_progress_child_topic ON topic_progress(child_profile_id, topic_id)",
+      "CREATE UNIQUE INDEX IF NOT EXISTS idx_streaks_child ON streaks(child_profile_id)",
     ];
     for (const sql of indexes) {
       try { await client.query(sql); } catch {}

@@ -9,6 +9,7 @@ import {
   quizSessions,
   questionResponses,
   topicProgress,
+  streaks,
   type User,
   type InsertUser,
   type ChildProfile,
@@ -458,4 +459,71 @@ export async function getCategoryStats(profileId: number) {
     .innerJoin(topics, eq(quizSessions.topicId, topics.id))
     .where(eq(questionResponses.childProfileId, profileId))
     .groupBy(topics.category);
+}
+
+// ── Streaks ─────────────────────────────────────────────────────────────────
+
+export async function getStreak(childProfileId: number) {
+  const [streak] = await db.select().from(streaks).where(eq(streaks.childProfileId, childProfileId));
+  return streak || null;
+}
+
+export async function recordPracticeDay(childProfileId: number) {
+  const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+  const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0];
+
+  let [streak] = await db.select().from(streaks).where(eq(streaks.childProfileId, childProfileId));
+
+  if (!streak) {
+    // First time
+    const [created] = await db.insert(streaks).values({
+      childProfileId,
+      currentStreak: 1,
+      longestStreak: 1,
+      lastPracticeDate: today,
+      freezesAvailable: 1,
+    }).returning();
+    return created;
+  }
+
+  // Already practiced today
+  if (streak.lastPracticeDate === today) return streak;
+
+  let newStreak = streak.currentStreak;
+
+  if (streak.lastPracticeDate === yesterday) {
+    // Consecutive day
+    newStreak = streak.currentStreak + 1;
+  } else if (streak.freezeUsedDate === yesterday) {
+    // Used a freeze yesterday, still counts
+    newStreak = streak.currentStreak + 1;
+  } else {
+    // Streak broken
+    newStreak = 1;
+  }
+
+  const longestStreak = Math.max(newStreak, streak.longestStreak);
+  // Award a new freeze every 7 days of streak
+  const freezes = newStreak > 0 && newStreak % 7 === 0 ? streak.freezesAvailable + 1 : streak.freezesAvailable;
+
+  const [updated] = await db.update(streaks)
+    .set({ currentStreak: newStreak, longestStreak, lastPracticeDate: today, freezesAvailable: freezes })
+    .where(eq(streaks.childProfileId, childProfileId))
+    .returning();
+  return updated;
+}
+
+export async function useStreakFreeze(childProfileId: number) {
+  const today = new Date().toISOString().split("T")[0];
+  const [streak] = await db.select().from(streaks).where(eq(streaks.childProfileId, childProfileId));
+
+  if (!streak || streak.freezesAvailable <= 0) {
+    throw new Error("No freezes available");
+  }
+
+  const [updated] = await db.update(streaks)
+    .set({ freezesAvailable: streak.freezesAvailable - 1, freezeUsedDate: today })
+    .where(eq(streaks.childProfileId, childProfileId))
+    .returning();
+  return updated;
 }

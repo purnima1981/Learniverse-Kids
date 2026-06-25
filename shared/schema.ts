@@ -159,6 +159,20 @@ export const topicProgress = pgTable("topic_progress", {
   uniqueIndex("idx_progress_child_topic").on(table.childProfileId, table.topicId),
 ]);
 
+// ─── Streaks ────────────────────────────────────────────────────────────────
+
+export const streaks = pgTable("streaks", {
+  id: serial("id").primaryKey(),
+  childProfileId: integer("child_profile_id").notNull().references(() => childProfiles.id, { onDelete: "cascade" }),
+  currentStreak: integer("current_streak").notNull().default(0),
+  longestStreak: integer("longest_streak").notNull().default(0),
+  lastPracticeDate: varchar("last_practice_date", { length: 10 }), // YYYY-MM-DD
+  freezesAvailable: integer("freezes_available").notNull().default(1),
+  freezeUsedDate: varchar("freeze_used_date", { length: 10 }),
+}, (table) => [
+  uniqueIndex("idx_streaks_child").on(table.childProfileId),
+]);
+
 // ─── Zod Insert Schemas ─────────────────────────────────────────────────────
 
 export const insertUserSchema = createInsertSchema(users).omit({ id: true, createdAt: true });
@@ -169,6 +183,7 @@ export const insertQuestionSchema = createInsertSchema(questions).omit({ id: tru
 export const insertQuizSessionSchema = createInsertSchema(quizSessions).omit({ id: true, startedAt: true });
 export const insertQuestionResponseSchema = createInsertSchema(questionResponses).omit({ id: true, answeredAt: true });
 export const insertTopicProgressSchema = createInsertSchema(topicProgress).omit({ id: true });
+export const insertStreakSchema = createInsertSchema(streaks).omit({ id: true });
 
 // ─── TypeScript Types ───────────────────────────────────────────────────────
 
@@ -188,3 +203,5 @@ export type QuestionResponse = typeof questionResponses.$inferSelect;
 export type InsertQuestionResponse = z.infer<typeof insertQuestionResponseSchema>;
 export type TopicProgress = typeof topicProgress.$inferSelect;
 export type InsertTopicProgress = z.infer<typeof insertTopicProgressSchema>;
+export type Streak = typeof streaks.$inferSelect;
+export type InsertStreak = z.infer<typeof insertStreakSchema>;

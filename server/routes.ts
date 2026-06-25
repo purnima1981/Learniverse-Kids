@@ -526,4 +526,50 @@ export function registerRoutes(app: Express) {
       }
     }
   );
+
+  // ── Streaks ─────────────────────────────────────────────────────────────────
+
+  app.get(
+    "/api/streaks/:profileId",
+    requireAuth,
+    async (req: Request, res: Response) => {
+      try {
+        const streak = await storage.getStreak(Number(req.params.profileId));
+        res.json(streak || { currentStreak: 0, longestStreak: 0, lastPracticeDate: null, freezesAvailable: 1 });
+      } catch (err) {
+        console.error("Get streak error:", err);
+        res.status(500).json({ message: "Failed to get streak" });
+      }
+    }
+  );
+
+  app.post(
+    "/api/streaks/record",
+    requireAuth,
+    async (req: Request, res: Response) => {
+      try {
+        const { childProfileId } = req.body;
+        const streak = await storage.recordPracticeDay(childProfileId);
+        res.json(streak);
+      } catch (err) {
+        console.error("Record streak error:", err);
+        res.status(500).json({ message: "Failed to record streak" });
+      }
+    }
+  );
+
+  app.post(
+    "/api/streaks/freeze",
+    requireAuth,
+    async (req: Request, res: Response) => {
+      try {
+        const { childProfileId } = req.body;
+        const streak = await storage.useStreakFreeze(childProfileId);
+        res.json(streak);
+      } catch (err) {
+        console.error("Streak freeze error:", err);
+        res.status(500).json({ message: "Failed to use streak freeze" });
+      }
+    }
+  );
 }

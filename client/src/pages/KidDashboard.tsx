@@ -1,10 +1,10 @@
 import { useState, useMemo, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { apiRequest, queryClient } from "@/lib/queryClient";
 import {
-  ChevronRight, Loader2, Star,
-  Calculator, Shapes, Hash, Lightbulb, PieChart, Puzzle, BookOpen,
-  Palette, Trophy, Flame, Target, Zap, CheckCircle2,
+  Loader2, Star, Trophy, Flame, Target, Zap, BookOpen,
+  Palette, CheckCircle2, ChevronRight, Play, Snowflake,
 } from "lucide-react";
 import { TopicQuestions } from "@/components/TopicQuestions";
 import type { Topic, TopicProgress } from "@shared/schema";
@@ -18,16 +18,6 @@ const THEMES = [
   { name: "Rose", bg: "#e84393", light: "#fce4ec" },
   { name: "Midnight", bg: "#2d3436", light: "#e8e8e8" },
 ];
-const CATEGORIES: Record<string, { label: string; icon: typeof Calculator; color: string }> = {
-  arithmetic: { label: "Arithmetic", icon: Calculator, color: "#6c5ce7" },
-  algebra: { label: "Algebra", icon: Hash, color: "#0984e3" },
-  geometry: { label: "Geometry", icon: Shapes, color: "#00b894" },
-  "number-theory": { label: "Number Theory", icon: BookOpen, color: "#e17055" },
-  combinatorics: { label: "Combinatorics", icon: Puzzle, color: "#e84393" },
-  "logical-reasoning": { label: "Logical Reasoning", icon: Lightbulb, color: "#fdcb6e" },
-  "data-handling": { label: "Data Handling", icon: PieChart, color: "#00cec9" },
-  adventure: { label: "Adventures", icon: Zap, color: "#6c5ce7" },
-};
 
 function getLevel(pts: number) {
   if (pts >= 5000) return { n: 5, name: "Legend", next: null, pct: 100 };
@@ -39,11 +29,11 @@ function getLevel(pts: number) {
 
 const BADGES = [
   { icon: Star, label: "First Step", desc: "Complete 1 session", test: (s: number, a: number, c: number, t: number) => s >= 1 },
-  { icon: Flame, label: "On Fire", desc: "Complete 5 sessions", test: (s: number) => s >= 5 },
+  { icon: Flame, label: "On Fire", desc: "5 sessions", test: (s: number) => s >= 5 },
   { icon: Target, label: "Sharpshooter", desc: "70%+ accuracy", test: (s: number, a: number) => a >= 70 && s > 0 },
   { icon: Trophy, label: "Champion", desc: "90%+ accuracy", test: (s: number, a: number) => a >= 90 && s > 0 },
-  { icon: Zap, label: "Speed Demon", desc: "20+ correct", test: (s: number, a: number, c: number) => c >= 20 },
-  { icon: BookOpen, label: "Scholar", desc: "50+ problems", test: (s: number, a: number, c: number, t: number) => t >= 50 },
+  { icon: Zap, label: "Speed Demon", desc: "20+ correct", test: (_s: number, _a: number, c: number) => c >= 20 },
+  { icon: BookOpen, label: "Scholar", desc: "50+ problems", test: (_s: number, _a: number, _c: number, t: number) => t >= 50 },
 ];
 
 export default function KidDashboard() {
@@ -64,18 +54,29 @@ export default function KidDashboard() {
       const params = new URLSearchParams();
       if (activeProfile?.grade) params.set("grade", String(activeProfile.grade));
       const res = await fetch(`/api/topics?${params}`, { credentials: "include" });
-      if (!res.ok) throw new Error("Failed");
-      return res.json();
+      if (!res.ok) throw new Error("Failed"); return res.json();
     },
   });
   const { data: progressList = [] } = useQuery<TopicProgress[]>({
     queryKey: [`/api/progress/${activeProfile?.id}`],
     queryFn: async () => {
       const res = await fetch(`/api/progress/${activeProfile?.id}`, { credentials: "include" });
-      if (!res.ok) throw new Error("Failed");
-      return res.json();
+      if (!res.ok) throw new Error("Failed"); return res.json();
     },
     enabled: !!activeProfile?.id,
+  });
+  const { data: streak } = useQuery<any>({
+    queryKey: [`/api/streaks/${activeProfile?.id}`],
+    queryFn: async () => {
+      const res = await fetch(`/api/streaks/${activeProfile?.id}`, { credentials: "include" });
+      if (!res.ok) throw new Error("Failed"); return res.json();
+    },
+    enabled: !!activeProfile?.id,
+  });
+
+  const recordStreak = useMutation({
+    mutationFn: async () => { await apiRequest("POST", "/api/streaks/record", { childProfileId: activeProfile?.id }); },
+    onSuccess: () => { queryClient.invalidateQueries({ queryKey: [`/api/streaks/${activeProfile?.id}`] }); },
   });
 
   const sessions = progressList.reduce((s, p) => s + (p.totalSessions ?? 0), 0);
@@ -85,29 +86,28 @@ export default function KidDashboard() {
   const pts = sessions * 50 + correct * 10;
   const level = getLevel(pts);
   const hasData = sessions > 0;
-
   const earned = BADGES.filter(b => b.test(sessions, accuracy, correct, attempted));
   const nextBadge = BADGES.find(b => !b.test(sessions, accuracy, correct, attempted));
 
-  const catProgress = useMemo(() => {
-    const m: Record<string, { c: number; a: number }> = {};
-    topicList.forEach(t => {
-      if (!m[t.category]) m[t.category] = { c: 0, a: 0 };
-      const p = progressList.find(x => x.topicId === t.id);
-      if (p && (p.totalSessions ?? 0) > 0) { m[t.category].c += p.questionsCorrect ?? 0; m[t.category].a += p.questionsAttempted ?? 0; }
-    });
-    return m;
-  }, [topicList, progressList]);
+  const currentStreak = streak?.currentStreak ?? 0;
+  const longestStreak = streak?.longestStreak ?? 0;
+  const freezesAvailable = streak?.freezesAvailable ?? 1;
 
   if (isLoading) return <div className="flex items-center justify-center min-h-[60vh]"><Loader2 className="h-8 w-8 animate-spin" style={{ color: theme.bg }} /></div>;
+
+  // Pick a random topic for "Start Practice"
+  function startRandomPractice() {
+    if (topicList.length === 0) return;
+    const topic = topicList[Math.floor(Math.random() * topicList.length)];
+    setPracticeTopicId(topic.id);
+    recordStreak.mutate();
+  }
 
   if (practiceTopicId) {
     return <div className="min-h-screen" style={{ background: "hsl(var(--background))" }}>
       <TopicQuestions topicId={practiceTopicId} profileId={activeProfile?.id ?? 0} grade={activeProfile?.grade ?? 5} onComplete={() => setPracticeTopicId(null)} />
     </div>;
   }
-
-  const grouped = topicList.reduce<Record<string, Topic[]>>((a, t) => { if (!a[t.category]) a[t.category] = []; a[t.category].push(t); return a; }, {});
 
   if (showCustomize) {
     return (
@@ -144,141 +144,142 @@ export default function KidDashboard() {
     );
   }
 
-  // ── MAIN DASHBOARD ────────────────────────────────────────────────────
   return (
     <div className="min-h-screen" style={{ background: "hsl(var(--background))" }}>
-
-      {/* Hero banner */}
+      {/* Hero */}
       <div style={{ background: theme.bg }}>
-        <div className="max-w-5xl mx-auto px-5 py-6">
+        <div className="max-w-5xl mx-auto px-5 py-5">
           <div className="flex items-center gap-4">
             <button onClick={() => setShowCustomize(true)} title="Customize"
-              className="w-16 h-16 rounded-2xl text-3xl flex items-center justify-center shrink-0 transition-transform hover:scale-105"
+              className="w-14 h-14 rounded-2xl text-2xl flex items-center justify-center shrink-0 transition-transform hover:scale-105"
               style={{ background: "rgba(255,255,255,0.15)", border: "2px solid rgba(255,255,255,0.25)" }}>{avatar}</button>
             <div className="flex-1 min-w-0">
-              <h1 className="font-display font-bold text-2xl text-white truncate">{activeProfile?.name}</h1>
-              <p className="text-sm font-body" style={{ color: "rgba(255,255,255,0.6)" }}>Grade {activeProfile?.grade} · Level {level.n}: {level.name}</p>
-              {/* Level bar */}
-              <div className="mt-2 flex items-center gap-3">
-                <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.15)" }}>
-                  <div className="h-full rounded-full" style={{ width: `${Math.max(level.pct, 3)}%`, background: "rgba(255,255,255,0.8)" }} />
-                </div>
-                <span className="text-xs font-semibold text-white font-body">{pts} pts</span>
+              <h1 className="font-display font-bold text-xl text-white truncate">{activeProfile?.name}</h1>
+              <div className="flex items-center gap-3 font-body text-sm" style={{ color: "rgba(255,255,255,0.6)" }}>
+                <span>Grade {activeProfile?.grade}</span>
+                <span>·</span>
+                <span>Lvl {level.n}: {level.name}</span>
+                <span>·</span>
+                <span className="font-semibold text-white">{pts} pts</span>
               </div>
+            </div>
+            {/* Streak display */}
+            <div className="text-center shrink-0">
+              <div className="flex items-center gap-1 text-white font-display font-bold text-xl">
+                <Flame size={20} style={{ color: currentStreak > 0 ? "#FAC775" : "rgba(255,255,255,0.3)" }} />
+                {currentStreak}
+              </div>
+              <p className="text-[10px] font-body" style={{ color: "rgba(255,255,255,0.5)" }}>day streak</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-5 py-5">
+      <div className="max-w-5xl mx-auto px-5 py-5 space-y-4 animate-fade-in">
 
-        {/* ── NEW USER: Welcome + Quick Start ────────────────────────── */}
-        {!hasData && (
-          <div className="grid md:grid-cols-3 gap-4 mb-6 animate-slide-up">
-            <div className="md:col-span-2 bg-white rounded-2xl p-6" style={{ border: "1px solid hsl(var(--border))" }}>
-              <h2 className="font-display font-bold text-xl text-foreground mb-2">Welcome to LearnSmarter!</h2>
-              <p className="text-sm text-muted-foreground font-body mb-4">
-                Pick any topic below and start solving. Every correct answer earns you points. Earn enough and you'll level up and unlock badges!
-              </p>
-              <div className="flex gap-2 flex-wrap font-body">
-                <span className="pill pill-grape text-xs"><Star size={12} /> Earn points</span>
-                <span className="pill pill-grape text-xs"><Trophy size={12} /> Unlock badges</span>
-                <span className="pill pill-grape text-xs"><Palette size={12} /> Customize your page</span>
-              </div>
-            </div>
-            {nextBadge && (
-              <div className="bg-white rounded-2xl p-5 flex flex-col items-center justify-center text-center" style={{ border: "1px solid hsl(var(--border))" }}>
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-2" style={{ background: theme.light }}>
-                  <nextBadge.icon size={24} style={{ color: theme.bg }} />
-                </div>
-                <p className="font-display font-bold text-sm text-foreground">First badge</p>
-                <p className="text-xs text-muted-foreground font-body">{nextBadge.desc}</p>
-              </div>
-            )}
+        {/* ── START PRACTICE (the main CTA) ──────────────────────────── */}
+        <button onClick={startRandomPractice} disabled={topicList.length === 0}
+          className="w-full flex items-center gap-4 bg-white rounded-2xl p-5 text-left hover-lift transition-all font-body"
+          style={{ border: "1px solid hsl(var(--border))" }}>
+          <div className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0" style={{ background: theme.bg }}>
+            <Play size={24} className="text-white" />
           </div>
-        )}
+          <div className="flex-1">
+            <p className="font-display font-bold text-lg text-foreground">Start Practice</p>
+            <p className="text-sm text-muted-foreground">Random topic from your grade — just start solving!</p>
+          </div>
+          <ChevronRight size={20} className="text-muted-foreground shrink-0" />
+        </button>
 
-        {/* ── RETURNING USER: Stats + Badges ─────────────────────────── */}
+        {/* ── STATS ROW (if has data) ────────────────────────────────── */}
         {hasData && (
-          <div className="grid md:grid-cols-4 gap-3 mb-6 animate-slide-up">
-            <StatCard value={String(sessions)} label="Sessions" color={theme.bg} />
-            <StatCard value={`${accuracy}%`} label="Accuracy" color={accuracy >= 70 ? "#00b894" : "#fdcb6e"} />
-            <StatCard value={String(correct)} label="Correct" color={theme.bg} />
-            <StatCard value={String(earned.length)} label={`Badge${earned.length !== 1 ? "s" : ""}`} color="#e84393" />
+          <div className="grid grid-cols-4 gap-3">
+            <div className="bg-white rounded-2xl p-3 text-center" style={{ border: "1px solid hsl(var(--border))" }}>
+              <p className="font-display font-bold text-xl" style={{ color: theme.bg }}>{sessions}</p>
+              <p className="text-[10px] text-muted-foreground font-body uppercase tracking-wider">sessions</p>
+            </div>
+            <div className="bg-white rounded-2xl p-3 text-center" style={{ border: "1px solid hsl(var(--border))" }}>
+              <p className="font-display font-bold text-xl" style={{ color: accuracy >= 70 ? "#00b894" : "#fdcb6e" }}>{accuracy}%</p>
+              <p className="text-[10px] text-muted-foreground font-body uppercase tracking-wider">accuracy</p>
+            </div>
+            <div className="bg-white rounded-2xl p-3 text-center" style={{ border: "1px solid hsl(var(--border))" }}>
+              <p className="font-display font-bold text-xl" style={{ color: theme.bg }}>{correct}</p>
+              <p className="text-[10px] text-muted-foreground font-body uppercase tracking-wider">correct</p>
+            </div>
+            <div className="bg-white rounded-2xl p-3 text-center" style={{ border: "1px solid hsl(var(--border))" }}>
+              <p className="font-display font-bold text-xl" style={{ color: "#e84393" }}>
+                <Flame size={16} className="inline mr-0.5" style={{ verticalAlign: "-2px" }} />{longestStreak}
+              </p>
+              <p className="text-[10px] text-muted-foreground font-body uppercase tracking-wider">best streak</p>
+            </div>
           </div>
         )}
 
-        {/* Badges row (if earned) */}
-        {earned.length > 0 && (
-          <div className="flex gap-2 mb-5 overflow-x-auto pb-1 font-body animate-fade-in">
-            {earned.map(b => (
-              <span key={b.label} className="shrink-0 rounded-full px-3 py-1.5 text-xs font-bold text-white" style={{ background: theme.bg }}>
-                <b.icon size={12} className="inline mr-1" style={{ verticalAlign: "-1px" }} />{b.label}
+        {/* ── STREAK + LEVEL CARD ────────────────────────────────────── */}
+        <div className="grid sm:grid-cols-2 gap-3">
+          {/* Level progress */}
+          <div className="bg-white rounded-2xl p-4 font-body" style={{ border: "1px solid hsl(var(--border))" }}>
+            <div className="flex items-center justify-between text-sm mb-2">
+              <span className="font-bold" style={{ color: theme.bg }}>
+                <Star size={14} className="inline mr-1" style={{ verticalAlign: "-2px" }} />Level {level.n}: {level.name}
               </span>
-            ))}
-            {nextBadge && (
-              <span className="shrink-0 rounded-full px-3 py-1.5 text-xs font-semibold font-body" style={{ background: "hsl(var(--background))", border: "1px dashed hsl(var(--border))", color: "hsl(var(--muted-foreground))" }}>
-                Next: {nextBadge.label} — {nextBadge.desc}
-              </span>
+              {level.next && <span className="text-muted-foreground text-xs">{level.next - pts} pts to go</span>}
+            </div>
+            <div className="h-2.5 rounded-full overflow-hidden" style={{ background: theme.light }}>
+              <div className="h-full rounded-full transition-all" style={{ width: `${Math.max(level.pct, 3)}%`, background: theme.bg }} />
+            </div>
+          </div>
+
+          {/* Streak card */}
+          <div className="bg-white rounded-2xl p-4 font-body flex items-center gap-3" style={{ border: "1px solid hsl(var(--border))" }}>
+            <Flame size={28} style={{ color: currentStreak > 0 ? "#e17055" : "hsl(var(--muted-foreground))" }} />
+            <div className="flex-1">
+              <p className="font-semibold text-sm text-foreground">{currentStreak} day streak</p>
+              <p className="text-xs text-muted-foreground">{currentStreak > 0 ? "Practice today to keep it going!" : "Start practicing to build a streak!"}</p>
+            </div>
+            {freezesAvailable > 0 && (
+              <div className="text-center" title="Streak freezes — skip a day without losing your streak">
+                <Snowflake size={16} style={{ color: "#0984e3" }} />
+                <p className="text-[10px] text-muted-foreground">{freezesAvailable}</p>
+              </div>
             )}
           </div>
-        )}
-
-        {/* ── TOPICS GRID ────────────────────────────────────────────── */}
-        <h2 className="font-display font-bold text-lg text-foreground mb-3">{hasData ? "Keep going" : "Pick a topic"}</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mb-5">
-          {Object.entries(grouped).map(([cat, topics], i) => {
-            const cfg = CATEGORIES[cat] ?? { label: cat, icon: Calculator, color: theme.bg };
-            const Icon = cfg.icon;
-            const cp = catProgress[cat];
-            const catAcc = cp && cp.a > 0 ? Math.round((cp.c / cp.a) * 100) : null;
-            return (
-              <button key={cat} onClick={() => setPracticeTopicId(topics[Math.floor(Math.random() * topics.length)].id)}
-                className="bg-white rounded-2xl p-4 text-left hover-lift transition-all font-body animate-slide-up"
-                style={{ border: "1px solid hsl(var(--border))", animationDelay: `${i * 40}ms`, animationFillMode: "both" }}>
-                <div className="flex items-start justify-between mb-3">
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `${cfg.color}18`, color: cfg.color }}>
-                    <Icon size={20} />
-                  </div>
-                  {catAcc !== null && (
-                    <span className="text-[10px] font-bold rounded-full px-2 py-0.5 text-white" style={{ background: catAcc >= 70 ? "#00b894" : "#fdcb6e", color: catAcc >= 70 ? "#fff" : "#2d3436" }}>
-                      {catAcc}%
-                    </span>
-                  )}
-                </div>
-                <p className="font-display font-bold text-sm text-foreground leading-tight">{cfg.label}</p>
-                <p className="text-[11px] text-muted-foreground mt-0.5">{topics.length} {topics.length === 1 ? "topic" : "topics"}</p>
-                <div className="mt-2 flex items-center gap-0.5 text-xs font-bold" style={{ color: cfg.color }}>
-                  Play <ChevronRight size={12} />
-                </div>
-              </button>
-            );
-          })}
         </div>
 
-        {topicList.length === 0 && (
-          <div className="bg-white rounded-2xl p-10 text-center font-body" style={{ border: "1px solid hsl(var(--border))" }}>
-            <p className="font-display font-bold text-foreground">No topics for Grade {activeProfile?.grade} yet</p>
-            <p className="text-sm text-muted-foreground mt-1">Check back soon!</p>
+        {/* ── BADGES ─────────────────────────────────────────────────── */}
+        {(earned.length > 0 || nextBadge) && (
+          <div className="bg-white rounded-2xl p-4 font-body" style={{ border: "1px solid hsl(var(--border))" }}>
+            <p className="font-display font-semibold text-sm text-foreground mb-3">Badges ({earned.length}/{BADGES.length})</p>
+            <div className="flex gap-2 flex-wrap">
+              {earned.map(b => (
+                <span key={b.label} className="rounded-full px-3 py-1.5 text-xs font-bold text-white" style={{ background: theme.bg }}>
+                  <b.icon size={12} className="inline mr-1" style={{ verticalAlign: "-1px" }} />{b.label}
+                </span>
+              ))}
+              {nextBadge && (
+                <span className="rounded-full px-3 py-1.5 text-xs font-semibold" style={{ background: "hsl(var(--background))", border: "1px dashed hsl(var(--border))", color: "hsl(var(--muted-foreground))" }}>
+                  Next: {nextBadge.label} — {nextBadge.desc}
+                </span>
+              )}
+            </div>
           </div>
         )}
 
-        {/* Customize link */}
+        {/* ── WELCOME (new users only) ───────────────────────────────── */}
+        {!hasData && (
+          <div className="bg-white rounded-2xl p-5 font-body" style={{ border: "1px solid hsl(var(--border))" }}>
+            <p className="font-display font-bold text-foreground mb-1">Welcome to LearnSmarter!</p>
+            <p className="text-sm text-muted-foreground">Hit "Start Practice" above to begin. Every correct answer earns points. Earn enough and you'll level up and unlock badges!</p>
+          </div>
+        )}
+
+        {/* Customize */}
         <button onClick={() => setShowCustomize(true)}
           className="w-full flex items-center justify-center gap-2 rounded-2xl p-3 text-sm font-semibold text-muted-foreground font-body hover:text-foreground transition-colors"
           style={{ border: "1px dashed hsl(var(--border))" }}>
           <Palette size={14} /> Customize avatar & theme
         </button>
       </div>
-    </div>
-  );
-}
-
-function StatCard({ value, label, color }: { value: string; label: string; color: string }) {
-  return (
-    <div className="bg-white rounded-2xl p-4 text-center" style={{ border: "1px solid hsl(var(--border))" }}>
-      <p className="font-display font-bold text-2xl" style={{ color }}>{value}</p>
-      <p className="text-[10px] text-muted-foreground font-body uppercase tracking-wider mt-0.5">{label}</p>
     </div>
   );
 }
