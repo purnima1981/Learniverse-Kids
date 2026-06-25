@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import {
   ChevronLeft, Loader2, UserPlus, TrendingUp, TrendingDown,
   Clock, Brain, Lightbulb, Target, AlertTriangle, CheckCircle2,
-  ArrowUpRight, ArrowDownRight, Minus,
+  ArrowUpRight, ArrowDownRight, Minus, Trash2, Key,
 } from "lucide-react";
 import {
   LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid,
@@ -69,6 +69,16 @@ export default function ParentDashboard() {
       toast({ title: `${data.name}'s profile created!` });
       queryClient.invalidateQueries({ queryKey: ["/api/profiles"] });
       setShowAddKid(false); setKidName(""); setKidPin(""); setKidPinConfirm("");
+    },
+    onError: (err: any) => toast({ title: "Error", description: err?.message, variant: "destructive" }),
+  });
+
+  const deleteChild = useMutation({
+    mutationFn: async (id: number) => { await apiRequest("DELETE", `/api/profiles/${id}`); },
+    onSuccess: () => {
+      toast({ title: "Profile deleted" });
+      queryClient.invalidateQueries({ queryKey: ["/api/profiles"] });
+      setSelectedKidId(null);
     },
     onError: (err: any) => toast({ title: "Error", description: err?.message, variant: "destructive" }),
   });
@@ -187,13 +197,22 @@ export default function ParentDashboard() {
         {profiles.map(kid => {
           const active = selectedKid?.id === kid.id;
           return (
-            <button key={kid.id} onClick={() => setSelectedKidId(kid.id)}
-              className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl transition-all shrink-0 font-body text-sm font-semibold"
-              style={{ background: active ? "hsl(var(--grape))" : "#fff", color: active ? "#fff" : "hsl(var(--foreground))", border: active ? "none" : "1px solid hsl(var(--border))" }}>
-              <span className="w-7 h-7 rounded-md flex items-center justify-center font-display font-bold text-xs"
-                style={{ background: active ? "rgba(255,255,255,0.2)" : "hsl(var(--grape-soft))", color: active ? "#fff" : "hsl(var(--grape))" }}>{kid.name[0]}</span>
-              {kid.name}
-            </button>
+            <div key={kid.id} className="flex items-center gap-1 shrink-0">
+              <button onClick={() => setSelectedKidId(kid.id)}
+                className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl transition-all font-body text-sm font-semibold"
+                style={{ background: active ? "hsl(var(--grape))" : "#fff", color: active ? "#fff" : "hsl(var(--foreground))", border: active ? "none" : "1px solid hsl(var(--border))" }}>
+                <span className="w-7 h-7 rounded-md flex items-center justify-center font-display font-bold text-xs"
+                  style={{ background: active ? "rgba(255,255,255,0.2)" : "hsl(var(--grape-soft))", color: active ? "#fff" : "hsl(var(--grape))" }}>{kid.name[0]}</span>
+                {kid.name}
+              </button>
+              {active && (
+                <button onClick={() => { if (confirm(`Delete ${kid.name}'s profile? This cannot be undone.`)) deleteChild.mutate(kid.id); }}
+                  className="p-1.5 rounded-lg hover:bg-muted transition-colors" title="Delete profile"
+                  style={{ color: "hsl(var(--coral))" }}>
+                  <Trash2 size={14} />
+                </button>
+              )}
+            </div>
           );
         })}
         <button onClick={() => setShowAddKid(true)} className="p-2.5 rounded-xl font-body" style={{ border: "1px dashed hsl(var(--border))", color: "hsl(var(--muted-foreground))" }} title="Add child"><UserPlus size={16} /></button>

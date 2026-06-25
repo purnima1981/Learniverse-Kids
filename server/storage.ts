@@ -461,6 +461,24 @@ export async function getCategoryStats(profileId: number) {
     .groupBy(topics.category);
 }
 
+// ── Delete Profile ──────────────────────────────────────────────────────────
+
+export async function deleteChildProfile(profileId: number, parentId: number) {
+  // Verify ownership
+  const [profile] = await db.select().from(childProfiles)
+    .where(and(eq(childProfiles.id, profileId), eq(childProfiles.parentId, parentId)));
+  if (!profile) throw new Error("Profile not found or not owned by user");
+
+  // CASCADE deletes handle quiz_sessions, question_responses, topic_progress, streaks
+  await db.delete(childProfiles).where(eq(childProfiles.id, profileId));
+}
+
+// ── Update Password ─────────────────────────────────────────────────────────
+
+export async function updateUserPassword(userId: number, hashedPassword: string) {
+  await db.update(users).set({ password: hashedPassword }).where(eq(users.id, userId));
+}
+
 // ── Streaks ─────────────────────────────────────────────────────────────────
 
 export async function getStreak(childProfileId: number) {

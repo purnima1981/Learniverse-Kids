@@ -527,6 +527,49 @@ export function registerRoutes(app: Express) {
     }
   );
 
+  // ── Delete Child Profile ──────────────────────────────────────────────────
+
+  app.delete(
+    "/api/profiles/:id",
+    requireParent,
+    async (req: Request, res: Response) => {
+      try {
+        await storage.deleteChildProfile(Number(req.params.id), (req as any).user.id);
+        res.json({ message: "Profile deleted" });
+      } catch (err) {
+        console.error("Delete profile error:", err);
+        res.status(500).json({ message: "Failed to delete profile" });
+      }
+    }
+  );
+
+  // ── Reset Password ──────────────────────────────────────────────────────
+
+  app.post(
+    "/api/auth/reset-password",
+    requireAuth,
+    async (req: Request, res: Response) => {
+      try {
+        const { currentPassword, newPassword } = req.body;
+        if (!currentPassword || !newPassword) return res.status(400).json({ message: "Both passwords required" });
+        if (newPassword.length < 6) return res.status(400).json({ message: "New password must be at least 6 characters" });
+
+        const user = await storage.getUserById((req as any).user.id);
+        if (!user) return res.status(404).json({ message: "User not found" });
+
+        const valid = await bcrypt.compare(currentPassword, user.password);
+        if (!valid) return res.status(401).json({ message: "Current password is incorrect" });
+
+        const hashed = await bcrypt.hash(newPassword, 10);
+        await storage.updateUserPassword(user.id, hashed);
+        res.json({ message: "Password updated" });
+      } catch (err) {
+        console.error("Reset password error:", err);
+        res.status(500).json({ message: "Failed to reset password" });
+      }
+    }
+  );
+
   // ── Streaks ─────────────────────────────────────────────────────────────────
 
   app.get(
