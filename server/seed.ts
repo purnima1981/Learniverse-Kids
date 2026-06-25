@@ -26,11 +26,19 @@ interface GeneratedTopic {
 }
 
 async function seedGeneratedQuestions() {
-  const filePath = path.join(__dirname, "content-generator", "generated-questions.json");
-  if (!fs.existsSync(filePath)) {
-    console.log("No generated-questions.json found, skipping.");
+  // Try multiple paths — __dirname works in dev, process.cwd() in production
+  const candidates = [
+    path.join(__dirname, "content-generator", "generated-questions.json"),
+    path.join(process.cwd(), "server", "content-generator", "generated-questions.json"),
+    path.join(process.cwd(), "content-generator", "generated-questions.json"),
+  ];
+  const filePath = candidates.find(p => fs.existsSync(p));
+  if (!filePath) {
+    console.log("No generated-questions.json found at any path, skipping.");
+    console.log("Searched:", candidates.join(", "));
     return;
   }
+  console.log("Loading generated questions from:", filePath);
 
   const data: GeneratedTopic[] = JSON.parse(fs.readFileSync(filePath, "utf-8"));
   let topicsCreated = 0;

@@ -209,7 +209,7 @@ function PracticeTest({ questions, profileId, topicId, grade, onComplete }: {
         </div>
       </div>
 
-      <div className="flex-1 flex flex-col max-w-2xl mx-auto w-full px-4 py-5 gap-4">
+      <div className="flex flex-col max-w-2xl mx-auto w-full px-4 py-5 gap-4">
 
         {/* Timer — adaptive by grade */}
         {timerMode === "full" && (
@@ -249,7 +249,7 @@ function PracticeTest({ questions, profileId, topicId, grade, onComplete }: {
         )}
 
         {/* Options grid */}
-        <div className="grid grid-cols-2 gap-2.5 flex-1">
+        <div className="grid grid-cols-2 gap-2.5">
           {options.map((opt, i) => {
             let state: "default" | "selected" | "correct" | "wrong" = "default";
             if (confirmed) {
