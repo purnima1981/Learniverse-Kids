@@ -8085,5 +8085,3429 @@
         "explanation": "(6 x 10^5)^2 = 36 x 10^10 = 3.6 x 10^11. Dividing: (3.6 x 10^11) / (3 x 10^4) = 1.2 x 10^7."
       }
     ]
+  },
+  {
+    "title": "The Lost Toy Treasure Hunt",
+    "description": "Follow the fairy's clues through the magical park to find your hidden toys! Solve each puzzle to get the next clue.",
+    "category": "adventure",
+    "gradeLevel": 1,
+    "questions": [
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ CLUE 1: Welcome to the Magical Park! A playful fairy has hidden all your toys around the park. She left you a note at the gate: 'Your first toy is hiding near some flowers. I planted 2 red flowers and 1 yellow flower. How many flowers did I plant in all?'",
+        "options": {
+          "choices": [
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "remember",
+        "topic": "addition",
+        "hints": [
+          "Count the red flowers first, then add the yellow one",
+          "2 + 1 = ?"
+        ],
+        "explanation": "2 red flowers + 1 yellow flower = 3 flowers! You run to the flower patch and find your toy car hiding behind the 3 flowers! The fairy giggled and left another clue nearby."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ CLUE 2: You found the toy car! Taped to it is a new note from the fairy: 'Great job! Your next toy is by the pond. I saw some ducks there — 3 big ducks and 2 little ducks. How many ducks are at the pond?'",
+        "options": {
+          "choices": [
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "remember",
+        "topic": "addition",
+        "hints": [
+          "Count the big ducks, then add the little ducks",
+          "3 + 2 = ?"
+        ],
+        "explanation": "3 big ducks + 2 little ducks = 5 ducks! You run to the pond and count 5 ducks. Behind them, you spot your stuffed bunny! Another clue is tied to its ear."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ CLUE 3: You found the stuffed bunny! The fairy's note says: 'Look at the stepping stones by the fountain. There are 6 stones, but 2 are covered in leaves. How many stones can you still see?'",
+        "options": {
+          "choices": [
+            "3",
+            "4",
+            "5",
+            "6"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "understand",
+        "topic": "subtraction",
+        "hints": [
+          "Start with 6 stones, then take away the hidden ones",
+          "6 - 2 = ?"
+        ],
+        "explanation": "6 stones - 2 hidden stones = 4 stones you can see! You hop across 4 visible stepping stones and find your toy dinosaur by the fountain! The fairy left sparkly footprints leading to the next clue."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ CLUE 4: You found the toy dinosaur! The fairy's sparkly trail leads to a sandbox. Her note says: 'I buried your toy under a shape with 3 sides. Which shape has 3 sides?'",
+        "options": {
+          "choices": [
+            "Circle",
+            "Square",
+            "Triangle",
+            "Rectangle"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "remember",
+        "topic": "shapes",
+        "hints": [
+          "Think about which shape looks like a mountain peak",
+          "Tri means three!"
+        ],
+        "explanation": "A triangle has 3 sides! You dig under the triangle-shaped sand mold and find your toy robot! A little flag is sticking out with the next clue."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ CLUE 5: You found the toy robot! The flag reads: 'Your next toy is on a park bench. The fairy painted dots on the benches: 🔴🔵🔴🔵🔴 — What color comes next?'",
+        "options": {
+          "choices": [
+            "Red",
+            "Blue",
+            "Green",
+            "Yellow"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "understand",
+        "topic": "patterns",
+        "hints": [
+          "Look at the pattern — it goes back and forth between two colors",
+          "Red, Blue, Red, Blue, Red, ...?"
+        ],
+        "explanation": "The pattern is Red, Blue, Red, Blue, Red — so Blue comes next! You find the bench with the blue dot and there is your toy airplane sitting on it! A paper butterfly is attached to the next clue."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ CLUE 6: You found the toy airplane! The paper butterfly says: 'Go to the big oak tree. Count the squirrels! There are 4 squirrels on the tree. Then 2 more squirrels climb up. How many squirrels are on the tree now?'",
+        "options": {
+          "choices": [
+            "5",
+            "6",
+            "7",
+            "8"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "understand",
+        "topic": "addition",
+        "hints": [
+          "Start with 4 squirrels and add the new ones",
+          "4 + 2 = ?"
+        ],
+        "explanation": "4 squirrels + 2 more squirrels = 6 squirrels! You look up at the oak tree and count 6 squirrels. One of them drops your toy ball down to you! Wrapped around the ball is another clue."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ CLUE 7: You found the toy ball! The fairy wrote: 'I have 2 groups of butterflies near the garden gate. One group has 3 butterflies and the other group has 3 butterflies. How many butterflies are there altogether?'",
+        "options": {
+          "choices": [
+            "5",
+            "6",
+            "7",
+            "8"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "addition",
+        "hints": [
+          "Add the two groups together",
+          "3 + 3 = ?"
+        ],
+        "explanation": "3 butterflies + 3 butterflies = 6 butterflies! You follow the 6 butterflies to the garden gate, and they land right on your toy puzzle box! Inside the box is the next clue."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ CLUE 8: You found the toy puzzle box! Inside it says: 'Which group has MORE? Group A has 5 acorns. Group B has 3 acorns. Which group has more?'",
+        "options": {
+          "choices": [
+            "Group A",
+            "Group B",
+            "They are equal",
+            "Neither"
+          ]
+        },
+        "answer": "a",
+        "difficulty": "easy",
+        "bloomLevel": "understand",
+        "topic": "comparison",
+        "hints": [
+          "Compare the two numbers — which is bigger?",
+          "5 is more than 3"
+        ],
+        "explanation": "Group A has more because 5 is greater than 3! You follow the trail of 5 acorns and find your toy truck under a bush. The fairy is getting trickier now — the next clue has a harder puzzle!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ CLUE 9: You found the toy truck! Now the fairy says: 'You're doing great! I hid your next toy near the swings. There were 7 birds on the fence, but 3 flew away. How many birds are still on the fence?'",
+        "options": {
+          "choices": [
+            "3",
+            "4",
+            "5",
+            "6"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "subtraction",
+        "hints": [
+          "Start with 7 and take away the ones that flew away",
+          "7 - 3 = ?"
+        ],
+        "explanation": "7 birds - 3 birds that flew away = 4 birds left! You go to the fence near the swings, count 4 birds, and find your toy drum hanging from the swing set! The next clue is taped to the drum."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ CLUE 10: You found the toy drum! The clue says: 'Look at the fairy's stone path: ⭐🌙⭐🌙⭐🌙 — What are the next TWO shapes in the pattern?'",
+        "options": {
+          "choices": [
+            "🌙⭐",
+            "⭐🌙",
+            "⭐⭐",
+            "🌙🌙"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "patterns",
+        "hints": [
+          "The pattern keeps repeating star then moon",
+          "Star, Moon, Star, Moon, Star, Moon, ...?"
+        ],
+        "explanation": "The pattern is Star, Moon repeating — so the next two are Star, Moon! You follow the stone path and find your toy bear sitting on a star-shaped stone. A tiny scroll is in its paw!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ CLUE 11: You found the toy bear! The scroll reads: 'The slide has a special shape — it has 4 equal sides. What shape is it?'",
+        "options": {
+          "choices": [
+            "Triangle",
+            "Circle",
+            "Square",
+            "Oval"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "understand",
+        "topic": "shapes",
+        "hints": [
+          "Which shape has exactly 4 sides that are all the same length?",
+          "Think of a box shape"
+        ],
+        "explanation": "A square has 4 equal sides! You run to the square-shaped platform on the slide and find your toy whistle! The fairy carved the next clue right into the slide."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ CLUE 12: You found the toy whistle! The slide carving says: 'I left 4 toys on the merry-go-round and 5 toys on the seesaw. How many toys did I leave in all?'",
+        "options": {
+          "choices": [
+            "7",
+            "8",
+            "9",
+            "10"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "addition",
+        "hints": [
+          "Add the toys from both places together",
+          "4 + 5 = ?"
+        ],
+        "explanation": "4 toys + 5 toys = 9 toys total! But wait — these are extra toys the fairy brought as gifts! You collect all 9 bonus toys and find a golden clue card among them."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ CLUE 13: You found the golden clue card! It says: 'The fairy had 8 magic wands. She gave 5 wands to the squirrels to guard your toys. How many wands does she have left?'",
+        "options": {
+          "choices": [
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "subtraction",
+        "hints": [
+          "She started with 8 and gave some away",
+          "8 - 5 = ?"
+        ],
+        "explanation": "8 wands - 5 wands = 3 wands left! The fairy waves her 3 remaining wands and a glowing path appears. You follow it and find your toy crown sitting on a rock!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ CLUE 14: You found the toy crown! You put it on and feel like royalty! The fairy says: 'Count the ladybugs on this leaf. 🐞🐞🐞🐞🐞🐞🐞 How many ladybugs are there?'",
+        "options": {
+          "choices": [
+            "5",
+            "6",
+            "7",
+            "8"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "remember",
+        "topic": "counting",
+        "hints": [
+          "Point to each ladybug and count carefully",
+          "Count one by one from left to right"
+        ],
+        "explanation": "There are 7 ladybugs! The 7th ladybug flies to a tree stump and lands on your toy magnifying glass. You pick it up and use it to read a tiny clue!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ CLUE 15: You found the toy magnifying glass! The tiny clue says: 'Your toy is near a shape with NO corners and NO straight sides. Which shape is that?'",
+        "options": {
+          "choices": [
+            "Square",
+            "Triangle",
+            "Rectangle",
+            "Circle"
+          ]
+        },
+        "answer": "d",
+        "difficulty": "medium",
+        "bloomLevel": "analyze",
+        "topic": "shapes",
+        "hints": [
+          "Think about which shape is perfectly round",
+          "It rolls easily because it has no corners"
+        ],
+        "explanation": "A circle has no corners and no straight sides! You find the round garden pond and your toy boat is floating right in the middle! A frog hops over with the next clue."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ CLUE 16: You found the toy boat! The frog has a note: 'You had 10 toy coins. You used 4 coins to cross the fairy bridge. How many coins do you have now?'",
+        "options": {
+          "choices": [
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "subtraction",
+        "hints": [
+          "You started with 10 and spent 4",
+          "10 - 4 = ?"
+        ],
+        "explanation": "10 coins - 4 coins = 6 coins left! You cross the fairy bridge with your 6 coins jingling in your pocket. On the other side, your toy telescope is waiting!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ CLUE 17: You found the toy telescope! The fairy's voice echoes: 'Almost there! I put out some fruit for you. There are 3 apples, 2 bananas, and 4 grapes on the blanket. How many pieces of fruit are there altogether?'",
+        "options": {
+          "choices": [
+            "7",
+            "8",
+            "9",
+            "10"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "hard",
+        "bloomLevel": "apply",
+        "topic": "addition",
+        "hints": [
+          "Add all three groups together",
+          "3 + 2 + 4 = ?"
+        ],
+        "explanation": "3 + 2 + 4 = 9 pieces of fruit! You eat a snack and find your toy compass under the picnic blanket. It's pointing toward the final hiding spots!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ CLUE 18: You found the toy compass! It spins and the fairy says: 'Tricky one! I am thinking of a number. It is more than 6 but less than 8. What is my number?'",
+        "options": {
+          "choices": [
+            "5",
+            "6",
+            "7",
+            "8"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "hard",
+        "bloomLevel": "analyze",
+        "topic": "comparison",
+        "hints": [
+          "What number comes between 6 and 8?",
+          "It's bigger than 6 and smaller than 8"
+        ],
+        "explanation": "The number is 7 — it is more than 6 and less than 8! You take 7 steps forward and find your toy storybook leaning against a mushroom. Only 2 more clues to go!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ CLUE 19: You found the toy storybook! Inside is a riddle: 'The fairy made a necklace with beads: 🔴🔴🔵🔴🔴🔵🔴🔴 — What bead comes next?'",
+        "options": {
+          "choices": [
+            "🔴",
+            "🔵",
+            "🟢",
+            "🟡"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "hard",
+        "bloomLevel": "analyze",
+        "topic": "patterns",
+        "hints": [
+          "Look carefully — how many red beads come before each blue bead?",
+          "The pattern is: 2 red, 1 blue, 2 red, 1 blue..."
+        ],
+        "explanation": "The pattern is Red, Red, Blue — repeating! After 2 reds, a blue bead comes next. The necklace glows and points you to the very last hiding spot in the park!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ FINAL CLUE 20: This is it — the LAST clue! The fairy appears and says: 'You found 10 toys today! If you put 5 toys in your red bag and the rest in your blue bag, how many go in the blue bag?' Solve this and the fairy will give you a special golden toy!",
+        "options": {
+          "choices": [
+            "3",
+            "4",
+            "5",
+            "6"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "hard",
+        "bloomLevel": "apply",
+        "topic": "subtraction",
+        "hints": [
+          "You have 10 toys total and 5 go in the red bag",
+          "10 - 5 = ?"
+        ],
+        "explanation": "10 toys - 5 toys in the red bag = 5 toys in the blue bag! YOU DID IT! The fairy claps her hands and gives you a beautiful golden toy star! All your toys are found, and the fairy says you are the BEST treasure hunter in the whole magical park! 🎉"
+      }
+    ]
+  },
+  {
+    "title": "The Enchanted Garden Quest",
+    "description": "The garden gnomes need your help! Solve puzzles to help them find their lost treasures.",
+    "category": "adventure",
+    "gradeLevel": 2,
+    "questions": [
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ CLUE 1: Welcome to the Enchanted Garden! Three little gnomes — Pip, Dot, and Fern — have lost their treasures. Pip says: 'A sneaky crow stole our gems and hid them all over the garden! I had 8 gems and Dot had 6. How many gems did we have together?'",
+        "options": {
+          "choices": [
+            "12",
+            "13",
+            "14",
+            "15"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "remember",
+        "topic": "addition",
+        "hints": [
+          "Add Pip's gems and Dot's gems",
+          "8 + 6 = ?"
+        ],
+        "explanation": "8 gems + 6 gems = 14 gems were stolen! Pip looks worried, but you promise to help. Dot points to a trail of glitter leading toward the mushroom patch."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ CLUE 2: You follow the glitter trail to the mushroom patch! Dot says: 'I see 15 mushrooms here, but only 9 of them are magical. How many are NOT magical?'",
+        "options": {
+          "choices": [
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "understand",
+        "topic": "subtraction",
+        "hints": [
+          "Take away the magical ones from the total",
+          "15 - 9 = ?"
+        ],
+        "explanation": "15 mushrooms - 9 magical mushrooms = 6 regular mushrooms! You look under the 6 regular mushrooms and find 3 gems hidden underneath! Fern cheers and spots another clue carved into a tree."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ CLUE 3: You found 3 gems! The tree carving says: 'The crow hid gems in groups of 2. If there are 5 groups, how many gems is that?'",
+        "options": {
+          "choices": [
+            "7",
+            "8",
+            "9",
+            "10"
+          ]
+        },
+        "answer": "d",
+        "difficulty": "easy",
+        "bloomLevel": "understand",
+        "topic": "addition",
+        "hints": [
+          "Count by 2s five times: 2, 4, 6, 8, ...",
+          "2 + 2 + 2 + 2 + 2 = ?"
+        ],
+        "explanation": "5 groups of 2 = 10 gems! You find 10 gems tucked into the roots of the tree. That's 13 gems found so far! Pip jumps up and down with joy. A butterfly lands on your shoulder with the next clue."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ CLUE 4: The butterfly leads you to a stone wall! Fern reads the clue: 'The crow's nest is on top of a shape with 4 sides, and 2 sides are long and 2 sides are short. What shape is it?'",
+        "options": {
+          "choices": [
+            "Square",
+            "Triangle",
+            "Rectangle",
+            "Circle"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "understand",
+        "topic": "shapes",
+        "hints": [
+          "Which shape has 4 sides with 2 long and 2 short?",
+          "Think of a door shape"
+        ],
+        "explanation": "A rectangle has 4 sides — 2 long and 2 short! You find the rectangle-shaped garden gate, and on top of it is a little nest with 2 more gems. Only 1 gem left to find from what you know about!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ CLUE 5: You've found 15 gems! Pip says: 'Wait — Fern, how many gems did YOU have?' Fern says: 'I had some too! Altogether the three of us had 20 gems. You two had 14. How many were mine?'",
+        "options": {
+          "choices": [
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "subtraction",
+        "hints": [
+          "Take away what Pip and Dot had from the total",
+          "20 - 14 = ?"
+        ],
+        "explanation": "20 total gems - 14 gems (Pip + Dot) = 6 gems belonged to Fern! Now you know there are 20 gems to find in total. The quest continues deeper into the enchanted garden!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ CLUE 6: Dot spots something! 'Look at the stepping stones across the stream! They have a pattern: 2, 4, 6, 8, ___. What number comes next?'",
+        "options": {
+          "choices": [
+            "9",
+            "10",
+            "11",
+            "12"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "understand",
+        "topic": "patterns",
+        "hints": [
+          "The numbers go up by 2 each time",
+          "8 + 2 = ?"
+        ],
+        "explanation": "The pattern counts by 2s — so the next number is 10! You hop to stone number 10 and underneath it, a gem sparkles in the water. The gnomes fish it out — 16 gems found! A frog croaks the next clue."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ CLUE 7: The frog croaks: 'Ribbit! I saw the crow hide gems in the garden beds. The first bed has 7 gems, the second has 9 gems. Which bed has MORE gems?'",
+        "options": {
+          "choices": [
+            "The first bed",
+            "The second bed",
+            "They have the same",
+            "Neither"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "understand",
+        "topic": "comparison",
+        "hints": [
+          "Compare 7 and 9 — which number is bigger?",
+          "9 is greater than 7"
+        ],
+        "explanation": "The second bed has more because 9 is greater than 7! You dig in the second bed first and find a gem. Then you check the first bed too — there's another gem there! That's 18 gems found now!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ CLUE 8: 18 gems found — only 2 more to go! Pip says: 'The crow left muddy footprints. I count 12 footprints going INTO the rose bush, and 12 footprints coming OUT. How many footprints are there in all?'",
+        "options": {
+          "choices": [
+            "20",
+            "22",
+            "24",
+            "26"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "addition",
+        "hints": [
+          "Add the footprints going in and coming out",
+          "12 + 12 = ?"
+        ],
+        "explanation": "12 going in + 12 coming out = 24 footprints! You follow them to the rose bush. The gnomes peek inside and find 1 more gem tangled in the branches. Only 1 gem left — but where could it be?"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ PUZZLE 9: 19 gems found! Fern finds a locked treasure box in the rose bush. It has a number lock! The clue reads: 'To open me, solve this: There are 25 apples on a tree. 11 fall to the ground. How many are still on the tree?'",
+        "options": {
+          "choices": [
+            "13",
+            "14",
+            "15",
+            "16"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "subtraction",
+        "hints": [
+          "Start with 25 and take away the ones that fell",
+          "25 - 11 = ?"
+        ],
+        "explanation": "25 apples - 11 apples = 14 apples still on the tree! You turn the lock to 14 and CLICK — it opens! But inside there's not a gem — just another clue! The crow is being very tricky!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ PUZZLE 10: The note from the treasure box says: 'Ha ha! I'm a clever crow! Your last gem is in the tallest place in the garden. The sunflowers are these heights: 34 inches, 47 inches, 28 inches, 41 inches. Which is the TALLEST?'",
+        "options": {
+          "choices": [
+            "34 inches",
+            "47 inches",
+            "28 inches",
+            "41 inches"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "analyze",
+        "topic": "comparison",
+        "hints": [
+          "Compare all four numbers — which is the biggest?",
+          "47 is the largest number"
+        ],
+        "explanation": "47 inches is the tallest! You run to the tallest sunflower and — wait, no gem here? But there IS another clue! The crow wrote: 'Getting warmer!' Pip says the crow must be watching you!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ PUZZLE 11: The sunflower clue says: 'I flew past the garden clock at half past 2. What does the clock look like at 2:30?' The gnomes need to figure out which garden clock the crow means!",
+        "options": {
+          "choices": [
+            "Hour hand on 2, minute hand on 6",
+            "Hour hand on 3, minute hand on 6",
+            "Hour hand on 2, minute hand on 12",
+            "Hour hand on 6, minute hand on 2"
+          ]
+        },
+        "answer": "a",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "telling time",
+        "hints": [
+          "Half past means 30 minutes — the minute hand points at 6",
+          "The hour hand stays near the 2"
+        ],
+        "explanation": "At 2:30, the hour hand is on 2 and the minute hand is on 6! You find the garden sundial set to 2:30 and there's a feather underneath it with another clue written on it."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ PUZZLE 12: The feather clue says: 'I counted my treasures! I had 36 shiny things. 18 were coins and the rest were gems. How many were gems?' Dot says, 'If we find those gems, ours must be among them!'",
+        "options": {
+          "choices": [
+            "16",
+            "17",
+            "18",
+            "19"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "subtraction",
+        "hints": [
+          "Take away the coins from the total",
+          "36 - 18 = ?"
+        ],
+        "explanation": "36 shiny things - 18 coins = 18 gems! The crow has been collecting gems from ALL over the garden. The gnomes realize the crow has a secret stash somewhere. A robin flies down to help!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ PUZZLE 13: The robin chirps: 'I know where the crow hides things! Follow me, but first tell me — if the path is 45 steps long and you've already walked 20 steps, how many steps are left?'",
+        "options": {
+          "choices": [
+            "20",
+            "25",
+            "30",
+            "35"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "subtraction",
+        "hints": [
+          "Subtract the steps you already walked from the total",
+          "45 - 20 = ?"
+        ],
+        "explanation": "45 steps - 20 steps = 25 steps left! You march 25 more steps behind the robin. She leads you to a hedge maze! Pip gulps nervously but you lead the way in."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ PUZZLE 14: Inside the hedge maze! Fern says: 'The maze walls are made of different shapes! I see shapes with exactly 6 sides. What are they called?'",
+        "options": {
+          "choices": [
+            "Pentagon",
+            "Hexagon",
+            "Octagon",
+            "Heptagon"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "remember",
+        "topic": "shapes",
+        "hints": [
+          "Hex means six",
+          "A hexagon has 6 sides — like a honeycomb!"
+        ],
+        "explanation": "A hexagon has 6 sides! The hedge is trimmed into hexagon shapes, just like a beehive. Through one of the hexagon openings, you spot something shiny deeper in the maze!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ PUZZLE 15: You squeeze through the hexagon opening! Dot finds a note: 'Left, Right, Left, Right, Left, ___. Which way do you turn next to reach my nest?'",
+        "options": {
+          "choices": [
+            "Left",
+            "Right",
+            "Straight",
+            "Back"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "patterns",
+        "hints": [
+          "The pattern alternates between Left and Right",
+          "Left, Right, Left, Right, Left — what comes after Left?"
+        ],
+        "explanation": "The pattern alternates: Left, Right, Left, Right, Left — so next is Right! You turn right and find yourself in a clearing. In the center is a tall oak tree with something shiny at the top!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ PUZZLE 16: The crow's nest is at the top of the oak tree! The robin says: 'The tree has 14 branches on the left side and 13 branches on the right side. How many branches does the tree have altogether?'",
+        "options": {
+          "choices": [
+            "25",
+            "26",
+            "27",
+            "28"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "addition",
+        "hints": [
+          "Add both sides together",
+          "14 + 13 = ?"
+        ],
+        "explanation": "14 branches + 13 branches = 27 branches! You start climbing up 27 branches toward the crow's nest. The gnomes cheer you on from below. You're getting close!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ ROOM 17: You reach the crow's nest! The crow is sitting there looking guilty. He says: 'Fine, you can have your gems back — IF you solve my hardest puzzle! I have 3 bags with 5 gems each. How many gems is that in all?'",
+        "options": {
+          "choices": [
+            "12",
+            "13",
+            "14",
+            "15"
+          ]
+        },
+        "answer": "d",
+        "difficulty": "hard",
+        "bloomLevel": "apply",
+        "topic": "addition",
+        "hints": [
+          "Count by 5s three times: 5, 10, ...",
+          "5 + 5 + 5 = ?"
+        ],
+        "explanation": "3 bags of 5 gems = 15 gems! The crow nods, impressed. 'Not bad! But I have two more puzzles for you!' He pulls out a tiny chalkboard and writes the next problem."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ ROOM 18: The crow scratches his puzzle on the chalkboard: 'I visited 4 gardens this week. In each garden I found 7 worms. I ate 12 worms so far. How many worms do I have left?' The gnomes whisper: 'You can do it!'",
+        "options": {
+          "choices": [
+            "14",
+            "15",
+            "16",
+            "17"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "hard",
+        "bloomLevel": "analyze",
+        "topic": "mixed operations",
+        "hints": [
+          "First find the total: 4 groups of 7 worms. Then subtract the 12 he ate.",
+          "7 + 7 + 7 + 7 = 28, then 28 - 12 = ?"
+        ],
+        "explanation": "4 gardens x 7 worms = 28 worms total. 28 - 12 eaten = 16 worms left! The crow claps his wings. 'One more puzzle and I'll give everything back!' He looks nervous — he didn't expect you to be this smart!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ ROOM 19: The crow's final puzzle: 'I collected things all week! On Monday I found 8 things, on Tuesday I found 6 things, and on Wednesday I found 9 things. I gave away 3 things on Thursday. How many things do I have now?'",
+        "options": {
+          "choices": [
+            "17",
+            "18",
+            "19",
+            "20"
+          ]
+        },
+        "answer": "d",
+        "difficulty": "hard",
+        "bloomLevel": "analyze",
+        "topic": "mixed operations",
+        "hints": [
+          "First add up Monday + Tuesday + Wednesday, then subtract Thursday",
+          "8 + 6 + 9 = 23, then 23 - 3 = ?"
+        ],
+        "explanation": "8 + 6 + 9 = 23 things collected. 23 - 3 given away = 20 things! The crow's beak drops open. 'You solved them ALL!' He hangs his head and pushes a big velvet bag toward you."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ FINAL PUZZLE 20: The crow gives you the velvet bag! Inside are ALL the missing gems! Pip asks: 'Let's make sure they're all here. We had 20 gems total. We already found 19 gems on our adventure. Plus this bag has 1 last gem. 19 + 1 equals what?'",
+        "options": {
+          "choices": [
+            "18",
+            "19",
+            "20",
+            "21"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "hard",
+        "bloomLevel": "evaluate",
+        "topic": "addition",
+        "hints": [
+          "Add the gems you found to the gem in the bag",
+          "19 + 1 = ?"
+        ],
+        "explanation": "19 + 1 = 20 gems — they're ALL here! YOU SAVED ALL THE GNOMES' TREASURES! Pip, Dot, and Fern dance around you with joy. The crow apologizes and promises to never steal again. The gnomes give you a special golden key to the Enchanted Garden — you can come back and visit anytime! You are a TRUE treasure-hunting hero! 🎉"
+      }
+    ]
+  },
+  {
+    "title": "Escape the Wizard's Castle",
+    "description": "You're trapped in a magical castle! Solve the wizard's puzzles in each room to unlock doors and find your way out.",
+    "category": "adventure",
+    "gradeLevel": 3,
+    "questions": [
+      {
+        "type": "multiple-choice",
+        "text": "🏰 ROOM 1: You wake up in a dark stone room. A glowing sign on the locked door reads: 'To open this door, solve my riddle! What is 8 × 3?' Quick — the torches are going out!",
+        "options": {
+          "choices": [
+            "21",
+            "24",
+            "27",
+            "32"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "remember",
+        "topic": "multiplication",
+        "hints": [
+          "Think of 8 groups of 3",
+          "Count by 3s eight times: 3, 6, 9..."
+        ],
+        "explanation": "8 × 3 = 24. The door creaks open! You step into a hallway lit by floating candles."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🕯️ ROOM 2: The hallway leads to a room with four treasure chests. A parrot squawks: 'Only the chest with the correct answer will open! What is 45 ÷ 5?'",
+        "options": {
+          "choices": [
+            "7",
+            "8",
+            "9",
+            "10"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "remember",
+        "topic": "division",
+        "hints": [
+          "How many groups of 5 fit into 45?",
+          "Count by 5s until you reach 45"
+        ],
+        "explanation": "45 ÷ 5 = 9. The correct chest pops open, revealing a silver key and a map of the castle!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗝️ ROOM 3: You reach a magic mirror blocking the passage. It whispers: 'I will let you pass if you tell me — what is 7 × 6?'",
+        "options": {
+          "choices": [
+            "36",
+            "42",
+            "48",
+            "54"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "remember",
+        "topic": "multiplication",
+        "hints": [
+          "Think of 7 groups of 6",
+          "6, 12, 18, 24, 30, 36, ..."
+        ],
+        "explanation": "7 × 6 = 42. The mirror shimmers and melts away, revealing a spiral staircase going up!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🌀 ROOM 4: At the top of the stairs, you find a room full of bubbling potions. A recipe book says: 'To make the shrinking potion, divide 56 equally into 8 bottles. How many drops go in each bottle?'",
+        "options": {
+          "choices": [
+            "6",
+            "7",
+            "8",
+            "9"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "division",
+        "hints": [
+          "56 ÷ 8 = ?",
+          "What number times 8 equals 56?"
+        ],
+        "explanation": "56 ÷ 8 = 7 drops per bottle. You drink the potion and shrink small enough to fit through a tiny door in the wall!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🚪 ROOM 5: The tiny door leads to a garden room with a magical fence. A gnome says: 'My square garden has sides of 6 feet each. What is the perimeter?' Answer correctly and I'll show you the secret exit!",
+        "options": {
+          "choices": [
+            "12 feet",
+            "18 feet",
+            "24 feet",
+            "36 feet"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "perimeter",
+        "hints": [
+          "A square has 4 equal sides",
+          "Perimeter = side + side + side + side"
+        ],
+        "explanation": "6 + 6 + 6 + 6 = 24 feet. The gnome grins and pushes aside a bush, revealing a hidden tunnel!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🌿 ROOM 6: The tunnel opens into a library. A spell book is locked with a number pad. The clue says: 'I am a number. When you multiply me by 9, you get 63. What am I?'",
+        "options": {
+          "choices": [
+            "6",
+            "7",
+            "8",
+            "9"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "division",
+        "hints": [
+          "63 ÷ 9 = ?",
+          "Try multiplying each answer choice by 9"
+        ],
+        "explanation": "63 ÷ 9 = 7. The spell book opens and a friendly ghost flies out to guide you!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "👻 ROOM 7: The ghost leads you to a room with stepping stones over a bubbling swamp. Each stone has a number. The ghost says: 'Step only on multiples of 4! Which of these is a multiple of 4?'",
+        "options": {
+          "choices": [
+            "14",
+            "18",
+            "22",
+            "28"
+          ]
+        },
+        "answer": "d",
+        "difficulty": "easy",
+        "bloomLevel": "understand",
+        "topic": "factors",
+        "hints": [
+          "A multiple of 4 can be divided by 4 with no remainder",
+          "Count by 4s: 4, 8, 12, 16, 20, 24, 28..."
+        ],
+        "explanation": "28 ÷ 4 = 7, so 28 is a multiple of 4! You hop across the stones safely and reach the other side."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🧱 ROOM 8: You enter a room where the floor is a giant grid. A sign reads: 'This rectangular room is 5 tiles long and 4 tiles wide. How many tiles cover the whole floor?' Step on the right tile to continue!",
+        "options": {
+          "choices": [
+            "9",
+            "18",
+            "20",
+            "25"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "area",
+        "hints": [
+          "Area = length × width",
+          "5 × 4 = ?"
+        ],
+        "explanation": "5 × 4 = 20 tiles. The correct tile glows and sinks down, revealing a ladder to the next level!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🪜 ROOM 9: You climb up and find a room with a giant clock. The wizard's voice booms: 'The clock chimes every 3 hours. It chimed at noon. After 4 chimes, how many hours have passed?'",
+        "options": {
+          "choices": [
+            "7",
+            "9",
+            "12",
+            "15"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "multiplication",
+        "hints": [
+          "Each chime = 3 hours later",
+          "4 chimes × 3 hours each = ?"
+        ],
+        "explanation": "4 × 3 = 12 hours. The clock hands spin and a secret compartment opens behind it, containing a golden compass!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🧭 ROOM 10: The compass points to a door with a fraction puzzle. A carved stone reads: 'A pizza was cut into 8 slices. The wizard ate 3 slices. What fraction of the pizza is LEFT?'",
+        "options": {
+          "choices": [
+            "3/8",
+            "5/8",
+            "3/5",
+            "8/3"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "understand",
+        "topic": "fractions",
+        "hints": [
+          "Start with 8 slices, remove 3",
+          "8 - 3 = 5 slices remaining out of 8"
+        ],
+        "explanation": "8 - 3 = 5 slices left, so 5/8 of the pizza remains. The door swings open to reveal a room full of floating books!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "📚 ROOM 11: A floating book opens and shows a pattern: 2, 6, 18, 54, ___. 'Complete the pattern to calm the books!' What comes next?",
+        "options": {
+          "choices": [
+            "108",
+            "128",
+            "162",
+            "216"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "analyze",
+        "topic": "patterns",
+        "hints": [
+          "Look at how each number relates to the one before it",
+          "Each number is multiplied by 3"
+        ],
+        "explanation": "Each number is multiplied by 3: 54 × 3 = 162. The books settle down and form a staircase to the next floor!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "⚔️ ROOM 12: A suit of armor blocks your path. It says: 'I guard a rectangular shield that is 9 inches long and 4 inches wide. What is its perimeter?' Answer to pass!",
+        "options": {
+          "choices": [
+            "13 inches",
+            "22 inches",
+            "26 inches",
+            "36 inches"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "perimeter",
+        "hints": [
+          "Perimeter of a rectangle = 2 × length + 2 × width",
+          "Add all four sides: 9 + 4 + 9 + 4"
+        ],
+        "explanation": "9 + 4 + 9 + 4 = 26 inches. The armor steps aside and salutes you as you march through!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔮 ROOM 13: A crystal ball shows a riddle: 'The wizard has 72 magic gems. He wants to put them equally into 9 treasure bags. How many gems go in each bag?'",
+        "options": {
+          "choices": [
+            "7",
+            "8",
+            "9",
+            "12"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "division",
+        "hints": [
+          "72 ÷ 9 = ?",
+          "What number times 9 equals 72?"
+        ],
+        "explanation": "72 ÷ 9 = 8 gems per bag. The crystal ball glows brightly and reveals a hidden map on the wall!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ ROOM 14: The map shows a trap! The floor has tiles and only the ones showing a FACTOR of 24 are safe. Which number is a factor of 24?",
+        "options": {
+          "choices": [
+            "5",
+            "6",
+            "7",
+            "9"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "understand",
+        "topic": "factors",
+        "hints": [
+          "A factor divides evenly into 24",
+          "Does 24 ÷ 6 have a remainder?"
+        ],
+        "explanation": "24 ÷ 6 = 4 with no remainder, so 6 is a factor of 24! You carefully step on the safe tiles and cross the room."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🧊 ROOM 15: You enter an icy room. A frozen scroll reads: 'Which fraction is GREATER: 2/5 or 3/5?' Melt the ice by choosing correctly!",
+        "options": {
+          "choices": [
+            "2/5",
+            "3/5",
+            "They are equal",
+            "Cannot compare"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "understand",
+        "topic": "fractions",
+        "hints": [
+          "Both fractions have the same denominator",
+          "Compare the numerators: which is bigger, 2 or 3?"
+        ],
+        "explanation": "3/5 > 2/5 because when denominators are the same, the bigger numerator means a bigger fraction. The ice melts and warm air fills the room!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🌡️ ROOM 16: Warm air pushes you into a room with a giant chessboard floor. It's 8 squares long and 8 squares wide. 'How many squares cover the ENTIRE board?' says a chess piece.",
+        "options": {
+          "choices": [
+            "16",
+            "32",
+            "48",
+            "64"
+          ]
+        },
+        "answer": "d",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "area",
+        "hints": [
+          "Area = length × width",
+          "8 × 8 = ?"
+        ],
+        "explanation": "8 × 8 = 64 squares. A chess piece slides aside, revealing a trapdoor beneath it. You're getting close to the exit!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🪤 LOCK 17: The trapdoor leads to a vault with a combination lock. The wizard's note says: 'Find the number! It is greater than 50, less than 60, and is a multiple of 7. What is it?'",
+        "options": {
+          "choices": [
+            "49",
+            "54",
+            "56",
+            "57"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "hard",
+        "bloomLevel": "analyze",
+        "topic": "factors",
+        "hints": [
+          "List the multiples of 7: 7, 14, 21, 28, 35, 42, 49, 56, 63...",
+          "Which of those is between 50 and 60?"
+        ],
+        "explanation": "56 = 7 × 8, and 56 is between 50 and 60. Click! The vault opens and you grab a glowing escape key!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "✨ PUZZLE 18: You reach a bridge guarded by a troll. He snarls: 'A rectangle has an area of 36 square feet and one side is 9 feet. What is the OTHER side?' Answer or be tossed into the moat!",
+        "options": {
+          "choices": [
+            "3 feet",
+            "4 feet",
+            "5 feet",
+            "6 feet"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "hard",
+        "bloomLevel": "analyze",
+        "topic": "area",
+        "hints": [
+          "Area = length × width, so 36 = 9 × ?",
+          "36 ÷ 9 = ?"
+        ],
+        "explanation": "36 ÷ 9 = 4 feet. The troll scratches his head in amazement and lets you cross the bridge!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🌉 PUZZLE 19: Across the bridge, you find the castle gate almost open! But one final lock remains. 'I am a number with exactly 4 factors: 1, the number itself, and two others. I am between 10 and 20, and I am odd. What am I?'",
+        "options": {
+          "choices": [
+            "11",
+            "15",
+            "17",
+            "19"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "hard",
+        "bloomLevel": "evaluate",
+        "topic": "factors",
+        "hints": [
+          "List the factors of each choice",
+          "15 has factors: 1, 3, 5, 15 — that's exactly 4!"
+        ],
+        "explanation": "15 has exactly 4 factors: 1, 3, 5, and 15. The final lock snaps open with a burst of sparks!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🏆 ROOM 20 — THE FINAL ESCAPE: The castle gate swings open! But the wizard appears and says: 'One last challenge! A magical garden outside is shaped like a rectangle, 12 feet long and 8 feet wide. What is its perimeter? Get it right and you are FREE!'",
+        "options": {
+          "choices": [
+            "20 feet",
+            "32 feet",
+            "40 feet",
+            "96 feet"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "hard",
+        "bloomLevel": "apply",
+        "topic": "perimeter",
+        "hints": [
+          "Perimeter = 2 × (length + width)",
+          "2 × (12 + 8) = 2 × 20 = ?"
+        ],
+        "explanation": "2 × (12 + 8) = 2 × 20 = 40 feet. The wizard smiles and bows. 'You have proven your wisdom!' You run through the gate into the sunlight — YOU ESCAPED THE WIZARD'S CASTLE!"
+      }
+    ]
+  },
+  {
+    "title": "The Dragon's Dungeon",
+    "description": "Deep beneath the castle lies the Dragon's Dungeon. Solve riddles to navigate the maze and free the captured dragon egg!",
+    "category": "adventure",
+    "gradeLevel": 4,
+    "questions": [
+      {
+        "type": "multiple-choice",
+        "text": "🐉 ROOM 1: You descend a stone staircase into the Dragon's Dungeon. A fiery inscription on the first gate reads: 'What is 12 × 7?' Speak the answer to open the gate!",
+        "options": {
+          "choices": [
+            "74",
+            "84",
+            "91",
+            "96"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "remember",
+        "topic": "multiplication",
+        "hints": [
+          "Think of 12 groups of 7",
+          "12 × 7 = (10 × 7) + (2 × 7)"
+        ],
+        "explanation": "12 × 7 = 84. The gate erupts in flames and swings open. You feel the heat of the dungeon ahead!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔥 ROOM 2: Lava pools bubble around narrow stone paths. A fire sprite blocks your way: 'There are 132 fire crystals divided equally among 12 shelves. How many crystals on each shelf?'",
+        "options": {
+          "choices": [
+            "9",
+            "10",
+            "11",
+            "12"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "division",
+        "hints": [
+          "132 ÷ 12 = ?",
+          "12 × 11 = ?"
+        ],
+        "explanation": "132 ÷ 12 = 11 crystals per shelf. The fire sprite nods and floats aside, lighting your path forward."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "💎 ROOM 3: You find a chamber of gemstones. A riddle is carved into the wall: 'A dragon's scale is shaped like a rectangle, 7 cm long and 5 cm wide. What is its area?'",
+        "options": {
+          "choices": [
+            "12 sq cm",
+            "24 sq cm",
+            "35 sq cm",
+            "40 sq cm"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "area",
+        "hints": [
+          "Area of a rectangle = length × width",
+          "7 × 5 = ?"
+        ],
+        "explanation": "7 × 5 = 35 square centimeters. A gemstone on the wall lights up, and a hidden door slides open!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🚪 ROOM 4: Behind the hidden door is a tunnel with glowing mushrooms. One mushroom whispers: 'What fraction of 1 hour is 15 minutes?'",
+        "options": {
+          "choices": [
+            "1/2",
+            "1/3",
+            "1/4",
+            "1/5"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "understand",
+        "topic": "fractions",
+        "hints": [
+          "There are 60 minutes in 1 hour",
+          "15/60 — can you simplify?"
+        ],
+        "explanation": "15 out of 60 minutes = 15/60 = 1/4. The mushrooms glow brighter, lighting a path deeper into the dungeon!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🍄 ROOM 5: The path leads to a room with a stone pedestal. Numbers are carved in a pattern: 5, 10, 20, 40, ___. 'Complete the pattern to reveal the next passage!'",
+        "options": {
+          "choices": [
+            "50",
+            "60",
+            "70",
+            "80"
+          ]
+        },
+        "answer": "d",
+        "difficulty": "easy",
+        "bloomLevel": "analyze",
+        "topic": "patterns",
+        "hints": [
+          "How does each number change to become the next?",
+          "Each number is doubled (multiplied by 2)"
+        ],
+        "explanation": "Each number is doubled: 40 × 2 = 80. The pedestal sinks into the floor, and a new tunnel appears!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🪨 ROOM 6: You enter a room shaped like a triangle. Three torches mark the walls. A sign reads: 'A triangular cave entrance has sides of 8 m, 6 m, and 10 m. What is its perimeter?'",
+        "options": {
+          "choices": [
+            "18 m",
+            "20 m",
+            "24 m",
+            "28 m"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "perimeter",
+        "hints": [
+          "Perimeter = sum of all sides",
+          "8 + 6 + 10 = ?"
+        ],
+        "explanation": "8 + 6 + 10 = 24 meters. The torches flare up, and a section of wall slides open!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🦇 ROOM 7: Bats flutter around a locked chest. The lock says: 'Which of these numbers is a factor of BOTH 18 and 24?'",
+        "options": {
+          "choices": [
+            "4",
+            "5",
+            "6",
+            "8"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "understand",
+        "topic": "factors",
+        "hints": [
+          "A common factor divides evenly into both numbers",
+          "18 ÷ 6 = 3 and 24 ÷ 6 = 4 — both work!"
+        ],
+        "explanation": "6 is a factor of both 18 (18 ÷ 6 = 3) and 24 (24 ÷ 6 = 4). The chest opens, revealing a dragon-scale shield!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🛡️ ROOM 8: Holding the shield, you enter a forge room. The blacksmith dragon says: 'I made 9 rows of swords with 8 swords in each row. Then I gave away 12 swords. How many do I have left?'",
+        "options": {
+          "choices": [
+            "48",
+            "56",
+            "60",
+            "72"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "multiplication",
+        "hints": [
+          "First find 9 × 8, then subtract 12",
+          "72 - 12 = ?"
+        ],
+        "explanation": "9 × 8 = 72 swords, then 72 - 12 = 60 swords remaining. The blacksmith dragon nods and opens the next gate!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "⚒️ ROOM 9: Beyond the forge, a river of lava blocks your path. Stepping stones appear with fractions on them. 'Step on the stone that shows a fraction EQUIVALENT to 2/3!'",
+        "options": {
+          "choices": [
+            "3/4",
+            "4/6",
+            "4/9",
+            "6/8"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "understand",
+        "topic": "fractions",
+        "hints": [
+          "Multiply both the numerator and denominator of 2/3 by the same number",
+          "2 × 2 = 4 and 3 × 2 = 6, so 2/3 = 4/6"
+        ],
+        "explanation": "2/3 = 4/6 (multiply top and bottom by 2). You leap onto the correct stone and cross the lava safely!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🌋 ROOM 10: Across the lava, you find a room with a giant abacus. A puzzle reads: 'The dungeon has 6 levels. Each level has 4 corridors, and each corridor has 5 locked cells. How many cells are there in total?'",
+        "options": {
+          "choices": [
+            "80",
+            "100",
+            "110",
+            "120"
+          ]
+        },
+        "answer": "d",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "multiplication",
+        "hints": [
+          "Multiply all three numbers together",
+          "6 × 4 × 5 = ?"
+        ],
+        "explanation": "6 × 4 × 5 = 120 cells. The abacus clicks into place and a secret panel opens in the wall!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔓 LOCK 11: Behind the panel is a vault door. The combination requires: 'A square room has a perimeter of 48 feet. What is the length of ONE side?'",
+        "options": {
+          "choices": [
+            "8 feet",
+            "10 feet",
+            "12 feet",
+            "16 feet"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "analyze",
+        "topic": "perimeter",
+        "hints": [
+          "A square has 4 equal sides",
+          "Perimeter ÷ 4 = one side"
+        ],
+        "explanation": "48 ÷ 4 = 12 feet per side. The vault door clicks and swings open, revealing a winding staircase going deeper!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🌀 ROOM 12: The staircase leads to an underground lake. A water serpent rises and hisses: 'What is the area of a rectangle that has a perimeter of 22 cm and a length of 7 cm?'",
+        "options": {
+          "choices": [
+            "21 sq cm",
+            "24 sq cm",
+            "28 sq cm",
+            "32 sq cm"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "analyze",
+        "topic": "area",
+        "hints": [
+          "First find the width: perimeter = 2 × (length + width)",
+          "22 = 2 × (7 + w), so 11 = 7 + w, w = 4. Then area = 7 × 4"
+        ],
+        "explanation": "Perimeter = 2 × (7 + w) = 22, so 7 + w = 11, w = 4 cm. Area = 7 × 4 = 28 sq cm. The serpent dives below the water, clearing your path across the lake!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🌊 ROOM 13: You paddle across the lake on a wooden raft. A water spirit asks: 'Which of these shows the fractions in order from LEAST to GREATEST? 1/2, 1/4, 3/4'",
+        "options": {
+          "choices": [
+            "1/2, 1/4, 3/4",
+            "1/4, 1/2, 3/4",
+            "3/4, 1/2, 1/4",
+            "1/4, 3/4, 1/2"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "analyze",
+        "topic": "fractions",
+        "hints": [
+          "Think about pieces of a pie: which piece is smallest?",
+          "1/4 is one quarter, 1/2 is two quarters, 3/4 is three quarters"
+        ],
+        "explanation": "1/4 < 1/2 < 3/4 (think of them as 1, 2, and 3 quarters). The spirit smiles and the raft glides to shore!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "⚓ ROOM 14: On shore, you find ancient number stones. They read: 3, 7, 15, 31, ___. A dragon statue asks: 'What comes next in this pattern?'",
+        "options": {
+          "choices": [
+            "47",
+            "55",
+            "62",
+            "63"
+          ]
+        },
+        "answer": "d",
+        "difficulty": "medium",
+        "bloomLevel": "analyze",
+        "topic": "patterns",
+        "hints": [
+          "Look at the pattern: 3 → 7 (×2+1), 7 → 15 (×2+1)",
+          "Each number is doubled and then 1 is added"
+        ],
+        "explanation": "The pattern is: multiply by 2, then add 1. So 31 × 2 + 1 = 63. The dragon statue's eyes glow and a doorway appears!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🐲 ROOM 15: You enter a massive cavern. Baby dragons are playing with number blocks. Mama Dragon says: 'What is the LEAST common multiple (LCM) of 4 and 6?'",
+        "options": {
+          "choices": [
+            "8",
+            "10",
+            "12",
+            "24"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "factors",
+        "hints": [
+          "List multiples of 4: 4, 8, 12, 16... List multiples of 6: 6, 12, 18...",
+          "Find the smallest number that appears in BOTH lists"
+        ],
+        "explanation": "Multiples of 4: 4, 8, 12... Multiples of 6: 6, 12... The smallest shared multiple is 12! Mama Dragon lets you pass through her cavern."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🥚 ROOM 16: You spot the dragon egg in the distance! But a pit of spikes blocks the way. A sign reads: 'The pit is shaped like a rectangle. Its length is 11 m and its area is 88 sq m. What is its width?'",
+        "options": {
+          "choices": [
+            "6 m",
+            "7 m",
+            "8 m",
+            "9 m"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "analyze",
+        "topic": "area",
+        "hints": [
+          "Area = length × width",
+          "88 = 11 × width, so width = 88 ÷ 11"
+        ],
+        "explanation": "88 ÷ 11 = 8 meters wide. A bridge extends across the pit. You're almost there!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🌟 LOCK 17: A magical cage surrounds the dragon egg. Three combination locks must be solved. Lock 1: 'There are 156 dragon scales. The scales are shared equally among 12 baby dragons. How many scales does each dragon get?'",
+        "options": {
+          "choices": [
+            "11",
+            "12",
+            "13",
+            "14"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "hard",
+        "bloomLevel": "apply",
+        "topic": "division",
+        "hints": [
+          "156 ÷ 12 = ?",
+          "12 × 13 = 156"
+        ],
+        "explanation": "156 ÷ 12 = 13 scales each. The first lock clicks open! Two more to go!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 LOCK 18: Lock 2 on the cage glows red. 'A dragon flew around a rectangular field 3 times. The field is 15 m long and 9 m wide. What TOTAL distance did the dragon fly?'",
+        "options": {
+          "choices": [
+            "48 m",
+            "96 m",
+            "135 m",
+            "144 m"
+          ]
+        },
+        "answer": "d",
+        "difficulty": "hard",
+        "bloomLevel": "evaluate",
+        "topic": "perimeter",
+        "hints": [
+          "First find the perimeter: 2 × (15 + 9)",
+          "Then multiply the perimeter by 3 laps"
+        ],
+        "explanation": "Perimeter = 2 × (15 + 9) = 2 × 24 = 48 m. Three laps = 48 × 3 = 144 m. The second lock springs open!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔑 LOCK 19: The final lock! It reads: 'A wizard had 5/6 of a potion bottle. He used 1/6 to cast a spell and then 2/6 to heal a dragon. What fraction of the potion is LEFT?'",
+        "options": {
+          "choices": [
+            "1/6",
+            "2/6",
+            "3/6",
+            "4/6"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "hard",
+        "bloomLevel": "apply",
+        "topic": "fractions",
+        "hints": [
+          "Start with 5/6, subtract 1/6, then subtract 2/6",
+          "5/6 - 1/6 - 2/6 = ?"
+        ],
+        "explanation": "5/6 - 1/6 = 4/6, then 4/6 - 2/6 = 2/6 of the potion remains. The final lock bursts open with a shower of golden sparks!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🏆 ROOM 20 — THE DRAGON EGG: The cage dissolves! The dragon egg begins to glow and crack. Before it hatches, one final inscription appears: 'The egg weighs as much as 8 gold bars. Each gold bar weighs 15 ounces. I will hatch only if you tell me my total weight!' What does the egg weigh?",
+        "options": {
+          "choices": [
+            "80 ounces",
+            "100 ounces",
+            "112 ounces",
+            "120 ounces"
+          ]
+        },
+        "answer": "d",
+        "difficulty": "hard",
+        "bloomLevel": "apply",
+        "topic": "multiplication",
+        "hints": [
+          "8 gold bars × 15 ounces each",
+          "8 × 15 = ?"
+        ],
+        "explanation": "8 × 15 = 120 ounces. The egg cracks open and a beautiful baby dragon emerges, spreading its tiny wings! It nuzzles you gratefully. You climb onto its back and the dragon flies you up through the dungeon, out of the castle, and into the bright sky. YOU FREED THE DRAGON AND ESCAPED THE DUNGEON!"
+      }
+    ]
+  },
+  {
+    "title": "Space Station Rescue",
+    "description": "The space station's computer crashed! Solve engineering puzzles to restart each module before the oxygen runs out.",
+    "category": "adventure",
+    "gradeLevel": 5,
+    "questions": [
+      {
+        "type": "multiple-choice",
+        "text": "🚀 MODULE 1 — LIFE SUPPORT: The oxygen generator produces 2.5 liters per minute. How many liters will it produce in 4 minutes? Hurry — the crew is counting on you!",
+        "options": {
+          "choices": [
+            "8 liters",
+            "10 liters",
+            "9.5 liters",
+            "12 liters"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "decimal multiplication",
+        "hints": [
+          "Multiply 2.5 by 4",
+          "Think of 2.5 as 2 + 0.5, then multiply each part by 4"
+        ],
+        "explanation": "2.5 × 4 = 10 liters. Oxygen flow restored! The crew can breathe easy — for now. Moving to Module 2..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔧 MODULE 2 — POWER GRID: The station has 3 solar panels. Each panel generates 1/6 of the total power needed. What fraction of total power do all 3 panels provide together?",
+        "options": {
+          "choices": [
+            "1/2",
+            "3/6",
+            "1/3",
+            "3/18"
+          ]
+        },
+        "answer": "a",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "fraction addition",
+        "hints": [
+          "Add 1/6 three times",
+          "3/6 can be simplified"
+        ],
+        "explanation": "1/6 + 1/6 + 1/6 = 3/6 = 1/2. That's half the power restored! But we need more. Advancing to Module 3..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "⚡ MODULE 3 — BACKUP BATTERY: The backup battery is at 45%. It drains 5% every hour. How many hours until it reaches 0%?",
+        "options": {
+          "choices": [
+            "7 hours",
+            "8 hours",
+            "9 hours",
+            "10 hours"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "percentages",
+        "hints": [
+          "Divide 45 by 5",
+          "How many times does 5 go into 45?"
+        ],
+        "explanation": "45 ÷ 5 = 9 hours remaining. That gives us time, but we need to work fast! Module 4 is next..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🛰️ MODULE 4 — COMMUNICATIONS: The radio signal bounces between 3 satellites. The total distance is 12,600 km split equally. How far apart is each satellite?",
+        "options": {
+          "choices": [
+            "3,200 km",
+            "4,200 km",
+            "6,300 km",
+            "4,000 km"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "division",
+        "hints": [
+          "Divide the total distance by 3",
+          "12,600 ÷ 3"
+        ],
+        "explanation": "12,600 ÷ 3 = 4,200 km between each satellite. Signal locked! We can call for help now. On to Module 5..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔩 MODULE 5 — HULL REPAIR: A hull breach is 3/8 of a meter wide. The repair patch covers 5/8 of a meter. How much extra patch extends beyond the breach?",
+        "options": {
+          "choices": [
+            "1/4 meter",
+            "2/8 meter",
+            "1/8 meter",
+            "3/8 meter"
+          ]
+        },
+        "answer": "a",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "fraction subtraction",
+        "hints": [
+          "Subtract 3/8 from 5/8",
+          "Simplify the result"
+        ],
+        "explanation": "5/8 - 3/8 = 2/8 = 1/4 meter. The patch fits with room to spare! Hull sealed. Module 6 awaits..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🌡️ MODULE 6 — TEMPERATURE CONTROL: The station is at -12°C. The heater raises the temperature by 3.5°C per cycle. After 4 cycles, what is the temperature?",
+        "options": {
+          "choices": [
+            "0°C",
+            "2°C",
+            "4°C",
+            "-2°C"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "decimal operations",
+        "hints": [
+          "First find 3.5 × 4",
+          "Then add that to -12"
+        ],
+        "explanation": "3.5 × 4 = 14. Then -12 + 14 = 2°C. Temperature stabilized! The crew is warming up. Module 7 is critical..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔑 MODULE 7 — SECURITY DOOR: The access code requires the first prime number greater than 20. Which number opens the door?",
+        "options": {
+          "choices": [
+            "21",
+            "22",
+            "23",
+            "25"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "remember",
+        "topic": "prime numbers",
+        "hints": [
+          "A prime number is only divisible by 1 and itself",
+          "Check each number — is 21 divisible by 3?"
+        ],
+        "explanation": "23 is prime (only divisible by 1 and 23). 21 = 3×7, 22 = 2×11, 25 = 5×5. Door unlocked! Entering Module 8..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "📡 MODULE 8 — NAVIGATION: The station orbits Earth every 90 minutes. How many complete orbits does it make in 24 hours?",
+        "options": {
+          "choices": [
+            "14",
+            "15",
+            "16",
+            "18"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "division",
+        "hints": [
+          "Convert 24 hours to minutes first",
+          "24 × 60 = 1,440 minutes"
+        ],
+        "explanation": "24 hours = 1,440 minutes. 1,440 ÷ 90 = 16 orbits. Navigation systems tracking! Now for the tougher repairs..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🚨 SYSTEM 9 — ALERT! FUEL SYSTEM: The fuel tank is 3/4 full. After using 1/3 of what's left, what fraction of the tank still has fuel? Solve quickly — the engine needs to fire in 60 seconds!",
+        "options": {
+          "choices": [
+            "1/4",
+            "1/2",
+            "5/12",
+            "2/3"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "fraction operations",
+        "hints": [
+          "First find 1/3 of 3/4",
+          "Then subtract that from 3/4"
+        ],
+        "explanation": "1/3 of 3/4 = 1/4. So 3/4 - 1/4 = 2/4 = 1/2. Fuel system stabilized! Engine firing on schedule. System 10 needs attention..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "⚠️ SYSTEM 10 — WATER RECYCLER: The recycler processes 0.75 liters per cycle. If the crew needs 18 liters per day, how many cycles must run?",
+        "options": {
+          "choices": [
+            "20 cycles",
+            "22 cycles",
+            "24 cycles",
+            "26 cycles"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "decimal division",
+        "hints": [
+          "Divide 18 by 0.75",
+          "Think: how many 0.75s fit into 18?"
+        ],
+        "explanation": "18 ÷ 0.75 = 24 cycles. Water recycler programmed and running! The crew won't go thirsty. System 11 is failing..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔬 SYSTEM 11 — LABORATORY: An experiment needs a ratio of 2:5 chemical mix. If you have 8 mL of chemical A, how much of chemical B do you need?",
+        "options": {
+          "choices": [
+            "15 mL",
+            "20 mL",
+            "25 mL",
+            "16 mL"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "ratios",
+        "hints": [
+          "Set up the proportion: 2/5 = 8/x",
+          "8 is 4 times 2, so multiply 5 by 4"
+        ],
+        "explanation": "2:5 = 8:x → x = 8 × 5 ÷ 2 = 20 mL. Experiment saved from contamination! System 12 is overheating..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🌀 SYSTEM 12 — CENTRIFUGE: The centrifuge spins at 150 RPM. To separate the samples, it needs to reach 200% of its current speed. What speed is needed?",
+        "options": {
+          "choices": [
+            "250 RPM",
+            "300 RPM",
+            "350 RPM",
+            "200 RPM"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "percentages",
+        "hints": [
+          "200% means 2 times the current speed",
+          "Multiply 150 by 2"
+        ],
+        "explanation": "200% of 150 = 2 × 150 = 300 RPM. Centrifuge at full speed! Samples processing. System 13 has a breach..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🛡️ SYSTEM 13 — RADIATION SHIELD: The shield blocks 7/10 of radiation. A solar flare sends 500 units. How many units get through the shield?",
+        "options": {
+          "choices": [
+            "350 units",
+            "200 units",
+            "150 units",
+            "100 units"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "fraction of a number",
+        "hints": [
+          "If 7/10 is blocked, then 3/10 gets through",
+          "Find 3/10 of 500"
+        ],
+        "explanation": "If 7/10 is blocked, 3/10 gets through. 3/10 × 500 = 150 units. Shield holding! Crew is safe. System 14 next..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔋 SYSTEM 14 — SOLAR ARRAY: Panel A produces 12.6 kW, Panel B produces 8.75 kW, and Panel C is offline. What's the total power from A and B combined?",
+        "options": {
+          "choices": [
+            "20.35 kW",
+            "21.35 kW",
+            "21.05 kW",
+            "20.75 kW"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "decimal addition",
+        "hints": [
+          "Line up the decimal points",
+          "12.6 + 8.75 — add carefully"
+        ],
+        "explanation": "12.60 + 8.75 = 21.35 kW. Partial power restored! We still need Panel C, but this will keep us going. System 15 is critical..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ SYSTEM 15 — MAPPING: The station's rectangular observation window is 1.2 m long and 0.8 m wide. What is the area of the window?",
+        "options": {
+          "choices": [
+            "0.96 m²",
+            "0.86 m²",
+            "1.06 m²",
+            "0.92 m²"
+          ]
+        },
+        "answer": "a",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "area with decimals",
+        "hints": [
+          "Area of a rectangle = length × width",
+          "Multiply 1.2 × 0.8"
+        ],
+        "explanation": "1.2 × 0.8 = 0.96 m². Window dimensions logged for the replacement order. System 16 is sparking!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "💡 SYSTEM 16 — LIGHTING GRID: 35% of the 120 lights on the station are broken. How many lights still work?",
+        "options": {
+          "choices": [
+            "42 lights",
+            "85 lights",
+            "78 lights",
+            "80 lights"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "percentages",
+        "hints": [
+          "If 35% are broken, then 65% still work",
+          "Find 65% of 120"
+        ],
+        "explanation": "65% of 120 = 0.65 × 120 = 78 lights. Rerouting power to working lights! Almost done — only the hardest systems left..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🚨 ALERT 17 — CRITICAL! DOCKING PORT: A supply ship is approaching. Its cargo bay is a rectangular prism: 4 m long, 3 m wide, and 2.5 m tall. What volume of supplies can it hold?",
+        "options": {
+          "choices": [
+            "24 m³",
+            "28 m³",
+            "30 m³",
+            "32 m³"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "hard",
+        "bloomLevel": "apply",
+        "topic": "volume",
+        "hints": [
+          "Volume = length × width × height",
+          "4 × 3 × 2.5"
+        ],
+        "explanation": "4 × 3 × 2.5 = 30 m³. Docking port calibrated for the incoming supply ship! Alert 18 is flashing red..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🚨 ALERT 18 — CRITICAL! ESCAPE POD: The escape pod fits 2/3 of the crew. If 5/6 of those people need space suits, and there are 24 crew members total, how many suits are needed?",
+        "options": {
+          "choices": [
+            "12 suits",
+            "14 suits",
+            "16 suits",
+            "20 suits"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "hard",
+        "bloomLevel": "analyze",
+        "topic": "fraction of a fraction",
+        "hints": [
+          "First find 2/3 of 24",
+          "Then find 5/6 of that number"
+        ],
+        "explanation": "2/3 of 24 = 16 people fit in the pod. 5/6 of 16 — wait, let's recalculate: 5/6 × 16 = 80/6 ≈ 13.3, round up to 14 suits needed. Safety first — always round up! Alert 19 incoming..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🚨 ALERT 19 — CRITICAL! THRUSTER CONTROL: The station is drifting! Thruster A fires at a ratio of 3:4 with Thruster B. If Thruster B fires at 240 newtons, how much force does Thruster A provide?",
+        "options": {
+          "choices": [
+            "160 newtons",
+            "180 newtons",
+            "200 newtons",
+            "320 newtons"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "hard",
+        "bloomLevel": "apply",
+        "topic": "ratios and proportions",
+        "hints": [
+          "A:B = 3:4, and B = 240",
+          "Set up: 3/4 = A/240"
+        ],
+        "explanation": "3/4 = A/240 → A = 3 × 240 ÷ 4 = 180 newtons. Thrusters balanced! The station is stabilizing. One final alert..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🚨 ALERT 20 — FINAL SYSTEM! MAIN COMPUTER: The computer needs a prime factorization code. What is the prime factorization of 120? Enter the code to reboot the entire station!",
+        "options": {
+          "choices": [
+            "2³ × 3 × 5",
+            "2² × 3 × 10",
+            "2 × 4 × 15",
+            "2² × 5 × 6"
+          ]
+        },
+        "answer": "a",
+        "difficulty": "hard",
+        "bloomLevel": "analyze",
+        "topic": "prime factorization",
+        "hints": [
+          "Start dividing 120 by the smallest prime: 2",
+          "120 = 2 × 60, then keep breaking down 60"
+        ],
+        "explanation": "120 = 2 × 60 = 2 × 2 × 30 = 2 × 2 × 2 × 15 = 2 × 2 × 2 × 3 × 5 = 2³ × 3 × 5. CODE ACCEPTED! All systems rebooted — the space station is fully operational! Mission complete, Commander! 🎉"
+      }
+    ]
+  },
+  {
+    "title": "Mission to Mars",
+    "description": "You're navigating a spacecraft to Mars. Calculate trajectories, manage fuel, and solve problems to complete the mission!",
+    "category": "adventure",
+    "gradeLevel": 6,
+    "questions": [
+      {
+        "type": "multiple-choice",
+        "text": "🚀 MISSION LOG 1 — LAUNCH SEQUENCE: The rocket burns 3.75 tons of fuel per minute during launch. How much fuel is used in the first 8 minutes?",
+        "options": {
+          "choices": [
+            "28 tons",
+            "30 tons",
+            "32 tons",
+            "24 tons"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "decimal multiplication",
+        "hints": [
+          "Multiply 3.75 by 8",
+          "Break it up: 3 × 8 = 24, and 0.75 × 8 = 6"
+        ],
+        "explanation": "3.75 × 8 = 30 tons of fuel burned. Launch successful! You've cleared Earth's atmosphere. Mission Log 2 incoming..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "📋 MISSION LOG 2 — CREW ASSIGNMENTS: The 18-person crew is split into teams with a ratio of 2:3:4 for navigation, engineering, and science. How many are on the science team?",
+        "options": {
+          "choices": [
+            "6",
+            "8",
+            "4",
+            "10"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "ratios",
+        "hints": [
+          "Add the ratio parts: 2 + 3 + 4 = 9",
+          "Science is 4 parts out of 9 total"
+        ],
+        "explanation": "Total parts = 2 + 3 + 4 = 9. Each part = 18 ÷ 9 = 2 people. Science = 4 × 2 = 8 crew members. Teams assigned! Mission Log 3..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🛸 MISSION LOG 3 — TRAJECTORY CHECK: Your spacecraft has traveled 2/5 of the distance to Mars. If the total distance is 225 million km, how far have you gone?",
+        "options": {
+          "choices": [
+            "80 million km",
+            "90 million km",
+            "100 million km",
+            "112.5 million km"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "fraction of a number",
+        "hints": [
+          "Find 2/5 of 225",
+          "Divide 225 by 5 first, then multiply by 2"
+        ],
+        "explanation": "2/5 × 225 = 450/5 = 90 million km. You're making great progress! Mars is getting closer. Mission Log 4..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🌑 MISSION LOG 4 — ASTEROID DODGE: An asteroid is 15.8 km ahead. Your ship moves 2.3 km per second to the side. How far will you have moved laterally in 5 seconds?",
+        "options": {
+          "choices": [
+            "10.5 km",
+            "11.5 km",
+            "12.5 km",
+            "10.15 km"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "decimal multiplication",
+        "hints": [
+          "Multiply 2.3 by 5",
+          "2 × 5 = 10, and 0.3 × 5 = 1.5"
+        ],
+        "explanation": "2.3 × 5 = 11.5 km lateral movement. Asteroid dodged! That was close. Mission Log 5 coming in..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "📊 MISSION LOG 5 — SUPPLY CHECK: You started with 480 food packs. After 30 days, 35% have been consumed. How many food packs remain?",
+        "options": {
+          "choices": [
+            "168 packs",
+            "312 packs",
+            "288 packs",
+            "336 packs"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "percentages",
+        "hints": [
+          "If 35% are consumed, 65% remain",
+          "Find 65% of 480"
+        ],
+        "explanation": "65% of 480 = 0.65 × 480 = 312 packs remaining. Supplies are on track! Mission Log 6..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔭 MISSION LOG 6 — TELESCOPE CALIBRATION: The telescope lens has a circular shape with a diameter of 14 cm. What is its radius?",
+        "options": {
+          "choices": [
+            "28 cm",
+            "7 cm",
+            "10 cm",
+            "3.5 cm"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "remember",
+        "topic": "circle properties",
+        "hints": [
+          "Radius is half the diameter",
+          "Divide 14 by 2"
+        ],
+        "explanation": "Radius = diameter ÷ 2 = 14 ÷ 2 = 7 cm. Telescope calibrated and focused on Mars! Mission Log 7 incoming..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "⚡ MISSION LOG 7 — POWER CHECK: The ship uses 125 kWh per day. The solar panels generate 87.5 kWh. How much must the backup generator provide?",
+        "options": {
+          "choices": [
+            "47.5 kWh",
+            "37.5 kWh",
+            "32.5 kWh",
+            "42.5 kWh"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "decimal subtraction",
+        "hints": [
+          "Subtract what the panels provide from the total needed",
+          "125 - 87.5"
+        ],
+        "explanation": "125 - 87.5 = 37.5 kWh from the backup generator. Power systems balanced! Mission Log 8 ahead..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗝️ MISSION LOG 8 — SECURE VAULT: The supply vault code is the least common multiple (LCM) of 6 and 8. What's the code?",
+        "options": {
+          "choices": [
+            "12",
+            "24",
+            "48",
+            "36"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "LCM",
+        "hints": [
+          "List multiples of 6: 6, 12, 18, 24...",
+          "List multiples of 8: 8, 16, 24... Find the first match"
+        ],
+        "explanation": "Multiples of 6: 6, 12, 18, 24... Multiples of 8: 8, 16, 24... LCM = 24. Vault unlocked! Entering the medium-difficulty zone of the mission..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🚨 SYSTEM 9 — FUEL EFFICIENCY: Your ship travels 4.2 km per liter of fuel. You need to cover 378 km to reach a refueling station. How many liters do you need?",
+        "options": {
+          "choices": [
+            "80 liters",
+            "85 liters",
+            "90 liters",
+            "95 liters"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "decimal division",
+        "hints": [
+          "Divide distance by efficiency",
+          "378 ÷ 4.2"
+        ],
+        "explanation": "378 ÷ 4.2 = 90 liters. Fuel loaded and engines running efficiently! System 10 needs your attention..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "⚠️ SYSTEM 10 — CARGO BAY: The cargo bay is a rectangular prism: 6 m × 4.5 m × 3 m. What is its volume?",
+        "options": {
+          "choices": [
+            "72 m³",
+            "81 m³",
+            "78 m³",
+            "85.5 m³"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "volume",
+        "hints": [
+          "Volume = length × width × height",
+          "6 × 4.5 × 3"
+        ],
+        "explanation": "6 × 4.5 = 27, then 27 × 3 = 81 m³. Cargo bay dimensions confirmed — everything fits! System 11 is overheating..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔥 SYSTEM 11 — HEAT SHIELD: The heat shield temperature is rising at a rate of 15°C per minute. If it starts at 120°C and the maximum safe temperature is 345°C, how many minutes until it reaches the danger zone?",
+        "options": {
+          "choices": [
+            "13 minutes",
+            "14 minutes",
+            "15 minutes",
+            "16 minutes"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "linear equations",
+        "hints": [
+          "Find the temperature difference: 345 - 120",
+          "Divide by the rate of increase"
+        ],
+        "explanation": "345 - 120 = 225°C difference. 225 ÷ 15 = 15 minutes. We have 15 minutes to cool the shield! System 12 is next..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🌀 SYSTEM 12 — GRAVITY SIMULATOR: The simulator needs to spin the crew module. If the module is a circle with a radius of 7 meters, what is the circumference? (Use π ≈ 22/7)",
+        "options": {
+          "choices": [
+            "42 meters",
+            "44 meters",
+            "38 meters",
+            "49 meters"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "circumference",
+        "hints": [
+          "Circumference = 2 × π × r",
+          "Use 22/7 for π"
+        ],
+        "explanation": "C = 2 × 22/7 × 7 = 2 × 22 = 44 meters. Gravity simulator spinning at the correct circumference! System 13 alert..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "📡 SYSTEM 13 — DEEP SPACE SIGNAL: A signal from Earth takes 12.5 minutes to reach you. If the signal travels at 300,000 km/s, how far are you from Earth in millions of km?",
+        "options": {
+          "choices": [
+            "200 million km",
+            "225 million km",
+            "250 million km",
+            "275 million km"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "distance calculation",
+        "hints": [
+          "Convert 12.5 minutes to seconds: 12.5 × 60",
+          "Then multiply by speed"
+        ],
+        "explanation": "12.5 min = 750 seconds. 750 × 300,000 = 225,000,000 km = 225 million km. Signal distance calculated! System 14 is critical..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔧 SYSTEM 14 — ENGINE REPAIR: A replacement part costs $2,400 on Earth. In space, parts cost 250% more. What is the space price?",
+        "options": {
+          "choices": [
+            "$6,000",
+            "$8,400",
+            "$4,800",
+            "$7,200"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "percentage increase",
+        "hints": [
+          "250% more means the space price is 100% + 250% = 350% of original",
+          "Find 350% of 2,400"
+        ],
+        "explanation": "350% of $2,400 = 3.5 × $2,400 = $8,400. Good thing we brought spares! Engine part installed. System 15..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🛰️ SYSTEM 15 — ORBITAL ENTRY: To enter Mars orbit, you need to reduce speed by 3/8. If your current speed is 24,000 km/h, what should your new speed be?",
+        "options": {
+          "choices": [
+            "15,000 km/h",
+            "16,000 km/h",
+            "18,000 km/h",
+            "9,000 km/h"
+          ]
+        },
+        "answer": "a",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "fractions",
+        "hints": [
+          "Find 3/8 of 24,000",
+          "Then subtract from 24,000"
+        ],
+        "explanation": "3/8 × 24,000 = 9,000. New speed = 24,000 - 9,000 = 15,000 km/h. Orbital entry speed achieved! System 16..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🧪 SYSTEM 16 — ATMOSPHERE ANALYSIS: Mars atmosphere is 95.3% CO₂, 2.7% nitrogen, and the rest is other gases. What percentage is other gases?",
+        "options": {
+          "choices": [
+            "1%",
+            "1.5%",
+            "2%",
+            "2.5%"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "percentages",
+        "hints": [
+          "All percentages must add up to 100%",
+          "100 - 95.3 - 2.7 = ?"
+        ],
+        "explanation": "100% - 95.3% - 2.7% = 2% other gases. Atmospheric data logged for the science team! Final challenge phase ahead..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🚨 ALERT 17 — CRITICAL! LANDING CALCULATIONS: The lander drops from 1,200 m altitude, descending 0.8 m every 0.25 seconds. How many seconds until landing?",
+        "options": {
+          "choices": [
+            "325 seconds",
+            "350 seconds",
+            "375 seconds",
+            "400 seconds"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "hard",
+        "bloomLevel": "analyze",
+        "topic": "rate problems",
+        "hints": [
+          "First find the rate per second: 0.8 ÷ 0.25",
+          "Then divide altitude by that rate"
+        ],
+        "explanation": "Rate = 0.8 ÷ 0.25 = 3.2 m/s. Time = 1,200 ÷ 3.2 = 375 seconds. Landing trajectory locked! Alert 18 incoming..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🚨 ALERT 18 — CRITICAL! HABITAT CONSTRUCTION: The Mars habitat base is a square with a perimeter of 64 meters. Solar panels will cover 3/4 of the base area. How many square meters of solar panels are needed?",
+        "options": {
+          "choices": [
+            "192 m²",
+            "196 m²",
+            "172 m²",
+            "256 m²"
+          ]
+        },
+        "answer": "a",
+        "difficulty": "hard",
+        "bloomLevel": "analyze",
+        "topic": "area and fractions",
+        "hints": [
+          "Find the side length from the perimeter: 64 ÷ 4",
+          "Then find the area, then take 3/4 of it"
+        ],
+        "explanation": "Side = 64 ÷ 4 = 16 m. Area = 16 × 16 = 256 m². Solar panels = 3/4 × 256 = 192 m². Habitat blueprints approved! Alert 19..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🚨 ALERT 19 — CRITICAL! WATER EXTRACTION: A Mars ice drill extracts 2.4 kg of ice per hour. Only 62.5% of the ice can be converted to drinkable water. How many kg of water do you get in 10 hours?",
+        "options": {
+          "choices": [
+            "12 kg",
+            "15 kg",
+            "18 kg",
+            "24 kg"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "hard",
+        "bloomLevel": "analyze",
+        "topic": "multi-step percentages",
+        "hints": [
+          "First find total ice in 10 hours",
+          "Then find 62.5% of that amount"
+        ],
+        "explanation": "Total ice = 2.4 × 10 = 24 kg. Drinkable water = 62.5% × 24 = 0.625 × 24 = 15 kg. Water supply secured for the crew! Final alert..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🚨 ALERT 20 — FINAL MISSION! RETURN TRAJECTORY: The return trip is 3/5 longer than the trip to Mars, which took 210 days. The ship uses fuel at a rate inversely proportional — it will need 7/6 of the original 540 tons. How much fuel is needed for the return?",
+        "options": {
+          "choices": [
+            "600 tons",
+            "630 tons",
+            "650 tons",
+            "720 tons"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "hard",
+        "bloomLevel": "analyze",
+        "topic": "fraction operations",
+        "hints": [
+          "Focus on the fuel: 7/6 of 540",
+          "Multiply 540 × 7, then divide by 6"
+        ],
+        "explanation": "Fuel needed = 7/6 × 540 = 3,780 ÷ 6 = 630 tons. Return trajectory plotted and fuel loaded! MISSION COMPLETE — You've successfully landed on Mars, built a habitat, and planned the return journey. Welcome to Mars, Commander! 🎉"
+      }
+    ]
+  },
+  {
+    "title": "Code Breaker Academy",
+    "description": "Welcome to the Agency, recruit. Crack encrypted codes and solve classified puzzles to earn your badge.",
+    "category": "adventure",
+    "gradeLevel": 7,
+    "questions": [
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CIPHER 1: Welcome to Code Breaker Academy, recruit. Your first test: the entry code to HQ is encrypted using a simple substitution. If A=1, B=2, C=3... the code is the value of the expression 3(x + 2) when x = 4. What number unlocks the door?",
+        "options": {
+          "choices": [
+            "14",
+            "18",
+            "21",
+            "15"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "expressions and equations",
+        "hints": [
+          "Substitute x = 4 into the expression",
+          "First compute what's inside the parentheses"
+        ],
+        "explanation": "3(4 + 2) = 3(6) = 18. The door slides open with a hiss. You step into a sleek command center filled with screens and encrypted feeds. Your training begins now."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CLASSIFIED 2: Your handler, Agent Shadow, slides a file across the table. 'Decode this,' she says. An enemy spy traveled 56 miles in 3.5 hours at constant speed. What was their speed in miles per hour?",
+        "options": {
+          "choices": [
+            "14 mph",
+            "16 mph",
+            "18 mph",
+            "20 mph"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "rates and ratios",
+        "hints": [
+          "Speed = Distance ÷ Time",
+          "Divide 56 by 3.5"
+        ],
+        "explanation": "56 ÷ 3.5 = 16 mph. Agent Shadow nods approvingly. 'The suspect was driving below the speed limit — trying not to draw attention. Smart. But not smart enough. Next file.'"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 INTERCEPT 3: You've intercepted a transmission. The enemy uses a number cipher: each letter maps to 2n + 1 where n is the letter's position. The first letter of their code name maps to the value 15. What position is that letter (what is n)?",
+        "options": {
+          "choices": [
+            "6",
+            "7",
+            "8",
+            "5"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "solving equations",
+        "hints": [
+          "Set up: 2n + 1 = 15",
+          "Subtract 1 from both sides, then divide by 2"
+        ],
+        "explanation": "2n + 1 = 15 → 2n = 14 → n = 7. The 7th letter is G. The enemy agent's code name starts with G. You type it into the database. A profile appears: Agent Ghost. The hunt is on."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 DECODE 4: Agent Ghost's safe uses a combination based on proportions. If the ratio of the first two digits is 3:5, and the first digit is 12, what is the second digit?",
+        "options": {
+          "choices": [
+            "15",
+            "18",
+            "20",
+            "24"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "proportions",
+        "hints": [
+          "Set up: 3/5 = 12/x",
+          "Cross multiply: 3x = 60"
+        ],
+        "explanation": "3/5 = 12/x → 3x = 60 → x = 20. The safe clicks open. Inside, you find a map with coordinates marked in red. Agent Ghost has been planning something big."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CIPHER 5: The map from Ghost's safe shows a drop zone. You need to calculate the distance between two surveillance points at (1, 2) and (4, 6) on the Agency grid. What is the distance in grid units?",
+        "options": {
+          "choices": [
+            "4",
+            "7",
+            "5",
+            "6"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "coordinate geometry",
+        "hints": [
+          "Use the distance formula: √((x₂-x₁)² + (y₂-y₁)²)",
+          "Calculate (4-1)² + (6-2)² first"
+        ],
+        "explanation": "√((4-1)² + (6-2)²) = √(9 + 16) = √25 = 5 grid units. You mark the surveillance radius on your map. The drop zone is closer than expected — Ghost is operating right under your nose."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CLASSIFIED 6: A coded message was hidden using exponents. Decrypt: what is the value of 2⁵ × 2³ ÷ 2⁴?",
+        "options": {
+          "choices": [
+            "8",
+            "16",
+            "32",
+            "4"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "exponents",
+        "hints": [
+          "When multiplying same bases, add exponents",
+          "When dividing same bases, subtract exponents"
+        ],
+        "explanation": "2⁵ × 2³ ÷ 2⁴ = 2⁸ ÷ 2⁴ = 2⁴ = 16. The decrypted number reveals a locker number at the train station. You grab your coat and head out into the rain."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 INTERCEPT 7: At the station, locker 16 contains a burner phone with a timer counting down. The timer shows a value that decreases by 15% each hour. If it started at 200, what is the value after 1 hour?",
+        "options": {
+          "choices": [
+            "185",
+            "175",
+            "170",
+            "160"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "percent decrease",
+        "hints": [
+          "15% of 200 = 30",
+          "Subtract the decrease from the original"
+        ],
+        "explanation": "15% of 200 = 30, so 200 - 30 = 170. The timer reads 170 — you have less time than you thought. A text message appears on the burner phone: a set of coordinates. Ghost is making a move tonight."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 DECODE 8: The text message contains coordinates encoded as an inequality. Ghost will be at any location where 3x - 7 ≤ 14. What is the largest integer value of x where Ghost might appear?",
+        "options": {
+          "choices": [
+            "5",
+            "6",
+            "7",
+            "8"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "inequalities",
+        "hints": [
+          "Add 7 to both sides: 3x ≤ 21",
+          "Divide by 3"
+        ],
+        "explanation": "3x - 7 ≤ 14 → 3x ≤ 21 → x ≤ 7. The largest integer is 7. You cross-reference grid sector 7 on the city map. It's the waterfront district. You radio Agent Shadow: 'Eyes on sector 7. Moving in.'"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CIPHER 9: You arrive at the waterfront and spot Ghost entering a warehouse. The warehouse security uses a modular arithmetic lock. What is 47 mod 8?",
+        "options": {
+          "choices": [
+            "5",
+            "6",
+            "7",
+            "3"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "modular arithmetic",
+        "hints": [
+          "Divide 47 by 8 and find the remainder",
+          "47 = 8 × 5 + ?"
+        ],
+        "explanation": "47 = 8 × 5 + 7, so 47 mod 8 = 7. You punch in 7. The warehouse door unlocks. Inside, crates are stacked floor to ceiling, each one marked with a different cipher."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CLASSIFIED 10: Ghost left a trap — a laser grid you must navigate. The grid pattern repeats every 3 seconds horizontally and every 4 seconds vertically. After how many seconds will both patterns sync up and create an opening?",
+        "options": {
+          "choices": [
+            "7",
+            "12",
+            "24",
+            "6"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "analyze",
+        "topic": "least common multiple",
+        "hints": [
+          "Find the LCM of 3 and 4",
+          "List multiples of each: 3,6,9,12... and 4,8,12..."
+        ],
+        "explanation": "LCM(3, 4) = 12. At exactly 12 seconds, both grids align and a gap appears. You dive through the opening and roll behind a crate. Heart pounding, you spot Ghost at a computer terminal ahead."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 INTERCEPT 11: Ghost is downloading files. The progress bar shows the download is a function of time: f(t) = 4t + 10, where f(t) is the percentage complete. At what time t will the download reach 50%?",
+        "options": {
+          "choices": [
+            "8",
+            "10",
+            "12",
+            "15"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "analyze",
+        "topic": "linear functions",
+        "hints": [
+          "Set 4t + 10 = 50",
+          "Solve for t"
+        ],
+        "explanation": "4t + 10 = 50 → 4t = 40 → t = 10 seconds. You have 10 seconds before Ghost hits the halfway mark. You need to cut the connection before the full download completes. Move fast, recruit."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 DECODE 12: To cut Ghost's connection, you need to reroute power through a circuit. The circuit has two resistors in a configuration described by the equation 1/R = 1/6 + 1/12. What is R?",
+        "options": {
+          "choices": [
+            "3",
+            "4",
+            "9",
+            "18"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "rational equations",
+        "hints": [
+          "Find a common denominator for 1/6 and 1/12",
+          "1/R = 2/12 + 1/12 = 3/12"
+        ],
+        "explanation": "1/R = 1/6 + 1/12 = 2/12 + 1/12 = 3/12 = 1/4, so R = 4. You reroute the circuit and the terminal flickers. Ghost spins around, eyes wide. 'Who are you?' The download stalls at 48%."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CIPHER 13: Ghost bolts. You chase through the warehouse. A locked gate blocks your path — it requires solving a system. Ghost's escape routes satisfy: x + y = 10 and x - y = 4. What is x?",
+        "options": {
+          "choices": [
+            "6",
+            "7",
+            "8",
+            "5"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "analyze",
+        "topic": "systems of equations",
+        "hints": [
+          "Add both equations together to eliminate y",
+          "(x+y) + (x-y) = 10 + 4"
+        ],
+        "explanation": "Adding: 2x = 14, so x = 7 (and y = 3). The gate opens to route 7. You sprint down the corridor, Ghost's footsteps echoing ahead. The chase is on."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CLASSIFIED 14: Ghost climbs a fire escape. From the ground, you estimate the building is the hypotenuse's height. The ladder reaches 24 feet up the wall, and its base is 10 feet from the wall. How long is the ladder?",
+        "options": {
+          "choices": [
+            "28 ft",
+            "26 ft",
+            "30 ft",
+            "34 ft"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "Pythagorean theorem",
+        "hints": [
+          "a² + b² = c² where a=10, b=24",
+          "100 + 576 = c²"
+        ],
+        "explanation": "10² + 24² = 100 + 576 = 676 = 26². The ladder is 26 feet. You estimate the distance and find an alternate route — a shorter fire escape on the adjacent building. You're gaining ground."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 INTERCEPT 15: On the rooftop, Ghost signals a helicopter with a flashing light. The light follows a pattern: it flashes at intervals that form the sequence 2, 6, 18, 54, ... What is the next number in this geometric sequence?",
+        "options": {
+          "choices": [
+            "108",
+            "162",
+            "72",
+            "216"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "analyze",
+        "topic": "geometric sequences",
+        "hints": [
+          "Find the common ratio: 6/2 = ?",
+          "Multiply the last term by the common ratio"
+        ],
+        "explanation": "Common ratio = 3. Next term: 54 × 3 = 162. The helicopter's signal code is 162 MHz. You radio Agent Shadow the frequency so the Agency can jam the transmission. No extraction for you, Ghost."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 DECODE 16: Ghost pulls out a scrambler device. To counter it, you need to compute: if a scrambler key is generated by (-3)⁴ ÷ 3², what is the counter-key?",
+        "options": {
+          "choices": [
+            "3",
+            "9",
+            "27",
+            "-9"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "exponents with negatives",
+        "hints": [
+          "(-3)⁴ = 81 (even exponent makes it positive)",
+          "81 ÷ 9 = ?"
+        ],
+        "explanation": "(-3)⁴ = 81, and 3² = 9, so 81 ÷ 9 = 9. You enter the counter-key and Ghost's scrambler goes dead. Ghost stares at the useless device and tosses it aside. 'Impressive, recruit.'"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CIPHER 17: Ghost offers a deal: 'Solve my puzzle and I'll hand over the stolen data.' The puzzle: a triangle has angles in the ratio 2:3:4. What is the measure of the largest angle?",
+        "options": {
+          "choices": [
+            "60°",
+            "80°",
+            "90°",
+            "100°"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "hard",
+        "bloomLevel": "analyze",
+        "topic": "angle relationships",
+        "hints": [
+          "Angles in a triangle sum to 180°",
+          "2x + 3x + 4x = 180"
+        ],
+        "explanation": "2x + 3x + 4x = 180 → 9x = 180 → x = 20. Largest angle = 4(20) = 80°. Ghost smiles. 'Not bad. But I have three more tests before you earn the data.'"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CLASSIFIED 18: Ghost's second challenge: 'A classified document was split among agents. Agent A has 1/3 of it, Agent B has 2/5, and Agent C has the rest. What fraction does Agent C hold?'",
+        "options": {
+          "choices": [
+            "4/15",
+            "1/5",
+            "7/15",
+            "3/8"
+          ]
+        },
+        "answer": "a",
+        "difficulty": "hard",
+        "bloomLevel": "analyze",
+        "topic": "fraction operations",
+        "hints": [
+          "Add A and B's fractions: 1/3 + 2/5",
+          "Find a common denominator of 15, then subtract from 1"
+        ],
+        "explanation": "1/3 + 2/5 = 5/15 + 6/15 = 11/15. Agent C has 1 - 11/15 = 4/15. Ghost nods slowly. 'Two down, two to go. You're sharper than most recruits.'"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 INTERCEPT 19: Ghost's third challenge: 'A double agent attends a secret meeting. There are 8 people at a round table. If each person shakes hands with everyone except the two people sitting next to them, how many handshakes occur?'",
+        "options": {
+          "choices": [
+            "16",
+            "20",
+            "24",
+            "28"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "hard",
+        "bloomLevel": "evaluate",
+        "topic": "combinatorics",
+        "hints": [
+          "Each person shakes hands with 5 others (8 - 1 self - 2 neighbors)",
+          "Total = 8 × 5, but each handshake is counted twice"
+        ],
+        "explanation": "Each of 8 people shakes hands with 5 others: 8 × 5 = 40, divided by 2 (each handshake counted twice) = 20. 'One more,' Ghost whispers. 'Get this right and the data is yours.'"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 DECODE 20: Ghost's final test: 'A briefcase has a 3-digit lock. The digits sum to 11. The hundreds digit is three times the units digit. The tens digit is 1 more than the units digit. What is the 3-digit code?'",
+        "options": {
+          "choices": [
+            "632",
+            "614",
+            "923",
+            "641"
+          ]
+        },
+        "answer": "a",
+        "difficulty": "hard",
+        "bloomLevel": "evaluate",
+        "topic": "systems of equations",
+        "hints": [
+          "Let units = u. Then hundreds = 3u and tens = u + 1",
+          "3u + (u + 1) + u = 11, solve for u"
+        ],
+        "explanation": "Let u = units digit. Hundreds = 3u, tens = u + 1. Sum: 3u + (u+1) + u = 11 → 5u + 1 = 11 → 5u = 10 → u = 2. So hundreds = 6, tens = 3, units = 2. The code is 632. Ghost hands over the flash drive. 'Welcome to the big leagues, recruit.' Mission complete — you've earned your Code Breaker badge."
+      }
+    ]
+  },
+  {
+    "title": "Operation Cipher",
+    "description": "A rogue agent has stolen classified data. Follow the trail of encrypted clues to recover the files before it's too late.",
+    "category": "adventure",
+    "gradeLevel": 8,
+    "questions": [
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CIPHER 1: Alert — a rogue agent codenamed Phantom has breached the Agency vault and stolen top-secret files. Your mission: track Phantom down. First, decode the alert frequency. Simplify: √144 + √81. What is the sum?",
+        "options": {
+          "choices": [
+            "19",
+            "21",
+            "23",
+            "25"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "square roots",
+        "hints": [
+          "√144 = 12",
+          "√81 = 9"
+        ],
+        "explanation": "√144 + √81 = 12 + 9 = 21. Frequency 21 MHz locked in. You tune your earpiece and hear static, then a voice: 'Phantom was last seen heading east on Route 7. All units mobilize.' You grab your gear."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CLASSIFIED 2: Phantom left a burner phone at the scene. The phone's password is the solution to: 5(x - 3) = 2x + 6. What is x?",
+        "options": {
+          "choices": [
+            "5",
+            "7",
+            "3",
+            "9"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "linear equations",
+        "hints": [
+          "Distribute: 5x - 15 = 2x + 6",
+          "Get all x terms on one side"
+        ],
+        "explanation": "5x - 15 = 2x + 6 → 3x = 21 → x = 7. The phone unlocks. The call history shows a single outgoing call to an overseas number. You forward it to HQ for analysis. Every clue matters."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 INTERCEPT 3: HQ traces the call to a coordinate on the city grid. The midpoint between the Agency at (2, 8) and Phantom's contact point is (5, 5). What is the contact point?",
+        "options": {
+          "choices": [
+            "(8, 2)",
+            "(7, 3)",
+            "(3, 7)",
+            "(10, 4)"
+          ]
+        },
+        "answer": "a",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "coordinate geometry",
+        "hints": [
+          "Midpoint formula: ((x₁+x₂)/2, (y₁+y₂)/2) = (5,5)",
+          "Solve: (2+x)/2 = 5 and (8+y)/2 = 5"
+        ],
+        "explanation": "(2+x)/2 = 5 → x = 8. (8+y)/2 = 5 → y = 2. Contact point: (8, 2). It's a cafe in the diplomatic quarter. You slip on your cover identity — a freelance journalist — and head out."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 DECODE 4: At the cafe, you find a napkin with a coded message. The cipher uses exponent rules. Simplify: (2³)² × 2². What is the result?",
+        "options": {
+          "choices": [
+            "128",
+            "256",
+            "512",
+            "1024"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "exponents",
+        "hints": [
+          "(2³)² = 2⁶ by the power rule",
+          "2⁶ × 2² = 2⁸"
+        ],
+        "explanation": "(2³)² × 2² = 2⁶ × 2² = 2⁸ = 256. The number 256 decodes to an address: 256 Harbor Street. That's the old shipping district. Phantom is using the abandoned docks as a staging ground."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CIPHER 5: You scope out Harbor Street and find a shipping container with a digital lock. The lock requires the slope of the line connecting the surveillance cameras at (1, 3) and (5, 11). What is the slope?",
+        "options": {
+          "choices": [
+            "3",
+            "2",
+            "4",
+            "1"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "slope",
+        "hints": [
+          "Slope = (y₂ - y₁)/(x₂ - x₁)",
+          "(11-3)/(5-1) = ?"
+        ],
+        "explanation": "Slope = (11-3)/(5-1) = 8/4 = 2. The container opens. Inside: a laptop, maps, and documents in a foreign language. Phantom has been selling Agency secrets. This is bigger than anyone thought."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CLASSIFIED 6: The laptop is encrypted. The decryption key is the value of x in: x/4 + x/6 = 5. What is x?",
+        "options": {
+          "choices": [
+            "10",
+            "12",
+            "8",
+            "15"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "equations with fractions",
+        "hints": [
+          "Find LCM of 4 and 6, which is 12",
+          "Multiply everything by 12: 3x + 2x = 60"
+        ],
+        "explanation": "Multiply by 12: 3x + 2x = 60 → 5x = 60 → x = 12. The laptop unlocks. You scan through the files — Phantom has a buyer meeting scheduled for tomorrow night. You photograph everything and report to Agent Shadow."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 INTERCEPT 7: Phantom's files reveal a network of 5 safe houses. Each safe house connects to every other. How many direct connections (communication lines) exist in the network?",
+        "options": {
+          "choices": [
+            "8",
+            "10",
+            "12",
+            "15"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "combinatorics",
+        "hints": [
+          "Use the formula n(n-1)/2",
+          "5 × 4 / 2 = ?"
+        ],
+        "explanation": "5(4)/2 = 10 connections. You map all 10 communication lines and identify the central hub — a penthouse downtown. That's where Phantom is coordinating. Agent Shadow authorizes surveillance."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 DECODE 8: You're setting up a surveillance drone. The drone's battery life follows the equation y = -2x + 40, where y is battery percentage and x is minutes. After how many minutes will the battery die?",
+        "options": {
+          "choices": [
+            "15",
+            "20",
+            "25",
+            "40"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "linear functions",
+        "hints": [
+          "Battery dies when y = 0",
+          "Set -2x + 40 = 0"
+        ],
+        "explanation": "-2x + 40 = 0 → 2x = 40 → x = 20 minutes. You have a 20-minute window. You launch the drone and start recording. The clock is ticking."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CIPHER 9: The drone captures footage of Phantom meeting someone. Their car's license plate is encoded: it's the solution to the system x + y = 13 and 2x - y = 5. What is the plate number xy (concatenated)?",
+        "options": {
+          "choices": [
+            "67",
+            "58",
+            "76",
+            "69"
+          ]
+        },
+        "answer": "a",
+        "difficulty": "medium",
+        "bloomLevel": "analyze",
+        "topic": "systems of equations",
+        "hints": [
+          "Add both equations: 3x = 18",
+          "Then find y from x + y = 13"
+        ],
+        "explanation": "Adding: 3x = 18 → x = 6. Then y = 13 - 6 = 7. Plate: 67. You run the plate through the database. It belongs to a foreign diplomat — this operation just became international. Agent Shadow calls an emergency briefing."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CLASSIFIED 10: At the briefing, Shadow reveals the stolen data is on 3 separate flash drives. The probability of Phantom carrying any one drive is 1/3. If Phantom randomly takes 2 drives, what is the probability they grab the one containing nuclear codes?",
+        "options": {
+          "choices": [
+            "1/3",
+            "2/3",
+            "1/2",
+            "1/4"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "analyze",
+        "topic": "probability",
+        "hints": [
+          "Think about it inversely: what's the probability of NOT grabbing the nuclear drive?",
+          "P(not nuclear) = 1/3, so P(nuclear) = 1 - 1/3"
+        ],
+        "explanation": "If Phantom grabs 2 out of 3 drives, the probability of including the nuclear codes drive is 1 - P(missing it) = 1 - (1/3) = 2/3. Shadow slams the table. 'Two-thirds chance Phantom has the nuclear codes. We cannot afford to wait. Move tonight.'"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 INTERCEPT 11: You need to reach Phantom's penthouse. The building is 60 feet tall. You're standing 80 feet from the base. What is the direct line-of-sight distance to the rooftop?",
+        "options": {
+          "choices": [
+            "90 ft",
+            "100 ft",
+            "110 ft",
+            "120 ft"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "Pythagorean theorem",
+        "hints": [
+          "This forms a right triangle with legs 60 and 80",
+          "60² + 80² = c²"
+        ],
+        "explanation": "60² + 80² = 3600 + 6400 = 10000. √10000 = 100 ft. Exactly 100 feet. You calibrate your grappling launcher and prepare for the ascent. The night is dark and the wind is picking up."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 DECODE 12: On the rooftop, you find a keypad. The code is the remainder when 253 is divided by 11. What is 253 mod 11?",
+        "options": {
+          "choices": [
+            "0",
+            "1",
+            "2",
+            "3"
+          ]
+        },
+        "answer": "a",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "modular arithmetic",
+        "hints": [
+          "253 ÷ 11 = ?",
+          "11 × 23 = 253"
+        ],
+        "explanation": "11 × 23 = 253 exactly, so 253 mod 11 = 0. The rooftop door clicks open silently. You descend the stairwell in darkness, counting floors. Phantom's penthouse is three levels down."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CIPHER 13: You reach Phantom's floor but trigger a motion sensor. To disable it, solve: the area of a triangle with vertices at (0,0), (6,0), and (0,8). What is the area?",
+        "options": {
+          "choices": [
+            "48",
+            "24",
+            "14",
+            "28"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "coordinate geometry",
+        "hints": [
+          "This is a right triangle with base 6 and height 8",
+          "Area = (1/2) × base × height"
+        ],
+        "explanation": "Area = (1/2)(6)(8) = 24 square units. You enter 24 and the sensor deactivates. The hallway goes dark. You switch to night vision and proceed. Phantom's door is at the end of the corridor."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CLASSIFIED 14: The door lock uses scientific notation. Convert 0.00045 to scientific notation and identify the exponent. What power of 10 is it?",
+        "options": {
+          "choices": [
+            "-3",
+            "-4",
+            "-5",
+            "-2"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "scientific notation",
+        "hints": [
+          "Move the decimal point right until you have a number between 1 and 10",
+          "0.00045 = 4.5 × 10^?"
+        ],
+        "explanation": "0.00045 = 4.5 × 10⁻⁴. The exponent is -4. You key in the value. The lock disengages with a soft click. You push the door open, weapon drawn. The penthouse is empty — but it won't be for long."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 INTERCEPT 15: Inside, you find Phantom's planning board. A note reads: 'Exchange at coordinates where the lines y = 2x + 1 and y = -x + 10 intersect.' Where is the exchange happening?",
+        "options": {
+          "choices": [
+            "(2, 5)",
+            "(4, 9)",
+            "(3, 7)",
+            "(5, 5)"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "analyze",
+        "topic": "systems of linear equations",
+        "hints": [
+          "Set equations equal: 2x + 1 = -x + 10",
+          "Solve for x, then plug back in"
+        ],
+        "explanation": "2x + 1 = -x + 10 → 3x = 9 → x = 3. y = 2(3) + 1 = 7. Intersection: (3, 7). Grid point (3, 7) is the old clock tower at the city center. You plant a tracker on Phantom's desk and head to the clock tower."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 DECODE 16: At the clock tower, you discover a vault. The combination is found by solving: if 3^x = 243, what is x?",
+        "options": {
+          "choices": [
+            "3",
+            "4",
+            "5",
+            "6"
+          ]
+        },
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "analyze",
+        "topic": "exponents and logarithmic thinking",
+        "hints": [
+          "List powers of 3: 3¹=3, 3²=9, 3³=27...",
+          "Keep going: 3⁴=81, 3⁵=?"
+        ],
+        "explanation": "3⁵ = 243, so x = 5. The vault door grinds open. Inside you find two of the three stolen flash drives. But the third — the one with nuclear codes — is missing. Phantom still has it."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CIPHER 17: Phantom sends a taunting message: 'Catch me if you can. I'm at a distance of √(a² + b²) from origin, where a = 5 and b = 12.' How far is Phantom from origin?",
+        "options": {
+          "choices": [
+            "17",
+            "13",
+            "15",
+            "11"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "hard",
+        "bloomLevel": "analyze",
+        "topic": "Pythagorean theorem and distance",
+        "hints": [
+          "Compute 5² + 12²",
+          "√(25 + 144) = √169"
+        ],
+        "explanation": "√(5² + 12²) = √(25 + 144) = √169 = 13 units from the origin. Phantom is 13 grid sectors out — near the airport. They're trying to flee the country. You commandeer a vehicle and floor it."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CLASSIFIED 18: En route to the airport, you need to calculate your arrival time. You're 78 miles away, driving at a speed that increases from 60 mph to 80 mph. Your average speed for the trip is the harmonic mean: 2(60)(80)/(60+80). What is your average speed?",
+        "options": {
+          "choices": [
+            "68.6 mph",
+            "70 mph",
+            "65 mph",
+            "72 mph"
+          ]
+        },
+        "answer": "a",
+        "difficulty": "hard",
+        "bloomLevel": "evaluate",
+        "topic": "rates and harmonic mean",
+        "hints": [
+          "Compute 2 × 60 × 80 = 9600",
+          "Divide by (60 + 80) = 140"
+        ],
+        "explanation": "2(60)(80)/(60+80) = 9600/140 ≈ 68.6 mph. At that speed, you'll reach the airport in just over an hour. You radio ahead to have airport security on standby. 'No flights out. Lock it down.'"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 INTERCEPT 19: You arrive at the airport. Phantom is disguised as one of 8 passengers at Gate 7. You can scan 2 passengers at a time. If Phantom is equally likely to be any of the 8, what is the probability you identify Phantom in your first scan?",
+        "options": {
+          "choices": [
+            "1/8",
+            "1/4",
+            "1/2",
+            "3/8"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "hard",
+        "bloomLevel": "evaluate",
+        "topic": "probability",
+        "hints": [
+          "You scan 2 out of 8 people",
+          "P = favorable outcomes / total outcomes = C(1,1)×C(7,1) / C(8,2)... or simply 2/8"
+        ],
+        "explanation": "Scanning 2 out of 8 passengers: P(Phantom in your pair) = 2/8 = 1/4. A 25% chance. You scan the first pair — negative. Second pair — your scanner flashes red. Phantom is the person in the gray coat, reaching for a boarding pass."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 DECODE 20: Phantom makes a break for it, but you corner them at a security checkpoint. Phantom holds up the flash drive: 'One last puzzle, and I'll surrender. A function f(x) = x² - 6x + k has exactly one real root. What is k?' Solve it to end the mission.",
+        "options": {
+          "choices": [
+            "6",
+            "9",
+            "12",
+            "3"
+          ]
+        },
+        "answer": "b",
+        "difficulty": "hard",
+        "bloomLevel": "evaluate",
+        "topic": "quadratic discriminant",
+        "hints": [
+          "Exactly one real root means the discriminant equals zero",
+          "Discriminant: b² - 4ac = 0 → 36 - 4k = 0"
+        ],
+        "explanation": "For one real root: b² - 4ac = 0 → (-6)² - 4(1)(k) = 0 → 36 - 4k = 0 → k = 9. Phantom smiles, drops the flash drive, and puts their hands up. 'Well played, recruit.' Security moves in. All three drives recovered. Nuclear codes secured. Mission accomplished. Agent Shadow's voice crackles in your ear: 'Outstanding work. Welcome to Operation Cipher — permanently. You've earned it.'"
+      }
+    ]
   }
 ]

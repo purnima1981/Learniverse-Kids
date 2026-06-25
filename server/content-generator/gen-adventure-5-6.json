@@ -1,0 +1,458 @@
+[
+  {
+    "title": "Space Station Rescue",
+    "description": "The space station's computer crashed! Solve engineering puzzles to restart each module before the oxygen runs out.",
+    "category": "adventure",
+    "gradeLevel": 5,
+    "questions": [
+      {
+        "type": "multiple-choice",
+        "text": "🚀 MODULE 1 — LIFE SUPPORT: The oxygen generator produces 2.5 liters per minute. How many liters will it produce in 4 minutes? Hurry — the crew is counting on you!",
+        "options": {"choices": ["8 liters", "10 liters", "9.5 liters", "12 liters"]},
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "decimal multiplication",
+        "hints": ["Multiply 2.5 by 4", "Think of 2.5 as 2 + 0.5, then multiply each part by 4"],
+        "explanation": "2.5 × 4 = 10 liters. Oxygen flow restored! The crew can breathe easy — for now. Moving to Module 2..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔧 MODULE 2 — POWER GRID: The station has 3 solar panels. Each panel generates 1/6 of the total power needed. What fraction of total power do all 3 panels provide together?",
+        "options": {"choices": ["1/2", "3/6", "1/3", "3/18"]},
+        "answer": "a",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "fraction addition",
+        "hints": ["Add 1/6 three times", "3/6 can be simplified"],
+        "explanation": "1/6 + 1/6 + 1/6 = 3/6 = 1/2. That's half the power restored! But we need more. Advancing to Module 3..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "⚡ MODULE 3 — BACKUP BATTERY: The backup battery is at 45%. It drains 5% every hour. How many hours until it reaches 0%?",
+        "options": {"choices": ["7 hours", "8 hours", "9 hours", "10 hours"]},
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "percentages",
+        "hints": ["Divide 45 by 5", "How many times does 5 go into 45?"],
+        "explanation": "45 ÷ 5 = 9 hours remaining. That gives us time, but we need to work fast! Module 4 is next..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🛰️ MODULE 4 — COMMUNICATIONS: The radio signal bounces between 3 satellites. The total distance is 12,600 km split equally. How far apart is each satellite?",
+        "options": {"choices": ["3,200 km", "4,200 km", "6,300 km", "4,000 km"]},
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "division",
+        "hints": ["Divide the total distance by 3", "12,600 ÷ 3"],
+        "explanation": "12,600 ÷ 3 = 4,200 km between each satellite. Signal locked! We can call for help now. On to Module 5..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔩 MODULE 5 — HULL REPAIR: A hull breach is 3/8 of a meter wide. The repair patch covers 5/8 of a meter. How much extra patch extends beyond the breach?",
+        "options": {"choices": ["1/4 meter", "2/8 meter", "1/8 meter", "3/8 meter"]},
+        "answer": "a",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "fraction subtraction",
+        "hints": ["Subtract 3/8 from 5/8", "Simplify the result"],
+        "explanation": "5/8 - 3/8 = 2/8 = 1/4 meter. The patch fits with room to spare! Hull sealed. Module 6 awaits..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🌡️ MODULE 6 — TEMPERATURE CONTROL: The station is at -12°C. The heater raises the temperature by 3.5°C per cycle. After 4 cycles, what is the temperature?",
+        "options": {"choices": ["0°C", "2°C", "4°C", "-2°C"]},
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "decimal operations",
+        "hints": ["First find 3.5 × 4", "Then add that to -12"],
+        "explanation": "3.5 × 4 = 14. Then -12 + 14 = 2°C. Temperature stabilized! The crew is warming up. Module 7 is critical..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔑 MODULE 7 — SECURITY DOOR: The access code requires the first prime number greater than 20. Which number opens the door?",
+        "options": {"choices": ["21", "22", "23", "25"]},
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "remember",
+        "topic": "prime numbers",
+        "hints": ["A prime number is only divisible by 1 and itself", "Check each number — is 21 divisible by 3?"],
+        "explanation": "23 is prime (only divisible by 1 and 23). 21 = 3×7, 22 = 2×11, 25 = 5×5. Door unlocked! Entering Module 8..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "📡 MODULE 8 — NAVIGATION: The station orbits Earth every 90 minutes. How many complete orbits does it make in 24 hours?",
+        "options": {"choices": ["14", "15", "16", "18"]},
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "division",
+        "hints": ["Convert 24 hours to minutes first", "24 × 60 = 1,440 minutes"],
+        "explanation": "24 hours = 1,440 minutes. 1,440 ÷ 90 = 16 orbits. Navigation systems tracking! Now for the tougher repairs..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🚨 SYSTEM 9 — ALERT! FUEL SYSTEM: The fuel tank is 3/4 full. After using 1/3 of what's left, what fraction of the tank still has fuel? Solve quickly — the engine needs to fire in 60 seconds!",
+        "options": {"choices": ["1/4", "1/2", "5/12", "2/3"]},
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "fraction operations",
+        "hints": ["First find 1/3 of 3/4", "Then subtract that from 3/4"],
+        "explanation": "1/3 of 3/4 = 1/4. So 3/4 - 1/4 = 2/4 = 1/2. Fuel system stabilized! Engine firing on schedule. System 10 needs attention..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "⚠️ SYSTEM 10 — WATER RECYCLER: The recycler processes 0.75 liters per cycle. If the crew needs 18 liters per day, how many cycles must run?",
+        "options": {"choices": ["20 cycles", "22 cycles", "24 cycles", "26 cycles"]},
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "decimal division",
+        "hints": ["Divide 18 by 0.75", "Think: how many 0.75s fit into 18?"],
+        "explanation": "18 ÷ 0.75 = 24 cycles. Water recycler programmed and running! The crew won't go thirsty. System 11 is failing..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔬 SYSTEM 11 — LABORATORY: An experiment needs a ratio of 2:5 chemical mix. If you have 8 mL of chemical A, how much of chemical B do you need?",
+        "options": {"choices": ["15 mL", "20 mL", "25 mL", "16 mL"]},
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "ratios",
+        "hints": ["Set up the proportion: 2/5 = 8/x", "8 is 4 times 2, so multiply 5 by 4"],
+        "explanation": "2:5 = 8:x → x = 8 × 5 ÷ 2 = 20 mL. Experiment saved from contamination! System 12 is overheating..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🌀 SYSTEM 12 — CENTRIFUGE: The centrifuge spins at 150 RPM. To separate the samples, it needs to reach 200% of its current speed. What speed is needed?",
+        "options": {"choices": ["250 RPM", "300 RPM", "350 RPM", "200 RPM"]},
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "percentages",
+        "hints": ["200% means 2 times the current speed", "Multiply 150 by 2"],
+        "explanation": "200% of 150 = 2 × 150 = 300 RPM. Centrifuge at full speed! Samples processing. System 13 has a breach..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🛡️ SYSTEM 13 — RADIATION SHIELD: The shield blocks 7/10 of radiation. A solar flare sends 500 units. How many units get through the shield?",
+        "options": {"choices": ["350 units", "200 units", "150 units", "100 units"]},
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "fraction of a number",
+        "hints": ["If 7/10 is blocked, then 3/10 gets through", "Find 3/10 of 500"],
+        "explanation": "If 7/10 is blocked, 3/10 gets through. 3/10 × 500 = 150 units. Shield holding! Crew is safe. System 14 next..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔋 SYSTEM 14 — SOLAR ARRAY: Panel A produces 12.6 kW, Panel B produces 8.75 kW, and Panel C is offline. What's the total power from A and B combined?",
+        "options": {"choices": ["20.35 kW", "21.35 kW", "21.05 kW", "20.75 kW"]},
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "decimal addition",
+        "hints": ["Line up the decimal points", "12.6 + 8.75 — add carefully"],
+        "explanation": "12.60 + 8.75 = 21.35 kW. Partial power restored! We still need Panel C, but this will keep us going. System 15 is critical..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗺️ SYSTEM 15 — MAPPING: The station's rectangular observation window is 1.2 m long and 0.8 m wide. What is the area of the window?",
+        "options": {"choices": ["0.96 m²", "0.86 m²", "1.06 m²", "0.92 m²"]},
+        "answer": "a",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "area with decimals",
+        "hints": ["Area of a rectangle = length × width", "Multiply 1.2 × 0.8"],
+        "explanation": "1.2 × 0.8 = 0.96 m². Window dimensions logged for the replacement order. System 16 is sparking!"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "💡 SYSTEM 16 — LIGHTING GRID: 35% of the 120 lights on the station are broken. How many lights still work?",
+        "options": {"choices": ["42 lights", "85 lights", "78 lights", "80 lights"]},
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "percentages",
+        "hints": ["If 35% are broken, then 65% still work", "Find 65% of 120"],
+        "explanation": "65% of 120 = 0.65 × 120 = 78 lights. Rerouting power to working lights! Almost done — only the hardest systems left..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🚨 ALERT 17 — CRITICAL! DOCKING PORT: A supply ship is approaching. Its cargo bay is a rectangular prism: 4 m long, 3 m wide, and 2.5 m tall. What volume of supplies can it hold?",
+        "options": {"choices": ["24 m³", "28 m³", "30 m³", "32 m³"]},
+        "answer": "c",
+        "difficulty": "hard",
+        "bloomLevel": "apply",
+        "topic": "volume",
+        "hints": ["Volume = length × width × height", "4 × 3 × 2.5"],
+        "explanation": "4 × 3 × 2.5 = 30 m³. Docking port calibrated for the incoming supply ship! Alert 18 is flashing red..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🚨 ALERT 18 — CRITICAL! ESCAPE POD: The escape pod fits 2/3 of the crew. If 5/6 of those people need space suits, and there are 24 crew members total, how many suits are needed?",
+        "options": {"choices": ["12 suits", "14 suits", "16 suits", "20 suits"]},
+        "answer": "b",
+        "difficulty": "hard",
+        "bloomLevel": "analyze",
+        "topic": "fraction of a fraction",
+        "hints": ["First find 2/3 of 24", "Then find 5/6 of that number"],
+        "explanation": "2/3 of 24 = 16 people fit in the pod. 5/6 of 16 — wait, let's recalculate: 5/6 × 16 = 80/6 ≈ 13.3, round up to 14 suits needed. Safety first — always round up! Alert 19 incoming..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🚨 ALERT 19 — CRITICAL! THRUSTER CONTROL: The station is drifting! Thruster A fires at a ratio of 3:4 with Thruster B. If Thruster B fires at 240 newtons, how much force does Thruster A provide?",
+        "options": {"choices": ["160 newtons", "180 newtons", "200 newtons", "320 newtons"]},
+        "answer": "b",
+        "difficulty": "hard",
+        "bloomLevel": "apply",
+        "topic": "ratios and proportions",
+        "hints": ["A:B = 3:4, and B = 240", "Set up: 3/4 = A/240"],
+        "explanation": "3/4 = A/240 → A = 3 × 240 ÷ 4 = 180 newtons. Thrusters balanced! The station is stabilizing. One final alert..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🚨 ALERT 20 — FINAL SYSTEM! MAIN COMPUTER: The computer needs a prime factorization code. What is the prime factorization of 120? Enter the code to reboot the entire station!",
+        "options": {"choices": ["2³ × 3 × 5", "2² × 3 × 10", "2 × 4 × 15", "2² × 5 × 6"]},
+        "answer": "a",
+        "difficulty": "hard",
+        "bloomLevel": "analyze",
+        "topic": "prime factorization",
+        "hints": ["Start dividing 120 by the smallest prime: 2", "120 = 2 × 60, then keep breaking down 60"],
+        "explanation": "120 = 2 × 60 = 2 × 2 × 30 = 2 × 2 × 2 × 15 = 2 × 2 × 2 × 3 × 5 = 2³ × 3 × 5. CODE ACCEPTED! All systems rebooted — the space station is fully operational! Mission complete, Commander! 🎉"
+      }
+    ]
+  },
+  {
+    "title": "Mission to Mars",
+    "description": "You're navigating a spacecraft to Mars. Calculate trajectories, manage fuel, and solve problems to complete the mission!",
+    "category": "adventure",
+    "gradeLevel": 6,
+    "questions": [
+      {
+        "type": "multiple-choice",
+        "text": "🚀 MISSION LOG 1 — LAUNCH SEQUENCE: The rocket burns 3.75 tons of fuel per minute during launch. How much fuel is used in the first 8 minutes?",
+        "options": {"choices": ["28 tons", "30 tons", "32 tons", "24 tons"]},
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "decimal multiplication",
+        "hints": ["Multiply 3.75 by 8", "Break it up: 3 × 8 = 24, and 0.75 × 8 = 6"],
+        "explanation": "3.75 × 8 = 30 tons of fuel burned. Launch successful! You've cleared Earth's atmosphere. Mission Log 2 incoming..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "📋 MISSION LOG 2 — CREW ASSIGNMENTS: The 18-person crew is split into teams with a ratio of 2:3:4 for navigation, engineering, and science. How many are on the science team?",
+        "options": {"choices": ["6", "8", "4", "10"]},
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "ratios",
+        "hints": ["Add the ratio parts: 2 + 3 + 4 = 9", "Science is 4 parts out of 9 total"],
+        "explanation": "Total parts = 2 + 3 + 4 = 9. Each part = 18 ÷ 9 = 2 people. Science = 4 × 2 = 8 crew members. Teams assigned! Mission Log 3..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🛸 MISSION LOG 3 — TRAJECTORY CHECK: Your spacecraft has traveled 2/5 of the distance to Mars. If the total distance is 225 million km, how far have you gone?",
+        "options": {"choices": ["80 million km", "90 million km", "100 million km", "112.5 million km"]},
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "fraction of a number",
+        "hints": ["Find 2/5 of 225", "Divide 225 by 5 first, then multiply by 2"],
+        "explanation": "2/5 × 225 = 450/5 = 90 million km. You're making great progress! Mars is getting closer. Mission Log 4..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🌑 MISSION LOG 4 — ASTEROID DODGE: An asteroid is 15.8 km ahead. Your ship moves 2.3 km per second to the side. How far will you have moved laterally in 5 seconds?",
+        "options": {"choices": ["10.5 km", "11.5 km", "12.5 km", "10.15 km"]},
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "decimal multiplication",
+        "hints": ["Multiply 2.3 by 5", "2 × 5 = 10, and 0.3 × 5 = 1.5"],
+        "explanation": "2.3 × 5 = 11.5 km lateral movement. Asteroid dodged! That was close. Mission Log 5 coming in..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "📊 MISSION LOG 5 — SUPPLY CHECK: You started with 480 food packs. After 30 days, 35% have been consumed. How many food packs remain?",
+        "options": {"choices": ["168 packs", "312 packs", "288 packs", "336 packs"]},
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "percentages",
+        "hints": ["If 35% are consumed, 65% remain", "Find 65% of 480"],
+        "explanation": "65% of 480 = 0.65 × 480 = 312 packs remaining. Supplies are on track! Mission Log 6..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔭 MISSION LOG 6 — TELESCOPE CALIBRATION: The telescope lens has a circular shape with a diameter of 14 cm. What is its radius?",
+        "options": {"choices": ["28 cm", "7 cm", "10 cm", "3.5 cm"]},
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "remember",
+        "topic": "circle properties",
+        "hints": ["Radius is half the diameter", "Divide 14 by 2"],
+        "explanation": "Radius = diameter ÷ 2 = 14 ÷ 2 = 7 cm. Telescope calibrated and focused on Mars! Mission Log 7 incoming..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "⚡ MISSION LOG 7 — POWER CHECK: The ship uses 125 kWh per day. The solar panels generate 87.5 kWh. How much must the backup generator provide?",
+        "options": {"choices": ["47.5 kWh", "37.5 kWh", "32.5 kWh", "42.5 kWh"]},
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "decimal subtraction",
+        "hints": ["Subtract what the panels provide from the total needed", "125 - 87.5"],
+        "explanation": "125 - 87.5 = 37.5 kWh from the backup generator. Power systems balanced! Mission Log 8 ahead..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🗝️ MISSION LOG 8 — SECURE VAULT: The supply vault code is the least common multiple (LCM) of 6 and 8. What's the code?",
+        "options": {"choices": ["12", "24", "48", "36"]},
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "LCM",
+        "hints": ["List multiples of 6: 6, 12, 18, 24...", "List multiples of 8: 8, 16, 24... Find the first match"],
+        "explanation": "Multiples of 6: 6, 12, 18, 24... Multiples of 8: 8, 16, 24... LCM = 24. Vault unlocked! Entering the medium-difficulty zone of the mission..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🚨 SYSTEM 9 — FUEL EFFICIENCY: Your ship travels 4.2 km per liter of fuel. You need to cover 378 km to reach a refueling station. How many liters do you need?",
+        "options": {"choices": ["80 liters", "85 liters", "90 liters", "95 liters"]},
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "decimal division",
+        "hints": ["Divide distance by efficiency", "378 ÷ 4.2"],
+        "explanation": "378 ÷ 4.2 = 90 liters. Fuel loaded and engines running efficiently! System 10 needs your attention..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "⚠️ SYSTEM 10 — CARGO BAY: The cargo bay is a rectangular prism: 6 m × 4.5 m × 3 m. What is its volume?",
+        "options": {"choices": ["72 m³", "81 m³", "78 m³", "85.5 m³"]},
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "volume",
+        "hints": ["Volume = length × width × height", "6 × 4.5 × 3"],
+        "explanation": "6 × 4.5 = 27, then 27 × 3 = 81 m³. Cargo bay dimensions confirmed — everything fits! System 11 is overheating..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔥 SYSTEM 11 — HEAT SHIELD: The heat shield temperature is rising at a rate of 15°C per minute. If it starts at 120°C and the maximum safe temperature is 345°C, how many minutes until it reaches the danger zone?",
+        "options": {"choices": ["13 minutes", "14 minutes", "15 minutes", "16 minutes"]},
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "linear equations",
+        "hints": ["Find the temperature difference: 345 - 120", "Divide by the rate of increase"],
+        "explanation": "345 - 120 = 225°C difference. 225 ÷ 15 = 15 minutes. We have 15 minutes to cool the shield! System 12 is next..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🌀 SYSTEM 12 — GRAVITY SIMULATOR: The simulator needs to spin the crew module. If the module is a circle with a radius of 7 meters, what is the circumference? (Use π ≈ 22/7)",
+        "options": {"choices": ["42 meters", "44 meters", "38 meters", "49 meters"]},
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "circumference",
+        "hints": ["Circumference = 2 × π × r", "Use 22/7 for π"],
+        "explanation": "C = 2 × 22/7 × 7 = 2 × 22 = 44 meters. Gravity simulator spinning at the correct circumference! System 13 alert..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "📡 SYSTEM 13 — DEEP SPACE SIGNAL: A signal from Earth takes 12.5 minutes to reach you. If the signal travels at 300,000 km/s, how far are you from Earth in millions of km?",
+        "options": {"choices": ["200 million km", "225 million km", "250 million km", "275 million km"]},
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "distance calculation",
+        "hints": ["Convert 12.5 minutes to seconds: 12.5 × 60", "Then multiply by speed"],
+        "explanation": "12.5 min = 750 seconds. 750 × 300,000 = 225,000,000 km = 225 million km. Signal distance calculated! System 14 is critical..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔧 SYSTEM 14 — ENGINE REPAIR: A replacement part costs $2,400 on Earth. In space, parts cost 250% more. What is the space price?",
+        "options": {"choices": ["$6,000", "$8,400", "$4,800", "$7,200"]},
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "percentage increase",
+        "hints": ["250% more means the space price is 100% + 250% = 350% of original", "Find 350% of 2,400"],
+        "explanation": "350% of $2,400 = 3.5 × $2,400 = $8,400. Good thing we brought spares! Engine part installed. System 15..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🛰️ SYSTEM 15 — ORBITAL ENTRY: To enter Mars orbit, you need to reduce speed by 3/8. If your current speed is 24,000 km/h, what should your new speed be?",
+        "options": {"choices": ["15,000 km/h", "16,000 km/h", "18,000 km/h", "9,000 km/h"]},
+        "answer": "a",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "fractions",
+        "hints": ["Find 3/8 of 24,000", "Then subtract from 24,000"],
+        "explanation": "3/8 × 24,000 = 9,000. New speed = 24,000 - 9,000 = 15,000 km/h. Orbital entry speed achieved! System 16..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🧪 SYSTEM 16 — ATMOSPHERE ANALYSIS: Mars atmosphere is 95.3% CO₂, 2.7% nitrogen, and the rest is other gases. What percentage is other gases?",
+        "options": {"choices": ["1%", "1.5%", "2%", "2.5%"]},
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "percentages",
+        "hints": ["All percentages must add up to 100%", "100 - 95.3 - 2.7 = ?"],
+        "explanation": "100% - 95.3% - 2.7% = 2% other gases. Atmospheric data logged for the science team! Final challenge phase ahead..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🚨 ALERT 17 — CRITICAL! LANDING CALCULATIONS: The lander drops from 1,200 m altitude, descending 0.8 m every 0.25 seconds. How many seconds until landing?",
+        "options": {"choices": ["325 seconds", "350 seconds", "375 seconds", "400 seconds"]},
+        "answer": "c",
+        "difficulty": "hard",
+        "bloomLevel": "analyze",
+        "topic": "rate problems",
+        "hints": ["First find the rate per second: 0.8 ÷ 0.25", "Then divide altitude by that rate"],
+        "explanation": "Rate = 0.8 ÷ 0.25 = 3.2 m/s. Time = 1,200 ÷ 3.2 = 375 seconds. Landing trajectory locked! Alert 18 incoming..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🚨 ALERT 18 — CRITICAL! HABITAT CONSTRUCTION: The Mars habitat base is a square with a perimeter of 64 meters. Solar panels will cover 3/4 of the base area. How many square meters of solar panels are needed?",
+        "options": {"choices": ["192 m²", "196 m²", "172 m²", "256 m²"]},
+        "answer": "a",
+        "difficulty": "hard",
+        "bloomLevel": "analyze",
+        "topic": "area and fractions",
+        "hints": ["Find the side length from the perimeter: 64 ÷ 4", "Then find the area, then take 3/4 of it"],
+        "explanation": "Side = 64 ÷ 4 = 16 m. Area = 16 × 16 = 256 m². Solar panels = 3/4 × 256 = 192 m². Habitat blueprints approved! Alert 19..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🚨 ALERT 19 — CRITICAL! WATER EXTRACTION: A Mars ice drill extracts 2.4 kg of ice per hour. Only 62.5% of the ice can be converted to drinkable water. How many kg of water do you get in 10 hours?",
+        "options": {"choices": ["12 kg", "15 kg", "18 kg", "24 kg"]},
+        "answer": "b",
+        "difficulty": "hard",
+        "bloomLevel": "analyze",
+        "topic": "multi-step percentages",
+        "hints": ["First find total ice in 10 hours", "Then find 62.5% of that amount"],
+        "explanation": "Total ice = 2.4 × 10 = 24 kg. Drinkable water = 62.5% × 24 = 0.625 × 24 = 15 kg. Water supply secured for the crew! Final alert..."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🚨 ALERT 20 — FINAL MISSION! RETURN TRAJECTORY: The return trip is 3/5 longer than the trip to Mars, which took 210 days. The ship uses fuel at a rate inversely proportional — it will need 7/6 of the original 540 tons. How much fuel is needed for the return?",
+        "options": {"choices": ["600 tons", "630 tons", "650 tons", "720 tons"]},
+        "answer": "b",
+        "difficulty": "hard",
+        "bloomLevel": "analyze",
+        "topic": "fraction operations",
+        "hints": ["Focus on the fuel: 7/6 of 540", "Multiply 540 × 7, then divide by 6"],
+        "explanation": "Fuel needed = 7/6 × 540 = 3,780 ÷ 6 = 630 tons. Return trajectory plotted and fuel loaded! MISSION COMPLETE — You've successfully landed on Mars, built a habitat, and planned the return journey. Welcome to Mars, Commander! 🎉"
+      }
+    ]
+  }
+]

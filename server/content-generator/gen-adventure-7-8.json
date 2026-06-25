@@ -1,0 +1,458 @@
+[
+  {
+    "title": "Code Breaker Academy",
+    "description": "Welcome to the Agency, recruit. Crack encrypted codes and solve classified puzzles to earn your badge.",
+    "category": "adventure",
+    "gradeLevel": 7,
+    "questions": [
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CIPHER 1: Welcome to Code Breaker Academy, recruit. Your first test: the entry code to HQ is encrypted using a simple substitution. If A=1, B=2, C=3... the code is the value of the expression 3(x + 2) when x = 4. What number unlocks the door?",
+        "options": {"choices": ["14", "18", "21", "15"]},
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "expressions and equations",
+        "hints": ["Substitute x = 4 into the expression", "First compute what's inside the parentheses"],
+        "explanation": "3(4 + 2) = 3(6) = 18. The door slides open with a hiss. You step into a sleek command center filled with screens and encrypted feeds. Your training begins now."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CLASSIFIED 2: Your handler, Agent Shadow, slides a file across the table. 'Decode this,' she says. An enemy spy traveled 56 miles in 3.5 hours at constant speed. What was their speed in miles per hour?",
+        "options": {"choices": ["14 mph", "16 mph", "18 mph", "20 mph"]},
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "rates and ratios",
+        "hints": ["Speed = Distance ÷ Time", "Divide 56 by 3.5"],
+        "explanation": "56 ÷ 3.5 = 16 mph. Agent Shadow nods approvingly. 'The suspect was driving below the speed limit — trying not to draw attention. Smart. But not smart enough. Next file.'"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 INTERCEPT 3: You've intercepted a transmission. The enemy uses a number cipher: each letter maps to 2n + 1 where n is the letter's position. The first letter of their code name maps to the value 15. What position is that letter (what is n)?",
+        "options": {"choices": ["6", "7", "8", "5"]},
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "solving equations",
+        "hints": ["Set up: 2n + 1 = 15", "Subtract 1 from both sides, then divide by 2"],
+        "explanation": "2n + 1 = 15 → 2n = 14 → n = 7. The 7th letter is G. The enemy agent's code name starts with G. You type it into the database. A profile appears: Agent Ghost. The hunt is on."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 DECODE 4: Agent Ghost's safe uses a combination based on proportions. If the ratio of the first two digits is 3:5, and the first digit is 12, what is the second digit?",
+        "options": {"choices": ["15", "18", "20", "24"]},
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "proportions",
+        "hints": ["Set up: 3/5 = 12/x", "Cross multiply: 3x = 60"],
+        "explanation": "3/5 = 12/x → 3x = 60 → x = 20. The safe clicks open. Inside, you find a map with coordinates marked in red. Agent Ghost has been planning something big."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CIPHER 5: The map from Ghost's safe shows a drop zone. You need to calculate the distance between two surveillance points at (1, 2) and (4, 6) on the Agency grid. What is the distance in grid units?",
+        "options": {"choices": ["4", "7", "5", "6"]},
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "coordinate geometry",
+        "hints": ["Use the distance formula: √((x₂-x₁)² + (y₂-y₁)²)", "Calculate (4-1)² + (6-2)² first"],
+        "explanation": "√((4-1)² + (6-2)²) = √(9 + 16) = √25 = 5 grid units. You mark the surveillance radius on your map. The drop zone is closer than expected — Ghost is operating right under your nose."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CLASSIFIED 6: A coded message was hidden using exponents. Decrypt: what is the value of 2⁵ × 2³ ÷ 2⁴?",
+        "options": {"choices": ["8", "16", "32", "4"]},
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "exponents",
+        "hints": ["When multiplying same bases, add exponents", "When dividing same bases, subtract exponents"],
+        "explanation": "2⁵ × 2³ ÷ 2⁴ = 2⁸ ÷ 2⁴ = 2⁴ = 16. The decrypted number reveals a locker number at the train station. You grab your coat and head out into the rain."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 INTERCEPT 7: At the station, locker 16 contains a burner phone with a timer counting down. The timer shows a value that decreases by 15% each hour. If it started at 200, what is the value after 1 hour?",
+        "options": {"choices": ["185", "175", "170", "160"]},
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "percent decrease",
+        "hints": ["15% of 200 = 30", "Subtract the decrease from the original"],
+        "explanation": "15% of 200 = 30, so 200 - 30 = 170. The timer reads 170 — you have less time than you thought. A text message appears on the burner phone: a set of coordinates. Ghost is making a move tonight."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 DECODE 8: The text message contains coordinates encoded as an inequality. Ghost will be at any location where 3x - 7 ≤ 14. What is the largest integer value of x where Ghost might appear?",
+        "options": {"choices": ["5", "6", "7", "8"]},
+        "answer": "c",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "inequalities",
+        "hints": ["Add 7 to both sides: 3x ≤ 21", "Divide by 3"],
+        "explanation": "3x - 7 ≤ 14 → 3x ≤ 21 → x ≤ 7. The largest integer is 7. You cross-reference grid sector 7 on the city map. It's the waterfront district. You radio Agent Shadow: 'Eyes on sector 7. Moving in.'"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CIPHER 9: You arrive at the waterfront and spot Ghost entering a warehouse. The warehouse security uses a modular arithmetic lock. What is 47 mod 8?",
+        "options": {"choices": ["5", "6", "7", "3"]},
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "modular arithmetic",
+        "hints": ["Divide 47 by 8 and find the remainder", "47 = 8 × 5 + ?"],
+        "explanation": "47 = 8 × 5 + 7, so 47 mod 8 = 7. You punch in 7. The warehouse door unlocks. Inside, crates are stacked floor to ceiling, each one marked with a different cipher."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CLASSIFIED 10: Ghost left a trap — a laser grid you must navigate. The grid pattern repeats every 3 seconds horizontally and every 4 seconds vertically. After how many seconds will both patterns sync up and create an opening?",
+        "options": {"choices": ["7", "12", "24", "6"]},
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "analyze",
+        "topic": "least common multiple",
+        "hints": ["Find the LCM of 3 and 4", "List multiples of each: 3,6,9,12... and 4,8,12..."],
+        "explanation": "LCM(3, 4) = 12. At exactly 12 seconds, both grids align and a gap appears. You dive through the opening and roll behind a crate. Heart pounding, you spot Ghost at a computer terminal ahead."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 INTERCEPT 11: Ghost is downloading files. The progress bar shows the download is a function of time: f(t) = 4t + 10, where f(t) is the percentage complete. At what time t will the download reach 50%?",
+        "options": {"choices": ["8", "10", "12", "15"]},
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "analyze",
+        "topic": "linear functions",
+        "hints": ["Set 4t + 10 = 50", "Solve for t"],
+        "explanation": "4t + 10 = 50 → 4t = 40 → t = 10 seconds. You have 10 seconds before Ghost hits the halfway mark. You need to cut the connection before the full download completes. Move fast, recruit."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 DECODE 12: To cut Ghost's connection, you need to reroute power through a circuit. The circuit has two resistors in a configuration described by the equation 1/R = 1/6 + 1/12. What is R?",
+        "options": {"choices": ["3", "4", "9", "18"]},
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "rational equations",
+        "hints": ["Find a common denominator for 1/6 and 1/12", "1/R = 2/12 + 1/12 = 3/12"],
+        "explanation": "1/R = 1/6 + 1/12 = 2/12 + 1/12 = 3/12 = 1/4, so R = 4. You reroute the circuit and the terminal flickers. Ghost spins around, eyes wide. 'Who are you?' The download stalls at 48%."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CIPHER 13: Ghost bolts. You chase through the warehouse. A locked gate blocks your path — it requires solving a system. Ghost's escape routes satisfy: x + y = 10 and x - y = 4. What is x?",
+        "options": {"choices": ["6", "7", "8", "5"]},
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "analyze",
+        "topic": "systems of equations",
+        "hints": ["Add both equations together to eliminate y", "(x+y) + (x-y) = 10 + 4"],
+        "explanation": "Adding: 2x = 14, so x = 7 (and y = 3). The gate opens to route 7. You sprint down the corridor, Ghost's footsteps echoing ahead. The chase is on."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CLASSIFIED 14: Ghost climbs a fire escape. From the ground, you estimate the building is the hypotenuse's height. The ladder reaches 24 feet up the wall, and its base is 10 feet from the wall. How long is the ladder?",
+        "options": {"choices": ["28 ft", "26 ft", "30 ft", "34 ft"]},
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "Pythagorean theorem",
+        "hints": ["a² + b² = c² where a=10, b=24", "100 + 576 = c²"],
+        "explanation": "10² + 24² = 100 + 576 = 676 = 26². The ladder is 26 feet. You estimate the distance and find an alternate route — a shorter fire escape on the adjacent building. You're gaining ground."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 INTERCEPT 15: On the rooftop, Ghost signals a helicopter with a flashing light. The light follows a pattern: it flashes at intervals that form the sequence 2, 6, 18, 54, ... What is the next number in this geometric sequence?",
+        "options": {"choices": ["108", "162", "72", "216"]},
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "analyze",
+        "topic": "geometric sequences",
+        "hints": ["Find the common ratio: 6/2 = ?", "Multiply the last term by the common ratio"],
+        "explanation": "Common ratio = 3. Next term: 54 × 3 = 162. The helicopter's signal code is 162 MHz. You radio Agent Shadow the frequency so the Agency can jam the transmission. No extraction for you, Ghost."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 DECODE 16: Ghost pulls out a scrambler device. To counter it, you need to compute: if a scrambler key is generated by (-3)⁴ ÷ 3², what is the counter-key?",
+        "options": {"choices": ["3", "9", "27", "-9"]},
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "exponents with negatives",
+        "hints": ["(-3)⁴ = 81 (even exponent makes it positive)", "81 ÷ 9 = ?"],
+        "explanation": "(-3)⁴ = 81, and 3² = 9, so 81 ÷ 9 = 9. You enter the counter-key and Ghost's scrambler goes dead. Ghost stares at the useless device and tosses it aside. 'Impressive, recruit.'"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CIPHER 17: Ghost offers a deal: 'Solve my puzzle and I'll hand over the stolen data.' The puzzle: a triangle has angles in the ratio 2:3:4. What is the measure of the largest angle?",
+        "options": {"choices": ["60°", "80°", "90°", "100°"]},
+        "answer": "b",
+        "difficulty": "hard",
+        "bloomLevel": "analyze",
+        "topic": "angle relationships",
+        "hints": ["Angles in a triangle sum to 180°", "2x + 3x + 4x = 180"],
+        "explanation": "2x + 3x + 4x = 180 → 9x = 180 → x = 20. Largest angle = 4(20) = 80°. Ghost smiles. 'Not bad. But I have three more tests before you earn the data.'"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CLASSIFIED 18: Ghost's second challenge: 'A classified document was split among agents. Agent A has 1/3 of it, Agent B has 2/5, and Agent C has the rest. What fraction does Agent C hold?'",
+        "options": {"choices": ["4/15", "1/5", "7/15", "3/8"]},
+        "answer": "a",
+        "difficulty": "hard",
+        "bloomLevel": "analyze",
+        "topic": "fraction operations",
+        "hints": ["Add A and B's fractions: 1/3 + 2/5", "Find a common denominator of 15, then subtract from 1"],
+        "explanation": "1/3 + 2/5 = 5/15 + 6/15 = 11/15. Agent C has 1 - 11/15 = 4/15. Ghost nods slowly. 'Two down, two to go. You're sharper than most recruits.'"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 INTERCEPT 19: Ghost's third challenge: 'A double agent attends a secret meeting. There are 8 people at a round table. If each person shakes hands with everyone except the two people sitting next to them, how many handshakes occur?'",
+        "options": {"choices": ["16", "20", "24", "28"]},
+        "answer": "b",
+        "difficulty": "hard",
+        "bloomLevel": "evaluate",
+        "topic": "combinatorics",
+        "hints": ["Each person shakes hands with 5 others (8 - 1 self - 2 neighbors)", "Total = 8 × 5, but each handshake is counted twice"],
+        "explanation": "Each of 8 people shakes hands with 5 others: 8 × 5 = 40, divided by 2 (each handshake counted twice) = 20. 'One more,' Ghost whispers. 'Get this right and the data is yours.'"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 DECODE 20: Ghost's final test: 'A briefcase has a 3-digit lock. The digits sum to 11. The hundreds digit is three times the units digit. The tens digit is 1 more than the units digit. What is the 3-digit code?'",
+        "options": {"choices": ["632", "614", "923", "641"]},
+        "answer": "a",
+        "difficulty": "hard",
+        "bloomLevel": "evaluate",
+        "topic": "systems of equations",
+        "hints": ["Let units = u. Then hundreds = 3u and tens = u + 1", "3u + (u + 1) + u = 11, solve for u"],
+        "explanation": "Let u = units digit. Hundreds = 3u, tens = u + 1. Sum: 3u + (u+1) + u = 11 → 5u + 1 = 11 → 5u = 10 → u = 2. So hundreds = 6, tens = 3, units = 2. The code is 632. Ghost hands over the flash drive. 'Welcome to the big leagues, recruit.' Mission complete — you've earned your Code Breaker badge."
+      }
+    ]
+  },
+  {
+    "title": "Operation Cipher",
+    "description": "A rogue agent has stolen classified data. Follow the trail of encrypted clues to recover the files before it's too late.",
+    "category": "adventure",
+    "gradeLevel": 8,
+    "questions": [
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CIPHER 1: Alert — a rogue agent codenamed Phantom has breached the Agency vault and stolen top-secret files. Your mission: track Phantom down. First, decode the alert frequency. Simplify: √144 + √81. What is the sum?",
+        "options": {"choices": ["19", "21", "23", "25"]},
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "square roots",
+        "hints": ["√144 = 12", "√81 = 9"],
+        "explanation": "√144 + √81 = 12 + 9 = 21. Frequency 21 MHz locked in. You tune your earpiece and hear static, then a voice: 'Phantom was last seen heading east on Route 7. All units mobilize.' You grab your gear."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CLASSIFIED 2: Phantom left a burner phone at the scene. The phone's password is the solution to: 5(x - 3) = 2x + 6. What is x?",
+        "options": {"choices": ["5", "7", "3", "9"]},
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "linear equations",
+        "hints": ["Distribute: 5x - 15 = 2x + 6", "Get all x terms on one side"],
+        "explanation": "5x - 15 = 2x + 6 → 3x = 21 → x = 7. The phone unlocks. The call history shows a single outgoing call to an overseas number. You forward it to HQ for analysis. Every clue matters."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 INTERCEPT 3: HQ traces the call to a coordinate on the city grid. The midpoint between the Agency at (2, 8) and Phantom's contact point is (5, 5). What is the contact point?",
+        "options": {"choices": ["(8, 2)", "(7, 3)", "(3, 7)", "(10, 4)"]},
+        "answer": "a",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "coordinate geometry",
+        "hints": ["Midpoint formula: ((x₁+x₂)/2, (y₁+y₂)/2) = (5,5)", "Solve: (2+x)/2 = 5 and (8+y)/2 = 5"],
+        "explanation": "(2+x)/2 = 5 → x = 8. (8+y)/2 = 5 → y = 2. Contact point: (8, 2). It's a cafe in the diplomatic quarter. You slip on your cover identity — a freelance journalist — and head out."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 DECODE 4: At the cafe, you find a napkin with a coded message. The cipher uses exponent rules. Simplify: (2³)² × 2². What is the result?",
+        "options": {"choices": ["128", "256", "512", "1024"]},
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "exponents",
+        "hints": ["(2³)² = 2⁶ by the power rule", "2⁶ × 2² = 2⁸"],
+        "explanation": "(2³)² × 2² = 2⁶ × 2² = 2⁸ = 256. The number 256 decodes to an address: 256 Harbor Street. That's the old shipping district. Phantom is using the abandoned docks as a staging ground."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CIPHER 5: You scope out Harbor Street and find a shipping container with a digital lock. The lock requires the slope of the line connecting the surveillance cameras at (1, 3) and (5, 11). What is the slope?",
+        "options": {"choices": ["3", "2", "4", "1"]},
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "slope",
+        "hints": ["Slope = (y₂ - y₁)/(x₂ - x₁)", "(11-3)/(5-1) = ?"],
+        "explanation": "Slope = (11-3)/(5-1) = 8/4 = 2. The container opens. Inside: a laptop, maps, and documents in a foreign language. Phantom has been selling Agency secrets. This is bigger than anyone thought."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CLASSIFIED 6: The laptop is encrypted. The decryption key is the value of x in: x/4 + x/6 = 5. What is x?",
+        "options": {"choices": ["10", "12", "8", "15"]},
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "equations with fractions",
+        "hints": ["Find LCM of 4 and 6, which is 12", "Multiply everything by 12: 3x + 2x = 60"],
+        "explanation": "Multiply by 12: 3x + 2x = 60 → 5x = 60 → x = 12. The laptop unlocks. You scan through the files — Phantom has a buyer meeting scheduled for tomorrow night. You photograph everything and report to Agent Shadow."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 INTERCEPT 7: Phantom's files reveal a network of 5 safe houses. Each safe house connects to every other. How many direct connections (communication lines) exist in the network?",
+        "options": {"choices": ["8", "10", "12", "15"]},
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "combinatorics",
+        "hints": ["Use the formula n(n-1)/2", "5 × 4 / 2 = ?"],
+        "explanation": "5(4)/2 = 10 connections. You map all 10 communication lines and identify the central hub — a penthouse downtown. That's where Phantom is coordinating. Agent Shadow authorizes surveillance."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 DECODE 8: You're setting up a surveillance drone. The drone's battery life follows the equation y = -2x + 40, where y is battery percentage and x is minutes. After how many minutes will the battery die?",
+        "options": {"choices": ["15", "20", "25", "40"]},
+        "answer": "b",
+        "difficulty": "easy",
+        "bloomLevel": "apply",
+        "topic": "linear functions",
+        "hints": ["Battery dies when y = 0", "Set -2x + 40 = 0"],
+        "explanation": "-2x + 40 = 0 → 2x = 40 → x = 20 minutes. You have a 20-minute window. You launch the drone and start recording. The clock is ticking."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CIPHER 9: The drone captures footage of Phantom meeting someone. Their car's license plate is encoded: it's the solution to the system x + y = 13 and 2x - y = 5. What is the plate number xy (concatenated)?",
+        "options": {"choices": ["67", "58", "76", "69"]},
+        "answer": "a",
+        "difficulty": "medium",
+        "bloomLevel": "analyze",
+        "topic": "systems of equations",
+        "hints": ["Add both equations: 3x = 18", "Then find y from x + y = 13"],
+        "explanation": "Adding: 3x = 18 → x = 6. Then y = 13 - 6 = 7. Plate: 67. You run the plate through the database. It belongs to a foreign diplomat — this operation just became international. Agent Shadow calls an emergency briefing."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CLASSIFIED 10: At the briefing, Shadow reveals the stolen data is on 3 separate flash drives. The probability of Phantom carrying any one drive is 1/3. If Phantom randomly takes 2 drives, what is the probability they grab the one containing nuclear codes?",
+        "options": {"choices": ["1/3", "2/3", "1/2", "1/4"]},
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "analyze",
+        "topic": "probability",
+        "hints": ["Think about it inversely: what's the probability of NOT grabbing the nuclear drive?", "P(not nuclear) = 1/3, so P(nuclear) = 1 - 1/3"],
+        "explanation": "If Phantom grabs 2 out of 3 drives, the probability of including the nuclear codes drive is 1 - P(missing it) = 1 - (1/3) = 2/3. Shadow slams the table. 'Two-thirds chance Phantom has the nuclear codes. We cannot afford to wait. Move tonight.'"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 INTERCEPT 11: You need to reach Phantom's penthouse. The building is 60 feet tall. You're standing 80 feet from the base. What is the direct line-of-sight distance to the rooftop?",
+        "options": {"choices": ["90 ft", "100 ft", "110 ft", "120 ft"]},
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "Pythagorean theorem",
+        "hints": ["This forms a right triangle with legs 60 and 80", "60² + 80² = c²"],
+        "explanation": "60² + 80² = 3600 + 6400 = 10000. √10000 = 100 ft. Exactly 100 feet. You calibrate your grappling launcher and prepare for the ascent. The night is dark and the wind is picking up."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 DECODE 12: On the rooftop, you find a keypad. The code is the remainder when 253 is divided by 11. What is 253 mod 11?",
+        "options": {"choices": ["0", "1", "2", "3"]},
+        "answer": "a",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "modular arithmetic",
+        "hints": ["253 ÷ 11 = ?", "11 × 23 = 253"],
+        "explanation": "11 × 23 = 253 exactly, so 253 mod 11 = 0. The rooftop door clicks open silently. You descend the stairwell in darkness, counting floors. Phantom's penthouse is three levels down."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CIPHER 13: You reach Phantom's floor but trigger a motion sensor. To disable it, solve: the area of a triangle with vertices at (0,0), (6,0), and (0,8). What is the area?",
+        "options": {"choices": ["48", "24", "14", "28"]},
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "coordinate geometry",
+        "hints": ["This is a right triangle with base 6 and height 8", "Area = (1/2) × base × height"],
+        "explanation": "Area = (1/2)(6)(8) = 24 square units. You enter 24 and the sensor deactivates. The hallway goes dark. You switch to night vision and proceed. Phantom's door is at the end of the corridor."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CLASSIFIED 14: The door lock uses scientific notation. Convert 0.00045 to scientific notation and identify the exponent. What power of 10 is it?",
+        "options": {"choices": ["-3", "-4", "-5", "-2"]},
+        "answer": "b",
+        "difficulty": "medium",
+        "bloomLevel": "apply",
+        "topic": "scientific notation",
+        "hints": ["Move the decimal point right until you have a number between 1 and 10", "0.00045 = 4.5 × 10^?"],
+        "explanation": "0.00045 = 4.5 × 10⁻⁴. The exponent is -4. You key in the value. The lock disengages with a soft click. You push the door open, weapon drawn. The penthouse is empty — but it won't be for long."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 INTERCEPT 15: Inside, you find Phantom's planning board. A note reads: 'Exchange at coordinates where the lines y = 2x + 1 and y = -x + 10 intersect.' Where is the exchange happening?",
+        "options": {"choices": ["(2, 5)", "(4, 9)", "(3, 7)", "(5, 5)"]},
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "analyze",
+        "topic": "systems of linear equations",
+        "hints": ["Set equations equal: 2x + 1 = -x + 10", "Solve for x, then plug back in"],
+        "explanation": "2x + 1 = -x + 10 → 3x = 9 → x = 3. y = 2(3) + 1 = 7. Intersection: (3, 7). Grid point (3, 7) is the old clock tower at the city center. You plant a tracker on Phantom's desk and head to the clock tower."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 DECODE 16: At the clock tower, you discover a vault. The combination is found by solving: if 3^x = 243, what is x?",
+        "options": {"choices": ["3", "4", "5", "6"]},
+        "answer": "c",
+        "difficulty": "medium",
+        "bloomLevel": "analyze",
+        "topic": "exponents and logarithmic thinking",
+        "hints": ["List powers of 3: 3¹=3, 3²=9, 3³=27...", "Keep going: 3⁴=81, 3⁵=?"],
+        "explanation": "3⁵ = 243, so x = 5. The vault door grinds open. Inside you find two of the three stolen flash drives. But the third — the one with nuclear codes — is missing. Phantom still has it."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CIPHER 17: Phantom sends a taunting message: 'Catch me if you can. I'm at a distance of √(a² + b²) from origin, where a = 5 and b = 12.' How far is Phantom from origin?",
+        "options": {"choices": ["17", "13", "15", "11"]},
+        "answer": "b",
+        "difficulty": "hard",
+        "bloomLevel": "analyze",
+        "topic": "Pythagorean theorem and distance",
+        "hints": ["Compute 5² + 12²", "√(25 + 144) = √169"],
+        "explanation": "√(5² + 12²) = √(25 + 144) = √169 = 13 units from the origin. Phantom is 13 grid sectors out — near the airport. They're trying to flee the country. You commandeer a vehicle and floor it."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 CLASSIFIED 18: En route to the airport, you need to calculate your arrival time. You're 78 miles away, driving at a speed that increases from 60 mph to 80 mph. Your average speed for the trip is the harmonic mean: 2(60)(80)/(60+80). What is your average speed?",
+        "options": {"choices": ["68.6 mph", "70 mph", "65 mph", "72 mph"]},
+        "answer": "a",
+        "difficulty": "hard",
+        "bloomLevel": "evaluate",
+        "topic": "rates and harmonic mean",
+        "hints": ["Compute 2 × 60 × 80 = 9600", "Divide by (60 + 80) = 140"],
+        "explanation": "2(60)(80)/(60+80) = 9600/140 ≈ 68.6 mph. At that speed, you'll reach the airport in just over an hour. You radio ahead to have airport security on standby. 'No flights out. Lock it down.'"
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 INTERCEPT 19: You arrive at the airport. Phantom is disguised as one of 8 passengers at Gate 7. You can scan 2 passengers at a time. If Phantom is equally likely to be any of the 8, what is the probability you identify Phantom in your first scan?",
+        "options": {"choices": ["1/8", "1/4", "1/2", "3/8"]},
+        "answer": "b",
+        "difficulty": "hard",
+        "bloomLevel": "evaluate",
+        "topic": "probability",
+        "hints": ["You scan 2 out of 8 people", "P = favorable outcomes / total outcomes = C(1,1)×C(7,1) / C(8,2)... or simply 2/8"],
+        "explanation": "Scanning 2 out of 8 passengers: P(Phantom in your pair) = 2/8 = 1/4. A 25% chance. You scan the first pair — negative. Second pair — your scanner flashes red. Phantom is the person in the gray coat, reaching for a boarding pass."
+      },
+      {
+        "type": "multiple-choice",
+        "text": "🔐 DECODE 20: Phantom makes a break for it, but you corner them at a security checkpoint. Phantom holds up the flash drive: 'One last puzzle, and I'll surrender. A function f(x) = x² - 6x + k has exactly one real root. What is k?' Solve it to end the mission.",
+        "options": {"choices": ["6", "9", "12", "3"]},
+        "answer": "b",
+        "difficulty": "hard",
+        "bloomLevel": "evaluate",
+        "topic": "quadratic discriminant",
+        "hints": ["Exactly one real root means the discriminant equals zero", "Discriminant: b² - 4ac = 0 → 36 - 4k = 0"],
+        "explanation": "For one real root: b² - 4ac = 0 → (-6)² - 4(1)(k) = 0 → 36 - 4k = 0 → k = 9. Phantom smiles, drops the flash drive, and puts their hands up. 'Well played, recruit.' Security moves in. All three drives recovered. Nuclear codes secured. Mission accomplished. Agent Shadow's voice crackles in your ear: 'Outstanding work. Welcome to Operation Cipher — permanently. You've earned it.'"
+      }
+    ]
+  }
+]
