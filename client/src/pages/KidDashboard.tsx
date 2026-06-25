@@ -103,7 +103,7 @@ export default function KidDashboard() {
 
   if (practiceTopicId) {
     return <div className="min-h-screen" style={{ background: "hsl(var(--background))" }}>
-      <TopicQuestions topicId={practiceTopicId} profileId={activeProfile?.id ?? 0} onComplete={() => setPracticeTopicId(null)} />
+      <TopicQuestions topicId={practiceTopicId} profileId={activeProfile?.id ?? 0} grade={activeProfile?.grade ?? 5} onComplete={() => setPracticeTopicId(null)} />
     </div>;
   }
 

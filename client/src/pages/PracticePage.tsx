@@ -106,6 +106,7 @@ export default function PracticePage() {
         <TopicQuestions
           topicId={topicId}
           profileId={activeProfile?.id ?? 0}
+          grade={activeProfile?.grade ?? 5}
           difficulty={selectedDifficulty === "all" ? undefined : selectedDifficulty ?? undefined}
           onComplete={handleQuizComplete}
         />
