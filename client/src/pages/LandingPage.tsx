@@ -21,7 +21,7 @@ export default function LandingPage() {
       {/* ── HERO with gradient bg ─────────────────────────────────────── */}
       <div style={{ background: "linear-gradient(135deg, #1a1040 0%, #2d1b69 40%, #4a2c8a 70%, #6c3fa0 100%)" }}>
         <nav className="flex items-center justify-between px-6 lg:px-12 py-4 max-w-6xl mx-auto animate-fade-in">
-          <span className="font-display font-bold text-xl text-white">
+          <span className="font-display font-bold text-2xl lg:text-3xl text-white">
             Learn<span style={{ color: "#f093fb" }}>Smarter</span>
           </span>
           <div className="flex items-center gap-3 font-body">
