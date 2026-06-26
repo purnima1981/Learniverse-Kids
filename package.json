@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "tsx server/index.ts",
-    "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=cjs --external:./vite --outfile=dist/index.cjs",
+    "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=cjs --external:./vite --outfile=dist/index.cjs && node -e \"const fs=require('fs');const p=require('path');function cpR(s,d){if(!fs.existsSync(s))return;fs.mkdirSync(d,{recursive:true});fs.readdirSync(s).forEach(f=>{const sp=p.join(s,f),dp=p.join(d,f);fs.statSync(sp).isDirectory()?cpR(sp,dp):fs.copyFileSync(sp,dp)});}cpR('server/content-generator','dist/content-generator');\"",
     "start": "NODE_ENV=production node dist/index.cjs",
     "check": "tsc",
     "db:push": "drizzle-kit push",

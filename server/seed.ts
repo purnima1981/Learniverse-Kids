@@ -30,6 +30,7 @@ async function seedGeneratedQuestions() {
   const candidates = [
     path.join(__dirname, "content-generator", "generated-questions.json"),
     path.join(process.cwd(), "server", "content-generator", "generated-questions.json"),
+    path.join(process.cwd(), "dist", "content-generator", "generated-questions.json"),
     path.join(process.cwd(), "content-generator", "generated-questions.json"),
   ];
   const filePath = candidates.find(p => fs.existsSync(p));

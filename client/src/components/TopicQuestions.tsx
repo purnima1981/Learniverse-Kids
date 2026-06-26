@@ -191,7 +191,7 @@ function PracticeTest({ questions, profileId, topicId, grade, onComplete }: {
   }
 
   return (
-    <div className="min-h-screen flex flex-col animate-fade-in" style={{ background: "hsl(var(--background))" }}>
+    <div className="min-h-screen animate-fade-in" style={{ background: "hsl(var(--background))" }}>
       {/* Top bar */}
       <div className="bg-white border-b px-4 py-3 flex items-center gap-3 sticky top-0 z-10" style={{ borderColor: "hsl(var(--border))" }}>
         <button onClick={() => onComplete(results.filter(r => r.correct).length, results.length)}
